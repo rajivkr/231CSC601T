@@ -2,7 +2,6 @@
 
 > **Purpose:** Internal teaching notes with timing, pacing, and intent
 > **Duration:** 3 hours (180 minutes)
-> **Note:** Add this file to `.gitignore`
 
 ---
 
@@ -85,20 +84,19 @@ Do not rush. Repeat in different words.
 
 ---
 
-## 5. Understanding a URL — 10 min
+## 5. Understanding a URL — 5 min
 
 **Intent:** Recognition, not memorization.
 
-Break down protocol, domain, path, query.
+Break down protocol, domain, path, query. (Covered partially in Section 4)
 
 ---
 
-## 6. Static vs Dynamic Websites — 10 min
+## 6. Static vs Dynamic Websites — 5 min
 
 **Intent:** Introduce backend conceptually.
 
-Key line:
-HTML always reaches the browser.
+Key line: HTML always reaches the browser. Keep brief.
 
 ---
 
@@ -123,37 +121,31 @@ Let students make mistakes.
 
 ---
 
-## 9. Common HTML Tags — 15 min
+## 9. Common HTML Tags — 10 min
 
-**Intent:** Familiarity.
+**Intent:** Familiarity, not mastery.
 
-Cover:
+Cover quickly:
 
-- Headings
-- Paragraphs
-- Links
-- Images
-- Lists
-- Tables (light)
+- Headings, Paragraphs
+- Links, Images
+- Lists, Tables (light — depth in Week 2)
 
 ---
 
-## 10. Forms — How Data Enters Systems — 15 min
+## 10. Forms — How Data Enters Systems — 10 min
 
 **Intent:** Real-world relevance.
 
-Explain:
-
-- Forms are everywhere
-- Focus on structure only
+Explain: Forms are everywhere. Focus on structure only. Depth in Week 3.
 
 ---
 
-## 11. Inputs and Labels — 10 min
+## 11. Inputs and Labels — 5 min
 
 **Intent:** Introduce quality & accessibility.
 
-Explain why labels matter.
+Quick explanation: why labels matter (`for` attribute links to `id`).
 
 ---
 
@@ -178,11 +170,8 @@ Rules:
 
 ---
 
-## 14. Wrap-up & Preview — 10 min
+## 14. Wrap-up & Preview — 5 min
 
-Reinforce:
+Reinforce: Client–server model, HTML = structure.
 
-- Client–server
-- HTML = structure
-
-Preview CSS next week.
+Preview: More HTML next week (lists, tables, semantic elements).
