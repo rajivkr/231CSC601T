@@ -175,3 +175,89 @@ Rules:
 Reinforce: Client–server model, HTML = structure.
 
 Preview: More HTML next week (lists, tables, semantic elements).
+
+## 📺 Pre-Class Review Links — Week 01 (Instructor)
+
+> **Purpose:** Refresh concepts before teaching
+> **Total prep time:** ~2 hours
+> Focus on **mental models**, not syntax or frameworks.
+
+---
+
+### 1. How the Web Works (Internet, DNS, Client–Server)
+
+**YouTube — Computerphile**
+
+- How the Internet Works
+  https://www.youtube.com/watch?v=7_LPdttKXPc
+- What is DNS?
+  https://www.youtube.com/watch?v=72snZctFFtA
+
+**Frontend Masters**
+
+- Brian Holt — _Web Development Foundations_
+  (Sections: How the Internet Works, Client–Server Model)
+  https://frontendmasters.com/courses/web-development-v3/
+
+---
+
+### 2. URL, Request–Response Flow (Critical for Week 01)
+
+**YouTube — Fireship**
+
+- How the Web Works
+  https://www.youtube.com/watch?v=hJHvdBlSxug
+
+**Frontend Masters**
+
+- Brian Holt — _Web Development Foundations_
+  (Section: What Happens When You Visit a Website)
+  https://frontendmasters.com/courses/web-development-v3/
+
+---
+
+### 3. What HTML Is (and Is Not)
+
+**Frontend Masters**
+
+- Jen Simmons — _HTML Semantics & Structure_
+  (Sections: What HTML Is For, Document Structure)
+  https://frontendmasters.com/courses/html-semantics/
+
+This helps reinforce:
+
+- HTML ≠ programming
+- Structure over styling
+- Why tags exist at all
+
+---
+
+### 4. Basic HTML Document Structure & Core Tags
+
+**Frontend Masters**
+
+- Brian Holt — _Complete Intro to Web Development_
+  (HTML document structure, headings, paragraphs, links, images)
+  https://frontendmasters.com/courses/web-development-v3/
+
+---
+
+### Optional Reference (Only if students ask deeper questions)
+
+**MDN Web Docs**
+
+- How the Web Works
+  https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/How_the_Web_works
+- HTML Basics
+  https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/HTML_basics
+
+---
+
+### What to Explicitly Skip for Week 01
+
+- Forms (covered properly in Week 03)
+- CSS / Bootstrap / Tailwind
+- JavaScript frameworks
+- “Build a website fast” tutorials
+
+Week 01 is about **understanding**, not building fast.
