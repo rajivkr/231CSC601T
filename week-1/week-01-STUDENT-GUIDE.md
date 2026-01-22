@@ -77,7 +77,7 @@ This applies to all websites, simple or complex.
 
 Open browser dev tools (F12 → Network tab), refresh any page. Each row is a separate request-response conversation.
 
-### Free Course
+### Free Course for Client Server
 
 Full Stack for Front-End Engineers v3 — How the Internet Works: <https://frontendmasters.com/courses/fullstack-v3/how-the-internet-works/>
 
@@ -87,40 +87,56 @@ Full Stack for Front-End Engineers v3 — How the Internet Works: <https://front
 
 ### The Complete Journey
 
-**Step 1: You type "google.com" and press Enter**
-- The browser doesn't know what google.com means. It's just text.
-- Computers only understand numbers (IP addresses like 142.250.192.46).
+#### Step 1: You type "google.com" and press Enter
 
-**Step 2: Browser checks local cache**
-- Before asking anyone, the browser checks: "Have I been here before?"
-- If yes and cache is fresh, skip ahead. This is why sites load faster on second visit.
+- "The browser doesn't know what google.com means. It's just text."
+- "Computers only understand numbers (IP addresses like 142.250.192.46)."
 
-**Step 3: DNS Resolution**
-- DNS = Domain Name System. It converts domain names to IP addresses.
-- Browser asks: "What is the IP address for google.com?"
-- Important: DNS only gives addresses. It never gives web pages.
+#### Step 2: Browser checks local cache
 
-**Step 4: TCP Connection**
-- Browser establishes a connection to the server.
-- For HTTPS: additional TLS handshake for encryption.
+- "Before asking anyone, the browser checks: 'Have I been here before?'"
+- "If yes and cache is fresh, skip to Step 5. This is why sites load faster on second visit."
 
-**Step 5: HTTP Request**
-- Browser sends: "GET / HTTP/1.1"
-- This means: "Please give me the homepage."
+#### Step 3: DNS Resolution
 
-**Step 6: Server Processing**
-- Server receives request and decides what to send.
-- Could be static (just read and send a file) or dynamic (run code, query database).
+- "DNS = Domain Name System. It's the internet's phonebook."
+- "Browser asks: 'What is the IP address for google.com?'"
+- "This question goes through multiple servers: Router → ISP → Root DNS → TLD DNS → Authoritative DNS."
+- "Finally gets back: 142.250.192.46"
+- "Important: DNS only gives addresses. It never gives web pages."
 
-**Step 7: HTTP Response**
-- Server sends back: status code + headers + body (the HTML).
-- Status 200 = success, 404 = not found, 500 = server error.
+#### Step 4: TCP Connection (The Handshake)
 
-**Step 8: Browser Parsing and Rendering**
-- Browser receives HTML and reads top to bottom.
-- Encounters CSS? Request CSS, apply styles.
-- Encounters JS? Request JS, execute code.
-- Finally: paint pixels on screen.
+- "Now browser knows WHERE to go, but needs to establish a connection."
+- "This is like calling someone and waiting for them to pick up."
+- "Three-way handshake: SYN → SYN-ACK → ACK (don't memorize, just understand concept)."
+- "For HTTPS: additional TLS handshake for encryption."
+
+#### Step 5: HTTP Request
+
+- "Browser sends a request: 'GET / HTTP/1.1'"
+- "This is like saying: 'Please give me the homepage.'"
+- "Request includes: what you want, who you are (browser), what you can accept."
+
+#### Step 6: Server Processing
+
+- "Server receives request and decides what to send."
+- "Could be a static file (just read and send)."
+- "Could be dynamic (run code, query database, generate HTML)."
+
+#### Step 7: HTTP Response
+
+- "Server sends back: status code + headers + body (the HTML)."
+- "Status 200 = success, 404 = not found, 500 = server error."
+- "The HTML is just text. Plain text traveling through the internet."
+
+#### Step 8: Browser Parsing and Rendering
+
+- "Browser receives HTML and starts reading top to bottom."
+- "Encounters CSS link? Pause, request CSS, apply styles."
+- "Encounters JS script? Pause, request JS, execute code."
+- "Encounters image? Request image (usually doesn't pause)."
+- "Finally: paint pixels on screen."
 
 ### Diagram
 
@@ -136,11 +152,9 @@ Full Stack for Front-End Engineers v3 — How the Internet Works: <https://front
 - The server does NOT push content to you. You ask, it responds.
 - HTTPS encryption happens AFTER DNS. DNS queries are often unencrypted.
 
-### Video Reference
+### Video Reference for Web
 
 Fireship — How the Web Works: <https://www.youtube.com/watch?v=hJHvdBlSxug> (Watch: 0:00–4:15)
-
-### Free Course
 
 Full Stack for Front-End Engineers v3 — DNS & URLs: <https://frontendmasters.com/courses/fullstack-v3/dns-urls/>
 
@@ -161,7 +175,7 @@ Protocol  Domain   Path    Query String
 ```
 
 - **Protocol (https://):** Encrypted conversation. HTTP = unencrypted. HTTPS = encrypted.
-- **Domain (www.amazon.in):** Subdomain (www) + main domain (amazon) + TLD (in for India).
+- **Domain (<www.amazon.in>):** Subdomain (www) + main domain (amazon) + TLD (in for India).
 - **Path (/s):** What page or resource. Here, /s means "search".
 - **Query (?k=laptop&ref=nav_bb):** Extra information. k=laptop means search keyword is "laptop".
 
@@ -169,7 +183,7 @@ Protocol  Domain   Path    Query String
 
 When debugging, you'll read URLs constantly. Seeing `?error=auth_failed` in a URL tells you exactly what went wrong. Understanding query strings is essential for working with APIs.
 
-### Video Reference
+### Video Reference for URL
 
 Web Dev Simplified — URL Explained: <https://www.youtube.com/watch?v=Vp7W8h6z6Wk> (Watch: 0:00–3:00)
 
@@ -180,15 +194,17 @@ Web Dev Simplified — URL Explained: <https://www.youtube.com/watch?v=Vp7W8h6z6
 **Static:** Same content for everyone
 **Dynamic:** Content changes based on data or user
 
-### Examples
+### Example for Static
 
 **Static websites:**
+
 - Personal portfolios
 - Company landing pages
 - Documentation sites
 - The HTML file exists on disk. Server just reads and sends it.
 
 **Dynamic websites:**
+
 - Amazon product pages (millions of products, can't create millions of HTML files)
 - Your Instagram feed (different for every user)
 - Search results (generated based on your query)
@@ -201,11 +217,13 @@ Web Dev Simplified — URL Explained: <https://www.youtube.com/watch?v=Vp7W8h6z6
 ## 7. What HTML Is (and Is Not)
 
 **HyperText Markup Language:**
+
 - **HyperText:** Text with links. Documents that connect to other documents.
 - **Markup:** You're "marking up" content to give it meaning.
 - **Language:** Not a programming language. A markup language.
 
 HTML:
+
 - Is not a programming language
 - Has no logic, loops, or conditions
 - Defines structure and meaning
@@ -240,38 +258,45 @@ Programming languages have: variables, loops, conditions, functions. HTML has no
 ### What Each Line Means
 
 **`<!DOCTYPE html>`**
+
 - Tells the browser: "I'm writing HTML5, the modern version."
 - Without it, browsers enter "quirks mode" — they render like it's 1999.
 - Always include this as line 1.
 
 **`<html lang="en">`**
+
 - The root element. Everything goes inside.
 - `lang="en"` tells browsers and screen readers this is English.
 
 **`<head>`**
+
 - Metadata — information ABOUT the page, not ON the page.
 - Users don't see this directly. Search engines and browsers do.
 
 **`<meta charset="UTF-8">`**
+
 - Character encoding. UTF-8 supports all languages — Hindi, Chinese, emojis.
 - Without this, special characters might show as garbage.
 
 **`<meta name="viewport"...>`**
+
 - Makes the page work on mobile devices.
 - Without it, your site looks zoomed out on phones.
 
 **`<title>`**
+
 - The text shown in the browser tab.
 - Also what Google shows in search results.
 
 **`<body>`**
+
 - Everything visible on the page goes here.
 
 ### Reference
 
 MDN HTML Basics: <https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/HTML_basics>
 
-### Free Course
+### Free Courses
 
 Introduction to HTML by Jen Kramer: <https://frontendmasters.com/bootcamp/introduction-html/>
 
@@ -316,7 +341,7 @@ New developers put everything in `<div>` tags. This creates meaningless structur
 
 **Looking up tags is normal.** MDN is your reference.
 
-### Video Reference
+### Video References
 
 Net Ninja — HTML Tutorial: <https://www.youtube.com/watch?v=bWPMSSsVdPk> (Watch: 0:00–4:30)
 
@@ -327,11 +352,13 @@ Net Ninja — HTML Tutorial: <https://www.youtube.com/watch?v=bWPMSSsVdPk> (Watc
 Forms collect data from users.
 
 Common examples:
+
 - Login
 - Signup
 - Payments
 
 Key tags:
+
 - form
 - input
 - label
