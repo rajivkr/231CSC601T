@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Links and Images Demo</title>
+</head>
+<body>
+    <h1>Links and Images in HTML</h1>
+
+    <h2>Types of Links</h2>
+
+    <h3>1. Basic Link</h3>
+    <p><a href="https://google.com">Visit Google</a></p>
+
+    <h3>2. Link Opening in New Tab</h3>
+    <p><a href="https://google.com" target="_blank">Open Google in new tab</a></p>
+
+    <h3>3. Email Link</h3>
+    <p><a href="mailto:student@srm.edu">Send email to student@srm.edu</a></p>
+
+    <h3>4. Phone Link (useful on mobile)</h3>
+    <p><a href="tel:+919876543210">Call +91 98765 43210</a></p>
+
+    <h3>5. Link to Section on Same Page</h3>
+    <p><a href="#images-section">Jump to Images Section</a></p>
+
+    <hr>
+
+    <h2 id="images-section">Images</h2>
+
+    <h3>1. Basic Image</h3>
+    <img src="https://via.placeholder.com/300x200" alt="Placeholder image 300x200">
+
+    <h3>2. Image with Specific Size</h3>
+    <img src="https://via.placeholder.com/400x300" alt="Larger placeholder" width="200" height="150">
+
+    <h3>3. Image as a Link (Clickable Image)</h3>
+    <a href="https://google.com" target="_blank">
+        <img src="https://via.placeholder.com/150x50?text=Click+Me" alt="Click to visit Google">
+    </a>
+
+    <h3>4. Image with Caption (using figure)</h3>
+    <figure>
+        <img src="https://via.placeholder.com/300x200?text=SRM+Campus" alt="SRM University Campus">
+        <figcaption>SRM University Main Campus, Chennai</figcaption>
+    </figure>
+
+    <hr>
+
+    <h2>Common Mistakes</h2>
+
+    <h3>Bad: Image without alt text</h3>
+    <p>Screen readers can't describe this image to blind users:</p>
+    <!-- <img src="photo.jpg"> DON'T DO THIS -->
+    <code>&lt;img src="photo.jpg"&gt;</code> - Missing alt attribute!
+
+    <h3>Good: Image with descriptive alt text</h3>
+    <code>&lt;img src="photo.jpg" alt="Students working on laptops in computer lab"&gt;</code>
+
+    <hr>
+
+    <p><a href="#top">Back to top</a></p>
+</body>
+</html>

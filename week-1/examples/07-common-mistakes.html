@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Common HTML Mistakes - Learning Examples</title>
+</head>
+<body>
+    <h1>Common HTML Mistakes</h1>
+    <p>Use this file to demonstrate mistakes and how browsers try to fix them.</p>
+
+    <hr>
+
+    <h2>Mistake 1: Forgetting Closing Tags</h2>
+    <p>This paragraph was never closed properly
+    <p>This is supposed to be a new paragraph, but the browser guesses where to close the previous one.</p>
+
+    <hr>
+
+    <h2>Mistake 2: Improper Nesting</h2>
+    <p>This is <strong>bold and <em>italic text</strong></em> - tags should close in reverse order!</p>
+    <p>Correct way: <strong>bold and <em>italic text</em></strong></p>
+
+    <hr>
+
+    <h2>Mistake 3: Skipping Heading Levels</h2>
+    <h1>Main Title</h1>
+    <h4>Why did we jump from h1 to h4?</h4>
+    <p>Screen readers and SEO tools get confused when heading levels are skipped.</p>
+
+    <h3>Correct Structure:</h3>
+    <p>h1 → h2 → h3 (don't skip levels)</p>
+
+    <hr>
+
+    <h2>Mistake 4: Using h1 Multiple Times</h2>
+    <p>There should only be ONE h1 per page - it's the main title.</p>
+    <p>Using multiple h1s confuses search engines about what the page is about.</p>
+
+    <hr>
+
+    <h2>Mistake 5: Missing alt on Images</h2>
+    <!-- This is wrong - no alt attribute -->
+    <!-- <img src="photo.jpg"> -->
+    <p>Bad: <code>&lt;img src="photo.jpg"&gt;</code></p>
+    <p>Good: <code>&lt;img src="photo.jpg" alt="Description of the image"&gt;</code></p>
+
+    <hr>
+
+    <h2>Mistake 6: Using Tables for Layout</h2>
+    <p>Tables should ONLY be used for tabular data (like spreadsheets, schedules).</p>
+    <p>Don't use tables to position elements on the page - that's CSS's job!</p>
+
+    <hr>
+
+    <h2>Mistake 7: Using br for Spacing</h2>
+    <p>Bad way to add space:</p>
+    Line 1<br><br><br><br>
+    Line 2 (too many br tags!)
+
+    <p>Better: Use CSS margin/padding for spacing, or proper paragraph tags.</p>
+
+    <hr>
+
+    <h2>Mistake 8: Inline Styles Everywhere</h2>
+    <p style="color: red; font-size: 20px; background: yellow;">This works but is hard to maintain!</p>
+    <p>Better: Use CSS classes in a separate stylesheet or style tag.</p>
+
+    <hr>
+
+    <h2>Key Lesson</h2>
+    <p><strong>HTML is forgiving</strong> - browsers try to fix your mistakes silently.</p>
+    <p>This is both good (page still renders) and bad (you don't know about the bug).</p>
+    <p>Use browser dev tools (F12 → Elements) to see how browsers interpret your HTML.</p>
+
+</body>
+</html>
