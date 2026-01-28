@@ -1,11 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Links and Images Demo</title>
-</head>
-<body>
+  </head>
+  <body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+
     <h1>Links and Images in HTML</h1>
 
     <h2>Types of Links</h2>
@@ -14,7 +16,9 @@
     <p><a href="https://google.com">Visit Google</a></p>
 
     <h3>2. Link Opening in New Tab</h3>
-    <p><a href="https://google.com" target="_blank">Open Google in new tab</a></p>
+    <p>
+      <a href="https://google.com" target="_blank">Open Google in new tab</a>
+    </p>
 
     <h3>3. Email Link</h3>
     <p><a href="mailto:student@srm.edu">Send email to student@srm.edu</a></p>
@@ -25,28 +29,42 @@
     <h3>5. Link to Section on Same Page</h3>
     <p><a href="#images-section">Jump to Images Section</a></p>
 
-    <hr>
+    <hr />
 
     <h2 id="images-section">Images</h2>
 
     <h3>1. Basic Image</h3>
-    <img src="https://via.placeholder.com/300x200" alt="Placeholder image 300x200">
+    <img
+      src="https://picsum.photos/seed/demo1/300/200"
+      alt="A scenic landscape photograph"
+    />
 
     <h3>2. Image with Specific Size</h3>
-    <img src="https://via.placeholder.com/400x300" alt="Larger placeholder" width="200" height="150">
+    <img
+      src="https://picsum.photos/seed/demo2/400/300"
+      alt="Nature photograph resized to 200x150"
+      width="200"
+      height="150"
+    />
 
     <h3>3. Image as a Link (Clickable Image)</h3>
     <a href="https://google.com" target="_blank">
-        <img src="https://via.placeholder.com/150x50?text=Click+Me" alt="Click to visit Google">
+      <img
+        src="https://picsum.photos/seed/clickme/150/50"
+        alt="Click to visit Google"
+      />
     </a>
 
     <h3>4. Image with Caption (using figure)</h3>
     <figure>
-        <img src="https://via.placeholder.com/300x200?text=SRM+Campus" alt="SRM University Campus">
-        <figcaption>SRM University Main Campus, Chennai</figcaption>
+      <img
+        src="https://picsum.photos/seed/campus/300/200"
+        alt="University Campus"
+      />
+      <figcaption>University Main Campus, Chennai</figcaption>
     </figure>
 
-    <hr>
+    <hr />
 
     <h2>Common Mistakes</h2>
 
@@ -56,10 +74,13 @@
     <code>&lt;img src="photo.jpg"&gt;</code> - Missing alt attribute!
 
     <h3>Good: Image with descriptive alt text</h3>
-    <code>&lt;img src="photo.jpg" alt="Students working on laptops in computer lab"&gt;</code>
+    <code
+      >&lt;img src="photo.jpg" alt="Students working on laptops in computer
+      lab"&gt;</code
+    >
 
-    <hr>
+    <hr />
 
-    <p><a href="#top">Back to top</a></p>
-</body>
+    <p><a href="#top">Back to top</a> | <a href="index.html">&larr; Back to Examples</a></p>
+  </body>
 </html>

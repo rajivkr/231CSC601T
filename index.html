@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>231CSC601T - Web Technologies</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #eee;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            text-align: center;
+            padding: 40px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            color: #4a90d9;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #888;
+            margin-bottom: 40px;
+        }
+        .weeks {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .week-card {
+            background: rgba(255,255,255,0.05);
+            border: 2px solid #4a90d9;
+            border-radius: 15px;
+            padding: 30px 40px;
+            text-decoration: none;
+            color: #eee;
+            transition: all 0.3s;
+        }
+        .week-card:hover {
+            background: rgba(74, 144, 217, 0.2);
+            transform: translateY(-5px);
+        }
+        .week-card h2 {
+            color: #4a90d9;
+            margin-bottom: 10px;
+        }
+        .week-card p {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>231CSC601T</h1>
+        <p class="subtitle">Web Technologies Course Materials</p>
+
+        <div class="weeks">
+            <a href="week-1/presentation/index.html" class="week-card">
+                <h2>Week 01</h2>
+                <p>Foundations of the Web & HTML5</p>
+            </a>
+            <a href="week-1/examples/index.html" class="week-card">
+                <h2>Week 01 Examples</h2>
+                <p>HTML Code Examples</p>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
