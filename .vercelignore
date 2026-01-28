@@ -1,0 +1,11 @@
+# Hide markdown files from deployment
+*.md
+**/*.md
+
+# Hide git files
+.git
+.gitignore
+
+# Hide any source/draft folders
+_source/
+drafts/
