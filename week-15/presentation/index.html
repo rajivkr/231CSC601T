@@ -9,37 +9,47 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="../../core/tw-config.js"></script>
     <link rel="stylesheet" href="../../core/slides.css">
+    <style>
+        /* Hide navigation buttons on first/last slides */
+        #prevBtn:disabled,
+        #nextBtn:disabled,
+        #prevBtn2:disabled,
+        #nextBtn2:disabled {
+            display: none !important;
+            visibility: hidden !important;
+        }
+    </style>
 </head>
 <body class="font-sans min-h-screen
-             bg-gradient-to-br from-navy to-navy-deep text-gray-200
-             dark:bg-gradient-to-br dark:from-navy dark:to-navy-deep dark:text-gray-200">
+             bg-white text-gray-900
+             dark:bg-gradient-to-br dark:from-[#0a0a0f] dark:to-[#16161f] dark:text-gray-100">
 
-    <a href="#main-content" class="skip-link bg-[var(--accent)] text-white px-4 py-2 rounded-lg font-semibold no-underline">Skip to content</a>
+    <a href="#main-content" class="skip-link btn btn-primary no-underline">Skip to content</a>
 
     <!-- Nav header -->
     <nav class="fixed top-0 left-0 right-0 z-50
-                bg-black/90 dark:bg-black/90 bg-white/95 dark:bg-black/90
-                backdrop-blur-md border-b-2 border-[var(--accent)]
-                px-4 py-2 flex justify-between items-center" aria-label="Slide navigation">
+                bg-white/95 dark:bg-black/90
+                backdrop-blur-md border-b border-gray-200 dark:border-white/10
+                px-4 py-2.5 flex justify-between items-center" aria-label="Slide navigation">
         <div class="flex items-center gap-3 min-w-0">
-            <a href="../../index.html" class="text-[var(--accent)] text-sm hover:underline whitespace-nowrap hidden sm:inline">&larr; Home</a>
-            <a href="../examples/index.html" class="text-[var(--accent)] text-sm hover:underline whitespace-nowrap hidden sm:inline">&larr; Examples</a>
-            <span class="text-[var(--accent)] font-bold text-sm truncate">Week 15: Case Study & Course Review</span>
+            <a href="../../index.html" class="btn btn-nav hidden sm:inline-flex">&larr; Home</a>
+            <a href="../examples/index.html" class="btn btn-nav hidden sm:inline-flex">&larr; Examples</a>
+            <span class="text-gray-700 dark:text-gray-300 font-medium text-sm truncate">Week 15: Case Study & Course Review</span>
         </div>
         <div class="flex items-center gap-2 flex-shrink-0">
-            <button class="theme-toggle w-9 h-9 flex items-center justify-center border border-gray-600 dark:border-gray-600 border-gray-300 rounded-lg bg-transparent text-gray-400 hover:text-white cursor-pointer transition" aria-label="Switch to light mode">
+            <button class="theme-toggle btn btn-ghost p-2" aria-label="Switch to light mode">
                 <svg class="icon-sun w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
                 <svg class="icon-moon w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
             </button>
-            <button class="px-3 py-1.5 rounded-lg bg-[var(--accent)] text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" onclick="toggleMenu()" aria-label="Open slide menu">Menu</button>
-            <button class="px-3 py-1.5 rounded-lg bg-red-500 text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" id="prevBtn" aria-label="Previous slide">Prev</button>
-            <span class="text-gray-400 text-sm tabular-nums" aria-live="polite"><span id="currentSlide">1</span> / <span id="totalSlides"></span></span>
-            <button class="px-3 py-1.5 rounded-lg bg-green-600 text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" id="nextBtn" aria-label="Next slide">Next</button>
+            <button class="btn btn-primary" onclick="toggleMenu()" aria-label="Open slide menu">Menu</button>
+            <button class="btn btn-secondary" id="prevBtn" aria-label="Previous slide">Prev</button>
+            <span class="text-gray-500 dark:text-gray-400 text-sm tabular-nums" aria-live="polite"><span id="currentSlide">1</span> / <span id="totalSlides"></span></span>
+            <button class="btn btn-primary" id="nextBtn" aria-label="Next slide">Next</button>
         </div>
     </nav>
 
     <!-- Menu Overlay -->
-    <div class="menu-overlay fixed inset-0 z-[200] bg-black/90 dark:bg-black/90 overflow-y-auto p-6" id="menuOverlay" aria-hidden="true" role="dialog" aria-label="Slide navigation menu">
+    <div class="menu-overlay fixed inset-0 z-[200] bg-white/95 dark:bg-black/90 overflow-y-auto p-6" id="menuOverlay" aria-hidden="true" role="dialog" aria-label="Slide navigation menu">
         <button class="close-menu fixed top-6 right-6 text-4xl text-white cursor-pointer bg-transparent border-none z-[201] leading-none p-2" onclick="toggleMenu()" aria-label="Close menu">&times;</button>
         <div class="max-w-[600px] mx-auto mt-12 p-5">
             <h2 class="text-[var(--accent)] text-2xl font-bold text-center mb-6">Slide Navigation</h2>
@@ -51,7 +61,7 @@
     <main id="main-content" class="max-w-[1200px] mx-auto px-5 pt-16">
 
         <!-- Progress bar -->
-        <div class="w-full h-1 bg-white/10 dark:bg-white/10 bg-gray-200 rounded mt-4 mb-5 overflow-hidden">
+        <div class="w-full h-1 bg-gray-200 dark:bg-white/10 rounded mt-4 mb-5 overflow-hidden">
             <div class="progress-fill h-full rounded bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)]" id="progress" style="width:0%"></div>
         </div>
 
@@ -61,7 +71,7 @@
                         border border-white/10 dark:border-white/10 border-gray-200
                         backdrop-blur-sm">
             <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Week 15: Case Study & Course Review</h1>
-            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Unit V - Bringing It All Together</h2>
+            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Unit V - Bringing It All Together</h2>
             <p class="text-xl text-gray-300 dark:text-gray-300 text-gray-600 my-5">Congratulations on reaching the final week!</p>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
@@ -89,7 +99,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Unit I: HTML Foundations</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Unit I: HTML Foundations</h2>
                     <div class="border-l-[3px] border-[var(--accent)] pl-5 mb-5 relative">
                         <h3 class="text-xl text-[var(--accent-light)] mb-3">Weeks 1-3: HTML</h3>
                         <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
@@ -100,7 +110,7 @@
                         </ul>
                     </div>
 
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Unit II: CSS Styling</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Unit II: CSS Styling</h2>
                     <div class="border-l-[3px] border-[var(--accent)] pl-5 mb-5 relative">
                         <h3 class="text-xl text-[var(--accent-light)] mb-3">Weeks 4-6: CSS</h3>
                         <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
@@ -112,7 +122,7 @@
                     </div>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Unit III: JavaScript</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Unit III: JavaScript</h2>
                     <div class="border-l-[3px] border-[var(--accent)] pl-5 mb-5 relative">
                         <h3 class="text-xl text-[var(--accent-light)] mb-3">Weeks 7-9: JavaScript</h3>
                         <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
@@ -123,7 +133,7 @@
                         </ul>
                     </div>
 
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Units IV-V: Server & Full-Stack</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Units IV-V: Server & Full-Stack</h2>
                     <div class="border-l-[3px] border-[var(--accent)] pl-5 mb-5 relative">
                         <h3 class="text-xl text-[var(--accent-light)] mb-3">Weeks 10-14: Backend</h3>
                         <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
@@ -172,7 +182,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Requirements</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Requirements</h2>
                     <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
                         <li>View all students in a responsive table</li>
                         <li>Add new students with a form</li>
@@ -182,7 +192,7 @@
                         <li>Mobile-responsive design</li>
                     </ul>
 
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">Technologies Used</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2 mt-6">Technologies Used</h2>
                     <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
                         <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Frontend:</strong> HTML, CSS, Bootstrap 5, JavaScript</li>
                         <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Backend:</strong> Node.js, Express</li>
@@ -191,7 +201,7 @@
                     </ul>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Architecture</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Architecture</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">student-portal/
 |-- backend/
 |   |-- server.js         # Express + routes
@@ -226,7 +236,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Schema Design</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Schema Design</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">CREATE DATABASE student_portal;
 USE student_portal;
 
@@ -253,7 +263,7 @@ CREATE INDEX idx_status
     ON students(status);</code></pre>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Design Decisions</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Design Decisions</h2>
                     <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
                         <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">AUTO_INCREMENT id:</strong> Reliable primary key</li>
                         <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">UNIQUE email:</strong> Prevents duplicates</li>
@@ -282,7 +292,7 @@ CREATE INDEX idx_status
         <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
             <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Case Study: Backend API</h1>
 
-            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">API Endpoint Design</h2>
+            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">API Endpoint Design</h2>
             <div class="overflow-x-auto">
                 <table class="w-full border-collapse text-base">
                     <tr>
@@ -318,7 +328,7 @@ CREATE INDEX idx_status
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">UI Components</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">UI Components</h2>
                     <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
                         <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Navbar:</strong> Bootstrap dark navbar with brand</li>
                         <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Dashboard cards:</strong> Total, active, GPA stats</li>
@@ -343,7 +353,7 @@ spinner-border
 d-flex, justify-content-between</code></pre>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">JavaScript Architecture</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">JavaScript Architecture</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// api.js - API Service Layer
 class StudentAPI {
     constructor(baseUrl) {
@@ -398,7 +408,7 @@ class StudentApp {
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">HTML Best Practices</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">HTML Best Practices</h2>
                     <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
                         <li>Use semantic tags (<code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">header</code>, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">nav</code>, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">main</code>, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">footer</code>)</li>
                         <li>Always include <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">alt</code> text on images</li>
@@ -406,7 +416,7 @@ class StudentApp {
                         <li>Validate your HTML</li>
                     </ul>
 
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">CSS Best Practices</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2 mt-6">CSS Best Practices</h2>
                     <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
                         <li>Use external stylesheets</li>
                         <li>Mobile-first responsive design</li>
@@ -415,7 +425,7 @@ class StudentApp {
                         <li>Avoid <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">!important</code></li>
                     </ul>
 
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">JavaScript Best Practices</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2 mt-6">JavaScript Best Practices</h2>
                     <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
                         <li>Use <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">const</code> and <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">let</code>, never <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">var</code></li>
                         <li>Use async/await for async code</li>
@@ -425,7 +435,7 @@ class StudentApp {
                     </ul>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Backend Best Practices</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Backend Best Practices</h2>
                     <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
                         <li>Use environment variables for secrets</li>
                         <li>Prepared statements (prevent SQL injection)</li>
@@ -435,7 +445,7 @@ class StudentApp {
                         <li>Use HTTPS in production</li>
                     </ul>
 
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">General Best Practices</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2 mt-6">General Best Practices</h2>
                     <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
                         <li>Use version control (Git)</li>
                         <li>Write clean, readable code</li>
@@ -465,7 +475,7 @@ class StudentApp {
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Frontend Mistakes</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Frontend Mistakes</h2>
 
                     <h3 class="text-xl text-[var(--accent-light)] mb-3">1. Missing viewport meta tag</h3>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;!-- Always include this! --&gt;
@@ -494,7 +504,7 @@ try {
 }</code></pre>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Backend Mistakes</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Backend Mistakes</h2>
 
                     <h3 class="text-xl text-[var(--accent-light)] mb-3">4. SQL Injection vulnerability</h3>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-red-500 text-sm"><code class="text-gray-200">// Bad - string concatenation
@@ -537,14 +547,14 @@ if (!name || !email) {
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Frontend Path</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Frontend Path</h2>
                     <div class="border-l-[3px] border-[var(--accent)] pl-5 mb-5"><h3 class="text-xl text-[var(--accent-light)] mb-2">React.js</h3><p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Component-based UI library by Facebook. Most popular for single-page applications.</p></div>
                     <div class="border-l-[3px] border-[var(--accent)] pl-5 mb-5"><h3 class="text-xl text-[var(--accent-light)] mb-2">TypeScript</h3><p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Type-safe JavaScript. Used in large-scale applications.</p></div>
                     <div class="border-l-[3px] border-[var(--accent)] pl-5 mb-5"><h3 class="text-xl text-[var(--accent-light)] mb-2">Tailwind CSS</h3><p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Utility-first CSS framework. Fast, modern alternative to Bootstrap.</p></div>
                     <div class="border-l-[3px] border-[var(--accent)] pl-5 mb-5"><h3 class="text-xl text-[var(--accent-light)] mb-2">Next.js</h3><p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Full-stack React framework with server-side rendering.</p></div>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Backend Path</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Backend Path</h2>
                     <div class="border-l-[3px] border-[var(--accent)] pl-5 mb-5"><h3 class="text-xl text-[var(--accent-light)] mb-2">Authentication (JWT, OAuth)</h3><p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">User login systems, token-based auth.</p></div>
                     <div class="border-l-[3px] border-[var(--accent)] pl-5 mb-5"><h3 class="text-xl text-[var(--accent-light)] mb-2">MongoDB + Mongoose</h3><p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">NoSQL database. Flexible document storage.</p></div>
                     <div class="border-l-[3px] border-[var(--accent)] pl-5 mb-5"><h3 class="text-xl text-[var(--accent-light)] mb-2">Docker</h3><p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Containerize your applications for consistent deployment.</p></div>
@@ -612,7 +622,7 @@ if (!name || !email) {
         <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
             <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Video Resources</h1>
 
-            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Web Development Roadmap 2025</h2>
+            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Web Development Roadmap 2025</h2>
             <div class="relative w-full max-w-[800px] mx-auto my-5 aspect-video bg-black rounded-lg overflow-hidden shadow-xl">
                 <iframe class="absolute inset-0 w-full h-full border-none" src="https://www.youtube.com/embed/u72H_zZzkcw?rel=0" title="Web Development Roadmap" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
@@ -639,7 +649,7 @@ if (!name || !email) {
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">HTML Topics</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">HTML Topics</h2>
                     <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
                         <li>Document structure (DOCTYPE, head, body)</li>
                         <li>Semantic tags and their purpose</li>
@@ -648,7 +658,7 @@ if (!name || !email) {
                         <li>Links, images, lists</li>
                     </ul>
 
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">CSS Topics</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2 mt-6">CSS Topics</h2>
                     <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
                         <li>Selectors: element, class, ID, combinators</li>
                         <li>Specificity and cascade</li>
@@ -659,7 +669,7 @@ if (!name || !email) {
                     </ul>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">JavaScript Topics</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">JavaScript Topics</h2>
                     <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
                         <li>Variables (let, const), data types</li>
                         <li>Functions (regular, arrow)</li>
@@ -668,7 +678,7 @@ if (!name || !email) {
                         <li>Fetch API and promises</li>
                     </ul>
 
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">Backend Topics</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2 mt-6">Backend Topics</h2>
                     <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
                         <li>Node.js and npm basics</li>
                         <li>Express routes and middleware</li>
@@ -687,7 +697,7 @@ if (!name || !email) {
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">What You've Accomplished</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">What You've Accomplished</h2>
                     <ul class="ml-6 space-y-2 text-lg text-gray-300 dark:text-gray-300 text-gray-600">
                         <li>Built web pages with HTML5</li>
                         <li>Styled them beautifully with CSS3</li>
@@ -705,7 +715,7 @@ if (!name || !email) {
                     </div>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Final Advice</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Final Advice</h2>
                     <ol class="ml-6 space-y-2 text-lg text-gray-300 dark:text-gray-300 text-gray-600 list-decimal">
                         <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Build a portfolio</strong> - Showcase your work</li>
                         <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Use Git/GitHub</strong> - Version control everything</li>

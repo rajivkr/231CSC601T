@@ -9,37 +9,47 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="../../core/tw-config.js"></script>
     <link rel="stylesheet" href="../../core/slides.css">
+    <style>
+        /* Hide navigation buttons on first/last slides */
+        #prevBtn:disabled,
+        #nextBtn:disabled,
+        #prevBtn2:disabled,
+        #nextBtn2:disabled {
+            display: none !important;
+            visibility: hidden !important;
+        }
+    </style>
 </head>
 <body class="font-sans min-h-screen
-             bg-gradient-to-br from-navy to-navy-deep text-gray-200
-             dark:bg-gradient-to-br dark:from-navy dark:to-navy-deep dark:text-gray-200">
+             bg-white text-gray-900
+             dark:bg-gradient-to-br dark:from-[#0a0a0f] dark:to-[#16161f] dark:text-gray-100">
 
-    <a href="#main-content" class="skip-link bg-[var(--accent)] text-white px-4 py-2 rounded-lg font-semibold no-underline">Skip to content</a>
+    <a href="#main-content" class="skip-link btn btn-primary no-underline">Skip to content</a>
 
     <!-- Nav header -->
     <nav class="fixed top-0 left-0 right-0 z-50
-                bg-black/90 dark:bg-black/90 bg-white/95 dark:bg-black/90
-                backdrop-blur-md border-b-2 border-[var(--accent)]
-                px-4 py-2 flex justify-between items-center" aria-label="Slide navigation">
+                bg-white/95 dark:bg-black/90
+                backdrop-blur-md border-b border-gray-200 dark:border-white/10
+                px-4 py-2.5 flex justify-between items-center" aria-label="Slide navigation">
         <div class="flex items-center gap-3 min-w-0">
-            <a href="../../index.html" class="text-[var(--accent)] text-sm hover:underline whitespace-nowrap hidden sm:inline">&larr; Home</a>
-            <a href="../examples/index.html" class="text-[var(--accent)] text-sm hover:underline whitespace-nowrap hidden sm:inline">&larr; Examples</a>
-            <span class="text-[var(--accent)] font-bold text-sm truncate">Week 03: HTML Forms & Data Flow</span>
+            <a href="../../index.html" class="btn btn-nav hidden sm:inline-flex">&larr; Home</a>
+            <a href="../examples/index.html" class="btn btn-nav hidden sm:inline-flex">&larr; Examples</a>
+            <span class="text-gray-700 dark:text-gray-300 font-medium text-sm truncate">Week 03: HTML Forms & Data Flow</span>
         </div>
         <div class="flex items-center gap-2 flex-shrink-0">
-            <button class="theme-toggle w-9 h-9 flex items-center justify-center border border-gray-600 dark:border-gray-600 border-gray-300 rounded-lg bg-transparent text-gray-400 hover:text-white cursor-pointer transition" aria-label="Switch to light mode">
+            <button class="theme-toggle btn btn-ghost p-2" aria-label="Switch to light mode">
                 <svg class="icon-sun w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
                 <svg class="icon-moon w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
             </button>
-            <button class="px-3 py-1.5 rounded-lg bg-[var(--accent)] text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" onclick="toggleMenu()" aria-label="Open slide menu">Menu</button>
-            <button class="px-3 py-1.5 rounded-lg bg-red-500 text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" id="prevBtn" aria-label="Previous slide">Prev</button>
-            <span class="text-gray-400 text-sm tabular-nums" aria-live="polite"><span id="currentSlide">1</span> / <span id="totalSlides"></span></span>
-            <button class="px-3 py-1.5 rounded-lg bg-green-600 text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" id="nextBtn" aria-label="Next slide">Next</button>
+            <button class="btn btn-primary" onclick="toggleMenu()" aria-label="Open slide menu">Menu</button>
+            <button class="btn btn-secondary" id="prevBtn" aria-label="Previous slide">Prev</button>
+            <span class="text-gray-500 dark:text-gray-400 text-sm tabular-nums" aria-live="polite"><span id="currentSlide">1</span> / <span id="totalSlides"></span></span>
+            <button class="btn btn-primary" id="nextBtn" aria-label="Next slide">Next</button>
         </div>
     </nav>
 
     <!-- Menu Overlay -->
-    <div class="menu-overlay fixed inset-0 z-[200] bg-black/90 dark:bg-black/90 overflow-y-auto p-6" id="menuOverlay" aria-hidden="true" role="dialog" aria-label="Slide navigation menu">
+    <div class="menu-overlay fixed inset-0 z-[200] bg-white/95 dark:bg-black/90 overflow-y-auto p-6" id="menuOverlay" aria-hidden="true" role="dialog" aria-label="Slide navigation menu">
         <button class="close-menu fixed top-6 right-6 text-4xl text-white cursor-pointer bg-transparent border-none z-[201] leading-none p-2" onclick="toggleMenu()" aria-label="Close menu">&times;</button>
         <div class="max-w-[600px] mx-auto mt-12 p-5">
             <h2 class="text-[var(--accent)] text-2xl font-bold text-center mb-6">Slide Navigation</h2>
@@ -51,7 +61,7 @@
     <main id="main-content" class="max-w-[1200px] mx-auto px-5 pt-16">
 
         <!-- Progress bar -->
-        <div class="w-full h-1 bg-white/10 dark:bg-white/10 bg-gray-200 rounded mt-4 mb-5 overflow-hidden">
+        <div class="w-full h-1 bg-gray-200 dark:bg-white/10 rounded mt-4 mb-5 overflow-hidden">
             <div class="progress-fill h-full rounded bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)]" id="progress" style="width:0%"></div>
         </div>
 

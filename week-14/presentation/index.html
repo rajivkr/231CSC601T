@@ -9,37 +9,47 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="../../core/tw-config.js"></script>
     <link rel="stylesheet" href="../../core/slides.css">
+    <style>
+        /* Hide navigation buttons on first/last slides */
+        #prevBtn:disabled,
+        #nextBtn:disabled,
+        #prevBtn2:disabled,
+        #nextBtn2:disabled {
+            display: none !important;
+            visibility: hidden !important;
+        }
+    </style>
 </head>
 <body class="font-sans min-h-screen
-             bg-gradient-to-br from-navy to-navy-deep text-gray-200
-             dark:bg-gradient-to-br dark:from-navy dark:to-navy-deep dark:text-gray-200">
+             bg-white text-gray-900
+             dark:bg-gradient-to-br dark:from-[#0a0a0f] dark:to-[#16161f] dark:text-gray-100">
 
-    <a href="#main-content" class="skip-link bg-[var(--accent)] text-white px-4 py-2 rounded-lg font-semibold no-underline">Skip to content</a>
+    <a href="#main-content" class="skip-link btn btn-primary no-underline">Skip to content</a>
 
     <!-- Nav header -->
     <nav class="fixed top-0 left-0 right-0 z-50
-                bg-black/90 dark:bg-black/90 bg-white/95 dark:bg-black/90
-                backdrop-blur-md border-b-2 border-[var(--accent)]
-                px-4 py-2 flex justify-between items-center" aria-label="Slide navigation">
+                bg-white/95 dark:bg-black/90
+                backdrop-blur-md border-b border-gray-200 dark:border-white/10
+                px-4 py-2.5 flex justify-between items-center" aria-label="Slide navigation">
         <div class="flex items-center gap-3 min-w-0">
-            <a href="../../index.html" class="text-[var(--accent)] text-sm hover:underline whitespace-nowrap hidden sm:inline">&larr; Home</a>
-            <a href="../examples/index.html" class="text-[var(--accent)] text-sm hover:underline whitespace-nowrap hidden sm:inline">&larr; Examples</a>
-            <span class="text-[var(--accent)] font-bold text-sm truncate">Week 14: API Integration & Full-Stack</span>
+            <a href="../../index.html" class="btn btn-nav hidden sm:inline-flex">&larr; Home</a>
+            <a href="../examples/index.html" class="btn btn-nav hidden sm:inline-flex">&larr; Examples</a>
+            <span class="text-gray-700 dark:text-gray-300 font-medium text-sm truncate">Week 14: API Integration & Full-Stack</span>
         </div>
         <div class="flex items-center gap-2 flex-shrink-0">
-            <button class="theme-toggle w-9 h-9 flex items-center justify-center border border-gray-600 dark:border-gray-600 border-gray-300 rounded-lg bg-transparent text-gray-400 hover:text-white cursor-pointer transition" aria-label="Switch to light mode">
+            <button class="theme-toggle btn btn-ghost p-2" aria-label="Switch to light mode">
                 <svg class="icon-sun w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
                 <svg class="icon-moon w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
             </button>
-            <button class="px-3 py-1.5 rounded-lg bg-[var(--accent)] text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" onclick="toggleMenu()" aria-label="Open slide menu">Menu</button>
-            <button class="px-3 py-1.5 rounded-lg bg-red-500 text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" id="prevBtn" aria-label="Previous slide">Prev</button>
-            <span class="text-gray-400 text-sm tabular-nums" aria-live="polite"><span id="currentSlide">1</span> / <span id="totalSlides"></span></span>
-            <button class="px-3 py-1.5 rounded-lg bg-green-600 text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" id="nextBtn" aria-label="Next slide">Next</button>
+            <button class="btn btn-primary" onclick="toggleMenu()" aria-label="Open slide menu">Menu</button>
+            <button class="btn btn-secondary" id="prevBtn" aria-label="Previous slide">Prev</button>
+            <span class="text-gray-500 dark:text-gray-400 text-sm tabular-nums" aria-live="polite"><span id="currentSlide">1</span> / <span id="totalSlides"></span></span>
+            <button class="btn btn-primary" id="nextBtn" aria-label="Next slide">Next</button>
         </div>
     </nav>
 
     <!-- Menu Overlay -->
-    <div class="menu-overlay fixed inset-0 z-[200] bg-black/90 dark:bg-black/90 overflow-y-auto p-6" id="menuOverlay" aria-hidden="true" role="dialog" aria-label="Slide navigation menu">
+    <div class="menu-overlay fixed inset-0 z-[200] bg-white/95 dark:bg-black/90 overflow-y-auto p-6" id="menuOverlay" aria-hidden="true" role="dialog" aria-label="Slide navigation menu">
         <button class="close-menu fixed top-6 right-6 text-4xl text-white cursor-pointer bg-transparent border-none z-[201] leading-none p-2" onclick="toggleMenu()" aria-label="Close menu">&times;</button>
         <div class="max-w-[600px] mx-auto mt-12 p-5">
             <h2 class="text-[var(--accent)] text-2xl font-bold text-center mb-6">Slide Navigation</h2>
@@ -51,7 +61,7 @@
     <main id="main-content" class="max-w-[1200px] mx-auto px-5 pt-16">
 
         <!-- Progress bar -->
-        <div class="w-full h-1 bg-white/10 dark:bg-white/10 bg-gray-200 rounded mt-4 mb-5 overflow-hidden">
+        <div class="w-full h-1 bg-gray-200 dark:bg-white/10 rounded mt-4 mb-5 overflow-hidden">
             <div class="progress-fill h-full rounded bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)]" id="progress" style="width:0%"></div>
         </div>
 
@@ -61,7 +71,7 @@
                         border border-white/10 dark:border-white/10 border-gray-200
                         backdrop-blur-sm">
             <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Week 14: API Integration & Full-Stack</h1>
-            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Unit V - Full-Stack Web Development</h2>
+            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Unit V - Full-Stack Web Development</h2>
             <p class="text-xl text-gray-300 dark:text-gray-300 text-gray-600 my-5">Connecting all the pieces together!</p>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
@@ -89,7 +99,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">REST = Representational State Transfer</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">REST = Representational State Transfer</h2>
                     <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600 mb-3">A set of rules for building web services:</p>
                     <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
                         <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Client-Server:</strong> Frontend and backend are separate</li>
@@ -145,7 +155,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">GET Request</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">GET Request</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// Basic GET request
 async function getUsers() {
     try {
@@ -174,7 +184,7 @@ getUsers().then(users => {
 });</code></pre>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">POST Request</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">POST Request</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// POST request with data
 async function createUser(userData) {
     try {
@@ -218,7 +228,7 @@ createUser({
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">PUT Request (Update)</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">PUT Request (Update)</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">async function updateUser(id, updates) {
     try {
         const response = await fetch(
@@ -252,7 +262,7 @@ updateUser(1, {
 });</code></pre>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">DELETE Request</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">DELETE Request</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">async function deleteUser(id) {
     try {
         const response = await fetch(
@@ -320,7 +330,7 @@ deleteUser(5).then(success => {
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">How Data Flows</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">How Data Flows</h2>
                     <ol class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600 list-decimal">
                         <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">User Action:</strong> Click "Add Student" button</li>
                         <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Frontend:</strong> Sends POST request with student data</li>
@@ -331,7 +341,7 @@ deleteUser(5).then(success => {
                     </ol>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Project Structure</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Project Structure</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">student-app/
   |-- frontend/
   |     |-- index.html
@@ -355,7 +365,7 @@ deleteUser(5).then(success => {
         <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
             <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Frontend Connecting to Backend</h1>
 
-            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Complete Frontend Example</h2>
+            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Complete Frontend Example</h2>
             <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;!-- index.html --&gt;
 &lt;div class="container mt-4"&gt;
     &lt;h1&gt;Student Manager&lt;/h1&gt;
@@ -468,7 +478,7 @@ async function deleteStudent(id) {
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">What is CORS?</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">What is CORS?</h2>
                     <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600 mb-3">A security feature that blocks requests from different origins (domains).</p>
 
                     <h3 class="text-xl text-[var(--accent-light)] mb-3">The Problem</h3>
@@ -487,7 +497,7 @@ has been blocked by CORS policy</code></pre>
                     </div>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">The Solution</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">The Solution</h2>
                     <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600 mb-3">Add CORS middleware to your Express backend:</p>
 
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">npm install cors</code></pre>
@@ -527,7 +537,7 @@ app.use(express.static('public'));
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Robust API Calls</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Robust API Calls</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// API helper with error handling
 class ApiService {
     constructor(baseUrl) {
@@ -579,7 +589,7 @@ class ApiService {
 const api = new ApiService('http://localhost:3000');</code></pre>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Loading States in UI</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Loading States in UI</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">async function loadStudents() {
     const container = document
         .getElementById('studentList');
@@ -632,7 +642,7 @@ const api = new ApiService('http://localhost:3000');</code></pre>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Free Public APIs</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Free Public APIs</h2>
                     <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
                         <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">JSONPlaceholder</strong> - Fake REST API for testing</li>
                         <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">OpenWeather</strong> - Weather data</li>
@@ -708,7 +718,7 @@ async function getCountryInfo(name) {
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Where to Deploy?</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Where to Deploy?</h2>
 
                     <h3 class="text-xl text-[var(--accent-light)] mb-3">Frontend (Static Sites)</h3>
                     <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
@@ -733,7 +743,7 @@ async function getCountryInfo(name) {
                     </ul>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Deployment Checklist</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Deployment Checklist</h2>
                     <ol class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600 list-decimal">
                         <li>Use environment variables for secrets</li>
                         <li>Set NODE_ENV to 'production'</li>
@@ -773,7 +783,7 @@ FRONTEND_URL=https://myapp.netlify.app</code></pre>
         <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
             <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Video Resources</h1>
 
-            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">REST API Concepts - Fireship</h2>
+            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">REST API Concepts - Fireship</h2>
             <div class="relative w-full max-w-[800px] mx-auto my-5 aspect-video bg-black rounded-lg overflow-hidden shadow-xl">
                 <iframe class="absolute inset-0 w-full h-full border-none" src="https://www.youtube.com/embed/-MTSQjw5DrM?rel=0" title="REST API Explained" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
@@ -862,7 +872,7 @@ FRONTEND_URL=https://myapp.netlify.app</code></pre>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Key Concepts</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Key Concepts</h2>
                     <ul class="ml-6 space-y-2 text-lg text-gray-300 dark:text-gray-300 text-gray-600">
                         <li>REST APIs use HTTP methods (GET, POST, PUT, DELETE)</li>
                         <li>Fetch API for making HTTP requests in JavaScript</li>
@@ -873,7 +883,7 @@ FRONTEND_URL=https://myapp.netlify.app</code></pre>
                     </ul>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Best Practices</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Best Practices</h2>
                     <ul class="ml-6 space-y-2 text-lg text-gray-300 dark:text-gray-300 text-gray-600">
                         <li>Use async/await for API calls</li>
                         <li>Always handle errors gracefully</li>

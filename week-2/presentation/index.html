@@ -9,32 +9,42 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="../../core/tw-config.js"></script>
     <link rel="stylesheet" href="../../core/slides.css">
+    <style>
+        /* Hide navigation buttons on first/last slides */
+        #prevBtn:disabled,
+        #nextBtn:disabled,
+        #prevBtn2:disabled,
+        #nextBtn2:disabled {
+            display: none !important;
+            visibility: hidden !important;
+        }
+    </style>
 </head>
 <body class="font-sans min-h-screen
-             bg-gray-50 text-gray-900
-             dark:bg-gradient-to-br dark:from-navy dark:to-navy-deep dark:text-gray-200">
+             bg-white text-gray-900
+             dark:bg-gradient-to-br dark:from-[#0a0a0f] dark:to-[#16161f] dark:text-gray-100">
 
-    <a href="#main-content" class="skip-link bg-[var(--accent)] text-white px-4 py-2 rounded-lg font-semibold no-underline">Skip to content</a>
+    <a href="#main-content" class="skip-link btn btn-primary no-underline">Skip to content</a>
 
     <!-- Nav header -->
     <nav class="fixed top-0 left-0 right-0 z-50
                 bg-white/95 dark:bg-black/90
-                backdrop-blur-md border-b-2 border-[var(--accent)]
-                px-4 py-2 flex justify-between items-center" aria-label="Slide navigation">
+                backdrop-blur-md border-b border-gray-200 dark:border-white/10
+                px-4 py-2.5 flex justify-between items-center" aria-label="Slide navigation">
         <div class="flex items-center gap-3 min-w-0">
-            <a href="../../index.html" class="text-[var(--accent)] text-sm hover:underline whitespace-nowrap hidden sm:inline">&larr; Home</a>
-            <a href="../examples/index.html" class="text-[var(--accent)] text-sm hover:underline whitespace-nowrap hidden sm:inline">&larr; Examples</a>
-            <span class="text-[var(--accent)] font-bold text-sm truncate">Week 02: HTML Structure, Lists &amp; Tables</span>
+            <a href="../../index.html" class="btn btn-nav hidden sm:inline-flex">&larr; Home</a>
+            <a href="../examples/index.html" class="btn btn-nav hidden sm:inline-flex">&larr; Examples</a>
+            <span class="text-gray-700 dark:text-gray-300 font-medium text-sm truncate">Week 02: HTML Structure, Lists &amp; Tables</span>
         </div>
         <div class="flex items-center gap-2 flex-shrink-0">
-            <button class="theme-toggle w-9 h-9 flex items-center justify-center border border-gray-300 dark:border-gray-600 rounded-lg bg-transparent text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer transition" aria-label="Switch to light mode">
+            <button class="theme-toggle btn btn-ghost p-2" aria-label="Switch to light mode">
                 <svg class="icon-sun w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
                 <svg class="icon-moon w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
             </button>
-            <button class="px-3 py-1.5 rounded-lg bg-[var(--accent)] text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" onclick="toggleMenu()" aria-label="Open slide menu">Menu</button>
-            <button class="px-3 py-1.5 rounded-lg bg-red-500 text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" id="prevBtn" aria-label="Previous slide">Prev</button>
-            <span class="text-gray-400 text-sm tabular-nums" aria-live="polite"><span id="currentSlide">1</span> / <span id="totalSlides"></span></span>
-            <button class="px-3 py-1.5 rounded-lg bg-green-600 text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" id="nextBtn" aria-label="Next slide">Next</button>
+            <button class="btn btn-primary" onclick="toggleMenu()" aria-label="Open slide menu">Menu</button>
+            <button class="btn btn-secondary" id="prevBtn" aria-label="Previous slide">Prev</button>
+            <span class="text-gray-500 dark:text-gray-400 text-sm tabular-nums" aria-live="polite"><span id="currentSlide">1</span> / <span id="totalSlides"></span></span>
+            <button class="btn btn-primary" id="nextBtn" aria-label="Next slide">Next</button>
         </div>
     </nav>
 
@@ -60,12 +70,12 @@
             <div class="flex flex-col justify-center min-h-[70vh]">
             <span class="inline-block bg-[var(--accent)]/20 text-[var(--accent)] px-4 py-1.5 rounded-full text-sm font-semibold mb-6 w-fit tracking-wide uppercase">Unit I &mdash; Web Foundations</span>
             <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-4 leading-tight">HTML Structure,<br><span class="text-[var(--accent)]">Lists &amp; Tables</span></h1>
-            <p class="text-xl md:text-2xl text-gray-500 dark:text-gray-400 font-light mb-10">Week 02 &bull; 231CSC601T &mdash; Web Technologies</p>
+            <p class="text-xl md:text-2xl text-gray-700 dark:text-gray-400 font-light mb-10">Week 02 &bull; 231CSC601T &mdash; Web Technologies</p>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl">
                 <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6">
                     <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3">What You'll Learn</h3>
-                    <ul class="space-y-2 text-gray-600 dark:text-gray-300">
+                    <ul class="space-y-2 text-gray-800 dark:text-gray-300">
                         <li>Ordered, unordered &amp; definition lists</li>
                         <li>HTML tables &amp; accessibility</li>
                         <li>Semantic HTML5 elements</li>
@@ -73,8 +83,8 @@
                     </ul>
                 </div>
                 <div class="rounded-xl bg-purple-500/5 border border-purple-500/20 p-6 italic">
-                    <p class="text-gray-600 dark:text-gray-300 text-lg leading-relaxed">"HTML is about meaning, not appearance."</p>
-                    <p class="text-gray-600 dark:text-gray-300 text-lg leading-relaxed mt-3">"Structure your content for machines and humans alike."</p>
+                    <p class="text-gray-800 dark:text-gray-300 text-lg leading-relaxed">"HTML is about meaning, not appearance."</p>
+                    <p class="text-gray-800 dark:text-gray-300 text-lg leading-relaxed mt-3">"Structure your content for machines and humans alike."</p>
                 </div>
             </div>
             </div>
@@ -89,18 +99,18 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
                 <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6">
                     <h4 class="text-base font-semibold text-[var(--accent-light)] mb-2">Screen Readers</h4>
-                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">Blind users navigate by headings, lists, and landmarks. Proper structure = usable website.</p>
+                    <p class="text-gray-800 dark:text-gray-300 leading-relaxed">Blind users navigate by headings, lists, and landmarks. Proper structure = usable website.</p>
                 </div>
                 <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6">
                     <h4 class="text-base font-semibold text-[var(--accent-light)] mb-2">Search Engines</h4>
-                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">Google reads structure, not styling. Semantic HTML = better SEO = more users.</p>
+                    <p class="text-gray-800 dark:text-gray-300 leading-relaxed">Google reads structure, not styling. Semantic HTML = better SEO = more users.</p>
                 </div>
             </div>
 
             <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">The Maintenance Argument</h3>
             <div class="rounded-xl bg-green-500/5 border border-green-500/20 p-6 my-6">
-                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300">Well-structured HTML is easier to:</p>
-                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-600 dark:text-gray-300 mt-2">
+                <p class="text-lg leading-relaxed text-gray-800 dark:text-gray-300">Well-structured HTML is easier to:</p>
+                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-800 dark:text-gray-300 mt-2">
                     <li><strong class="text-gray-900 dark:text-white">Style</strong> &mdash; CSS selectors work predictably</li>
                     <li><strong class="text-gray-900 dark:text-white">Script</strong> &mdash; JavaScript can find elements easily</li>
                     <li><strong class="text-gray-900 dark:text-white">Maintain</strong> &mdash; Other developers understand the code</li>
@@ -110,8 +120,8 @@
 
             <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Structure vs Presentation</h3>
             <div class="rounded-xl bg-red-500/5 border border-red-500/20 p-6 my-6">
-                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300"><strong class="text-gray-900 dark:text-white">Wrong thinking:</strong> "I'll use a table because I want a grid layout"</p>
-                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300 mt-2"><strong class="text-gray-900 dark:text-white">Right thinking:</strong> "Is this actually tabular data? If yes, use table. If no, use CSS for layout."</p>
+                <p class="text-lg leading-relaxed text-gray-800 dark:text-gray-300"><strong class="text-gray-900 dark:text-white">Wrong thinking:</strong> "I'll use a table because I want a grid layout"</p>
+                <p class="text-lg leading-relaxed text-gray-800 dark:text-gray-300 mt-2"><strong class="text-gray-900 dark:text-white">Right thinking:</strong> "Is this actually tabular data? If yes, use table. If no, use CSS for layout."</p>
             </div>
         </section>
 
@@ -138,7 +148,7 @@
 
             <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Unordered List</h3>
             <div class="rounded-xl overflow-hidden my-6 shadow-lg">
-                <div class="bg-gray-800 px-4 py-2 flex items-center gap-2">
+                <div class="bg-gray-800 px-4 py-2.5 flex items-center gap-2">
                     <span class="w-3 h-3 rounded-full bg-red-500"></span>
                     <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
                     <span class="w-3 h-3 rounded-full bg-green-500"></span>
@@ -150,8 +160,8 @@
 &lt;/ul&gt;</code></pre>
             </div>
             <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6 my-6">
-                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300"><strong class="text-gray-900 dark:text-white">Renders as:</strong></p>
-                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-600 dark:text-gray-300 mt-2">
+                <p class="text-lg leading-relaxed text-gray-800 dark:text-gray-300"><strong class="text-gray-900 dark:text-white">Renders as:</strong></p>
+                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-800 dark:text-gray-300 mt-2">
                     <li>HTML</li>
                     <li>CSS</li>
                     <li>JavaScript</li>
@@ -160,7 +170,7 @@
 
             <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Ordered List</h3>
             <div class="rounded-xl overflow-hidden my-6 shadow-lg">
-                <div class="bg-gray-800 px-4 py-2 flex items-center gap-2">
+                <div class="bg-gray-800 px-4 py-2.5 flex items-center gap-2">
                     <span class="w-3 h-3 rounded-full bg-red-500"></span>
                     <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
                     <span class="w-3 h-3 rounded-full bg-green-500"></span>
@@ -172,8 +182,8 @@
 &lt;/ol&gt;</code></pre>
             </div>
             <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6 my-6">
-                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300"><strong class="text-gray-900 dark:text-white">Renders as:</strong></p>
-                <ol class="ml-6 space-y-2 text-lg leading-relaxed text-gray-600 dark:text-gray-300 mt-2">
+                <p class="text-lg leading-relaxed text-gray-800 dark:text-gray-300"><strong class="text-gray-900 dark:text-white">Renders as:</strong></p>
+                <ol class="ml-6 space-y-2 text-lg leading-relaxed text-gray-800 dark:text-gray-300 mt-2">
                     <li>Preheat oven to 180&deg;C</li>
                     <li>Mix ingredients</li>
                     <li>Bake for 30 minutes</li>
@@ -182,7 +192,7 @@
 
             <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Definition List</h3>
             <div class="rounded-xl overflow-hidden my-6 shadow-lg">
-                <div class="bg-gray-800 px-4 py-2 flex items-center gap-2">
+                <div class="bg-gray-800 px-4 py-2.5 flex items-center gap-2">
                     <span class="w-3 h-3 rounded-full bg-red-500"></span>
                     <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
                     <span class="w-3 h-3 rounded-full bg-green-500"></span>
@@ -196,8 +206,8 @@
             </div>
 
             <div class="rounded-xl bg-red-500/5 border border-red-500/20 p-6 my-6">
-                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300"><strong class="text-gray-900 dark:text-white">Don't use lists for:</strong></p>
-                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-600 dark:text-gray-300 mt-2">
+                <p class="text-lg leading-relaxed text-gray-800 dark:text-gray-300"><strong class="text-gray-900 dark:text-white">Don't use lists for:</strong></p>
+                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-800 dark:text-gray-300 mt-2">
                     <li>Layout purposes (use CSS)</li>
                     <li>Indentation (use CSS margins)</li>
                     <li>Single items (that's not a "list")</li>
@@ -211,10 +221,10 @@
             <div class="h-1 w-20 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] rounded mb-8"></div>
 
             <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3">Hierarchical Content</h3>
-            <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300 mb-4">Lists can contain other lists to show hierarchy.</p>
+            <p class="text-lg leading-relaxed text-gray-800 dark:text-gray-300 mb-4">Lists can contain other lists to show hierarchy.</p>
 
             <div class="rounded-xl overflow-hidden my-6 shadow-lg">
-                <div class="bg-gray-800 px-4 py-2 flex items-center gap-2">
+                <div class="bg-gray-800 px-4 py-2.5 flex items-center gap-2">
                     <span class="w-3 h-3 rounded-full bg-red-500"></span>
                     <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
                     <span class="w-3 h-3 rounded-full bg-green-500"></span>
@@ -238,8 +248,8 @@
             </div>
 
             <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6 my-6">
-                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300"><strong class="text-gray-900 dark:text-white">Renders as:</strong></p>
-                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-600 dark:text-gray-300 mt-2">
+                <p class="text-lg leading-relaxed text-gray-800 dark:text-gray-300"><strong class="text-gray-900 dark:text-white">Renders as:</strong></p>
+                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-800 dark:text-gray-300 mt-2">
                     <li>Frontend
                         <ul class="ml-6 space-y-1 mt-1">
                             <li>HTML</li>
@@ -258,9 +268,9 @@
             </div>
 
             <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Mixed Nesting</h3>
-            <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300 mb-4">You can nest ordered lists inside unordered lists (and vice versa):</p>
+            <p class="text-lg leading-relaxed text-gray-800 dark:text-gray-300 mb-4">You can nest ordered lists inside unordered lists (and vice versa):</p>
             <div class="rounded-xl overflow-hidden my-6 shadow-lg">
-                <div class="bg-gray-800 px-4 py-2 flex items-center gap-2">
+                <div class="bg-gray-800 px-4 py-2.5 flex items-center gap-2">
                     <span class="w-3 h-3 rounded-full bg-red-500"></span>
                     <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
                     <span class="w-3 h-3 rounded-full bg-green-500"></span>
@@ -279,9 +289,9 @@
             </div>
 
             <div class="rounded-xl bg-red-500/5 border border-red-500/20 p-6 my-6">
-                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300"><strong class="text-gray-900 dark:text-white">Common Mistake:</strong> The nested list must be INSIDE an <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;li&gt;</code>, not between them.</p>
+                <p class="text-lg leading-relaxed text-gray-800 dark:text-gray-300"><strong class="text-gray-900 dark:text-white">Common Mistake:</strong> The nested list must be INSIDE an <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;li&gt;</code>, not between them.</p>
                 <div class="rounded-xl overflow-hidden my-4 shadow-lg">
-                    <div class="bg-gray-800 px-4 py-2 flex items-center gap-2">
+                    <div class="bg-gray-800 px-4 py-2.5 flex items-center gap-2">
                         <span class="w-3 h-3 rounded-full bg-red-500"></span>
                         <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
                         <span class="w-3 h-3 rounded-full bg-green-500"></span>
@@ -308,7 +318,7 @@
             <div class="h-1 w-20 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] rounded mb-8"></div>
 
             <div class="rounded-xl bg-red-500/5 border border-red-500/20 p-6 my-6">
-                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300"><strong class="text-gray-900 dark:text-white">Golden Rule:</strong> Tables are for <strong class="text-gray-900 dark:text-white">tabular data only</strong> &mdash; not for page layout!</p>
+                <p class="text-lg leading-relaxed text-gray-800 dark:text-gray-300"><strong class="text-gray-900 dark:text-white">Golden Rule:</strong> Tables are for <strong class="text-gray-900 dark:text-white">tabular data only</strong> &mdash; not for page layout!</p>
             </div>
 
             <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Table Structure</h3>
@@ -332,7 +342,7 @@
 
             <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Basic Table Example</h3>
             <div class="rounded-xl overflow-hidden my-6 shadow-lg">
-                <div class="bg-gray-800 px-4 py-2 flex items-center gap-2">
+                <div class="bg-gray-800 px-4 py-2.5 flex items-center gap-2">
                     <span class="w-3 h-3 rounded-full bg-red-500"></span>
                     <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
                     <span class="w-3 h-3 rounded-full bg-green-500"></span>
@@ -365,12 +375,12 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
                 <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6">
                     <h4 class="text-base font-semibold text-[var(--accent-light)] mb-2">colspan</h4>
-                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">Cell spans multiple columns</p>
+                    <p class="text-gray-800 dark:text-gray-300 leading-relaxed">Cell spans multiple columns</p>
                     <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;td colspan="2"&gt;</code>
                 </div>
                 <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6">
                     <h4 class="text-base font-semibold text-[var(--accent-light)] mb-2">rowspan</h4>
-                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">Cell spans multiple rows</p>
+                    <p class="text-gray-800 dark:text-gray-300 leading-relaxed">Cell spans multiple rows</p>
                     <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;td rowspan="3"&gt;</code>
                 </div>
             </div>
@@ -383,14 +393,14 @@
 
             <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3">Why Accessibility Matters for Tables</h3>
             <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6 my-6">
-                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300">Screen readers announce: "Table with 3 columns and 5 rows"</p>
-                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300 mt-2">Without proper structure, blind users can't understand the data relationships.</p>
+                <p class="text-lg leading-relaxed text-gray-800 dark:text-gray-300">Screen readers announce: "Table with 3 columns and 5 rows"</p>
+                <p class="text-lg leading-relaxed text-gray-800 dark:text-gray-300 mt-2">Without proper structure, blind users can't understand the data relationships.</p>
             </div>
 
             <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Caption</h3>
-            <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300 mb-4">Describes the table's purpose &mdash; visible to all users.</p>
+            <p class="text-lg leading-relaxed text-gray-800 dark:text-gray-300 mb-4">Describes the table's purpose &mdash; visible to all users.</p>
             <div class="rounded-xl overflow-hidden my-6 shadow-lg">
-                <div class="bg-gray-800 px-4 py-2 flex items-center gap-2">
+                <div class="bg-gray-800 px-4 py-2.5 flex items-center gap-2">
                     <span class="w-3 h-3 rounded-full bg-red-500"></span>
                     <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
                     <span class="w-3 h-3 rounded-full bg-green-500"></span>
@@ -402,9 +412,9 @@
             </div>
 
             <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Scope Attribute</h3>
-            <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300 mb-4">Tells screen readers whether a header applies to a row or column.</p>
+            <p class="text-lg leading-relaxed text-gray-800 dark:text-gray-300 mb-4">Tells screen readers whether a header applies to a row or column.</p>
             <div class="rounded-xl overflow-hidden my-6 shadow-lg">
-                <div class="bg-gray-800 px-4 py-2 flex items-center gap-2">
+                <div class="bg-gray-800 px-4 py-2.5 flex items-center gap-2">
                     <span class="w-3 h-3 rounded-full bg-red-500"></span>
                     <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
                     <span class="w-3 h-3 rounded-full bg-green-500"></span>
@@ -428,9 +438,9 @@
             <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Historical Warning</h3>
             <div class="rounded-xl bg-red-500/5 border border-red-500/20 p-6 my-6">
                 <h4 class="text-base font-semibold text-red-400 mb-2">Tables for Layout (1990s-2000s)</h4>
-                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300">Before CSS, developers used tables to create page layouts:</p>
+                <p class="text-lg leading-relaxed text-gray-800 dark:text-gray-300">Before CSS, developers used tables to create page layouts:</p>
                 <div class="rounded-xl overflow-hidden my-4 shadow-lg">
-                    <div class="bg-gray-800 px-4 py-2 flex items-center gap-2">
+                    <div class="bg-gray-800 px-4 py-2.5 flex items-center gap-2">
                         <span class="w-3 h-3 rounded-full bg-red-500"></span>
                         <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
                         <span class="w-3 h-3 rounded-full bg-green-500"></span>
@@ -447,12 +457,12 @@
     &lt;/tr&gt;
 &lt;/table&gt;</code></pre>
                 </div>
-                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300">This is <strong class="text-gray-900 dark:text-white">terrible for accessibility</strong>. Screen readers would announce this as a data table. Use CSS for layout!</p>
+                <p class="text-lg leading-relaxed text-gray-800 dark:text-gray-300">This is <strong class="text-gray-900 dark:text-white">terrible for accessibility</strong>. Screen readers would announce this as a data table. Use CSS for layout!</p>
             </div>
 
             <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">When TO Use Tables</h3>
             <div class="rounded-xl bg-green-500/5 border border-green-500/20 p-6 my-6">
-                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-600 dark:text-gray-300">
+                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-800 dark:text-gray-300">
                     <li>Spreadsheet-like data</li>
                     <li>Schedules and timetables</li>
                     <li>Comparison charts</li>
@@ -469,7 +479,7 @@
 
             <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3">The Problem Before HTML5</h3>
             <div class="rounded-xl overflow-hidden my-6 shadow-lg">
-                <div class="bg-gray-800 px-4 py-2 flex items-center gap-2">
+                <div class="bg-gray-800 px-4 py-2.5 flex items-center gap-2">
                     <span class="w-3 h-3 rounded-full bg-red-500"></span>
                     <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
                     <span class="w-3 h-3 rounded-full bg-green-500"></span>
@@ -481,7 +491,7 @@
 &lt;div id="sidebar"&gt;...&lt;/div&gt;
 &lt;div id="footer"&gt;...&lt;/div&gt;</code></pre>
             </div>
-            <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300">Divs have no meaning. Browsers and screen readers can't understand the structure.</p>
+            <p class="text-lg leading-relaxed text-gray-800 dark:text-gray-300">Divs have no meaning. Browsers and screen readers can't understand the structure.</p>
 
             <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">HTML5 Semantic Elements</h3>
             <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-white/10 my-6">
@@ -506,7 +516,7 @@
 
             <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Typical Page Structure</h3>
             <div class="rounded-xl overflow-hidden my-6 shadow-lg">
-                <div class="bg-gray-800 px-4 py-2 flex items-center gap-2">
+                <div class="bg-gray-800 px-4 py-2.5 flex items-center gap-2">
                     <span class="w-3 h-3 rounded-full bg-red-500"></span>
                     <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
                     <span class="w-3 h-3 rounded-full bg-green-500"></span>
@@ -542,13 +552,13 @@
             <div class="h-1 w-20 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] rounded mb-8"></div>
 
             <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3">Headings Create Structure</h3>
-            <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300 mb-4">Headings (<code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;h1&gt;</code> to <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;h6&gt;</code>) create a document outline &mdash; like a table of contents.</p>
+            <p class="text-lg leading-relaxed text-gray-800 dark:text-gray-300 mb-4">Headings (<code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;h1&gt;</code> to <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;h6&gt;</code>) create a document outline &mdash; like a table of contents.</p>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
                 <div class="rounded-xl bg-red-500/5 border border-red-500/20 p-6">
                     <h4 class="text-base font-semibold text-red-400 mb-2">Wrong</h4>
                     <div class="rounded-xl overflow-hidden shadow-lg">
-                        <div class="bg-gray-800 px-4 py-2 flex items-center gap-2">
+                        <div class="bg-gray-800 px-4 py-2.5 flex items-center gap-2">
                             <span class="w-3 h-3 rounded-full bg-red-500"></span>
                             <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
                             <span class="w-3 h-3 rounded-full bg-green-500"></span>
@@ -558,12 +568,12 @@
 &lt;h2&gt;Services&lt;/h2&gt;
 &lt;h6&gt;Contact&lt;/h6&gt;</code></pre>
                     </div>
-                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed mt-3">Skipping levels, inconsistent hierarchy</p>
+                    <p class="text-gray-800 dark:text-gray-300 leading-relaxed mt-3">Skipping levels, inconsistent hierarchy</p>
                 </div>
                 <div class="rounded-xl bg-green-500/5 border border-green-500/20 p-6">
                     <h4 class="text-base font-semibold text-green-400 mb-2">Correct</h4>
                     <div class="rounded-xl overflow-hidden shadow-lg">
-                        <div class="bg-gray-800 px-4 py-2 flex items-center gap-2">
+                        <div class="bg-gray-800 px-4 py-2.5 flex items-center gap-2">
                             <span class="w-3 h-3 rounded-full bg-red-500"></span>
                             <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
                             <span class="w-3 h-3 rounded-full bg-green-500"></span>
@@ -575,13 +585,13 @@
 &lt;h3&gt;Development&lt;/h3&gt;
 &lt;h2&gt;Contact&lt;/h2&gt;</code></pre>
                     </div>
-                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed mt-3">Logical hierarchy, no skipped levels</p>
+                    <p class="text-gray-800 dark:text-gray-300 leading-relaxed mt-3">Logical hierarchy, no skipped levels</p>
                 </div>
             </div>
 
             <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Rules for Headings</h3>
             <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6 my-6">
-                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-600 dark:text-gray-300">
+                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-800 dark:text-gray-300">
                     <li><strong class="text-gray-900 dark:text-white">One <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;h1&gt;</code> per page</strong> &mdash; the main title</li>
                     <li><strong class="text-gray-900 dark:text-white">Don't skip levels</strong> &mdash; go h1 &rarr; h2 &rarr; h3, not h1 &rarr; h4</li>
                     <li><strong class="text-gray-900 dark:text-white">Use for structure, not size</strong> &mdash; CSS controls appearance</li>
@@ -607,8 +617,8 @@
 
             <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Test Your Structure</h3>
             <div class="rounded-xl bg-green-500/5 border border-green-500/20 p-6 my-6">
-                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300"><strong class="text-gray-900 dark:text-white">Try this:</strong> Read only your headings. Does it make sense as a table of contents?</p>
-                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300 mt-2">If not, restructure your content.</p>
+                <p class="text-lg leading-relaxed text-gray-800 dark:text-gray-300"><strong class="text-gray-900 dark:text-white">Try this:</strong> Read only your headings. Does it make sense as a table of contents?</p>
+                <p class="text-lg leading-relaxed text-gray-800 dark:text-gray-300 mt-2">If not, restructure your content.</p>
             </div>
         </section>
 
@@ -619,41 +629,41 @@
 
             <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3">Exercise 1: Course Schedule Table</h3>
             <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6 my-6">
-                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300">Create a weekly class schedule with:</p>
-                <ul class="ml-6 space-y-2 text-gray-600 dark:text-gray-300 mt-2">
+                <p class="text-lg leading-relaxed text-gray-800 dark:text-gray-300">Create a weekly class schedule with:</p>
+                <ul class="ml-6 space-y-2 text-gray-800 dark:text-gray-300 mt-2">
                     <li>Days as column headers</li>
                     <li>Time slots as row headers</li>
                     <li>Proper <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;caption&gt;</code></li>
                     <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">scope</code> attributes for accessibility</li>
                     <li>Use <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">colspan</code> for lunch break</li>
                 </ul>
-                <p class="text-gray-600 dark:text-gray-300 mt-3"><strong class="text-gray-900 dark:text-white">Solution:</strong> <a href="../examples/01-schedule.html" target="_blank" class="text-[var(--accent)] hover:underline">examples/01-schedule.html</a></p>
+                <p class="text-gray-800 dark:text-gray-300 mt-3"><strong class="text-gray-900 dark:text-white">Solution:</strong> <a href="../examples/01-schedule.html" target="_blank" class="text-[var(--accent)] hover:underline">examples/01-schedule.html</a></p>
             </div>
 
             <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Exercise 2: Recipe Page</h3>
             <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6 my-6">
-                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300">Create a recipe page with:</p>
-                <ul class="ml-6 space-y-2 text-gray-600 dark:text-gray-300 mt-2">
+                <p class="text-lg leading-relaxed text-gray-800 dark:text-gray-300">Create a recipe page with:</p>
+                <ul class="ml-6 space-y-2 text-gray-800 dark:text-gray-300 mt-2">
                     <li>Recipe title (<code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;h1&gt;</code>)</li>
                     <li>Ingredients (unordered list)</li>
                     <li>Steps (ordered list)</li>
                     <li>Nested lists for sub-ingredients</li>
                     <li>Semantic structure (article, sections)</li>
                 </ul>
-                <p class="text-gray-600 dark:text-gray-300 mt-3"><strong class="text-gray-900 dark:text-white">Solution:</strong> <a href="../examples/02-recipe.html" target="_blank" class="text-[var(--accent)] hover:underline">examples/02-recipe.html</a></p>
+                <p class="text-gray-800 dark:text-gray-300 mt-3"><strong class="text-gray-900 dark:text-white">Solution:</strong> <a href="../examples/02-recipe.html" target="_blank" class="text-[var(--accent)] hover:underline">examples/02-recipe.html</a></p>
             </div>
 
             <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Exercise 3: Blog Article Page</h3>
             <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6 my-6">
-                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300">Create a blog page with full semantic structure:</p>
-                <ul class="ml-6 space-y-2 text-gray-600 dark:text-gray-300 mt-2">
+                <p class="text-lg leading-relaxed text-gray-800 dark:text-gray-300">Create a blog page with full semantic structure:</p>
+                <ul class="ml-6 space-y-2 text-gray-800 dark:text-gray-300 mt-2">
                     <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;header&gt;</code> with site title and nav</li>
                     <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;main&gt;</code> with <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;article&gt;</code></li>
                     <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;aside&gt;</code> for related posts</li>
                     <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;footer&gt;</code> with copyright</li>
                     <li>Proper heading hierarchy</li>
                 </ul>
-                <p class="text-gray-600 dark:text-gray-300 mt-3"><strong class="text-gray-900 dark:text-white">Solution:</strong> <a href="../examples/03-blog.html" target="_blank" class="text-[var(--accent)] hover:underline">examples/03-blog.html</a></p>
+                <p class="text-gray-800 dark:text-gray-300 mt-3"><strong class="text-gray-900 dark:text-white">Solution:</strong> <a href="../examples/03-blog.html" target="_blank" class="text-[var(--accent)] hover:underline">examples/03-blog.html</a></p>
             </div>
 
             <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">All Examples</h3>
@@ -667,7 +677,7 @@
 
             <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6 my-6">
                 <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3">Lists</h3>
-                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-600 dark:text-gray-300">
+                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-800 dark:text-gray-300">
                     <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;ul&gt;</code> &mdash; unordered (order doesn't matter)</li>
                     <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;ol&gt;</code> &mdash; ordered (sequence matters)</li>
                     <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;dl&gt;</code> &mdash; definition (term-definition pairs)</li>
@@ -677,7 +687,7 @@
 
             <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6 my-6">
                 <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3">Tables</h3>
-                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-600 dark:text-gray-300">
+                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-800 dark:text-gray-300">
                     <li>Tables are for <strong class="text-gray-900 dark:text-white">tabular data only</strong></li>
                     <li>Use <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;thead&gt;</code>, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;tbody&gt;</code>, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;tfoot&gt;</code></li>
                     <li>Add <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;caption&gt;</code> and <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">scope</code> for accessibility</li>
@@ -687,7 +697,7 @@
 
             <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6 my-6">
                 <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3">Semantic HTML5</h3>
-                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-600 dark:text-gray-300">
+                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-800 dark:text-gray-300">
                     <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;header&gt;</code>, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;nav&gt;</code>, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;main&gt;</code>, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;footer&gt;</code></li>
                     <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;article&gt;</code>, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;section&gt;</code>, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;aside&gt;</code></li>
                     <li>One <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;main&gt;</code> and one <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;h1&gt;</code> per page</li>
@@ -697,8 +707,8 @@
 
             <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">What's Next</h3>
             <div class="rounded-xl bg-purple-500/5 border border-purple-500/20 p-6 my-6 italic">
-                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300"><strong class="text-gray-900 dark:text-white">Week 03:</strong> HTML Forms &amp; Data Flow</p>
-                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300 mt-2">Still no CSS &mdash; we're finishing HTML properly first.</p>
+                <p class="text-lg leading-relaxed text-gray-800 dark:text-gray-300"><strong class="text-gray-900 dark:text-white">Week 03:</strong> HTML Forms &amp; Data Flow</p>
+                <p class="text-lg leading-relaxed text-gray-800 dark:text-gray-300 mt-2">Still no CSS &mdash; we're finishing HTML properly first.</p>
             </div>
         </section>
 
@@ -725,11 +735,11 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6">
                 <div class="rounded-xl bg-gray-50 dark:bg-white/[0.03] border border-gray-200 dark:border-white/10 p-5 hover:-translate-y-1 transition">
                     <h4 class="text-base font-semibold text-[var(--accent-light)] mb-2">MDN &mdash; HTML Tables</h4>
-                    <p class="text-gray-600 dark:text-gray-300"><a href="https://developer.mozilla.org/en-US/docs/Learn/HTML/Tables" target="_blank" class="text-[var(--accent)] hover:underline">Learn HTML Tables</a></p>
+                    <p class="text-gray-800 dark:text-gray-300"><a href="https://developer.mozilla.org/en-US/docs/Learn/HTML/Tables" target="_blank" class="text-[var(--accent)] hover:underline">Learn HTML Tables</a></p>
                 </div>
                 <div class="rounded-xl bg-gray-50 dark:bg-white/[0.03] border border-gray-200 dark:border-white/10 p-5 hover:-translate-y-1 transition">
                     <h4 class="text-base font-semibold text-[var(--accent-light)] mb-2">MDN &mdash; Document Structure</h4>
-                    <p class="text-gray-600 dark:text-gray-300"><a href="https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/Document_and_website_structure" target="_blank" class="text-[var(--accent)] hover:underline">Document Structure</a></p>
+                    <p class="text-gray-800 dark:text-gray-300"><a href="https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/Document_and_website_structure" target="_blank" class="text-[var(--accent)] hover:underline">Document Structure</a></p>
                 </div>
             </div>
 
@@ -737,7 +747,7 @@
             <a href="https://frontendmasters.com/bootcamp/introduction-html/" target="_blank" class="inline-block rounded-lg bg-[var(--accent)]/10 border border-[var(--accent)]/30 px-5 py-3 text-[var(--accent)] hover:bg-[var(--accent)]/20 transition">Intro to HTML (FREE) &mdash; Frontend Masters</a>
 
             <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Practice</h3>
-            <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-600 dark:text-gray-300">
+            <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-800 dark:text-gray-300">
                 <li>Rebuild the schedule table from memory</li>
                 <li>Create a comparison table (3 products)</li>
                 <li>Structure a news website homepage using semantic elements</li>

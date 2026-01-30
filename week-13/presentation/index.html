@@ -9,37 +9,47 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="../../core/tw-config.js"></script>
     <link rel="stylesheet" href="../../core/slides.css">
+    <style>
+        /* Hide navigation buttons on first/last slides */
+        #prevBtn:disabled,
+        #nextBtn:disabled,
+        #prevBtn2:disabled,
+        #nextBtn2:disabled {
+            display: none !important;
+            visibility: hidden !important;
+        }
+    </style>
 </head>
 <body class="font-sans min-h-screen
-             bg-gradient-to-br from-navy to-navy-deep text-gray-200
-             dark:bg-gradient-to-br dark:from-navy dark:to-navy-deep dark:text-gray-200">
+             bg-white text-gray-900
+             dark:bg-gradient-to-br dark:from-[#0a0a0f] dark:to-[#16161f] dark:text-gray-100">
 
-    <a href="#main-content" class="skip-link bg-[var(--accent)] text-white px-4 py-2 rounded-lg font-semibold no-underline">Skip to content</a>
+    <a href="#main-content" class="skip-link btn btn-primary no-underline">Skip to content</a>
 
     <!-- Nav header -->
     <nav class="fixed top-0 left-0 right-0 z-50
-                bg-black/90 dark:bg-black/90 bg-white/95 dark:bg-black/90
-                backdrop-blur-md border-b-2 border-[var(--accent)]
-                px-4 py-2 flex justify-between items-center" aria-label="Slide navigation">
+                bg-white/95 dark:bg-black/90
+                backdrop-blur-md border-b border-gray-200 dark:border-white/10
+                px-4 py-2.5 flex justify-between items-center" aria-label="Slide navigation">
         <div class="flex items-center gap-3 min-w-0">
-            <a href="../../index.html" class="text-[var(--accent)] text-sm hover:underline whitespace-nowrap hidden sm:inline">&larr; Home</a>
-            <a href="../examples/index.html" class="text-[var(--accent)] text-sm hover:underline whitespace-nowrap hidden sm:inline">&larr; Examples</a>
-            <span class="text-[var(--accent)] font-bold text-sm truncate">Week 13: Bootstrap & Responsive Design</span>
+            <a href="../../index.html" class="btn btn-nav hidden sm:inline-flex">&larr; Home</a>
+            <a href="../examples/index.html" class="btn btn-nav hidden sm:inline-flex">&larr; Examples</a>
+            <span class="text-gray-700 dark:text-gray-300 font-medium text-sm truncate">Week 13: Bootstrap & Responsive Design</span>
         </div>
         <div class="flex items-center gap-2 flex-shrink-0">
-            <button class="theme-toggle w-9 h-9 flex items-center justify-center border border-gray-600 dark:border-gray-600 border-gray-300 rounded-lg bg-transparent text-gray-400 hover:text-white cursor-pointer transition" aria-label="Switch to light mode">
+            <button class="theme-toggle btn btn-ghost p-2" aria-label="Switch to light mode">
                 <svg class="icon-sun w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
                 <svg class="icon-moon w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
             </button>
-            <button class="px-3 py-1.5 rounded-lg bg-[var(--accent)] text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" onclick="toggleMenu()" aria-label="Open slide menu">Menu</button>
-            <button class="px-3 py-1.5 rounded-lg bg-red-500 text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" id="prevBtn" aria-label="Previous slide">Prev</button>
-            <span class="text-gray-400 text-sm tabular-nums" aria-live="polite"><span id="currentSlide">1</span> / <span id="totalSlides"></span></span>
-            <button class="px-3 py-1.5 rounded-lg bg-green-600 text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" id="nextBtn" aria-label="Next slide">Next</button>
+            <button class="btn btn-primary" onclick="toggleMenu()" aria-label="Open slide menu">Menu</button>
+            <button class="btn btn-secondary" id="prevBtn" aria-label="Previous slide">Prev</button>
+            <span class="text-gray-500 dark:text-gray-400 text-sm tabular-nums" aria-live="polite"><span id="currentSlide">1</span> / <span id="totalSlides"></span></span>
+            <button class="btn btn-primary" id="nextBtn" aria-label="Next slide">Next</button>
         </div>
     </nav>
 
     <!-- Menu Overlay -->
-    <div class="menu-overlay fixed inset-0 z-[200] bg-black/90 dark:bg-black/90 overflow-y-auto p-6" id="menuOverlay" aria-hidden="true" role="dialog" aria-label="Slide navigation menu">
+    <div class="menu-overlay fixed inset-0 z-[200] bg-white/95 dark:bg-black/90 overflow-y-auto p-6" id="menuOverlay" aria-hidden="true" role="dialog" aria-label="Slide navigation menu">
         <button class="close-menu fixed top-6 right-6 text-4xl text-white cursor-pointer bg-transparent border-none z-[201] leading-none p-2" onclick="toggleMenu()" aria-label="Close menu">&times;</button>
         <div class="max-w-[600px] mx-auto mt-12 p-5">
             <h2 class="text-[var(--accent)] text-2xl font-bold text-center mb-6">Slide Navigation</h2>
@@ -51,7 +61,7 @@
     <main id="main-content" class="max-w-[1200px] mx-auto px-5 pt-16">
 
         <!-- Progress bar -->
-        <div class="w-full h-1 bg-white/10 dark:bg-white/10 bg-gray-200 rounded mt-4 mb-5 overflow-hidden">
+        <div class="w-full h-1 bg-gray-200 dark:bg-white/10 rounded mt-4 mb-5 overflow-hidden">
             <div class="progress-fill h-full rounded bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)]" id="progress" style="width:0%"></div>
         </div>
 
@@ -61,7 +71,7 @@
                         border border-white/10 dark:border-white/10 border-gray-200
                         backdrop-blur-sm">
             <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Week 13: Bootstrap & Responsive Design</h1>
-            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Unit V - Frontend Frameworks</h2>
+            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Unit V - Frontend Frameworks</h2>
             <p class="text-xl text-gray-300 dark:text-gray-300 text-gray-600 my-5">Build beautiful, responsive websites faster!</p>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
@@ -89,7 +99,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Bootstrap Overview</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Bootstrap Overview</h2>
                     <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
                         <li>Most popular CSS framework in the world</li>
                         <li>Created by Twitter (2011)</li>
@@ -144,7 +154,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">12-Column System</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">12-Column System</h2>
                     <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600 mb-3">Bootstrap divides the page into 12 equal columns:</p>
 
                     <div class="grid grid-cols-12 gap-1 my-3">
@@ -180,7 +190,7 @@
                     </div>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Grid Structure</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Grid Structure</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;!-- Container > Row > Columns --&gt;
 &lt;div class="container"&gt;
     &lt;div class="row"&gt;
@@ -259,7 +269,7 @@
         <!-- Slide 5: Components - Buttons & Cards -->
         <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
             <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Bootstrap Components</h1>
-            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Buttons & Cards</h2>
+            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Buttons & Cards</h2>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
@@ -324,7 +334,7 @@
         <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
             <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Navbar & Navigation</h1>
 
-            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Responsive Navigation Bar</h2>
+            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Responsive Navigation Bar</h2>
             <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;nav class="navbar navbar-expand-lg navbar-dark bg-dark"&gt;
     &lt;div class="container"&gt;
         &lt;!-- Brand --&gt;
@@ -379,7 +389,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Form Controls</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Form Controls</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;form&gt;
     &lt;!-- Text input --&gt;
     &lt;div class="mb-3"&gt;
@@ -415,7 +425,7 @@
 &lt;/form&gt;</code></pre>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Validation States</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Validation States</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;!-- Valid state --&gt;
 &lt;div class="mb-3"&gt;
     &lt;input type="text"
@@ -461,7 +471,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Spacing</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Spacing</h2>
                     <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600 mb-2">Format: <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">{property}{sides}-{size}</code></p>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;!-- Margin --&gt;
 &lt;div class="m-3"&gt;Margin all sides&lt;/div&gt;
@@ -480,7 +490,7 @@
 &lt;!-- 0=0, 1=0.25rem, 2=0.5rem,
      3=1rem, 4=1.5rem, 5=3rem --&gt;</code></pre>
 
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">Display</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2 mt-6">Display</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;div class="d-none"&gt;Hidden&lt;/div&gt;
 &lt;div class="d-block"&gt;Block&lt;/div&gt;
 &lt;div class="d-flex"&gt;Flexbox&lt;/div&gt;
@@ -493,7 +503,7 @@
 &lt;/div&gt;</code></pre>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Colors</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Colors</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;!-- Text colors --&gt;
 &lt;p class="text-primary"&gt;Blue text&lt;/p&gt;
 &lt;p class="text-success"&gt;Green text&lt;/p&gt;
@@ -506,7 +516,7 @@
 &lt;div class="bg-dark text-white"&gt;Dark bg&lt;/div&gt;
 &lt;div class="bg-light text-dark"&gt;Light bg&lt;/div&gt;</code></pre>
 
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">Text & Alignment</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2 mt-6">Text & Alignment</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;p class="text-center"&gt;Centered&lt;/p&gt;
 &lt;p class="text-end"&gt;Right aligned&lt;/p&gt;
 &lt;p class="text-start"&gt;Left aligned&lt;/p&gt;
@@ -516,7 +526,7 @@
 &lt;p class="fs-1"&gt;Font size 1 (largest)&lt;/p&gt;
 &lt;p class="fs-6"&gt;Font size 6 (smallest)&lt;/p&gt;</code></pre>
 
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">Borders & Shadows</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2 mt-6">Borders & Shadows</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;div class="border"&gt;All borders&lt;/div&gt;
 &lt;div class="border-top"&gt;Top border&lt;/div&gt;
 &lt;div class="rounded"&gt;Rounded corners&lt;/div&gt;
@@ -533,7 +543,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Flexbox Classes</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Flexbox Classes</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;!-- Flex container --&gt;
 &lt;div class="d-flex"&gt;...&lt;/div&gt;
 
@@ -560,7 +570,7 @@
 &lt;div class="d-flex gap-3"&gt;...&lt;/div&gt;</code></pre>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Common Patterns</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Common Patterns</h2>
 
                     <h3 class="text-xl text-[var(--accent-light)] mb-3">Center Everything</h3>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;div class="d-flex justify-content-center
@@ -597,7 +607,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Alerts</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Alerts</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;div class="alert alert-success"&gt;
     Operation successful!
 &lt;/div&gt;
@@ -610,14 +620,14 @@
     &lt;/button&gt;
 &lt;/div&gt;</code></pre>
 
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">Badges</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2 mt-6">Badges</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;span class="badge bg-primary"&gt;New&lt;/span&gt;
 &lt;span class="badge bg-danger"&gt;4&lt;/span&gt;
 &lt;span class="badge rounded-pill bg-success"&gt;
     Sale
 &lt;/span&gt;</code></pre>
 
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">List Group</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2 mt-6">List Group</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;ul class="list-group"&gt;
     &lt;li class="list-group-item active"&gt;
         Active item
@@ -632,7 +642,7 @@
 &lt;/ul&gt;</code></pre>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Modal (Popup)</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Modal (Popup)</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;!-- Trigger button --&gt;
 &lt;button class="btn btn-primary"
         data-bs-toggle="modal"
@@ -677,7 +687,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Mobile-First Design</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Mobile-First Design</h2>
                     <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600 mb-3">Start designing for the smallest screen, then add complexity for larger ones.</p>
 
                     <h3 class="text-xl text-[var(--accent-light)] mb-3">Why Mobile-First?</h3>
@@ -695,7 +705,7 @@
                     <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600 mt-2">This is <strong class="text-gray-100 dark:text-gray-100 text-gray-800">required</strong> for responsive design to work!</p>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Responsive Images</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Responsive Images</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;!-- Responsive image --&gt;
 &lt;img src="photo.jpg"
      class="img-fluid"
@@ -711,7 +721,7 @@
      class="rounded-circle"
      alt="Circle image"&gt;</code></pre>
 
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">Responsive Tables</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2 mt-6">Responsive Tables</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;div class="table-responsive"&gt;
     &lt;table class="table table-striped"&gt;
         &lt;thead&gt;
@@ -738,7 +748,7 @@
         <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
             <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Video Resources</h1>
 
-            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Bootstrap 5 Crash Course - Traversy Media</h2>
+            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Bootstrap 5 Crash Course - Traversy Media</h2>
             <div class="relative w-full max-w-[800px] mx-auto my-5 aspect-video bg-black rounded-lg overflow-hidden shadow-xl">
                 <iframe class="absolute inset-0 w-full h-full border-none" src="https://www.youtube.com/embed/4sosXZsdy-s?rel=0" title="Bootstrap 5 Crash Course" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
@@ -827,7 +837,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Key Concepts</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Key Concepts</h2>
                     <ul class="ml-6 space-y-2 text-lg text-gray-300 dark:text-gray-300 text-gray-600">
                         <li>Bootstrap is a CSS framework for rapid UI development</li>
                         <li>12-column grid system for layouts</li>
@@ -837,7 +847,7 @@
                         <li>Utility classes for quick styling</li>
                     </ul>
 
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">Components Covered</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2 mt-6">Components Covered</h2>
                     <ul class="ml-6 space-y-2 text-lg text-gray-300 dark:text-gray-300 text-gray-600">
                         <li>Buttons, Cards, Alerts, Badges</li>
                         <li>Navbar, Modals, List Groups</li>
@@ -846,7 +856,7 @@
                     </ul>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Best Practices</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Best Practices</h2>
                     <ul class="ml-6 space-y-2 text-lg text-gray-300 dark:text-gray-300 text-gray-600">
                         <li>Always include viewport meta tag</li>
                         <li>Use semantic Bootstrap classes</li>

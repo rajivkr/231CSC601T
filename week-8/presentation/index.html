@@ -9,37 +9,47 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="../../core/tw-config.js"></script>
     <link rel="stylesheet" href="../../core/slides.css">
+    <style>
+        /* Hide navigation buttons on first/last slides */
+        #prevBtn:disabled,
+        #nextBtn:disabled,
+        #prevBtn2:disabled,
+        #nextBtn2:disabled {
+            display: none !important;
+            visibility: hidden !important;
+        }
+    </style>
 </head>
 <body class="font-sans min-h-screen
-             bg-gradient-to-br from-navy to-navy-deep text-gray-200
-             dark:bg-gradient-to-br dark:from-navy dark:to-navy-deep dark:text-gray-200">
+             bg-white text-gray-900
+             dark:bg-gradient-to-br dark:from-[#0a0a0f] dark:to-[#16161f] dark:text-gray-100">
 
-    <a href="#main-content" class="skip-link bg-[var(--accent)] text-white px-4 py-2 rounded-lg font-semibold no-underline">Skip to content</a>
+    <a href="#main-content" class="skip-link btn btn-primary no-underline">Skip to content</a>
 
     <!-- Nav header -->
     <nav class="fixed top-0 left-0 right-0 z-50
-                bg-black/90 dark:bg-black/90 bg-white/95 dark:bg-black/90
-                backdrop-blur-md border-b-2 border-[var(--accent)]
-                px-4 py-2 flex justify-between items-center" aria-label="Slide navigation">
+                bg-white/95 dark:bg-black/90
+                backdrop-blur-md border-b border-gray-200 dark:border-white/10
+                px-4 py-2.5 flex justify-between items-center" aria-label="Slide navigation">
         <div class="flex items-center gap-3 min-w-0">
-            <a href="../../index.html" class="text-[var(--accent)] text-sm hover:underline whitespace-nowrap hidden sm:inline">&larr; Home</a>
-            <a href="../examples/index.html" class="text-[var(--accent)] text-sm hover:underline whitespace-nowrap hidden sm:inline">&larr; Examples</a>
-            <span class="text-[var(--accent)] font-bold text-sm truncate">Week 08: JavaScript DOM & Events</span>
+            <a href="../../index.html" class="btn btn-nav hidden sm:inline-flex">&larr; Home</a>
+            <a href="../examples/index.html" class="btn btn-nav hidden sm:inline-flex">&larr; Examples</a>
+            <span class="text-gray-700 dark:text-gray-300 font-medium text-sm truncate">Week 08: JavaScript DOM & Events</span>
         </div>
         <div class="flex items-center gap-2 flex-shrink-0">
-            <button class="theme-toggle w-9 h-9 flex items-center justify-center border border-gray-600 dark:border-gray-600 border-gray-300 rounded-lg bg-transparent text-gray-400 hover:text-white cursor-pointer transition" aria-label="Switch to light mode">
+            <button class="theme-toggle btn btn-ghost p-2" aria-label="Switch to light mode">
                 <svg class="icon-sun w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
                 <svg class="icon-moon w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
             </button>
-            <button class="px-3 py-1.5 rounded-lg bg-[var(--accent)] text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" onclick="toggleMenu()" aria-label="Open slide menu">Menu</button>
-            <button class="px-3 py-1.5 rounded-lg bg-red-500 text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" id="prevBtn" aria-label="Previous slide">Prev</button>
-            <span class="text-gray-400 text-sm tabular-nums" aria-live="polite"><span id="currentSlide">1</span> / <span id="totalSlides"></span></span>
-            <button class="px-3 py-1.5 rounded-lg bg-green-600 text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" id="nextBtn" aria-label="Next slide">Next</button>
+            <button class="btn btn-primary" onclick="toggleMenu()" aria-label="Open slide menu">Menu</button>
+            <button class="btn btn-secondary" id="prevBtn" aria-label="Previous slide">Prev</button>
+            <span class="text-gray-500 dark:text-gray-400 text-sm tabular-nums" aria-live="polite"><span id="currentSlide">1</span> / <span id="totalSlides"></span></span>
+            <button class="btn btn-primary" id="nextBtn" aria-label="Next slide">Next</button>
         </div>
     </nav>
 
     <!-- Menu Overlay -->
-    <div class="menu-overlay fixed inset-0 z-[200] bg-black/90 dark:bg-black/90 overflow-y-auto p-6" id="menuOverlay" aria-hidden="true" role="dialog" aria-label="Slide navigation menu">
+    <div class="menu-overlay fixed inset-0 z-[200] bg-white/95 dark:bg-black/90 overflow-y-auto p-6" id="menuOverlay" aria-hidden="true" role="dialog" aria-label="Slide navigation menu">
         <button class="close-menu fixed top-6 right-6 text-4xl text-white cursor-pointer bg-transparent border-none z-[201] leading-none p-2" onclick="toggleMenu()" aria-label="Close menu">&times;</button>
         <div class="max-w-[600px] mx-auto mt-12 p-5">
             <h2 class="text-[var(--accent)] text-2xl font-bold text-center mb-6">Slide Navigation</h2>
@@ -51,7 +61,7 @@
     <main id="main-content" class="max-w-[1200px] mx-auto px-5 pt-16">
 
         <!-- Progress bar -->
-        <div class="w-full h-1 bg-white/10 dark:bg-white/10 bg-gray-200 rounded mt-4 mb-5 overflow-hidden">
+        <div class="w-full h-1 bg-gray-200 dark:bg-white/10 rounded mt-4 mb-5 overflow-hidden">
             <div class="progress-fill h-full rounded bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)]" id="progress" style="width:0%"></div>
         </div>
 
@@ -61,7 +71,7 @@
                         border border-white/10 dark:border-white/10 border-gray-200
                         backdrop-blur-sm">
             <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Week 08: JavaScript DOM & Events</h1>
-            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Unit III - Making Pages Interactive</h2>
+            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Unit III - Making Pages Interactive</h2>
             <p class="text-xl text-gray-300 dark:text-gray-300 text-gray-600 my-5">Connecting JavaScript to HTML!</p>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
@@ -133,7 +143,7 @@
             <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Selecting Elements</h1>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Modern Methods</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Modern Methods</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// By ID - returns one element
 document.getElementById('header')
 
@@ -147,7 +157,7 @@ document.querySelectorAll('.card')
 document.querySelectorAll('p')</code></pre>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Older Methods</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Older Methods</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// By class name
 document.getElementsByClassName('card')
 
@@ -176,7 +186,7 @@ all.forEach(card => console.log(card));</code></pre>
             <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Modifying Content</h1>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Text Content</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Text Content</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">const el = document.querySelector('h1');
 
 // Get text content
@@ -192,7 +202,7 @@ el.innerHTML = '&lt;span&gt;Bold&lt;/span&gt; Title';
 el.innerText = 'Visible text';</code></pre>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Attributes</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Attributes</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">const link = document.querySelector('a');
 const img = document.querySelector('img');
 
@@ -227,7 +237,7 @@ el.textContent = userInput;</code></pre>
             <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Modifying Styles</h1>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Inline Styles</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Inline Styles</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">const box = document.querySelector('.box');
 
 // Set individual styles
@@ -243,7 +253,7 @@ box.style.marginTop = '10px';
 getComputedStyle(box).color</code></pre>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">CSS Classes (Preferred!)</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">CSS Classes (Preferred!)</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">const box = document.querySelector('.box');
 
 // Add class
@@ -281,7 +291,7 @@ element.classList.toggle('hidden');</code></pre>
             <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Events are actions that happen in the browser (clicks, keypresses, form submissions...)</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">addEventListener (Best!)</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">addEventListener (Best!)</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">const btn = document.querySelector('button');
 
 btn.addEventListener('click', function() {
@@ -303,7 +313,7 @@ btn.addEventListener('click', handleClick);
 btn.removeEventListener('click', handleClick);</code></pre>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Common Events</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Common Events</h2>
                     <div class="overflow-x-auto">
                         <table class="w-full border-collapse text-base">
                             <tr><th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Event</th><th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Trigger</th></tr>
@@ -327,7 +337,7 @@ btn.removeEventListener('click', handleClick);</code></pre>
             <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Event handlers receive an event object with details about the event.</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Basic Usage</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Basic Usage</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">btn.addEventListener('click', function(event) {
     console.log(event.type);     // "click"
     console.log(event.target);   // clicked element
@@ -347,7 +357,7 @@ btn.addEventListener('click', (e) => {
                     </ul>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Prevent Default</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Prevent Default</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// Stop form submission
 form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -359,7 +369,7 @@ link.addEventListener('click', (e) => {
     e.preventDefault();
     console.log('Link clicked, not navigating');
 });</code></pre>
-                    <h2 class="text-2xl text-[var(--accent-light)] mt-6 mb-4 border-b-2 border-[var(--accent)] pb-2">Stop Propagation</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mt-6 mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Stop Propagation</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// Stop event bubbling
 inner.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -375,7 +385,7 @@ inner.addEventListener('click', (e) => {
             <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Instead of adding listeners to many elements, add one to their parent!</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Without Delegation (Bad)</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Without Delegation (Bad)</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-red-500 text-sm"><code class="text-gray-200">// Adding listener to EACH button
 const buttons = document.querySelectorAll('.btn');
 buttons.forEach(btn => {
@@ -386,7 +396,7 @@ buttons.forEach(btn => {
 // They won't have listeners!</code></pre>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">With Delegation (Good)</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">With Delegation (Good)</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-green-500 text-sm"><code class="text-gray-200">// Single listener on parent
 document.querySelector('.container')
     .addEventListener('click', (e) => {
@@ -410,7 +420,7 @@ document.querySelector('.container')
             <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Creating & Removing Elements</h1>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Creating Elements</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Creating Elements</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// Create element
 const div = document.createElement('div');
 div.textContent = 'Hello!';
@@ -429,7 +439,7 @@ el.insertAdjacentHTML('beforeend',
     '&lt;p&gt;New paragraph&lt;/p&gt;');</code></pre>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Removing Elements</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Removing Elements</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// Modern way
 element.remove();
 
@@ -461,7 +471,7 @@ ul.appendChild(fragment); // One DOM update!</code></pre>
             <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Navigate between elements in the DOM tree.</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Parent/Child/Sibling</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Parent/Child/Sibling</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">const el = document.querySelector('.item');
 
 // Parent
@@ -482,7 +492,7 @@ el.previousElementSibling
 el.closest('.container')</code></pre>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Example</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Example</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;ul class="list"&gt;
   &lt;li&gt;Item 1&lt;/li&gt;
   &lt;li class="active"&gt;Item 2&lt;/li&gt;
@@ -556,7 +566,7 @@ active.closest('ul')
             <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Week 08 Summary</h1>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Key Concepts</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Key Concepts</h2>
                     <ul class="ml-6 space-y-2 text-lg text-gray-300 dark:text-gray-300 text-gray-600">
                         <li>DOM is the tree representation of HTML</li>
                         <li>querySelector/querySelectorAll for selecting</li>
@@ -568,7 +578,7 @@ active.closest('ul')
                     </ul>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Best Practices</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Best Practices</h2>
                     <ul class="ml-6 space-y-2 text-lg text-gray-300 dark:text-gray-300 text-gray-600">
                         <li>Use querySelector over getElementById</li>
                         <li>Use classList over inline styles</li>

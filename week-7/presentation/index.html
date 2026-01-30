@@ -9,37 +9,47 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="../../core/tw-config.js"></script>
     <link rel="stylesheet" href="../../core/slides.css">
+    <style>
+        /* Hide navigation buttons on first/last slides */
+        #prevBtn:disabled,
+        #nextBtn:disabled,
+        #prevBtn2:disabled,
+        #nextBtn2:disabled {
+            display: none !important;
+            visibility: hidden !important;
+        }
+    </style>
 </head>
 <body class="font-sans min-h-screen
-             bg-gradient-to-br from-navy to-navy-deep text-gray-200
-             dark:bg-gradient-to-br dark:from-navy dark:to-navy-deep dark:text-gray-200">
+             bg-white text-gray-900
+             dark:bg-gradient-to-br dark:from-[#0a0a0f] dark:to-[#16161f] dark:text-gray-100">
 
-    <a href="#main-content" class="skip-link bg-[var(--accent)] text-white px-4 py-2 rounded-lg font-semibold no-underline">Skip to content</a>
+    <a href="#main-content" class="skip-link btn btn-primary no-underline">Skip to content</a>
 
     <!-- Nav header -->
     <nav class="fixed top-0 left-0 right-0 z-50
-                bg-black/90 dark:bg-black/90 bg-white/95 dark:bg-black/90
-                backdrop-blur-md border-b-2 border-[var(--accent)]
-                px-4 py-2 flex justify-between items-center" aria-label="Slide navigation">
+                bg-white/95 dark:bg-black/90
+                backdrop-blur-md border-b border-gray-200 dark:border-white/10
+                px-4 py-2.5 flex justify-between items-center" aria-label="Slide navigation">
         <div class="flex items-center gap-3 min-w-0">
-            <a href="../../index.html" class="text-[var(--accent)] text-sm hover:underline whitespace-nowrap hidden sm:inline">&larr; Home</a>
-            <a href="../examples/index.html" class="text-[var(--accent)] text-sm hover:underline whitespace-nowrap hidden sm:inline">&larr; Examples</a>
-            <span class="text-[var(--accent)] font-bold text-sm truncate">Week 07: JavaScript Fundamentals</span>
+            <a href="../../index.html" class="btn btn-nav hidden sm:inline-flex">&larr; Home</a>
+            <a href="../examples/index.html" class="btn btn-nav hidden sm:inline-flex">&larr; Examples</a>
+            <span class="text-gray-700 dark:text-gray-300 font-medium text-sm truncate">Week 07: JavaScript Fundamentals</span>
         </div>
         <div class="flex items-center gap-2 flex-shrink-0">
-            <button class="theme-toggle w-9 h-9 flex items-center justify-center border border-gray-600 dark:border-gray-600 border-gray-300 rounded-lg bg-transparent text-gray-400 hover:text-white cursor-pointer transition" aria-label="Switch to light mode">
+            <button class="theme-toggle btn btn-ghost p-2" aria-label="Switch to light mode">
                 <svg class="icon-sun w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
                 <svg class="icon-moon w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
             </button>
-            <button class="px-3 py-1.5 rounded-lg bg-[var(--accent)] text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" onclick="toggleMenu()" aria-label="Open slide menu">Menu</button>
-            <button class="px-3 py-1.5 rounded-lg bg-red-500 text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" id="prevBtn" aria-label="Previous slide">Prev</button>
-            <span class="text-gray-400 text-sm tabular-nums" aria-live="polite"><span id="currentSlide">1</span> / <span id="totalSlides"></span></span>
-            <button class="px-3 py-1.5 rounded-lg bg-green-600 text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" id="nextBtn" aria-label="Next slide">Next</button>
+            <button class="btn btn-primary" onclick="toggleMenu()" aria-label="Open slide menu">Menu</button>
+            <button class="btn btn-secondary" id="prevBtn" aria-label="Previous slide">Prev</button>
+            <span class="text-gray-500 dark:text-gray-400 text-sm tabular-nums" aria-live="polite"><span id="currentSlide">1</span> / <span id="totalSlides"></span></span>
+            <button class="btn btn-primary" id="nextBtn" aria-label="Next slide">Next</button>
         </div>
     </nav>
 
     <!-- Menu Overlay -->
-    <div class="menu-overlay fixed inset-0 z-[200] bg-black/90 dark:bg-black/90 overflow-y-auto p-6" id="menuOverlay" aria-hidden="true" role="dialog" aria-label="Slide navigation menu">
+    <div class="menu-overlay fixed inset-0 z-[200] bg-white/95 dark:bg-black/90 overflow-y-auto p-6" id="menuOverlay" aria-hidden="true" role="dialog" aria-label="Slide navigation menu">
         <button class="close-menu fixed top-6 right-6 text-4xl text-white cursor-pointer bg-transparent border-none z-[201] leading-none p-2" onclick="toggleMenu()" aria-label="Close menu">&times;</button>
         <div class="max-w-[600px] mx-auto mt-12 p-5">
             <h2 class="text-[var(--accent)] text-2xl font-bold text-center mb-6">Slide Navigation</h2>
@@ -51,7 +61,7 @@
     <main id="main-content" class="max-w-[1200px] mx-auto px-5 pt-16">
 
         <!-- Progress bar -->
-        <div class="w-full h-1 bg-white/10 dark:bg-white/10 bg-gray-200 rounded mt-4 mb-5 overflow-hidden">
+        <div class="w-full h-1 bg-gray-200 dark:bg-white/10 rounded mt-4 mb-5 overflow-hidden">
             <div class="progress-fill h-full rounded bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)]" id="progress" style="width:0%"></div>
         </div>
 
@@ -61,7 +71,7 @@
                         border border-white/10 dark:border-white/10 border-gray-200
                         backdrop-blur-sm">
             <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Week 07: JavaScript Fundamentals</h1>
-            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Unit III - Programming the Web</h2>
+            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Unit III - Programming the Web</h2>
             <p class="text-xl text-gray-300 dark:text-gray-300 text-gray-600 my-5">Welcome to the language of the web!</p>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
@@ -101,17 +111,17 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">1. Inline (Avoid!)</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">1. Inline (Avoid!)</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;button onclick="alert('Hi!')"&gt;
     Click me
 &lt;/button&gt;</code></pre>
 
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-5">2. Internal Script</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2 mt-5">2. Internal Script</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;script&gt;
     console.log('Hello, World!');
 &lt;/script&gt;</code></pre>
 
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-5">3. External File (Best!)</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2 mt-5">3. External File (Best!)</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;!-- At end of body --&gt;
 &lt;script src="script.js"&gt;&lt;/script&gt;</code></pre>
                 </div>
@@ -143,7 +153,7 @@ console.warn('Warning!');</code></pre>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Declaring Variables</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Declaring Variables</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// Modern way (ES6+)
 let name = 'John';      // Can be reassigned
 const PI = 3.14159;     // Cannot be reassigned
@@ -163,7 +173,7 @@ var age = 25;           // Function scoped, hoisted</code></pre>
                     </div>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Naming Rules</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Naming Rules</h2>
                     <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
                         <li>Start with letter, _ or $</li>
                         <li>Can contain letters, numbers, _ , $</li>
@@ -194,7 +204,7 @@ const API_KEY = 'abc123';</code></pre>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Primitive Types</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Primitive Types</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// String - text
 let name = 'John';
 let message = "Hello";
@@ -216,7 +226,7 @@ let x;  // x is undefined
 let data = null;</code></pre>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Checking Types</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Checking Types</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">typeof 'hello'    // "string"
 typeof 42         // "number"
 typeof true       // "boolean"
@@ -245,7 +255,7 @@ typeof []         // "object"</code></pre>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Arithmetic</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Arithmetic</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">let a = 10, b = 3;
 
 a + b    // 13 (addition)
@@ -255,7 +265,7 @@ a / b    // 3.333... (division)
 a % b    // 1 (modulo/remainder)
 a ** b   // 1000 (exponent)</code></pre>
 
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-5">Assignment</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2 mt-5">Assignment</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">let x = 10;
 x += 5;   // x = x + 5 → 15
 x -= 3;   // x = x - 3 → 12
@@ -267,7 +277,7 @@ x++;      // x = x + 1
 x--;      // x = x - 1</code></pre>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Comparison</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Comparison</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">5 == '5'   // true (loose)
 5 === '5'  // false (strict)
 5 != '5'   // false
@@ -277,7 +287,7 @@ x--;      // x = x - 1</code></pre>
 5 >= 5     // true
 5 <= 4     // false</code></pre>
 
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-5">Logical</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2 mt-5">Logical</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">true && true   // true (AND)
 true && false  // false
 true || false  // true (OR)
@@ -300,7 +310,7 @@ const value = input || 'default';</code></pre>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Creating Strings</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Creating Strings</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// Three ways
 let s1 = 'single quotes';
 let s2 = "double quotes";
@@ -313,7 +323,7 @@ let multi = `Line 1
 Line 2
 Line 3`;</code></pre>
 
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-5">String Properties & Methods</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2 mt-5">String Properties & Methods</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">let str = 'Hello, World!';
 
 str.length         // 13
@@ -322,7 +332,7 @@ str.toLowerCase()  // "hello, world!"
 str.trim()         // Remove whitespace</code></pre>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Common String Methods</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Common String Methods</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">let str = 'Hello, World!';
 
 // Finding
@@ -354,7 +364,7 @@ str.split(', ')         // ["Hello", "World!"]
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Creating Arrays</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Creating Arrays</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// Array literal (preferred)
 let fruits = ['apple', 'banana', 'orange'];
 let numbers = [1, 2, 3, 4, 5];
@@ -375,7 +385,7 @@ fruits.length         // 3</code></pre>
 // first = 'apple', second = 'banana'</code></pre>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Common Array Methods</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Common Array Methods</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">let arr = [1, 2, 3];
 
 // Adding/Removing
@@ -410,7 +420,7 @@ arr.sort()           // Sort alphabetically</code></pre>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">if...else</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">if...else</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">let age = 18;
 
 if (age >= 18) {
@@ -424,7 +434,7 @@ if (age >= 18) {
 // Single line (simple cases)
 if (age >= 18) console.log('Adult');</code></pre>
 
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-5">Ternary Operator</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2 mt-5">Ternary Operator</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// condition ? ifTrue : ifFalse
 let status = age >= 18 ? 'adult' : 'minor';
 
@@ -436,7 +446,7 @@ let category = age >= 18
         : 'child';</code></pre>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">switch</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">switch</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">let day = 'Monday';
 
 switch (day) {
@@ -468,7 +478,7 @@ switch (day) {
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">for loop</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">for loop</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// Classic for loop
 for (let i = 0; i < 5; i++) {
     console.log(i);  // 0, 1, 2, 3, 4
@@ -481,7 +491,7 @@ for (let i = 0; i < fruits.length; i++) {
     console.log(fruits[i]);
 }</code></pre>
 
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-5">for...of (Arrays)</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2 mt-5">for...of (Arrays)</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// Preferred for arrays!
 for (const fruit of fruits) {
     console.log(fruit);
@@ -493,7 +503,7 @@ for (const [index, fruit] of fruits.entries()) {
 }</code></pre>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">while loop</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">while loop</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">let count = 0;
 
 while (count < 5) {
@@ -507,7 +517,7 @@ do {
     count++;
 } while (count < 5);</code></pre>
 
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-5">Loop Control</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2 mt-5">Loop Control</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// break - exit loop entirely
 for (let i = 0; i < 10; i++) {
     if (i === 5) break;
@@ -530,7 +540,7 @@ for (let i = 0; i < 5; i++) {
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Function Declaration</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Function Declaration</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">function greet(name) {
     return `Hello, ${name}!`;
 }
@@ -544,7 +554,7 @@ function add(a, b) {
 
 add(5, 3);  // 8</code></pre>
 
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-5">Default Parameters</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2 mt-5">Default Parameters</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">function greet(name = 'Guest') {
     return `Hello, ${name}!`;
 }
@@ -553,7 +563,7 @@ greet();        // "Hello, Guest!"
 greet('John');  // "Hello, John!"</code></pre>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Arrow Functions (ES6)</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Arrow Functions (ES6)</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// Arrow function syntax
 const greet = (name) => {
     return `Hello, ${name}!`;
@@ -589,7 +599,7 @@ const add = (a, b) => a + b;</code></pre>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Global Scope</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Global Scope</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// Accessible everywhere
 const globalVar = 'I am global';
 
@@ -597,7 +607,7 @@ function test() {
     console.log(globalVar);  // Works!
 }</code></pre>
 
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-5">Function Scope</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2 mt-5">Function Scope</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">function test() {
     const localVar = 'I am local';
     console.log(localVar);  // Works!
@@ -605,7 +615,7 @@ function test() {
 
 console.log(localVar);  // Error!</code></pre>
 
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-5">Block Scope (let, const)</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2 mt-5">Block Scope (let, const)</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">if (true) {
     let blockVar = 'I am block scoped';
     const alsoBlock = 'Me too';
@@ -614,7 +624,7 @@ console.log(localVar);  // Error!</code></pre>
 console.log(blockVar);  // Error!</code></pre>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">var vs let</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">var vs let</h2>
                     <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// var is function scoped (confusing!)
 if (true) {
     var x = 5;
@@ -651,7 +661,7 @@ counter();  // 3</code></pre>
         <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
             <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Video Resources</h1>
 
-            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">JavaScript in 100 Seconds - Fireship</h2>
+            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">JavaScript in 100 Seconds - Fireship</h2>
             <div class="relative w-full max-w-[800px] mx-auto my-5 aspect-video bg-black rounded-lg overflow-hidden shadow-xl">
                 <iframe class="absolute inset-0 w-full h-full border-none" src="https://www.youtube.com/embed/DHjqpvDnNGE?rel=0" title="JavaScript in 100 Seconds" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
@@ -727,7 +737,7 @@ counter();  // 3</code></pre>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Key Concepts</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Key Concepts</h2>
                     <ul class="ml-6 space-y-2 text-lg text-gray-300 dark:text-gray-300 text-gray-600">
                         <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Variables:</strong> let (reassignable), const (constant)</li>
                         <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Types:</strong> string, number, boolean, null, undefined</li>
@@ -740,7 +750,7 @@ counter();  // 3</code></pre>
                     </ul>
                 </div>
                 <div>
-                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Best Practices</h2>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Best Practices</h2>
                     <ul class="ml-6 space-y-2 text-lg text-gray-300 dark:text-gray-300 text-gray-600">
                         <li>Use const by default, let when needed</li>
                         <li>Never use var</li>
