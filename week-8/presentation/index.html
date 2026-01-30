@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en" class="dark" data-accent="unit-3">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1a1a2e">
+    <title>Week 08 - JavaScript DOM & Events | 231CSC601T</title>
+    <script src="../../core/theme.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../../core/tw-config.js"></script>
+    <link rel="stylesheet" href="../../core/slides.css">
+</head>
+<body class="font-sans min-h-screen
+             bg-gradient-to-br from-navy to-navy-deep text-gray-200
+             dark:bg-gradient-to-br dark:from-navy dark:to-navy-deep dark:text-gray-200">
+
+    <a href="#main-content" class="skip-link bg-[var(--accent)] text-white px-4 py-2 rounded-lg font-semibold no-underline">Skip to content</a>
+
+    <!-- Nav header -->
+    <nav class="fixed top-0 left-0 right-0 z-50
+                bg-black/90 dark:bg-black/90 bg-white/95 dark:bg-black/90
+                backdrop-blur-md border-b-2 border-[var(--accent)]
+                px-4 py-2 flex justify-between items-center" aria-label="Slide navigation">
+        <div class="flex items-center gap-3 min-w-0">
+            <a href="../../index.html" class="text-[var(--accent)] text-sm hover:underline whitespace-nowrap hidden sm:inline">&larr; Home</a>
+            <a href="../examples/index.html" class="text-[var(--accent)] text-sm hover:underline whitespace-nowrap hidden sm:inline">&larr; Examples</a>
+            <span class="text-[var(--accent)] font-bold text-sm truncate">Week 08: JavaScript DOM & Events</span>
+        </div>
+        <div class="flex items-center gap-2 flex-shrink-0">
+            <button class="theme-toggle w-9 h-9 flex items-center justify-center border border-gray-600 dark:border-gray-600 border-gray-300 rounded-lg bg-transparent text-gray-400 hover:text-white cursor-pointer transition" aria-label="Switch to light mode">
+                <svg class="icon-sun w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="icon-moon w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+            <button class="px-3 py-1.5 rounded-lg bg-[var(--accent)] text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" onclick="toggleMenu()" aria-label="Open slide menu">Menu</button>
+            <button class="px-3 py-1.5 rounded-lg bg-red-500 text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" id="prevBtn" aria-label="Previous slide">Prev</button>
+            <span class="text-gray-400 text-sm tabular-nums" aria-live="polite"><span id="currentSlide">1</span> / <span id="totalSlides"></span></span>
+            <button class="px-3 py-1.5 rounded-lg bg-green-600 text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" id="nextBtn" aria-label="Next slide">Next</button>
+        </div>
+    </nav>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay fixed inset-0 z-[200] bg-black/90 dark:bg-black/90 overflow-y-auto p-6" id="menuOverlay" aria-hidden="true" role="dialog" aria-label="Slide navigation menu">
+        <button class="close-menu fixed top-6 right-6 text-4xl text-white cursor-pointer bg-transparent border-none z-[201] leading-none p-2" onclick="toggleMenu()" aria-label="Close menu">&times;</button>
+        <div class="max-w-[600px] mx-auto mt-12 p-5">
+            <h2 class="text-[var(--accent)] text-2xl font-bold text-center mb-6">Slide Navigation</h2>
+            <ul id="slideMenu" class="list-none m-0 p-0"></ul>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <main id="main-content" class="max-w-[1200px] mx-auto px-5 pt-16">
+
+        <!-- Progress bar -->
+        <div class="w-full h-1 bg-white/10 dark:bg-white/10 bg-gray-200 rounded mt-4 mb-5 overflow-hidden">
+            <div class="progress-fill h-full rounded bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)]" id="progress" style="width:0%"></div>
+        </div>
+
+        <!-- Slide 1 -->
+        <section class="slide active rounded-2xl p-6 md:p-10 min-h-[80vh]
+                        bg-white/5 dark:bg-white/5 bg-white dark:bg-white/5
+                        border border-white/10 dark:border-white/10 border-gray-200
+                        backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Week 08: JavaScript DOM & Events</h1>
+            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Unit III - Making Pages Interactive</h2>
+            <p class="text-xl text-gray-300 dark:text-gray-300 text-gray-600 my-5">Connecting JavaScript to HTML!</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">What You'll Learn</h3>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>What is the DOM?</li>
+                        <li>Selecting elements</li>
+                        <li>Modifying content and styles</li>
+                        <li>Handling user events</li>
+                        <li>Creating and removing elements</li>
+                    </ul>
+                </div>
+                <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">The DOM Analogy</h3>
+                    <p class="text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">Think of your HTML as a family tree. The DOM lets JavaScript navigate this tree, find any family member (element), and change their properties!</p>
+                </div>
+            </div>
+
+            <p class="text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Press &rarr; or click Next to continue</strong></p>
+        </section>
+
+        <!-- Slide 2 -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">What is the DOM?</h1>
+            <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Document Object Model</strong> - A tree representation of HTML that JavaScript can manipulate.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">HTML</h3>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Page&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hello&lt;/h1&gt;
+    &lt;p&gt;World&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                </div>
+                <div>
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">DOM Tree</h3>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">document
+└── html
+    ├── head
+    │   └── title
+    │       └── "Page"
+    └── body
+        ├── h1
+        │   └── "Hello"
+        └── p
+            └── "World"</code></pre>
+                </div>
+            </div>
+
+            <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                <h3 class="text-xl text-[var(--accent-light)] mb-3">Key Concepts</h3>
+                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                    <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">document:</strong> The root - entry point to the DOM</li>
+                    <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Element:</strong> HTML tags (h1, p, div)</li>
+                    <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Node:</strong> Everything including text, comments</li>
+                    <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Parent/Child:</strong> Tree relationships</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Slide 3 -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Selecting Elements</h1>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Modern Methods</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// By ID - returns one element
+document.getElementById('header')
+
+// By CSS selector - returns first match
+document.querySelector('.intro')
+document.querySelector('#main')
+document.querySelector('div.card')
+
+// By CSS selector - returns ALL matches
+document.querySelectorAll('.card')
+document.querySelectorAll('p')</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Older Methods</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// By class name
+document.getElementsByClassName('card')
+
+// By tag name
+document.getElementsByTagName('p')
+
+// By name attribute
+document.getElementsByName('email')</code></pre>
+                    <div class="p-5 rounded-lg border border-red-500/30 bg-red-500/10 my-4">
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Prefer querySelector/querySelectorAll!</strong> They use CSS selectors and are more flexible.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                <h3 class="text-xl text-[var(--accent-light)] mb-3">querySelector vs querySelectorAll</h3>
+                <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">const first = document.querySelector('.card');     // First .card element
+const all = document.querySelectorAll('.card');   // NodeList of ALL .card elements
+
+// Loop through NodeList
+all.forEach(card => console.log(card));</code></pre>
+            </div>
+        </section>
+
+        <!-- Slide 4 -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Modifying Content</h1>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Text Content</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">const el = document.querySelector('h1');
+
+// Get text content
+console.log(el.textContent);
+
+// Set text content (safe from XSS)
+el.textContent = 'New Title';
+
+// innerHTML - includes HTML tags
+el.innerHTML = '&lt;span&gt;Bold&lt;/span&gt; Title';
+
+// innerText - visible text only
+el.innerText = 'Visible text';</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Attributes</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">const link = document.querySelector('a');
+const img = document.querySelector('img');
+
+// Get attribute
+link.getAttribute('href')
+img.src  // shortcut for common attrs
+
+// Set attribute
+link.setAttribute('href', 'https://...')
+img.src = 'new-image.jpg'
+
+// Remove attribute
+link.removeAttribute('target')
+
+// Check if exists
+link.hasAttribute('target')</code></pre>
+                </div>
+            </div>
+            <div class="p-5 rounded-lg border border-red-500/30 bg-red-500/10 my-4">
+                <h3 class="text-xl text-red-400 mb-3">innerHTML Security Warning</h3>
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><code class="bg-red-500/20 text-red-400 px-2 py-0.5 rounded font-mono text-sm">innerHTML</code> can execute scripts! Never use with user input.</p>
+                <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-red-500 text-sm mt-3"><code class="text-gray-200">// DANGEROUS - XSS vulnerability!
+el.innerHTML = userInput;
+
+// SAFE - text only
+el.textContent = userInput;</code></pre>
+            </div>
+        </section>
+
+        <!-- Slide 5 -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Modifying Styles</h1>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Inline Styles</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">const box = document.querySelector('.box');
+
+// Set individual styles
+box.style.backgroundColor = 'red';
+box.style.fontSize = '20px';
+box.style.marginTop = '10px';
+
+// Note: CSS properties use camelCase!
+// background-color → backgroundColor
+// font-size → fontSize
+
+// Get computed style
+getComputedStyle(box).color</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">CSS Classes (Preferred!)</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">const box = document.querySelector('.box');
+
+// Add class
+box.classList.add('active');
+box.classList.add('highlight', 'big');
+
+// Remove class
+box.classList.remove('active');
+
+// Toggle class
+box.classList.toggle('hidden');
+
+// Check if has class
+box.classList.contains('active');
+
+// Replace class
+box.classList.replace('old', 'new');</code></pre>
+                </div>
+            </div>
+            <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                <h3 class="text-xl text-[var(--accent-light)] mb-3">Best Practice</h3>
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Use CSS classes instead of inline styles! Define styles in CSS, toggle classes in JS.</p>
+                <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm mt-3"><code class="text-gray-200">// CSS
+.hidden { display: none; }
+.active { background: #e91e63; color: white; }
+
+// JS
+element.classList.toggle('hidden');</code></pre>
+            </div>
+        </section>
+
+        <!-- Slide 6 -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Event Handling</h1>
+            <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Events are actions that happen in the browser (clicks, keypresses, form submissions...)</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">addEventListener (Best!)</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">const btn = document.querySelector('button');
+
+btn.addEventListener('click', function() {
+    console.log('Clicked!');
+});
+
+// With arrow function
+btn.addEventListener('click', () => {
+    console.log('Clicked!');
+});
+
+// Named function (for removal)
+function handleClick() {
+    console.log('Clicked!');
+}
+btn.addEventListener('click', handleClick);
+
+// Remove listener
+btn.removeEventListener('click', handleClick);</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Common Events</h2>
+                    <div class="overflow-x-auto">
+                        <table class="w-full border-collapse text-base">
+                            <tr><th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Event</th><th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Trigger</th></tr>
+                            <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">click</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Mouse click</td></tr>
+                            <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">dblclick</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Double click</td></tr>
+                            <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">mouseover</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Mouse enters</td></tr>
+                            <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">mouseout</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Mouse leaves</td></tr>
+                            <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">keydown</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Key pressed</td></tr>
+                            <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">keyup</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Key released</td></tr>
+                            <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">submit</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Form submitted</td></tr>
+                            <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">input</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Input value changes</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 7-10: preserved content, same Tailwind pattern as above -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">The Event Object</h1>
+            <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Event handlers receive an event object with details about the event.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Basic Usage</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">btn.addEventListener('click', function(event) {
+    console.log(event.type);     // "click"
+    console.log(event.target);   // clicked element
+    console.log(event.currentTarget); // listener element
+});
+
+// Arrow function
+btn.addEventListener('click', (e) => {
+    e.target.textContent = 'Clicked!';
+});</code></pre>
+                    <h3 class="text-xl text-[var(--accent-light)] mt-4 mb-3">Common Properties</h3>
+                    <ul class="ml-6 space-y-2 text-lg text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">event.target</code> - Element that triggered event</li>
+                        <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">event.currentTarget</code> - Element with listener</li>
+                        <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">event.type</code> - Event name</li>
+                        <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">event.timeStamp</code> - When it happened</li>
+                    </ul>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Prevent Default</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// Stop form submission
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    // Handle form with JS instead
+});
+
+// Stop link navigation
+link.addEventListener('click', (e) => {
+    e.preventDefault();
+    console.log('Link clicked, not navigating');
+});</code></pre>
+                    <h2 class="text-2xl text-[var(--accent-light)] mt-6 mb-4 border-b-2 border-[var(--accent)] pb-2">Stop Propagation</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// Stop event bubbling
+inner.addEventListener('click', (e) => {
+    e.stopPropagation();
+    // Parent won't receive this click
+});</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 8: Event Delegation -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Event Delegation</h1>
+            <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Instead of adding listeners to many elements, add one to their parent!</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Without Delegation (Bad)</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-red-500 text-sm"><code class="text-gray-200">// Adding listener to EACH button
+const buttons = document.querySelectorAll('.btn');
+buttons.forEach(btn => {
+    btn.addEventListener('click', handleClick);
+});
+
+// Problem: What about dynamically added buttons?
+// They won't have listeners!</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">With Delegation (Good)</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-green-500 text-sm"><code class="text-gray-200">// Single listener on parent
+document.querySelector('.container')
+    .addEventListener('click', (e) => {
+        if (e.target.classList.contains('btn')) {
+            handleClick(e);
+        }
+    });
+
+// Works for dynamically added elements too!</code></pre>
+                </div>
+            </div>
+            <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                <h3 class="text-xl text-[var(--accent-light)] mb-3">Event Bubbling</h3>
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Events "bubble up" from child to parent. Click on a button inside a div? Both receive the event!</p>
+                <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm mt-3"><code class="text-gray-200">// child click → parent click → grandparent click → ... → document</code></pre>
+            </div>
+        </section>
+
+        <!-- Slide 9: Creating & Removing -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Creating & Removing Elements</h1>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Creating Elements</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// Create element
+const div = document.createElement('div');
+div.textContent = 'Hello!';
+div.classList.add('card');
+
+// Add to DOM
+document.body.appendChild(div);
+// or
+parent.insertBefore(div, referenceElement);
+// or
+parent.append(div);     // at end
+parent.prepend(div);    // at start
+
+// Insert adjacent
+el.insertAdjacentHTML('beforeend',
+    '&lt;p&gt;New paragraph&lt;/p&gt;');</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Removing Elements</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// Modern way
+element.remove();
+
+// Old way
+parent.removeChild(element);
+
+// Replace element
+parent.replaceChild(newEl, oldEl);
+
+// Clone element
+const clone = element.cloneNode(true);
+// true = deep clone (with children)</code></pre>
+                    <h3 class="text-xl text-[var(--accent-light)] mt-4 mb-3">DocumentFragment</h3>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// For adding many elements efficiently
+const fragment = document.createDocumentFragment();
+items.forEach(item => {
+    const li = document.createElement('li');
+    li.textContent = item;
+    fragment.appendChild(li);
+});
+ul.appendChild(fragment); // One DOM update!</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 10: DOM Traversal -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">DOM Traversal</h1>
+            <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Navigate between elements in the DOM tree.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Parent/Child/Sibling</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">const el = document.querySelector('.item');
+
+// Parent
+el.parentElement
+el.parentNode
+
+// Children
+el.children           // HTMLCollection
+el.childNodes         // includes text nodes
+el.firstElementChild
+el.lastElementChild
+
+// Siblings
+el.nextElementSibling
+el.previousElementSibling
+
+// Closest ancestor matching selector
+el.closest('.container')</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Example</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;ul class="list"&gt;
+  &lt;li&gt;Item 1&lt;/li&gt;
+  &lt;li class="active"&gt;Item 2&lt;/li&gt;
+  &lt;li&gt;Item 3&lt;/li&gt;
+&lt;/ul&gt;
+
+const active = document.querySelector('.active');
+
+active.parentElement
+// → ul.list
+
+active.nextElementSibling
+// → li (Item 3)
+
+active.closest('ul')
+// → ul.list</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 11: Video Resources -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Video Resources</h1>
+            <div class="relative w-full max-w-[800px] mx-auto my-5 aspect-video bg-black rounded-lg overflow-hidden shadow-xl">
+                <iframe class="absolute inset-0 w-full h-full border-none" src="https://www.youtube.com/embed/y17RuWkWdn8?rel=0" title="DOM Manipulation" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 my-5">
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200 hover:-translate-y-1 transition">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Frontend Masters</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600"><a href="https://frontendmasters.com/courses/javascript-hard-parts-v2/" target="_blank" class="text-[var(--accent)] hover:underline">JS Hard Parts</a></p>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200 hover:-translate-y-1 transition">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">JavaScript.info</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600"><a href="https://javascript.info/document" target="_blank" class="text-[var(--accent)] hover:underline">DOM Tutorial</a></p>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200 hover:-translate-y-1 transition">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">MDN</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600"><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model" target="_blank" class="text-[var(--accent)] hover:underline">DOM Reference</a></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 12: Practice -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Practice Exercises</h1>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-5">
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Exercise 1: Todo List</h3>
+                    <ul class="ml-5 space-y-1 text-gray-300 dark:text-gray-300 text-gray-600"><li>Add items with form</li><li>Mark as complete</li><li>Delete items</li></ul>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Exercise 2: Image Gallery</h3>
+                    <ul class="ml-5 space-y-1 text-gray-300 dark:text-gray-300 text-gray-600"><li>Click thumbnails</li><li>Show in main view</li><li>Next/Previous buttons</li></ul>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Exercise 3: Form Validation</h3>
+                    <ul class="ml-5 space-y-1 text-gray-300 dark:text-gray-300 text-gray-600"><li>Validate on submit</li><li>Show error messages</li><li>Real-time feedback</li></ul>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Exercise 4: Accordion</h3>
+                    <ul class="ml-5 space-y-1 text-gray-300 dark:text-gray-300 text-gray-600"><li>Collapsible sections</li><li>Only one open at a time</li><li>Smooth animation</li></ul>
+                </div>
+            </div>
+            <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><a href="../examples/index.html" class="text-[var(--accent)] hover:underline">View Week 08 Examples &rarr;</a></p>
+            </div>
+        </section>
+
+        <!-- Slide 13: Summary -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Week 08 Summary</h1>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Key Concepts</h2>
+                    <ul class="ml-6 space-y-2 text-lg text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>DOM is the tree representation of HTML</li>
+                        <li>querySelector/querySelectorAll for selecting</li>
+                        <li>textContent (safe) vs innerHTML</li>
+                        <li>classList for managing CSS classes</li>
+                        <li>addEventListener for events</li>
+                        <li>Event delegation for efficiency</li>
+                        <li>createElement, remove for DOM manipulation</li>
+                    </ul>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Best Practices</h2>
+                    <ul class="ml-6 space-y-2 text-lg text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Use querySelector over getElementById</li>
+                        <li>Use classList over inline styles</li>
+                        <li>Use event delegation</li>
+                        <li>Use textContent for user input (XSS)</li>
+                        <li>Cache DOM selections in variables</li>
+                    </ul>
+                    <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 mt-4">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-2">Next Week</h3>
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Week 09: Objects, JSON & AJAX!</p>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="mt-10 pt-5 border-t border-white/10 dark:border-white/10 border-gray-200 text-center text-sm text-gray-500">
+                <p><strong>Prepared by Rajiv Ramakrishnan</strong></p>
+                <p><a href="mailto:gmail@rajiv.kr" class="text-[var(--accent)] hover:underline">gmail@rajiv.kr</a> | <a href="tel:+919566134326" class="text-[var(--accent)] hover:underline">+91 9566134326</a> | <a href="https://www.linkedin.com/in/rajivramakrishnan/" target="_blank" rel="noopener" class="text-[var(--accent)] hover:underline">LinkedIn</a></p>
+                <p class="mt-2 text-gray-600">&copy; 2026 Rajiv Ramakrishnan. Licensed for educational use at Eashwari.</p>
+            </footer>
+        </section></main>
+
+    <!-- Bottom nav -->
+    <div class="max-w-[1200px] mx-auto px-5">
+        <div class="flex justify-between items-center mt-8 pt-5 border-t border-white/10 dark:border-white/10 border-gray-200 pb-8">
+            <button class="px-6 py-3 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] text-white font-medium cursor-pointer hover:scale-105 hover:shadow-lg transition border-none disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none" id="prevBtn2" onclick="changeSlide(-1)">&larr; Previous</button>
+            <div class="text-gray-500 text-sm tabular-nums"><span id="currentSlide2"></span></div>
+            <button class="px-6 py-3 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] text-white font-medium cursor-pointer hover:scale-105 hover:shadow-lg transition border-none disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none" id="nextBtn2" onclick="changeSlide(1)">Next &rarr;</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] py-8 mt-8">
+        <div class="max-w-[1200px] mx-auto px-5 text-center">
+            <p class="text-gray-900 dark:text-white text-lg font-semibold mb-4">Prepared by Rajiv Ramakrishnan</p>
+            <div class="flex flex-wrap justify-center gap-3 text-sm mb-6">
+                <a href="mailto:gmail@rajiv.kr" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    gmail@rajiv.kr
+                </a>
+                <a href="tel:+919566134326" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    +91 9566134326
+                </a>
+                <a href="https://www.linkedin.com/in/rajivramakrishnan/" target="_blank" rel="noopener" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="mr-1.5"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+                    LinkedIn
+                </a>
+            </div>
+            <p class="text-gray-600 dark:text-gray-500 text-xs">
+                &copy; 2026 Rajiv Ramakrishnan. All rights reserved. Licensed for educational use at Eashwari.
+            </p>
+        </div>
+    </footer>
+
+    </div>
+
+    <!-- Keyboard hint -->
+    <div class="fixed bottom-5 right-5 bg-black/80 px-3 py-1.5 rounded-lg text-xs text-gray-500 z-10 pointer-events-none hidden md:block" aria-hidden="true">
+        <kbd class="bg-white/10 px-1.5 py-0.5 rounded border border-white/20 font-mono text-xs">&larr;</kbd>
+        <kbd class="bg-white/10 px-1.5 py-0.5 rounded border border-white/20 font-mono text-xs">&rarr;</kbd> navigate &middot;
+        <kbd class="bg-white/10 px-1.5 py-0.5 rounded border border-white/20 font-mono text-xs">M</kbd> menu
+    </div>
+
+    <script src="../../core/slides.js" defer></script>
+</body>
+</html>

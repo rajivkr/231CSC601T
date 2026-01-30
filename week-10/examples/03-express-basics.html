@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Express.js Basics - Week 10 Example</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; }
+        h1 { color: #4caf50; }
+        h2 { color: #388e3c; border-bottom: 2px solid #4caf50; padding-bottom: 5px; }
+        .code-block { background: #263238; color: #aed581; padding: 15px; border-radius: 8px; font-family: monospace; margin: 10px 0; overflow-x: auto; white-space: pre-wrap; }
+        .terminal { background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 8px; font-family: monospace; margin: 10px 0; white-space: pre-wrap; }
+        .prompt { color: #4caf50; }
+        .comment { color: #6a9955; }
+        .note { background: #e8f5e9; padding: 15px; border-radius: 8px; border-left: 4px solid #4caf50; margin: 15px 0; }
+        .step { background: #f5f5f5; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #4caf50; }
+        .step-number { background: #4caf50; color: white; border-radius: 50%; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; margin-right: 10px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+    <h1>Express.js Basics</h1>
+
+    <div class="note">
+        <strong>Follow along!</strong> Create these files on your computer and run with <code>node index.js</code>.
+    </div>
+
+    <h2>Step 1: Project Setup</h2>
+    <div class="step">
+        <span class="step-number">1</span> Create project and install Express
+    </div>
+    <div class="terminal">
+<span class="prompt">$ </span>mkdir express-demo
+<span class="prompt">$ </span>cd express-demo
+<span class="prompt">$ </span>npm init -y
+<span class="prompt">$ </span>npm install express
+    </div>
+
+    <h2>Step 2: Hello World Server</h2>
+    <div class="step">
+        <span class="step-number">2</span> Create <code>index.js</code>
+    </div>
+    <div class="code-block">// index.js
+const express = require('express');
+const app = express();
+const PORT = 3000;
+
+// Home route
+app.get('/', (req, res) => {
+    res.send('&lt;h1&gt;Hello World!&lt;/h1&gt;&lt;p&gt;Welcome to Express.js&lt;/p&gt;');
+});
+
+// About route
+app.get('/about', (req, res) => {
+    res.send('&lt;h1&gt;About Page&lt;/h1&gt;&lt;p&gt;This is a simple Express app.&lt;/p&gt;');
+});
+
+// JSON response
+app.get('/api/status', (req, res) => {
+    res.json({
+        status: 'running',
+        timestamp: new Date().toISOString(),
+        uptime: process.uptime()
+    });
+});
+
+// Start server
+app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+    console.log('Press Ctrl+C to stop');
+});</div>
+
+    <div class="terminal">
+<span class="prompt">$ </span>node index.js
+Server running at http://localhost:3000
+<span class="comment"># Open http://localhost:3000 in your browser</span>
+    </div>
+
+    <h2>Step 3: Route Parameters</h2>
+    <div class="code-block">// routes-demo.js
+const express = require('express');
+const app = express();
+
+// Static route
+app.get('/products', (req, res) => {
+    res.json([
+        { id: 1, name: 'Laptop', price: 999 },
+        { id: 2, name: 'Phone', price: 699 }
+    ]);
+});
+
+// Dynamic route with URL parameter
+app.get('/products/:id', (req, res) => {
+    const { id } = req.params;
+    res.json({ message: `Fetching product ${id}` });
+});
+
+// Multiple parameters
+app.get('/users/:userId/posts/:postId', (req, res) => {
+    const { userId, postId } = req.params;
+    res.json({
+        message: `User ${userId}, Post ${postId}`
+    });
+});
+
+// Query parameters
+// GET /search?q=laptop&sort=price&order=asc
+app.get('/search', (req, res) => {
+    const { q, sort, order } = req.query;
+    res.json({
+        query: q,
+        sort: sort || 'relevance',
+        order: order || 'desc',
+        results: []
+    });
+});
+
+app.listen(3000, () => console.log('Server on :3000'));</div>
+
+    <h2>Step 4: Serving Static Files</h2>
+    <div class="code-block">// static-server.js
+const express = require('express');
+const path = require('path');
+const app = express();
+
+// Serve files from 'public' directory
+// Files accessible at: http://localhost:3000/filename
+app.use(express.static('public'));
+
+// Serve files from 'uploads' with prefix
+// Files accessible at: http://localhost:3000/files/filename
+app.use('/files', express.static('uploads'));
+
+// Serve index.html for root
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.listen(3000, () => console.log('Static server on :3000'));
+
+// Project structure:
+// express-demo/
+//   public/
+//     index.html
+//     style.css
+//     script.js
+//     images/
+//       logo.png
+//   uploads/
+//   static-server.js</div>
+
+    <h2>Step 5: Middleware</h2>
+    <div class="code-block">// middleware-demo.js
+const express = require('express');
+const app = express();
+
+// Built-in middleware
+app.use(express.json());              // Parse JSON bodies
+app.use(express.urlencoded({          // Parse form data
+    extended: true
+}));
+app.use(express.static('public'));    // Serve static files
+
+// Custom middleware - Request Logger
+app.use((req, res, next) => {
+    const timestamp = new Date().toISOString();
+    console.log(`[${timestamp}] ${req.method} ${req.url}`);
+    next();  // MUST call next() to continue
+});
+
+// Custom middleware - Add request time
+app.use((req, res, next) => {
+    req.requestTime = Date.now();
+    next();
+});
+
+// Route-specific middleware
+function requireAuth(req, res, next) {
+    const token = req.headers['authorization'];
+    if (!token) {
+        return res.status(401).json({ error: 'Not authorized' });
+    }
+    // In real app: verify token
+    next();
+}
+
+// Public route - no auth needed
+app.get('/api/public', (req, res) => {
+    res.json({ message: 'Public data' });
+});
+
+// Protected route - auth middleware applied
+app.get('/api/private', requireAuth, (req, res) => {
+    res.json({ message: 'Secret data!' });
+});
+
+// Error handling middleware (4 parameters!)
+app.use((err, req, res, next) => {
+    console.error('Error:', err.message);
+    res.status(500).json({ error: 'Something went wrong!' });
+});
+
+app.listen(3000);</div>
+
+    <h2>Step 6: Handling POST Data</h2>
+    <div class="code-block">// post-demo.js
+const express = require('express');
+const app = express();
+
+// IMPORTANT: Parse JSON request bodies
+app.use(express.json());
+
+// In-memory storage
+const messages = [];
+
+// Serve a simple form
+app.get('/', (req, res) => {
+    res.send(`
+        &lt;h1&gt;Message Board&lt;/h1&gt;
+        &lt;form action="/messages" method="POST"&gt;
+            &lt;input name="author" placeholder="Your name" required&gt;
+            &lt;input name="text" placeholder="Your message" required&gt;
+            &lt;button type="submit"&gt;Send&lt;/button&gt;
+        &lt;/form&gt;
+        &lt;h2&gt;Messages:&lt;/h2&gt;
+        &lt;ul&gt;
+            ${messages.map(m =>
+                `&lt;li&gt;&lt;strong&gt;${m.author}:&lt;/strong&gt; ${m.text}&lt;/li&gt;`
+            ).join('')}
+        &lt;/ul&gt;
+    `);
+});
+
+// Handle form submission
+app.use(express.urlencoded({ extended: true }));
+
+app.post('/messages', (req, res) => {
+    const { author, text } = req.body;
+    messages.push({
+        id: messages.length + 1,
+        author,
+        text,
+        createdAt: new Date().toISOString()
+    });
+    res.redirect('/');
+});
+
+// JSON API endpoint
+app.post('/api/messages', (req, res) => {
+    const { author, text } = req.body;
+
+    if (!author || !text) {
+        return res.status(400).json({
+            error: 'Author and text are required'
+        });
+    }
+
+    const message = {
+        id: messages.length + 1,
+        author,
+        text,
+        createdAt: new Date().toISOString()
+    };
+    messages.push(message);
+    res.status(201).json(message);
+});
+
+app.listen(3000, () => {
+    console.log('Message board on http://localhost:3000');
+});</div>
+
+    <div class="note">
+        <strong>Testing POST requests:</strong> Use the browser form, or test with curl:
+        <div class="terminal">
+<span class="prompt">$ </span>curl -X POST http://localhost:3000/api/messages \
+  -H "Content-Type: application/json" \
+  -d '{"author":"Alice","text":"Hello!"}'
+        </div>
+    </div>
+
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operators - Week 07 Example</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 { color: #f1c40f; }
+        h2 { color: #2c3e50; margin-top: 30px; }
+        .output {
+            background: #2c3e50;
+            color: #2ecc71;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            margin: 15px 0;
+        }
+        button {
+            background: #f1c40f;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+        }
+        button:hover { background: #f39c12; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: white;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th { background: #f1c40f; }
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #f39c12;
+            padding: 15px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+
+    <h1>JavaScript Operators</h1>
+
+    <h2>1. Arithmetic Operators</h2>
+    <table>
+        <tr><th>Operator</th><th>Name</th><th>Example</th></tr>
+        <tr><td>+</td><td>Addition</td><td>5 + 3 = 8</td></tr>
+        <tr><td>-</td><td>Subtraction</td><td>5 - 3 = 2</td></tr>
+        <tr><td>*</td><td>Multiplication</td><td>5 * 3 = 15</td></tr>
+        <tr><td>/</td><td>Division</td><td>15 / 3 = 5</td></tr>
+        <tr><td>%</td><td>Modulo (Remainder)</td><td>5 % 3 = 2</td></tr>
+        <tr><td>**</td><td>Exponent</td><td>2 ** 3 = 8</td></tr>
+    </table>
+    <button onclick="demoArithmetic()">Run Demo</button>
+    <div class="output" id="output1">Click to see results...</div>
+
+    <h2>2. Comparison Operators</h2>
+    <table>
+        <tr><th>Operator</th><th>Name</th><th>Example</th></tr>
+        <tr><td>==</td><td>Loose Equality</td><td>'5' == 5 → true</td></tr>
+        <tr><td>===</td><td>Strict Equality</td><td>'5' === 5 → false</td></tr>
+        <tr><td>!=</td><td>Loose Inequality</td><td>'5' != 5 → false</td></tr>
+        <tr><td>!==</td><td>Strict Inequality</td><td>'5' !== 5 → true</td></tr>
+        <tr><td>&gt;</td><td>Greater than</td><td>5 > 3 → true</td></tr>
+        <tr><td>&lt;</td><td>Less than</td><td>5 < 3 → false</td></tr>
+        <tr><td>&gt;=</td><td>Greater or equal</td><td>5 >= 5 → true</td></tr>
+        <tr><td>&lt;=</td><td>Less or equal</td><td>5 <= 4 → false</td></tr>
+    </table>
+    <button onclick="demoComparison()">Run Demo</button>
+    <div class="output" id="output2">Click to see results...</div>
+
+    <div class="warning">
+        <strong>Always use === (strict equality)!</strong> The loose equality (==) does type coercion which can lead to unexpected results.
+    </div>
+
+    <h2>3. Logical Operators</h2>
+    <table>
+        <tr><th>Operator</th><th>Name</th><th>Example</th></tr>
+        <tr><td>&&</td><td>AND</td><td>true && false → false</td></tr>
+        <tr><td>||</td><td>OR</td><td>true || false → true</td></tr>
+        <tr><td>!</td><td>NOT</td><td>!true → false</td></tr>
+        <tr><td>??</td><td>Nullish Coalescing</td><td>null ?? 'default' → 'default'</td></tr>
+    </table>
+    <button onclick="demoLogical()">Run Demo</button>
+    <div class="output" id="output3">Click to see results...</div>
+
+    <h2>4. Assignment Operators</h2>
+    <button onclick="demoAssignment()">Run Demo</button>
+    <div class="output" id="output4">Click to see results...</div>
+
+    <h2>5. Type Coercion Gotchas</h2>
+    <button onclick="demoCoercion()">Run Demo</button>
+    <div class="output" id="output5">Click to see results...</div>
+
+    <script>
+        function demoArithmetic() {
+            let a = 10, b = 3;
+            let output = `// Arithmetic Operators
+let a = 10, b = 3;
+
+a + b  → ${a + b}    (Addition)
+a - b  → ${a - b}     (Subtraction)
+a * b  → ${a * b}    (Multiplication)
+a / b  → ${(a / b).toFixed(4)}  (Division)
+a % b  → ${a % b}     (Modulo/Remainder)
+a ** b → ${a ** b}  (Exponent: 10³)
+
+// Increment & Decrement
+let x = 5;
+x++    → ${5 + 1}     (x is now 6)
+x--    → ${6 - 1}     (x is now 5)
+++x    → ${5 + 1}     (increment first, then return)
+
+// Order of operations (PEMDAS)
+2 + 3 * 4     → ${2 + 3 * 4}    (multiplication first)
+(2 + 3) * 4   → ${(2 + 3) * 4}   (parentheses first)`;
+
+            document.getElementById('output1').textContent = output;
+        }
+
+        function demoComparison() {
+            let output = `// Comparison Operators
+
+// Loose equality (== / !=) - does type coercion!
+'5' == 5     → ${String('5') == 5}    (string converted to number)
+'5' != 5     → ${'5' != 5}   (they ARE equal after coercion)
+0 == false   → ${0 == false}    (both convert to 0)
+'' == false  → ${'' == false}    (both convert to 0)
+null == undefined → ${null == undefined}  (special case)
+
+// Strict equality (=== / !==) - no type coercion
+'5' === 5    → ${'5' === 5}   (different types!)
+'5' !== 5    → ${'5' !== 5}    (different types!)
+0 === false  → ${0 === false}   (different types!)
+
+// Relational operators
+5 > 3        → ${5 > 3}
+5 < 3        → ${5 < 3}
+5 >= 5       → ${5 >= 5}
+5 <= 4       → ${5 <= 4}
+
+// String comparison (alphabetical)
+'apple' < 'banana'  → ${'apple' < 'banana'}
+'Z' < 'a'           → ${'Z' < 'a'}  (uppercase < lowercase!)`;
+
+            document.getElementById('output2').textContent = output;
+        }
+
+        function demoLogical() {
+            let output = `// Logical Operators
+
+// AND (&&) - all must be true
+true && true   → ${true && true}
+true && false  → ${true && false}
+false && true  → ${false && true}
+
+// OR (||) - at least one must be true
+true || false  → ${true || false}
+false || true  → ${false || true}
+false || false → ${false || false}
+
+// NOT (!) - inverts boolean
+!true   → ${!true}
+!false  → ${!false}
+!!true  → ${!!true}  (double negation = original)
+
+// Short-circuit evaluation
+// AND: returns first falsy value, or last value
+true && 'hello'   → '${'hello'}'
+false && 'hello'  → ${false && 'hello'}
+null && 'hello'   → ${null && 'hello'}
+
+// OR: returns first truthy value, or last value
+false || 'default'  → '${false || 'default'}'
+'' || 'fallback'    → '${'' || 'fallback'}'
+'value' || 'default' → '${('value' || 'default')}'
+
+// Nullish Coalescing (??) - only null/undefined trigger fallback
+null ?? 'default'      → '${null ?? 'default'}'
+undefined ?? 'default' → '${undefined ?? 'default'}'
+0 ?? 'default'         → ${0 ?? 'default'}  (0 is not null!)
+'' ?? 'default'        → '${'' ?? 'default'}'  ('' is not null!)`;
+
+            document.getElementById('output3').textContent = output;
+        }
+
+        function demoAssignment() {
+            let output = `// Assignment Operators
+
+let x = 10;
+
+x += 5   → ${10 + 5}  (x = x + 5)
+x -= 3   → ${15 - 3}  (x = x - 3)
+x *= 2   → ${12 * 2}  (x = x * 2)
+x /= 4   → ${24 / 4}   (x = x / 4)
+x %= 3   → ${6 % 3}   (x = x % 3)
+x **= 2  → ${0 ** 2}   (x = x ** 2)
+
+// Increment / Decrement
+let y = 5;
+y++      // y becomes 6 (post-increment)
+++y      // y becomes 7 (pre-increment)
+y--      // y becomes 6 (post-decrement)
+--y      // y becomes 5 (pre-decrement)
+
+// Difference between pre and post:
+let a = 5;
+let b = a++;  // b = 5, a = 6 (assign first, then increment)
+let c = ++a;  // c = 7, a = 7 (increment first, then assign)`;
+
+            document.getElementById('output4').textContent = output;
+        }
+
+        function demoCoercion() {
+            let output = `// Type Coercion Gotchas - The Weird Parts of JS!
+
+// String + Number = String (concatenation)
+'5' + 3      → '${('5' + 3)}'      (3 becomes '3')
+'5' + '3'    → '${('5' + '3')}'
+5 + '3'      → '${(5 + '3')}'
+
+// String - Number = Number (subtraction)
+'5' - 3      → ${('5' - 3)}       ('5' becomes 5)
+'10' * '2'   → ${('10' * '2')}      (both become numbers)
+'10' / '2'   → ${('10' / '2')}
+
+// Falsy values (all evaluate to false)
+Boolean(0)         → ${Boolean(0)}
+Boolean('')        → ${Boolean('')}
+Boolean(null)      → ${Boolean(null)}
+Boolean(undefined) → ${Boolean(undefined)}
+Boolean(NaN)       → ${Boolean(NaN)}
+Boolean(false)     → ${Boolean(false)}
+
+// Truthy values (everything else!)
+Boolean(1)         → ${Boolean(1)}
+Boolean('hello')   → ${Boolean('hello')}
+Boolean([])        → ${Boolean([])}  (empty array is truthy!)
+Boolean({})        → ${Boolean({})}  (empty object is truthy!)
+
+// The weirdest ones:
+[] == false    → ${[] == false}     ([] coerces to '')
+[] == ![]      → ${[] == ![]}     (wat?)
+NaN === NaN    → ${NaN === NaN}   (NaN is not equal to itself!)`;
+
+            document.getElementById('output5').textContent = output;
+        }
+
+        // Run first demo on load
+        demoArithmetic();
+    </script>
+
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>

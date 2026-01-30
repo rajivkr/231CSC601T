@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Blog - Semantic HTML Example</title>
+</head>
+<body>
+    <header>
+        <h1>Tech Insights Blog</h1>
+        <nav>
+            <a href="#">Home</a> |
+            <a href="#">Articles</a> |
+            <a href="#">About</a> |
+            <a href="#">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <article>
+            <header>
+                <h2>Understanding the DOM: A Beginner's Guide</h2>
+                <p>
+                    <small>
+                        Published: <time datetime="2025-01-28">January 28, 2025</time> |
+                        Author: Rajiv Ramakrishnan |
+                        Category: JavaScript
+                    </small>
+                </p>
+            </header>
+
+            <section>
+                <h3>What is the DOM?</h3>
+                <p>
+                    The Document Object Model (DOM) is a programming interface for web documents.
+                    It represents the page so that programs can change the document structure,
+                    style, and content.
+                </p>
+                <p>
+                    When a browser loads a web page, it creates a DOM of the page. This model
+                    is constructed as a tree of objects.
+                </p>
+            </section>
+
+            <section>
+                <h3>Why is it Important?</h3>
+                <p>
+                    Understanding the DOM is crucial for:
+                </p>
+                <ul>
+                    <li>Manipulating web page content with JavaScript</li>
+                    <li>Responding to user interactions</li>
+                    <li>Creating dynamic, interactive websites</li>
+                    <li>Debugging layout and styling issues</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>DOM vs HTML</h3>
+                <p>
+                    Many beginners confuse the DOM with HTML source code. Here's the difference:
+                </p>
+                <figure>
+                    <img src="https://picsum.photos/seed/dom/600/300" alt="Diagram showing HTML source transforming into DOM tree">
+                    <figcaption>HTML source code is parsed by the browser to create the DOM tree</figcaption>
+                </figure>
+                <p>
+                    The DOM is a <em>live</em> representation. When you modify it with JavaScript,
+                    the page updates immediately. The original HTML source file remains unchanged.
+                </p>
+            </section>
+
+            <section>
+                <h3>Key Takeaways</h3>
+                <ol>
+                    <li>The DOM is created by the browser when parsing HTML</li>
+                    <li>It's a tree structure with nodes</li>
+                    <li>JavaScript can read and modify the DOM</li>
+                    <li>Changes to DOM immediately reflect on the page</li>
+                </ol>
+            </section>
+
+            <footer>
+                <p>Tags: <a href="#">JavaScript</a>, <a href="#">DOM</a>, <a href="#">Web Development</a></p>
+            </footer>
+        </article>
+
+        <aside>
+            <h3>Related Articles</h3>
+            <ul>
+                <li><a href="#">Introduction to JavaScript</a></li>
+                <li><a href="#">CSS Selectors Explained</a></li>
+                <li><a href="#">Event Handling Basics</a></li>
+            </ul>
+
+            <h3>About the Author</h3>
+            <p>
+                Rajiv is a software engineer with 10+ years of experience
+                in web development and teaching.
+            </p>
+        </aside>
+    </main>
+
+    <footer>
+        <hr>
+        <nav>
+            <a href="#">Privacy Policy</a> |
+            <a href="#">Terms of Service</a> |
+            <a href="#">RSS Feed</a>
+        </nav>
+        <p>&copy; 2025 Tech Insights Blog. All rights reserved.</p>
+        <p><a href="index.html">&larr; Back to Examples</a></p>
+    </footer>
+</body>
+</html>

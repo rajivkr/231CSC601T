@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REST API Design - Week 10 Example</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; }
+        h1 { color: #4caf50; }
+        h2 { color: #388e3c; border-bottom: 2px solid #4caf50; padding-bottom: 5px; }
+        .code-block { background: #263238; color: #aed581; padding: 15px; border-radius: 8px; font-family: monospace; margin: 10px 0; overflow-x: auto; white-space: pre-wrap; }
+        .terminal { background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 8px; font-family: monospace; margin: 10px 0; white-space: pre-wrap; }
+        .prompt { color: #4caf50; }
+        .comment { color: #6a9955; }
+        .note { background: #e8f5e9; padding: 15px; border-radius: 8px; border-left: 4px solid #4caf50; margin: 15px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        th, td { padding: 10px; text-align: left; border: 1px solid #ddd; }
+        th { background: #4caf50; color: white; }
+        tr:nth-child(even) { background: #f5f5f5; }
+        .method-get { color: #4caf50; font-weight: bold; }
+        .method-post { color: #ff9800; font-weight: bold; }
+        .method-put { color: #2196f3; font-weight: bold; }
+        .method-delete { color: #f44336; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+    <h1>REST API Design</h1>
+
+    <div class="note">
+        <strong>REST</strong> = Representational State Transfer. A convention for designing web APIs using HTTP methods and URLs.
+    </div>
+
+    <h2>REST Conventions</h2>
+    <table>
+        <tr>
+            <th>Method</th>
+            <th>URL</th>
+            <th>Action</th>
+            <th>Status</th>
+        </tr>
+        <tr>
+            <td><span class="method-get">GET</span></td>
+            <td>/api/books</td>
+            <td>List all books</td>
+            <td>200</td>
+        </tr>
+        <tr>
+            <td><span class="method-get">GET</span></td>
+            <td>/api/books/:id</td>
+            <td>Get one book</td>
+            <td>200 / 404</td>
+        </tr>
+        <tr>
+            <td><span class="method-post">POST</span></td>
+            <td>/api/books</td>
+            <td>Create a book</td>
+            <td>201</td>
+        </tr>
+        <tr>
+            <td><span class="method-put">PUT</span></td>
+            <td>/api/books/:id</td>
+            <td>Update a book</td>
+            <td>200 / 404</td>
+        </tr>
+        <tr>
+            <td><span class="method-delete">DELETE</span></td>
+            <td>/api/books/:id</td>
+            <td>Delete a book</td>
+            <td>204 / 404</td>
+        </tr>
+    </table>
+
+    <h2>Complete REST API: Book Store</h2>
+    <div class="note">
+        Save this as <code>bookstore-api.js</code> and run with <code>node bookstore-api.js</code>
+    </div>
+
+    <div class="code-block">// bookstore-api.js
+const express = require('express');
+const app = express();
+const PORT = 3000;
+
+// Middleware
+app.use(express.json());
+
+// Request logger
+app.use((req, res, next) => {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+    next();
+});
+
+// ============================================
+// DATA STORE (In-memory - resets on restart)
+// ============================================
+let books = [
+    { id: 1, title: 'JavaScript: The Good Parts', author: 'Douglas Crockford', year: 2008, genre: 'Programming' },
+    { id: 2, title: 'Eloquent JavaScript', author: 'Marijn Haverbeke', year: 2018, genre: 'Programming' },
+    { id: 3, title: 'Node.js Design Patterns', author: 'Mario Casciaro', year: 2020, genre: 'Programming' }
+];
+let nextId = 4;
+
+// ============================================
+// ROUTES
+// ============================================
+
+// GET /api/books - List all books
+app.get('/api/books', (req, res) => {
+    // Support filtering by genre
+    const { genre, author } = req.query;
+    let result = books;
+
+    if (genre) {
+        result = result.filter(b =>
+            b.genre.toLowerCase() === genre.toLowerCase()
+        );
+    }
+    if (author) {
+        result = result.filter(b =>
+            b.author.toLowerCase().includes(author.toLowerCase())
+        );
+    }
+
+    res.json({
+        count: result.length,
+        data: result
+    });
+});
+
+// GET /api/books/:id - Get one book
+app.get('/api/books/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const book = books.find(b => b.id === id);
+
+    if (!book) {
+        return res.status(404).json({
+            error: 'Book not found',
+            id: id
+        });
+    }
+
+    res.json(book);
+});
+
+// POST /api/books - Create a book
+app.post('/api/books', (req, res) => {
+    const { title, author, year, genre } = req.body;
+
+    // Validation
+    if (!title || !author) {
+        return res.status(400).json({
+            error: 'Title and author are required'
+        });
+    }
+
+    const book = {
+        id: nextId++,
+        title,
+        author,
+        year: year || new Date().getFullYear(),
+        genre: genre || 'General'
+    };
+
+    books.push(book);
+    res.status(201).json(book);
+});
+
+// PUT /api/books/:id - Update a book
+app.put('/api/books/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const book = books.find(b => b.id === id);
+
+    if (!book) {
+        return res.status(404).json({
+            error: 'Book not found'
+        });
+    }
+
+    // Update fields
+    const { title, author, year, genre } = req.body;
+    if (title) book.title = title;
+    if (author) book.author = author;
+    if (year) book.year = year;
+    if (genre) book.genre = genre;
+
+    res.json(book);
+});
+
+// DELETE /api/books/:id - Delete a book
+app.delete('/api/books/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const index = books.findIndex(b => b.id === id);
+
+    if (index === -1) {
+        return res.status(404).json({
+            error: 'Book not found'
+        });
+    }
+
+    books.splice(index, 1);
+    res.status(204).send();
+});
+
+// ============================================
+// ERROR HANDLING
+// ============================================
+
+// 404 handler (no route matched)
+app.use((req, res) => {
+    res.status(404).json({
+        error: 'Route not found',
+        path: req.url,
+        method: req.method
+    });
+});
+
+// Error handler
+app.use((err, req, res, next) => {
+    console.error('Server error:', err.message);
+    res.status(500).json({
+        error: 'Internal server error'
+    });
+});
+
+// ============================================
+// START SERVER
+// ============================================
+app.listen(PORT, () => {
+    console.log(`Book Store API running at http://localhost:${PORT}`);
+    console.log('');
+    console.log('Endpoints:');
+    console.log('  GET    /api/books        - List all books');
+    console.log('  GET    /api/books/:id    - Get one book');
+    console.log('  POST   /api/books        - Create a book');
+    console.log('  PUT    /api/books/:id    - Update a book');
+    console.log('  DELETE /api/books/:id    - Delete a book');
+});</div>
+
+    <h2>Testing the API</h2>
+    <div class="terminal">
+<span class="comment"># List all books</span>
+<span class="prompt">$ </span>curl http://localhost:3000/api/books
+
+<span class="comment"># Get one book</span>
+<span class="prompt">$ </span>curl http://localhost:3000/api/books/1
+
+<span class="comment"># Create a book</span>
+<span class="prompt">$ </span>curl -X POST http://localhost:3000/api/books \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Learning Node.js","author":"Shelley Powers","year":2024}'
+
+<span class="comment"># Update a book</span>
+<span class="prompt">$ </span>curl -X PUT http://localhost:3000/api/books/1 \
+  -H "Content-Type: application/json" \
+  -d '{"year":2024}'
+
+<span class="comment"># Delete a book</span>
+<span class="prompt">$ </span>curl -X DELETE http://localhost:3000/api/books/1
+
+<span class="comment"># Filter books</span>
+<span class="prompt">$ </span>curl "http://localhost:3000/api/books?genre=Programming"
+    </div>
+
+    <h2>HTTP Status Codes Reference</h2>
+    <table>
+        <tr><th>Code</th><th>Meaning</th><th>Use Case</th></tr>
+        <tr><td>200</td><td>OK</td><td>Successful GET, PUT</td></tr>
+        <tr><td>201</td><td>Created</td><td>Successful POST</td></tr>
+        <tr><td>204</td><td>No Content</td><td>Successful DELETE</td></tr>
+        <tr><td>400</td><td>Bad Request</td><td>Invalid input data</td></tr>
+        <tr><td>401</td><td>Unauthorized</td><td>Missing/invalid auth</td></tr>
+        <tr><td>403</td><td>Forbidden</td><td>No permission</td></tr>
+        <tr><td>404</td><td>Not Found</td><td>Resource doesn't exist</td></tr>
+        <tr><td>500</td><td>Server Error</td><td>Unexpected error</td></tr>
+    </table>
+
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>

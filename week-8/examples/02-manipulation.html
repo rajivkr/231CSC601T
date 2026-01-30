@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM Manipulation - Week 08 Example</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; }
+        h1 { color: #e91e63; }
+        .demo-box { background: #f5f5f5; padding: 30px; border-radius: 10px; margin: 20px 0; text-align: center; min-height: 100px; transition: all 0.3s ease; }
+        button { background: #e91e63; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 5px; }
+        button:hover { background: #c2185b; }
+        input { padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin: 5px; width: 200px; }
+        .controls { background: #ecf0f1; padding: 15px; border-radius: 10px; margin: 10px 0; }
+        .hidden { display: none; }
+        .highlight { background: yellow !important; }
+        .big { font-size: 24px; }
+        .red { color: #e74c3c; }
+        .bold { font-weight: bold; }
+        #list-container { background: white; padding: 20px; border-radius: 10px; margin: 20px 0; }
+        #list-container li { padding: 10px; margin: 5px 0; background: #f9f9f9; border-radius: 5px; display: flex; justify-content: space-between; }
+        .delete-btn { background: #e74c3c; padding: 5px 10px; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+    <h1>DOM Manipulation Demo</h1>
+
+    <h2>1. Changing Content</h2>
+    <div class="demo-box" id="content-box">
+        <p id="content-target">Original text content</p>
+    </div>
+    <div class="controls">
+        <input type="text" id="new-text" placeholder="Enter new text">
+        <button onclick="changeText()">Change textContent</button>
+        <button onclick="changeHTML()">Change innerHTML</button>
+        <button onclick="resetContent()">Reset</button>
+    </div>
+
+    <h2>2. Changing Styles</h2>
+    <div class="demo-box" id="style-box">
+        <p id="style-target">Style this element!</p>
+    </div>
+    <div class="controls">
+        <button onclick="changeColor()">Change Color</button>
+        <button onclick="changeSize()">Change Size</button>
+        <button onclick="changeBackground()">Change Background</button>
+        <button onclick="resetStyles()">Reset</button>
+    </div>
+
+    <h2>3. Managing Classes</h2>
+    <div class="demo-box" id="class-box">
+        <p id="class-target">Toggle classes on me!</p>
+    </div>
+    <div class="controls">
+        <button onclick="toggleClass('highlight')">Toggle Highlight</button>
+        <button onclick="toggleClass('big')">Toggle Big</button>
+        <button onclick="toggleClass('red')">Toggle Red</button>
+        <button onclick="toggleClass('bold')">Toggle Bold</button>
+        <button onclick="showClasses()">Show Classes</button>
+    </div>
+    <p id="class-display" style="font-family: monospace;"></p>
+
+    <h2>4. Changing Attributes</h2>
+    <div class="demo-box">
+        <img id="attr-img" src="https://picsum.photos/200/100?random=1" alt="Random image" style="border-radius: 10px;">
+        <p><a id="attr-link" href="https://example.com" target="_blank">Example Link</a></p>
+    </div>
+    <div class="controls">
+        <button onclick="changeImage()">Change Image</button>
+        <button onclick="changeLink()">Change Link</button>
+        <button onclick="toggleTarget()">Toggle target="_blank"</button>
+    </div>
+
+    <h2>5. Creating & Removing Elements</h2>
+    <div id="list-container">
+        <ul id="dynamic-list">
+            <li>Item 1 <button class="delete-btn" onclick="removeItem(this)">Delete</button></li>
+            <li>Item 2 <button class="delete-btn" onclick="removeItem(this)">Delete</button></li>
+        </ul>
+    </div>
+    <div class="controls">
+        <input type="text" id="new-item" placeholder="New item text">
+        <button onclick="addItem()">Add Item</button>
+        <button onclick="clearList()">Clear All</button>
+    </div>
+
+    <script>
+        // 1. Content Manipulation
+        function changeText() {
+            const text = document.getElementById('new-text').value || 'New text!';
+            document.getElementById('content-target').textContent = text;
+        }
+
+        function changeHTML() {
+            const text = document.getElementById('new-text').value || 'Bold';
+            document.getElementById('content-target').innerHTML = `<strong>${text}</strong> with <em>HTML</em>!`;
+        }
+
+        function resetContent() {
+            document.getElementById('content-target').textContent = 'Original text content';
+        }
+
+        // 2. Style Manipulation
+        let colorIndex = 0;
+        const colors = ['#e91e63', '#3498db', '#27ae60', '#f39c12', '#9b59b6'];
+
+        function changeColor() {
+            colorIndex = (colorIndex + 1) % colors.length;
+            document.getElementById('style-target').style.color = colors[colorIndex];
+        }
+
+        function changeSize() {
+            const el = document.getElementById('style-target');
+            const currentSize = parseInt(getComputedStyle(el).fontSize);
+            el.style.fontSize = (currentSize + 5) + 'px';
+        }
+
+        function changeBackground() {
+            const el = document.getElementById('style-box');
+            const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+            el.style.backgroundColor = randomColor;
+        }
+
+        function resetStyles() {
+            document.getElementById('style-target').style.cssText = '';
+            document.getElementById('style-box').style.backgroundColor = '';
+        }
+
+        // 3. Class Manipulation
+        function toggleClass(className) {
+            document.getElementById('class-target').classList.toggle(className);
+            showClasses();
+        }
+
+        function showClasses() {
+            const classes = document.getElementById('class-target').classList;
+            document.getElementById('class-display').textContent =
+                `Current classes: [${Array.from(classes).join(', ')}]`;
+        }
+
+        // 4. Attribute Manipulation
+        let imgNumber = 1;
+        function changeImage() {
+            imgNumber++;
+            document.getElementById('attr-img').src = `https://picsum.photos/200/100?random=${imgNumber}`;
+            document.getElementById('attr-img').alt = `Random image ${imgNumber}`;
+        }
+
+        function changeLink() {
+            const link = document.getElementById('attr-link');
+            const isGoogle = link.href.includes('google');
+            link.href = isGoogle ? 'https://example.com' : 'https://google.com';
+            link.textContent = isGoogle ? 'Example Link' : 'Google Link';
+        }
+
+        function toggleTarget() {
+            const link = document.getElementById('attr-link');
+            if (link.hasAttribute('target')) {
+                link.removeAttribute('target');
+                alert('target attribute removed');
+            } else {
+                link.setAttribute('target', '_blank');
+                alert('target="_blank" added');
+            }
+        }
+
+        // 5. Creating & Removing Elements
+        let itemCount = 2;
+        function addItem() {
+            const text = document.getElementById('new-item').value || `Item ${++itemCount}`;
+
+            const li = document.createElement('li');
+            li.textContent = text + ' ';
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'delete-btn';
+            deleteBtn.textContent = 'Delete';
+            deleteBtn.onclick = function() { removeItem(this); };
+
+            li.appendChild(deleteBtn);
+            document.getElementById('dynamic-list').appendChild(li);
+
+            document.getElementById('new-item').value = '';
+        }
+
+        function removeItem(btn) {
+            btn.parentElement.remove();
+        }
+
+        function clearList() {
+            document.getElementById('dynamic-list').innerHTML = '';
+            itemCount = 0;
+        }
+    </script>
+
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>

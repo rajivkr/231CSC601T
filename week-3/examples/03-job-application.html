@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Application - Week 03 Example</title>
+</head>
+<body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+    <h1>Job Application Form</h1>
+    <h2>Software Developer Position</h2>
+
+    <form action="/api/apply" method="POST" enctype="multipart/form-data">
+        <fieldset>
+            <legend>Personal Details</legend>
+            <p>
+                <label for="firstname">First Name:</label><br>
+                <input type="text" id="firstname" name="firstname" required>
+            </p>
+            <p>
+                <label for="lastname">Last Name:</label><br>
+                <input type="text" id="lastname" name="lastname" required>
+            </p>
+            <p>
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="email" required>
+            </p>
+            <p>
+                <label for="phone">Phone:</label><br>
+                <input type="tel" id="phone" name="phone" required>
+            </p>
+            <p>
+                <label for="linkedin">LinkedIn Profile:</label><br>
+                <input type="url" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/yourprofile">
+            </p>
+            <p>
+                <label for="portfolio">Portfolio Website:</label><br>
+                <input type="url" id="portfolio" name="portfolio" placeholder="https://yourportfolio.com">
+            </p>
+        </fieldset>
+
+        <fieldset>
+            <legend>Education</legend>
+            <p>
+                <label for="degree">Highest Degree:</label><br>
+                <select id="degree" name="degree" required>
+                    <option value="">-- Select --</option>
+                    <option value="btech">B.Tech / B.E.</option>
+                    <option value="mtech">M.Tech / M.E.</option>
+                    <option value="bsc">B.Sc Computer Science</option>
+                    <option value="msc">M.Sc Computer Science</option>
+                    <option value="mca">MCA</option>
+                    <option value="other">Other</option>
+                </select>
+            </p>
+            <p>
+                <label for="university">University/College:</label><br>
+                <input type="text" id="university" name="university" required>
+            </p>
+            <p>
+                <label for="graduation">Graduation Year:</label><br>
+                <input type="number" id="graduation" name="graduation" min="1990" max="2030" required>
+            </p>
+            <p>
+                <label for="percentage">Percentage/CGPA:</label><br>
+                <input type="text" id="percentage" name="percentage" placeholder="e.g., 85% or 8.5 CGPA">
+            </p>
+        </fieldset>
+
+        <fieldset>
+            <legend>Work Experience</legend>
+            <p>
+                <label for="experience">Total Experience (years):</label><br>
+                <input type="number" id="experience" name="experience" min="0" max="50" required>
+            </p>
+            <p>
+                <label for="current_company">Current/Last Company:</label><br>
+                <input type="text" id="current_company" name="current_company">
+            </p>
+            <p>
+                <label for="current_role">Current/Last Role:</label><br>
+                <input type="text" id="current_role" name="current_role">
+            </p>
+            <p>
+                <label for="current_ctc">Current CTC (LPA):</label><br>
+                <input type="number" id="current_ctc" name="current_ctc" min="0" step="0.5">
+            </p>
+            <p>
+                <label for="expected_ctc">Expected CTC (LPA):</label><br>
+                <input type="number" id="expected_ctc" name="expected_ctc" min="0" step="0.5" required>
+            </p>
+            <p>
+                <label for="notice">Notice Period (days):</label><br>
+                <input type="number" id="notice" name="notice" min="0" max="180" value="30">
+            </p>
+        </fieldset>
+
+        <fieldset>
+            <legend>Skills</legend>
+            <p><label>Programming Languages:</label></p>
+            <p>
+                <label><input type="checkbox" name="skills" value="javascript"> JavaScript</label>
+                <label><input type="checkbox" name="skills" value="python"> Python</label>
+                <label><input type="checkbox" name="skills" value="java"> Java</label>
+                <label><input type="checkbox" name="skills" value="cpp"> C++</label>
+                <label><input type="checkbox" name="skills" value="go"> Go</label>
+            </p>
+            <p><label>Web Technologies:</label></p>
+            <p>
+                <label><input type="checkbox" name="skills" value="html"> HTML/CSS</label>
+                <label><input type="checkbox" name="skills" value="react"> React</label>
+                <label><input type="checkbox" name="skills" value="node"> Node.js</label>
+                <label><input type="checkbox" name="skills" value="sql"> SQL</label>
+                <label><input type="checkbox" name="skills" value="mongodb"> MongoDB</label>
+            </p>
+        </fieldset>
+
+        <fieldset>
+            <legend>Documents</legend>
+            <p>
+                <label for="resume">Resume (PDF, max 5MB):</label><br>
+                <input type="file" id="resume" name="resume" accept=".pdf" required>
+            </p>
+            <p>
+                <label for="cover">Cover Letter (optional):</label><br>
+                <input type="file" id="cover" name="cover" accept=".pdf,.doc,.docx">
+            </p>
+        </fieldset>
+
+        <fieldset>
+            <legend>Additional Information</legend>
+            <p>
+                <label for="why">Why do you want to join us?</label><br>
+                <textarea id="why" name="why" rows="4" cols="60" required minlength="50"></textarea>
+            </p>
+            <p>
+                <label for="available">Available to start from:</label><br>
+                <input type="date" id="available" name="available" required>
+            </p>
+            <p>
+                <label>
+                    <input type="checkbox" name="relocate" value="yes">
+                    Willing to relocate
+                </label>
+            </p>
+            <p>
+                <label>How did you hear about us?</label><br>
+                <label><input type="radio" name="source" value="linkedin"> LinkedIn</label>
+                <label><input type="radio" name="source" value="referral"> Employee Referral</label>
+                <label><input type="radio" name="source" value="jobsite"> Job Portal</label>
+                <label><input type="radio" name="source" value="other"> Other</label>
+            </p>
+        </fieldset>
+
+        <p>
+            <label>
+                <input type="checkbox" name="accurate" required>
+                I certify that all information provided is accurate
+            </label>
+        </p>
+
+        <p>
+            <button type="submit">Submit Application</button>
+            <button type="reset">Clear Form</button>
+        </p>
+    </form>
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>

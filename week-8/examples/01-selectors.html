@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM Selectors - Week 08 Example</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; }
+        h1 { color: #e91e63; }
+        .output { background: #2c3e50; color: #2ecc71; padding: 20px; border-radius: 10px; font-family: monospace; white-space: pre-wrap; margin: 15px 0; }
+        button { background: #e91e63; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 5px; }
+        button:hover { background: #c2185b; }
+        .demo-area { background: #f5f5f5; padding: 20px; border-radius: 10px; margin: 20px 0; }
+        .highlight { background: yellow; padding: 2px 5px; }
+        .card { background: white; padding: 15px; margin: 10px 0; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+    <h1>DOM Selectors Demo</h1>
+
+    <div class="demo-area">
+        <h2 id="main-title">Main Title</h2>
+        <p class="intro">This is the first paragraph with class "intro".</p>
+        <p class="intro">This is the second paragraph with class "intro".</p>
+        <p>This is a regular paragraph.</p>
+
+        <div class="card" data-id="1">
+            <h3>Card 1</h3>
+            <p>First card content</p>
+        </div>
+        <div class="card" data-id="2">
+            <h3>Card 2</h3>
+            <p>Second card content</p>
+        </div>
+        <div class="card special" data-id="3">
+            <h3>Card 3 (Special)</h3>
+            <p>Third card with extra class</p>
+        </div>
+    </div>
+
+    <h2>Try the Selectors</h2>
+    <button onclick="selectById()">getElementById</button>
+    <button onclick="selectByQuery()">querySelector</button>
+    <button onclick="selectByQueryAll()">querySelectorAll</button>
+    <button onclick="selectByClass()">getElementsByClassName</button>
+    <button onclick="selectAttribute()">Attribute Selector</button>
+    <button onclick="resetDemo()">Reset</button>
+
+    <div class="output" id="output">Click a button to see the selector in action...</div>
+
+    <script>
+        function selectById() {
+            // Clear previous highlights
+            resetDemo();
+
+            const element = document.getElementById('main-title');
+            element.style.backgroundColor = '#e91e63';
+            element.style.color = 'white';
+            element.style.padding = '10px';
+
+            document.getElementById('output').textContent = `// getElementById - Returns ONE element by ID
+
+const element = document.getElementById('main-title');
+
+// Result: ${element.tagName} element
+// Text: "${element.textContent}"
+
+// Note: IDs should be unique on a page!`;
+        }
+
+        function selectByQuery() {
+            resetDemo();
+
+            const element = document.querySelector('.intro');
+            element.classList.add('highlight');
+
+            document.getElementById('output').textContent = `// querySelector - Returns FIRST match
+
+const element = document.querySelector('.intro');
+
+// Result: First element with class "intro"
+// Text: "${element.textContent}"
+
+// You can use any CSS selector:
+document.querySelector('#main-title')      // by ID
+document.querySelector('.card')            // by class
+document.querySelector('div.card.special') // complex selector
+document.querySelector('[data-id="2"]')    // attribute selector`;
+        }
+
+        function selectByQueryAll() {
+            resetDemo();
+
+            const elements = document.querySelectorAll('.card');
+            elements.forEach((el, index) => {
+                el.style.borderLeft = '5px solid #e91e63';
+            });
+
+            document.getElementById('output').textContent = `// querySelectorAll - Returns ALL matches (NodeList)
+
+const elements = document.querySelectorAll('.card');
+
+// Result: NodeList with ${elements.length} elements
+
+// Loop through them:
+elements.forEach((el, index) => {
+    console.log(\`Card \${index + 1}: \${el.textContent}\`);
+});
+
+// Convert to Array if needed:
+const array = Array.from(elements);
+// or
+const array2 = [...elements];`;
+        }
+
+        function selectByClass() {
+            resetDemo();
+
+            const elements = document.getElementsByClassName('intro');
+            for (let el of elements) {
+                el.style.color = '#e91e63';
+                el.style.fontWeight = 'bold';
+            }
+
+            document.getElementById('output').textContent = `// getElementsByClassName - Returns HTMLCollection
+
+const elements = document.getElementsByClassName('intro');
+
+// Result: HTMLCollection with ${elements.length} elements
+
+// HTMLCollection is "live" - updates automatically when DOM changes
+// Use for...of to loop:
+for (let el of elements) {
+    console.log(el.textContent);
+}
+
+// Note: Prefer querySelectorAll for consistency!`;
+        }
+
+        function selectAttribute() {
+            resetDemo();
+
+            const element = document.querySelector('[data-id="2"]');
+            element.style.backgroundColor = '#e91e63';
+            element.style.color = 'white';
+
+            const special = document.querySelector('.card.special');
+            special.style.border = '3px dashed #f06292';
+
+            document.getElementById('output').textContent = `// Attribute Selectors
+
+// Select by data attribute:
+const el = document.querySelector('[data-id="2"]');
+
+// Select by multiple classes:
+const special = document.querySelector('.card.special');
+
+// Other attribute selectors:
+[href]          // has href attribute
+[href="..."]    // href equals value
+[href^="http"]  // href starts with
+[href$=".pdf"]  // href ends with
+[href*="example"] // href contains`;
+        }
+
+        function resetDemo() {
+            // Reset all styles
+            document.querySelectorAll('.demo-area *').forEach(el => {
+                el.style.backgroundColor = '';
+                el.style.color = '';
+                el.style.padding = '';
+                el.style.fontWeight = '';
+                el.style.borderLeft = '';
+                el.style.border = '';
+                el.classList.remove('highlight');
+            });
+        }
+    </script>
+
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>

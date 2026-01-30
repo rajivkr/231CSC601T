@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid - Week 05 Example</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #e67e22;
+        }
+
+        h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #e67e22;
+            padding-bottom: 10px;
+        }
+
+        .demo-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+
+        .grid-container {
+            display: grid;
+            gap: 10px;
+            background: #ecf0f1;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .grid-item {
+            background: #3498db;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        /* Basic grid */
+        .grid-3-cols {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        /* Different column sizes */
+        .grid-mixed {
+            grid-template-columns: 200px 1fr 1fr;
+        }
+
+        /* Repeat */
+        .grid-repeat {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        /* Auto-fit */
+        .grid-auto-fit {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+
+        /* Rows */
+        .grid-rows {
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: 100px 150px 100px;
+        }
+
+        /* Spanning */
+        .grid-span {
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(3, 100px);
+        }
+        .span-2-cols { grid-column: span 2; background: #e74c3c; }
+        .span-2-rows { grid-row: span 2; background: #27ae60; }
+        .span-both { grid-column: span 2; grid-row: span 2; background: #9b59b6; }
+
+        /* Grid areas */
+        .grid-areas {
+            grid-template-columns: 200px 1fr 1fr;
+            grid-template-rows: 60px 1fr 60px;
+            grid-template-areas:
+                "header header header"
+                "sidebar main main"
+                "footer footer footer";
+            min-height: 400px;
+        }
+        .header { grid-area: header; background: #2c3e50; }
+        .sidebar { grid-area: sidebar; background: #e67e22; }
+        .main { grid-area: main; background: #3498db; }
+        .footer { grid-area: footer; background: #2c3e50; }
+
+        /* Gallery demo */
+        .gallery {
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            grid-auto-rows: 150px;
+        }
+        .gallery img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .gallery .wide {
+            grid-column: span 2;
+        }
+        .gallery .tall {
+            grid-row: span 2;
+        }
+
+        code {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+
+        pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        .label {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .info-box {
+            background: #e8f5e9;
+            border-left: 4px solid #27ae60;
+            padding: 15px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+
+    <h1>CSS Grid Demo</h1>
+    <p>CSS Grid is perfect for two-dimensional layouts (rows AND columns)!</p>
+
+    <!-- Basic Grid -->
+    <div class="demo-section">
+        <h2>1. Basic Grid - 3 Equal Columns</h2>
+        <div class="grid-container grid-3-cols">
+            <div class="grid-item">1</div>
+            <div class="grid-item">2</div>
+            <div class="grid-item">3</div>
+            <div class="grid-item">4</div>
+            <div class="grid-item">5</div>
+            <div class="grid-item">6</div>
+        </div>
+        <pre><code>.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+}</code></pre>
+        <p class="label">The <code>fr</code> unit means "fraction of available space"</p>
+    </div>
+
+    <!-- Mixed Columns -->
+    <div class="demo-section">
+        <h2>2. Mixed Column Sizes</h2>
+        <div class="grid-container grid-mixed">
+            <div class="grid-item">Fixed 200px</div>
+            <div class="grid-item">1fr</div>
+            <div class="grid-item">1fr</div>
+        </div>
+        <pre><code>grid-template-columns: 200px 1fr 1fr;</code></pre>
+        <p class="label">First column is fixed, rest share remaining space</p>
+    </div>
+
+    <!-- Repeat -->
+    <div class="demo-section">
+        <h2>3. Using repeat()</h2>
+        <div class="grid-container grid-repeat">
+            <div class="grid-item">1</div>
+            <div class="grid-item">2</div>
+            <div class="grid-item">3</div>
+            <div class="grid-item">4</div>
+        </div>
+        <pre><code>grid-template-columns: repeat(4, 1fr);
+/* Same as: 1fr 1fr 1fr 1fr */</code></pre>
+    </div>
+
+    <!-- Auto-fit -->
+    <div class="demo-section">
+        <h2>4. Responsive Grid with auto-fit</h2>
+        <div class="grid-container grid-auto-fit">
+            <div class="grid-item">1</div>
+            <div class="grid-item">2</div>
+            <div class="grid-item">3</div>
+            <div class="grid-item">4</div>
+            <div class="grid-item">5</div>
+            <div class="grid-item">6</div>
+        </div>
+        <pre><code>grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));</code></pre>
+        <p class="label">Resize the browser to see items automatically reflow! Minimum 200px, maximum 1fr.</p>
+        <div class="info-box">
+            <strong>This is the magic formula for responsive grids!</strong> No media queries needed.
+        </div>
+    </div>
+
+    <!-- Rows -->
+    <div class="demo-section">
+        <h2>5. Explicit Row Heights</h2>
+        <div class="grid-container grid-rows">
+            <div class="grid-item">1</div>
+            <div class="grid-item">2</div>
+            <div class="grid-item">3</div>
+            <div class="grid-item">4</div>
+            <div class="grid-item">5</div>
+            <div class="grid-item">6</div>
+            <div class="grid-item">7</div>
+            <div class="grid-item">8</div>
+            <div class="grid-item">9</div>
+        </div>
+        <pre><code>grid-template-columns: repeat(3, 1fr);
+grid-template-rows: 100px 150px 100px;</code></pre>
+    </div>
+
+    <!-- Spanning -->
+    <div class="demo-section">
+        <h2>6. Grid Spanning</h2>
+        <div class="grid-container grid-span">
+            <div class="grid-item span-2-cols">Span 2 columns</div>
+            <div class="grid-item">3</div>
+            <div class="grid-item">4</div>
+            <div class="grid-item span-2-rows">Span 2 rows</div>
+            <div class="grid-item">6</div>
+            <div class="grid-item">7</div>
+            <div class="grid-item span-both">Span 2x2</div>
+            <div class="grid-item">9</div>
+            <div class="grid-item">10</div>
+        </div>
+        <pre><code>.span-2-cols { grid-column: span 2; }
+.span-2-rows { grid-row: span 2; }
+.span-both {
+    grid-column: span 2;
+    grid-row: span 2;
+}</code></pre>
+    </div>
+
+    <!-- Grid Areas -->
+    <div class="demo-section">
+        <h2>7. Named Grid Areas</h2>
+        <div class="grid-container grid-areas">
+            <div class="grid-item header">Header</div>
+            <div class="grid-item sidebar">Sidebar</div>
+            <div class="grid-item main">Main Content</div>
+            <div class="grid-item footer">Footer</div>
+        </div>
+        <pre><code>grid-template-areas:
+    "header header header"
+    "sidebar main main"
+    "footer footer footer";
+
+.header { grid-area: header; }
+.sidebar { grid-area: sidebar; }
+.main { grid-area: main; }
+.footer { grid-area: footer; }</code></pre>
+        <div class="info-box">
+            <strong>Visual Layout!</strong> The template-areas property lets you "draw" your layout with ASCII art.
+        </div>
+    </div>
+
+    <!-- Image Gallery -->
+    <div class="demo-section">
+        <h2>8. Practical Example: Image Gallery</h2>
+        <div class="grid-container gallery">
+            <div class="wide"><img src="https://picsum.photos/400/150?random=1" alt="Wide image"></div>
+            <div><img src="https://picsum.photos/150/150?random=2" alt="Image"></div>
+            <div class="tall"><img src="https://picsum.photos/150/300?random=3" alt="Tall image"></div>
+            <div><img src="https://picsum.photos/150/150?random=4" alt="Image"></div>
+            <div><img src="https://picsum.photos/150/150?random=5" alt="Image"></div>
+            <div><img src="https://picsum.photos/150/150?random=6" alt="Image"></div>
+            <div class="wide"><img src="https://picsum.photos/400/150?random=7" alt="Wide image"></div>
+            <div><img src="https://picsum.photos/150/150?random=8" alt="Image"></div>
+        </div>
+        <pre><code>.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-auto-rows: 150px;
+    gap: 10px;
+}
+.wide { grid-column: span 2; }
+.tall { grid-row: span 2; }</code></pre>
+    </div>
+
+    <!-- Summary -->
+    <div class="demo-section">
+        <h2>Key Grid Properties Summary</h2>
+        <table border="1" cellpadding="10" style="width: 100%; border-collapse: collapse;">
+            <tr style="background: #e67e22; color: white;">
+                <th>Property</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td><code>grid-template-columns</code></td>
+                <td>Define column tracks</td>
+            </tr>
+            <tr>
+                <td><code>grid-template-rows</code></td>
+                <td>Define row tracks</td>
+            </tr>
+            <tr>
+                <td><code>gap</code></td>
+                <td>Space between items</td>
+            </tr>
+            <tr>
+                <td><code>grid-column</code></td>
+                <td>Item column position/span</td>
+            </tr>
+            <tr>
+                <td><code>grid-row</code></td>
+                <td>Item row position/span</td>
+            </tr>
+            <tr>
+                <td><code>grid-template-areas</code></td>
+                <td>Name areas for easy placement</td>
+            </tr>
+            <tr>
+                <td><code>repeat()</code></td>
+                <td>Repeat track definitions</td>
+            </tr>
+            <tr>
+                <td><code>minmax()</code></td>
+                <td>Set min and max track size</td>
+            </tr>
+            <tr>
+                <td><code>auto-fit / auto-fill</code></td>
+                <td>Create responsive grids</td>
+            </tr>
+        </table>
+    </div>
+
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>

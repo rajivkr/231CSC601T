@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en" class="dark" data-accent="unit-2">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1a1a2e">
+    <title>Week 06 - CSS Animations & Advanced | 231CSC601T</title>
+    <script src="../../core/theme.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../../core/tw-config.js"></script>
+    <link rel="stylesheet" href="../../core/slides.css">
+</head>
+<body class="font-sans min-h-screen
+             bg-gradient-to-br from-navy to-navy-deep text-gray-200
+             dark:bg-gradient-to-br dark:from-navy dark:to-navy-deep dark:text-gray-200">
+
+    <a href="#main-content" class="skip-link bg-[var(--accent)] text-white px-4 py-2 rounded-lg font-semibold no-underline">Skip to content</a>
+
+    <!-- Nav header -->
+    <nav class="fixed top-0 left-0 right-0 z-50
+                bg-black/90 dark:bg-black/90 bg-white/95 dark:bg-black/90
+                backdrop-blur-md border-b-2 border-[var(--accent)]
+                px-4 py-2 flex justify-between items-center" aria-label="Slide navigation">
+        <div class="flex items-center gap-3 min-w-0">
+            <a href="../../index.html" class="text-[var(--accent)] text-sm hover:underline whitespace-nowrap hidden sm:inline">&larr; Home</a>
+            <a href="../examples/index.html" class="text-[var(--accent)] text-sm hover:underline whitespace-nowrap hidden sm:inline">&larr; Examples</a>
+            <span class="text-[var(--accent)] font-bold text-sm truncate">Week 06: CSS Animations & Advanced</span>
+        </div>
+        <div class="flex items-center gap-2 flex-shrink-0">
+            <button class="theme-toggle w-9 h-9 flex items-center justify-center border border-gray-600 dark:border-gray-600 border-gray-300 rounded-lg bg-transparent text-gray-400 hover:text-white cursor-pointer transition" aria-label="Switch to light mode">
+                <svg class="icon-sun w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="icon-moon w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+            <button class="px-3 py-1.5 rounded-lg bg-[var(--accent)] text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" onclick="toggleMenu()" aria-label="Open slide menu">Menu</button>
+            <button class="px-3 py-1.5 rounded-lg bg-red-500 text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" id="prevBtn" aria-label="Previous slide">Prev</button>
+            <span class="text-gray-400 text-sm tabular-nums" aria-live="polite"><span id="currentSlide">1</span> / <span id="totalSlides"></span></span>
+            <button class="px-3 py-1.5 rounded-lg bg-green-600 text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" id="nextBtn" aria-label="Next slide">Next</button>
+        </div>
+    </nav>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay fixed inset-0 z-[200] bg-black/90 dark:bg-black/90 overflow-y-auto p-6" id="menuOverlay" aria-hidden="true" role="dialog" aria-label="Slide navigation menu">
+        <button class="close-menu fixed top-6 right-6 text-4xl text-white cursor-pointer bg-transparent border-none z-[201] leading-none p-2" onclick="toggleMenu()" aria-label="Close menu">&times;</button>
+        <div class="max-w-[600px] mx-auto mt-12 p-5">
+            <h2 class="text-[var(--accent)] text-2xl font-bold text-center mb-6">Slide Navigation</h2>
+            <ul id="slideMenu" class="list-none m-0 p-0"></ul>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <main id="main-content" class="max-w-[1200px] mx-auto px-5 pt-16">
+
+        <!-- Progress bar -->
+        <div class="w-full h-1 bg-white/10 dark:bg-white/10 bg-gray-200 rounded mt-4 mb-5 overflow-hidden">
+            <div class="progress-fill h-full rounded bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)]" id="progress" style="width:0%"></div>
+        </div>
+
+        <!-- Slide 1: Title -->
+        <section class="slide active rounded-2xl p-6 md:p-10 min-h-[80vh]
+                        bg-white/5 dark:bg-white/5 bg-white dark:bg-white/5
+                        border border-white/10 dark:border-white/10 border-gray-200
+                        backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Week 06: CSS Animations & Advanced</h1>
+            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Unit II - Bringing Pages to Life</h2>
+            <p class="text-xl text-gray-300 dark:text-gray-300 text-gray-600 my-5">Making the web move, transform, and delight!</p>
+
+            <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                <h3 class="text-xl text-[var(--accent-light)] mb-3">What You'll Learn</h3>
+                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                    <li>CSS Transitions - smooth property changes</li>
+                    <li>CSS Transforms - rotate, scale, skew, translate</li>
+                    <li>CSS Animations - keyframes and complex sequences</li>
+                    <li>Responsive design with media queries</li>
+                </ul>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div style="background: var(--accent); color: white; padding: 20px; border-radius: 10px; text-align: center; transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='scale(1.1)';this.style.background='var(--accent-light)'" onmouseout="this.style.transform='scale(1)';this.style.background='var(--accent)'">Hover me!</div>
+                <div style="background: var(--accent); color: white; padding: 20px; border-radius: 10px; text-align: center; animation: pulse 2s infinite;">Pulsing</div>
+            </div>
+
+            <p class="text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Press &rarr; or click Next to continue</strong></p>
+        </section>
+
+        <!-- Slide 2: CSS Transitions -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">CSS Transitions</h1>
+            <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Smooth animations between two states (e.g., hover)</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Transition Properties</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">/* Individual properties */
+transition-property: background-color;
+transition-duration: 0.3s;
+transition-timing-function: ease;
+transition-delay: 0s;
+
+/* Shorthand */
+transition: all 0.3s ease;
+
+/* Multiple properties */
+transition: background 0.3s,
+            transform 0.5s ease-out;</code></pre>
+
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3 mt-4">Timing Functions</h3>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">ease</code> - slow start, fast, slow end (default)</li>
+                        <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">linear</code> - constant speed</li>
+                        <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">ease-in</code> - slow start</li>
+                        <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">ease-out</code> - slow end</li>
+                        <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">ease-in-out</code> - slow start and end</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">Example</h3>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">.button {
+    background: #3498db;
+    padding: 15px 30px;
+    transition: all 0.3s ease;
+}
+
+.button:hover {
+    background: #2980b9;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}</code></pre>
+
+                    <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-3">What Can Transition?</h3>
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Most numeric properties: color, background, width, height, opacity, transform, box-shadow, etc.</p>
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Cannot transition:</strong> display, visibility (use opacity instead)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3: CSS Transforms -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">CSS Transforms</h1>
+            <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Modify an element's visual appearance without affecting layout</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">2D Transforms</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">/* Move element */
+transform: translate(50px, 100px);
+transform: translateX(50px);
+transform: translateY(100px);
+
+/* Rotate */
+transform: rotate(45deg);
+
+/* Scale (resize) */
+transform: scale(1.5);      /* 150% */
+transform: scale(2, 0.5);   /* x, y */
+
+/* Skew (tilt) */
+transform: skew(10deg, 5deg);
+
+/* Combine multiple */
+transform: translateX(50px) rotate(45deg) scale(1.2);</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Transform Origin</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">/* Default is center */
+transform-origin: center center;
+
+/* Change the pivot point */
+transform-origin: top left;
+transform-origin: 0 0;
+transform-origin: 100% 100%;</code></pre>
+
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3 mt-4">Live Demos</h3>
+                    <div style="display: flex; gap: 20px; margin-top: 15px;">
+                        <div style="background: var(--accent); color: white; padding: 20px; border-radius: 10px; text-align: center; transform: rotate(15deg);">Rotate</div>
+                        <div style="background: var(--accent); color: white; padding: 20px; border-radius: 10px; text-align: center; transform: scale(0.8);">Scale</div>
+                        <div style="background: var(--accent); color: white; padding: 20px; border-radius: 10px; text-align: center; transform: skewX(10deg);">Skew</div>
+                    </div>
+
+                    <div class="p-5 rounded-lg border border-red-500/30 bg-red-500/10 my-4">
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Note:</strong> Transforms don't affect document flow - the element's original space is preserved!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 4: CSS Animations -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">CSS Animations with @keyframes</h1>
+            <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Complex, multi-step animations that run automatically</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Define Animation</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">@keyframes slidein {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Or with percentages */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Apply Animation</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">.element {
+    animation-name: slidein;
+    animation-duration: 1s;
+    animation-timing-function: ease;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+}
+
+/* Shorthand */
+animation: slidein 1s ease forwards;
+
+/* Infinite animation */
+animation: pulse 2s infinite;</code></pre>
+                </div>
+            </div>
+
+            <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                <h3 class="text-xl text-[var(--accent-light)] mb-3">Live Examples</h3>
+                <div style="display: flex; gap: 30px; align-items: center;">
+                    <div style="background: var(--accent); color: white; padding: 20px; border-radius: 10px; text-align: center; animation: pulse 2s infinite;">Pulse</div>
+                    <div style="background: var(--accent); color: white; padding: 20px; border-radius: 10px; text-align: center; animation: bounce 1s ease infinite;">Bounce</div>
+                    <div style="background: var(--accent); color: white; padding: 20px; border-radius: 10px; text-align: center; animation: spin 3s linear infinite; display: inline-block;">Spin</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 5: Animation Properties -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Animation Properties Deep Dive</h1>
+
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse text-base">
+                    <tr>
+                        <th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Property</th>
+                        <th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Values</th>
+                        <th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Description</th>
+                    </tr>
+                    <tr class="hover:bg-white/5">
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">animation-duration</code></td>
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">1s, 500ms</td>
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">How long one cycle takes</td>
+                    </tr>
+                    <tr class="hover:bg-white/5">
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">animation-iteration-count</code></td>
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">1, 3, infinite</td>
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">How many times to repeat</td>
+                    </tr>
+                    <tr class="hover:bg-white/5">
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">animation-direction</code></td>
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">normal, reverse, alternate</td>
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Direction of playback</td>
+                    </tr>
+                    <tr class="hover:bg-white/5">
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">animation-fill-mode</code></td>
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">none, forwards, backwards, both</td>
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">State before/after animation</td>
+                    </tr>
+                    <tr class="hover:bg-white/5">
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">animation-play-state</code></td>
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">running, paused</td>
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Pause/resume animation</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">animation-direction: alternate</h3>
+                    <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Animation plays forward, then backward. Great for continuous effects!</p>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm mt-3"><code class="text-gray-200">animation: bounce 1s ease infinite alternate;</code></pre>
+                </div>
+                <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">animation-fill-mode: forwards</h3>
+                    <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Element stays at the final keyframe state after animation ends.</p>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm mt-3"><code class="text-gray-200">animation: fadeIn 1s forwards;</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 6: Practical Animation Examples -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Practical Animation Examples</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Loading Spinner</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #eee;
+    border-top-color: #1abc9c;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}</code></pre>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">Fade In on Load</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeInUp 0.5s ease forwards;
+}</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Shake Effect (Error)</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+.error {
+    animation: shake 0.3s ease;
+}</code></pre>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">Typing Effect</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+.typewriter {
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typing 3s steps(30);
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 7: Media Queries -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Responsive Design with Media Queries</h1>
+            <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Apply different styles based on screen size, orientation, etc.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Basic Syntax</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">/* Mobile first approach */
+.container {
+    width: 100%;
+    padding: 10px;
+}
+
+/* Tablet and up */
+@media (min-width: 768px) {
+    .container {
+        width: 750px;
+        margin: 0 auto;
+    }
+}
+
+/* Desktop and up */
+@media (min-width: 1024px) {
+    .container {
+        width: 960px;
+    }
+}</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Common Breakpoints</h2>
+                    <div class="overflow-x-auto">
+                        <table class="w-full border-collapse text-base">
+                            <tr>
+                                <th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Device</th>
+                                <th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Width</th>
+                            </tr>
+                            <tr class="hover:bg-white/5">
+                                <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Mobile</td>
+                                <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">&lt; 768px</td>
+                            </tr>
+                            <tr class="hover:bg-white/5">
+                                <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Tablet</td>
+                                <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">768px - 1023px</td>
+                            </tr>
+                            <tr class="hover:bg-white/5">
+                                <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Desktop</td>
+                                <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">1024px - 1199px</td>
+                            </tr>
+                            <tr class="hover:bg-white/5">
+                                <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Large Desktop</td>
+                                <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">&ge; 1200px</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-3">Mobile First!</h3>
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Write base styles for mobile, then add complexity for larger screens with <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">min-width</code>.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 8: Advanced Media Queries -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Advanced Media Queries</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Combining Conditions</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">/* AND - both must be true */
+@media (min-width: 768px) and (max-width: 1023px) {
+    /* Tablet only */
+}
+
+/* OR - either can be true */
+@media (max-width: 767px), (orientation: portrait) {
+    /* Mobile OR portrait mode */
+}
+
+/* NOT */
+@media not print {
+    /* Everything except print */
+}</code></pre>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">Other Media Features</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">/* Orientation */
+@media (orientation: landscape) { }
+
+/* High-resolution screens */
+@media (min-resolution: 2dppx) { }
+
+/* Hover capability */
+@media (hover: hover) {
+    /* Device can hover */
+}
+
+/* Prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; }
+}</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Responsive Navigation Example</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">.nav {
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-toggle {
+    display: block;
+}
+
+@media (min-width: 768px) {
+    .nav {
+        flex-direction: row;
+    }
+
+    .nav-toggle {
+        display: none;
+    }
+}</code></pre>
+
+                    <div class="p-5 rounded-lg border border-red-500/30 bg-red-500/10 my-4">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-3">Accessibility: prefers-reduced-motion</h3>
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Always respect user preferences! Some users get motion sickness from animations.</p>
+                        <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm mt-3"><code class="text-gray-200">@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 9: CSS Variables -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">CSS Custom Properties (Variables)</h1>
+            <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Store values for reuse throughout your stylesheet</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Defining Variables</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">/* Define in :root for global access */
+:root {
+    --primary-color: #1abc9c;
+    --secondary-color: #3498db;
+    --spacing: 20px;
+    --border-radius: 8px;
+    --font-main: 'Segoe UI', sans-serif;
+}
+
+/* Use with var() */
+.button {
+    background: var(--primary-color);
+    padding: var(--spacing);
+    border-radius: var(--border-radius);
+    font-family: var(--font-main);
+}</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Why Use Variables?</h2>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Single source of truth for colors, sizes</li>
+                        <li>Easy theme switching</li>
+                        <li>Consistent design system</li>
+                        <li>Easier maintenance</li>
+                    </ul>
+
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3 mt-4">Fallback Values</h3>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">color: var(--text-color, #333);
+/* Uses #333 if --text-color is not defined */</code></pre>
+
+                    <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-3">Dark Mode Example</h3>
+                        <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">:root {
+    --bg: white;
+    --text: black;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #1a1a1a;
+        --text: white;
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 10: Performance Tips -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Animation Performance Tips</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Performant Properties</h2>
+                    <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">These trigger GPU acceleration (fast!):</p>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">transform</code></li>
+                        <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">opacity</code></li>
+                    </ul>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">Expensive Properties</h2>
+                    <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">These trigger layout recalculation (slow!):</p>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">width</code>, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">height</code></li>
+                        <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">margin</code>, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">padding</code></li>
+                        <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">top</code>, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">left</code></li>
+                        <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">font-size</code></li>
+                    </ul>
+
+                    <div class="p-5 rounded-lg border border-red-500/30 bg-red-500/10 my-4">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-3">Instead of animating width...</h3>
+                        <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">/* Bad */
+width: 100px → width: 200px;
+
+/* Good */
+transform: scaleX(1) → scaleX(2);</code></pre>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Best Practices</h2>
+                    <ol class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Prefer transform and opacity</li>
+                        <li>Use <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">will-change</code> sparingly</li>
+                        <li>Keep animations under 300ms for UI</li>
+                        <li>Test on low-end devices</li>
+                        <li>Respect prefers-reduced-motion</li>
+                    </ol>
+
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3 mt-4">will-change Property</h3>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">/* Hint to browser about upcoming animation */
+.animated-element {
+    will-change: transform;
+}
+
+/* Remove after animation */
+.animated-element.done {
+    will-change: auto;
+}</code></pre>
+
+                    <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Don't overuse will-change!</strong> It consumes memory. Only use for complex animations.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 11: Video Resources -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Video Resources</h1>
+            <div class="relative w-full max-w-[800px] mx-auto my-5 aspect-video bg-black rounded-lg overflow-hidden shadow-xl">
+                <iframe class="absolute inset-0 w-full h-full border-none" src="https://www.youtube.com/embed/zHUpx90NerM?rel=0" title="CSS Animation" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 my-5">
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200 hover:-translate-y-1 transition">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Frontend Masters</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600"><a href="https://frontendmasters.com/courses/css-animations/" target="_blank" class="text-[var(--accent)] hover:underline">CSS Animations Course</a></p>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600">In-depth animation techniques</p>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200 hover:-translate-y-1 transition">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Animate.css</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600"><a href="https://animate.style/" target="_blank" class="text-[var(--accent)] hover:underline">animate.style</a></p>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600">Ready-to-use CSS animations library</p>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200 hover:-translate-y-1 transition">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Cubic Bezier</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600"><a href="https://cubic-bezier.com/" target="_blank" class="text-[var(--accent)] hover:underline">cubic-bezier.com</a></p>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600">Create custom timing functions</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 12: Practice -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Practice Exercises</h1>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-5">
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Exercise 1: Animated Button</h3>
+                    <ul class="ml-5 space-y-1 text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Hover effect with transform</li>
+                        <li>Color transition</li>
+                        <li>Box-shadow animation</li>
+                    </ul>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Exercise 2: Loading Spinner</h3>
+                    <ul class="ml-5 space-y-1 text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Create a spinning loader</li>
+                        <li>Use @keyframes</li>
+                        <li>Infinite animation</li>
+                    </ul>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Exercise 3: Responsive Layout</h3>
+                    <ul class="ml-5 space-y-1 text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Mobile-first design</li>
+                        <li>Hamburger menu on mobile</li>
+                        <li>Navigation changes on desktop</li>
+                    </ul>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Exercise 4: Card Animations</h3>
+                    <ul class="ml-5 space-y-1 text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Fade-in on scroll</li>
+                        <li>Hover scale effect</li>
+                        <li>Staggered animation delays</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                <h3 class="text-xl text-[var(--accent-light)] mb-3">Examples to Study</h3>
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><a href="../examples/index.html" class="text-[var(--accent)] hover:underline">View Week 06 Examples &rarr;</a></p>
+            </div>
+        </section>
+
+        <!-- Slide 13: Summary -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Week 06 Summary</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Key Concepts</h2>
+                    <ul class="ml-6 space-y-2 text-lg text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Transitions:</strong> Smooth changes between states</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Transforms:</strong> rotate, scale, translate, skew</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Animations:</strong> @keyframes for complex sequences</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Media Queries:</strong> Responsive design</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">CSS Variables:</strong> Reusable custom properties</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Performance:</strong> Prefer transform and opacity</li>
+                    </ul>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Best Practices</h2>
+                    <ul class="ml-6 space-y-2 text-lg text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Mobile-first responsive design</li>
+                        <li>Use transitions for hover/focus states</li>
+                        <li>Keep animations subtle and purposeful</li>
+                        <li>Respect prefers-reduced-motion</li>
+                        <li>Use CSS variables for consistency</li>
+                        <li>Test performance on real devices</li>
+                    </ul>
+
+                    <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 mt-4">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-2">Coming Next Week</h3>
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Week 07: JavaScript Fundamentals - Adding interactivity to web pages!</p>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="mt-10 pt-5 border-t border-white/10 dark:border-white/10 border-gray-200 text-center text-sm text-gray-500">
+                <p><strong>Prepared by Rajiv Ramakrishnan</strong></p>
+                <p><a href="mailto:gmail@rajiv.kr" class="text-[var(--accent)] hover:underline">gmail@rajiv.kr</a> | <a href="tel:+919566134326" class="text-[var(--accent)] hover:underline">+91 9566134326</a> | <a href="https://www.linkedin.com/in/rajivramakrishnan/" target="_blank" rel="noopener" class="text-[var(--accent)] hover:underline">LinkedIn</a></p>
+                <p class="mt-2 text-gray-600">&copy; 2026 Rajiv Ramakrishnan. Licensed for educational use at Eashwari.</p>
+            </footer>
+        </section></main>
+
+    <!-- Bottom nav -->
+    <div class="max-w-[1200px] mx-auto px-5">
+        <div class="flex justify-between items-center mt-8 pt-5 border-t border-white/10 dark:border-white/10 border-gray-200 pb-8">
+            <button class="px-6 py-3 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] text-white font-medium cursor-pointer hover:scale-105 hover:shadow-lg transition border-none disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none" id="prevBtn2" onclick="changeSlide(-1)">&larr; Previous</button>
+            <div class="text-gray-500 text-sm tabular-nums"><span id="currentSlide2"></span></div>
+            <button class="px-6 py-3 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] text-white font-medium cursor-pointer hover:scale-105 hover:shadow-lg transition border-none disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none" id="nextBtn2" onclick="changeSlide(1)">Next &rarr;</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] py-8 mt-8">
+        <div class="max-w-[1200px] mx-auto px-5 text-center">
+            <p class="text-gray-900 dark:text-white text-lg font-semibold mb-4">Prepared by Rajiv Ramakrishnan</p>
+            <div class="flex flex-wrap justify-center gap-3 text-sm mb-6">
+                <a href="mailto:gmail@rajiv.kr" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    gmail@rajiv.kr
+                </a>
+                <a href="tel:+919566134326" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    +91 9566134326
+                </a>
+                <a href="https://www.linkedin.com/in/rajivramakrishnan/" target="_blank" rel="noopener" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="mr-1.5"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+                    LinkedIn
+                </a>
+            </div>
+            <p class="text-gray-600 dark:text-gray-500 text-xs">
+                &copy; 2026 Rajiv Ramakrishnan. All rights reserved. Licensed for educational use at Eashwari.
+            </p>
+        </div>
+    </footer>
+
+    </div>
+
+    <!-- Keyboard hint -->
+    <div class="fixed bottom-5 right-5 bg-black/80 px-3 py-1.5 rounded-lg text-xs text-gray-500 z-10 pointer-events-none hidden md:block" aria-hidden="true">
+        <kbd class="bg-white/10 px-1.5 py-0.5 rounded border border-white/20 font-mono text-xs">&larr;</kbd>
+        <kbd class="bg-white/10 px-1.5 py-0.5 rounded border border-white/20 font-mono text-xs">&rarr;</kbd> navigate &middot;
+        <kbd class="bg-white/10 px-1.5 py-0.5 rounded border border-white/20 font-mono text-xs">M</kbd> menu
+    </div>
+
+    <script src="../../core/slides.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Transitions - Week 06 Example</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        h1 {
+            color: #1abc9c;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-top: 40px;
+        }
+
+        .demo-section {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Basic Transition */
+        .basic-box {
+            width: 150px;
+            height: 150px;
+            background: #3498db;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+        .basic-box:hover {
+            background: #2980b9;
+        }
+
+        /* Multiple Properties */
+        .multi-box {
+            width: 150px;
+            height: 150px;
+            background: #e74c3c;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .multi-box:hover {
+            background: #c0392b;
+            transform: scale(1.1);
+            border-radius: 50%;
+            box-shadow: 0 10px 30px rgba(231, 76, 60, 0.4);
+        }
+
+        /* Button Styles */
+        .buttons-demo {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #1abc9c;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #16a085;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(26, 188, 156, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #3498db;
+            color: #3498db;
+        }
+        .btn-outline:hover {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: #2c3e50;
+            border: none;
+            position: relative;
+        }
+        .btn-ghost::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: #1abc9c;
+            transition: all 0.3s ease;
+        }
+        .btn-ghost:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        /* Card Hover */
+        .card {
+            width: 250px;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+        .card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .card:hover img {
+            transform: scale(1.1);
+        }
+        .card-content {
+            padding: 20px;
+        }
+        .card h3 {
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+        }
+
+        /* Timing Functions */
+        .timing-demo {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .timing-bar {
+            height: 40px;
+            background: #1abc9c;
+            border-radius: 5px;
+            width: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+        }
+        .timing-demo:hover .timing-bar {
+            width: 100%;
+        }
+        .ease { transition: width 1s ease; }
+        .linear { transition: width 1s linear; }
+        .ease-in { transition: width 1s ease-in; }
+        .ease-out { transition: width 1s ease-out; }
+        .ease-in-out { transition: width 1s ease-in-out; }
+
+        /* Input Focus */
+        .input-demo input {
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            width: 300px;
+            transition: all 0.3s ease;
+        }
+        .input-demo input:focus {
+            outline: none;
+            border-color: #1abc9c;
+            box-shadow: 0 0 0 4px rgba(26, 188, 156, 0.2);
+        }
+
+        /* Navigation Link */
+        .nav-link {
+            display: inline-block;
+            padding: 10px 20px;
+            color: #2c3e50;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #1abc9c;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        .nav-link:hover::before {
+            transform: translateX(0);
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+
+    <h1>CSS Transitions</h1>
+    <p>Transitions create smooth animations between property values. Hover over the elements below!</p>
+
+    <h2>1. Basic Color Transition</h2>
+    <div class="demo-section">
+        <div class="basic-box">Hover me</div>
+        <pre><code>transition: background-color 0.3s ease;</code></pre>
+    </div>
+
+    <h2>2. Multiple Property Transitions</h2>
+    <div class="demo-section">
+        <div class="multi-box">Hover me</div>
+        <pre><code>transition: all 0.3s ease;
+/* Changes: background, scale, border-radius, shadow */</code></pre>
+    </div>
+
+    <h2>3. Button Transitions</h2>
+    <div class="demo-section">
+        <div class="buttons-demo">
+            <button class="btn btn-primary">Lift Effect</button>
+            <button class="btn btn-outline">Fill Effect</button>
+            <button class="btn btn-ghost">Underline Effect</button>
+        </div>
+    </div>
+
+    <h2>4. Card Hover Effect</h2>
+    <div class="demo-section">
+        <div class="card">
+            <img src="https://picsum.photos/250/150?random=1" alt="Card image">
+            <div class="card-content">
+                <h3>Card Title</h3>
+                <p>Hover for lift and zoom effect</p>
+            </div>
+        </div>
+    </div>
+
+    <h2>5. Timing Functions Comparison</h2>
+    <div class="demo-section">
+        <p>Hover over this section to see different timing functions:</p>
+        <div class="timing-demo">
+            <div class="timing-bar ease">ease</div>
+            <div class="timing-bar linear">linear</div>
+            <div class="timing-bar ease-in">ease-in</div>
+            <div class="timing-bar ease-out">ease-out</div>
+            <div class="timing-bar ease-in-out">ease-in-out</div>
+        </div>
+    </div>
+
+    <h2>6. Input Focus Transition</h2>
+    <div class="demo-section input-demo">
+        <input type="text" placeholder="Click to focus...">
+        <pre><code>input:focus {
+    border-color: #1abc9c;
+    box-shadow: 0 0 0 4px rgba(26, 188, 156, 0.2);
+}</code></pre>
+    </div>
+
+    <h2>7. Navigation Link Animation</h2>
+    <div class="demo-section">
+        <nav>
+            <a href="#" class="nav-link">Home</a>
+            <a href="#" class="nav-link">About</a>
+            <a href="#" class="nav-link">Services</a>
+            <a href="#" class="nav-link">Contact</a>
+        </nav>
+    </div>
+
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>

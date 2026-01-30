@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en" class="dark" data-accent="unit-5">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1a1a2e">
+    <title>Week 15 - Case Study & Review | 231CSC601T</title>
+    <script src="../../core/theme.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../../core/tw-config.js"></script>
+    <link rel="stylesheet" href="../../core/slides.css">
+</head>
+<body class="font-sans min-h-screen
+             bg-gradient-to-br from-navy to-navy-deep text-gray-200
+             dark:bg-gradient-to-br dark:from-navy dark:to-navy-deep dark:text-gray-200">
+
+    <a href="#main-content" class="skip-link bg-[var(--accent)] text-white px-4 py-2 rounded-lg font-semibold no-underline">Skip to content</a>
+
+    <!-- Nav header -->
+    <nav class="fixed top-0 left-0 right-0 z-50
+                bg-black/90 dark:bg-black/90 bg-white/95 dark:bg-black/90
+                backdrop-blur-md border-b-2 border-[var(--accent)]
+                px-4 py-2 flex justify-between items-center" aria-label="Slide navigation">
+        <div class="flex items-center gap-3 min-w-0">
+            <a href="../../index.html" class="text-[var(--accent)] text-sm hover:underline whitespace-nowrap hidden sm:inline">&larr; Home</a>
+            <a href="../examples/index.html" class="text-[var(--accent)] text-sm hover:underline whitespace-nowrap hidden sm:inline">&larr; Examples</a>
+            <span class="text-[var(--accent)] font-bold text-sm truncate">Week 15: Case Study & Course Review</span>
+        </div>
+        <div class="flex items-center gap-2 flex-shrink-0">
+            <button class="theme-toggle w-9 h-9 flex items-center justify-center border border-gray-600 dark:border-gray-600 border-gray-300 rounded-lg bg-transparent text-gray-400 hover:text-white cursor-pointer transition" aria-label="Switch to light mode">
+                <svg class="icon-sun w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="icon-moon w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+            <button class="px-3 py-1.5 rounded-lg bg-[var(--accent)] text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" onclick="toggleMenu()" aria-label="Open slide menu">Menu</button>
+            <button class="px-3 py-1.5 rounded-lg bg-red-500 text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" id="prevBtn" aria-label="Previous slide">Prev</button>
+            <span class="text-gray-400 text-sm tabular-nums" aria-live="polite"><span id="currentSlide">1</span> / <span id="totalSlides"></span></span>
+            <button class="px-3 py-1.5 rounded-lg bg-green-600 text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" id="nextBtn" aria-label="Next slide">Next</button>
+        </div>
+    </nav>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay fixed inset-0 z-[200] bg-black/90 dark:bg-black/90 overflow-y-auto p-6" id="menuOverlay" aria-hidden="true" role="dialog" aria-label="Slide navigation menu">
+        <button class="close-menu fixed top-6 right-6 text-4xl text-white cursor-pointer bg-transparent border-none z-[201] leading-none p-2" onclick="toggleMenu()" aria-label="Close menu">&times;</button>
+        <div class="max-w-[600px] mx-auto mt-12 p-5">
+            <h2 class="text-[var(--accent)] text-2xl font-bold text-center mb-6">Slide Navigation</h2>
+            <ul id="slideMenu" class="list-none m-0 p-0"></ul>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <main id="main-content" class="max-w-[1200px] mx-auto px-5 pt-16">
+
+        <!-- Progress bar -->
+        <div class="w-full h-1 bg-white/10 dark:bg-white/10 bg-gray-200 rounded mt-4 mb-5 overflow-hidden">
+            <div class="progress-fill h-full rounded bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)]" id="progress" style="width:0%"></div>
+        </div>
+
+        <!-- Slide 1: Title -->
+        <section class="slide active rounded-2xl p-6 md:p-10 min-h-[80vh]
+                        bg-white/5 dark:bg-white/5 bg-white dark:bg-white/5
+                        border border-white/10 dark:border-white/10 border-gray-200
+                        backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Week 15: Case Study & Course Review</h1>
+            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Unit V - Bringing It All Together</h2>
+            <p class="text-xl text-gray-300 dark:text-gray-300 text-gray-600 my-5">Congratulations on reaching the final week!</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">What We'll Cover</h3>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Complete course summary</li>
+                        <li>Full project walkthrough: Student Portal</li>
+                        <li>Web development best practices</li>
+                        <li>Resources for continued learning</li>
+                    </ul>
+                </div>
+                <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">Reflection</h3>
+                    <p class="text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">Think about where you started at Week 1 - you knew nothing about web development. Now you can build complete web applications with HTML, CSS, JavaScript, Node.js, MySQL, and Bootstrap. That is an incredible journey! Let's review everything and see how it all connects.</p>
+                </div>
+            </div>
+
+            <p class="text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Press &rarr; or click Next to continue</strong></p>
+        </section>
+
+        <!-- Slide 2: Course Journey -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Our Course Journey</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Unit I: HTML Foundations</h2>
+                    <div class="border-l-[3px] border-[var(--accent)] pl-5 mb-5 relative">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-3">Weeks 1-3: HTML</h3>
+                        <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                            <li>HTML document structure</li>
+                            <li>Tags, elements, attributes</li>
+                            <li>Forms, tables, semantic HTML</li>
+                            <li>Accessibility basics</li>
+                        </ul>
+                    </div>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Unit II: CSS Styling</h2>
+                    <div class="border-l-[3px] border-[var(--accent)] pl-5 mb-5 relative">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-3">Weeks 4-6: CSS</h3>
+                        <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                            <li>Selectors and specificity</li>
+                            <li>Box model, colors, typography</li>
+                            <li>Flexbox and Grid layouts</li>
+                            <li>Animations and responsive design</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Unit III: JavaScript</h2>
+                    <div class="border-l-[3px] border-[var(--accent)] pl-5 mb-5 relative">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-3">Weeks 7-9: JavaScript</h3>
+                        <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                            <li>Variables, operators, functions</li>
+                            <li>DOM manipulation</li>
+                            <li>Events and event handling</li>
+                            <li>Async programming (Promises, fetch)</li>
+                        </ul>
+                    </div>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Units IV-V: Server & Full-Stack</h2>
+                    <div class="border-l-[3px] border-[var(--accent)] pl-5 mb-5 relative">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-3">Weeks 10-14: Backend</h3>
+                        <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                            <li>Node.js and Express</li>
+                            <li>MySQL and CRUD operations</li>
+                            <li>Bootstrap for responsive UI</li>
+                            <li>REST APIs and full-stack integration</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3: Technology Stack -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">The Complete Technology Stack</h1>
+
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse text-base">
+                    <tr>
+                        <th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Layer</th>
+                        <th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Technology</th>
+                        <th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Purpose</th>
+                        <th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Weeks</th>
+                    </tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Structure</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">HTML5</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Page structure and content</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">1-3</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Styling</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">CSS3</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Visual design, layouts, animations</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">4-6</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Interactivity</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">JavaScript</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Dynamic behavior, DOM manipulation</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">7-9</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Server</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">Node.js + Express</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Backend API, server logic</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">10-11</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Database</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">MySQL</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Data storage, CRUD operations</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">12</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">UI Framework</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">Bootstrap 5</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Responsive design, components</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">13</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Integration</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">REST APIs + Fetch</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Frontend-backend communication</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">14</td></tr>
+                </table>
+            </div>
+
+            <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                <h3 class="text-xl text-[var(--accent-light)] mb-3">How They Connect</h3>
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">HTML</strong> provides structure. <strong class="text-gray-100 dark:text-gray-100 text-gray-800">CSS</strong> makes it beautiful. <strong class="text-gray-100 dark:text-gray-100 text-gray-800">JavaScript</strong> makes it interactive. <strong class="text-gray-100 dark:text-gray-100 text-gray-800">Node.js</strong> handles server logic. <strong class="text-gray-100 dark:text-gray-100 text-gray-800">MySQL</strong> stores data. <strong class="text-gray-100 dark:text-gray-100 text-gray-800">Bootstrap</strong> ensures it looks good everywhere. <strong class="text-gray-100 dark:text-gray-100 text-gray-800">REST APIs</strong> connect it all together!</p>
+            </div>
+        </section>
+
+        <!-- Slide 4: Case Study - Student Portal -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Case Study: Student Portal</h1>
+            <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600 mb-4">Let's walk through building a complete Student Management Portal.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Requirements</h2>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>View all students in a responsive table</li>
+                        <li>Add new students with a form</li>
+                        <li>Edit student information</li>
+                        <li>Delete students with confirmation</li>
+                        <li>Search and filter students</li>
+                        <li>Mobile-responsive design</li>
+                    </ul>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">Technologies Used</h2>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Frontend:</strong> HTML, CSS, Bootstrap 5, JavaScript</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Backend:</strong> Node.js, Express</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Database:</strong> MySQL</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Communication:</strong> REST API + Fetch</li>
+                    </ul>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Architecture</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">student-portal/
+|-- backend/
+|   |-- server.js         # Express + routes
+|   |-- config/
+|   |   |-- database.js   # MySQL pool
+|   |-- models/
+|   |   |-- Student.js    # Data model
+|   |-- routes/
+|   |   |-- students.js   # API routes
+|   |-- middleware/
+|   |   |-- validate.js   # Input validation
+|   |-- .env
+|   |-- package.json
+|
+|-- frontend/
+|   |-- index.html        # Main page
+|   |-- css/
+|   |   |-- style.css     # Custom styles
+|   |-- js/
+|       |-- api.js        # API service
+|       |-- app.js        # UI logic
+|
+|-- setup.sql             # Database schema
+|-- README.md</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 5: Case Study - Database Design -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Case Study: Database Design</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Schema Design</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">CREATE DATABASE student_portal;
+USE student_portal;
+
+CREATE TABLE students (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(150) UNIQUE NOT NULL,
+    age INT CHECK(age BETWEEN 15 AND 100),
+    course VARCHAR(50) NOT NULL,
+    semester INT DEFAULT 1,
+    gpa DECIMAL(3,2),
+    status ENUM('active', 'inactive',
+        'graduated') DEFAULT 'active',
+    created_at TIMESTAMP
+        DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP
+        DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_course
+    ON students(course);
+CREATE INDEX idx_status
+    ON students(status);</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Design Decisions</h2>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">AUTO_INCREMENT id:</strong> Reliable primary key</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">UNIQUE email:</strong> Prevents duplicates</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">CHECK constraint:</strong> Validates age range</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">ENUM status:</strong> Limited valid options</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">DEFAULT values:</strong> Sensible defaults</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Timestamps:</strong> Audit trail</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Indexes:</strong> Faster queries on common filters</li>
+                    </ul>
+
+                    <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-3">Design Principles</h3>
+                        <ol class="ml-6 space-y-1 text-gray-300 dark:text-gray-300 text-gray-600 list-decimal">
+                            <li>Choose appropriate data types</li>
+                            <li>Use constraints for data integrity</li>
+                            <li>Index columns used in WHERE/JOIN</li>
+                            <li>Plan for growth and changes</li>
+                            <li>Always include timestamps</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 6: Case Study - Backend API -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Case Study: Backend API</h1>
+
+            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">API Endpoint Design</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse text-base">
+                    <tr>
+                        <th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Method</th>
+                        <th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Endpoint</th>
+                        <th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Description</th>
+                        <th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Status Codes</th>
+                    </tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">GET</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">/api/students</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">List all (with search & pagination)</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">200</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">GET</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">/api/students/:id</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Get single student</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">200, 404</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">POST</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">/api/students</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Create new student</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">201, 400</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">PUT</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">/api/students/:id</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Update student</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">200, 400, 404</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">DELETE</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">/api/students/:id</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Delete student</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">200, 404</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">GET</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">/api/students/stats</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Dashboard statistics</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">200</td></tr>
+                </table>
+            </div>
+
+            <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                <h3 class="text-xl text-[var(--accent-light)] mb-3">API Best Practices Applied</h3>
+                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                    <li>Consistent JSON response format: <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">{ success, data/error }</code></li>
+                    <li>Proper HTTP status codes for each scenario</li>
+                    <li>Input validation before database operations</li>
+                    <li>Prepared statements for all SQL queries</li>
+                    <li>Error handling middleware for clean error responses</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Slide 7: Case Study - Frontend -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Case Study: Frontend Design</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">UI Components</h2>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Navbar:</strong> Bootstrap dark navbar with brand</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Dashboard cards:</strong> Total, active, GPA stats</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Search bar:</strong> Real-time filtering</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Data table:</strong> Responsive, sortable</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Add form:</strong> With validation</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Edit modal:</strong> Bootstrap modal popup</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Delete confirmation:</strong> Alert before delete</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Toast notifications:</strong> Success/error messages</li>
+                    </ul>
+
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3 mt-4">Bootstrap Classes Used</h3>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">container, row, col-*
+navbar, navbar-dark, bg-dark
+card, card-body, card-header
+table, table-striped, table-hover
+form-control, form-select
+btn, btn-primary, btn-danger
+modal, modal-dialog
+alert, alert-success
+spinner-border
+d-flex, justify-content-between</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">JavaScript Architecture</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// api.js - API Service Layer
+class StudentAPI {
+    constructor(baseUrl) {
+        this.baseUrl = baseUrl;
+    }
+
+    async getAll(search = '') { ... }
+    async getById(id) { ... }
+    async create(data) { ... }
+    async update(id, data) { ... }
+    async delete(id) { ... }
+}
+
+// app.js - UI Logic Layer
+class StudentApp {
+    constructor() {
+        this.api = new StudentAPI(API_URL);
+        this.init();
+    }
+
+    init() {
+        this.bindEvents();
+        this.loadStudents();
+    }
+
+    bindEvents() {
+        // Form submit
+        // Search input
+        // Edit/Delete buttons
+    }
+
+    async loadStudents() {
+        this.showLoading();
+        const result = await this.api.getAll();
+        this.renderTable(result.data);
+    }
+
+    renderTable(students) { ... }
+    showAlert(message, type) { ... }
+}</code></pre>
+
+                    <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Separating API calls from UI logic makes the code easier to maintain and test.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 8: Best Practices -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Web Development Best Practices</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">HTML Best Practices</h2>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Use semantic tags (<code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">header</code>, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">nav</code>, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">main</code>, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">footer</code>)</li>
+                        <li>Always include <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">alt</code> text on images</li>
+                        <li>Use proper heading hierarchy (h1-h6)</li>
+                        <li>Validate your HTML</li>
+                    </ul>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">CSS Best Practices</h2>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Use external stylesheets</li>
+                        <li>Mobile-first responsive design</li>
+                        <li>Use CSS variables for themes</li>
+                        <li>Use Flexbox/Grid for layouts</li>
+                        <li>Avoid <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">!important</code></li>
+                    </ul>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">JavaScript Best Practices</h2>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Use <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">const</code> and <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">let</code>, never <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">var</code></li>
+                        <li>Use async/await for async code</li>
+                        <li>Always handle errors (try/catch)</li>
+                        <li>Validate input on both sides</li>
+                        <li>Prevent XSS (escape HTML output)</li>
+                    </ul>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Backend Best Practices</h2>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Use environment variables for secrets</li>
+                        <li>Prepared statements (prevent SQL injection)</li>
+                        <li>Connection pooling for databases</li>
+                        <li>Proper error handling middleware</li>
+                        <li>Input validation on the server</li>
+                        <li>Use HTTPS in production</li>
+                    </ul>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">General Best Practices</h2>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Use version control (Git)</li>
+                        <li>Write clean, readable code</li>
+                        <li>Comment complex logic</li>
+                        <li>Keep functions small and focused</li>
+                        <li>Test on multiple browsers/devices</li>
+                        <li>Follow the DRY principle</li>
+                    </ul>
+
+                    <div class="p-5 rounded-lg border border-red-500/30 bg-red-500/10 my-4">
+                        <h3 class="text-xl text-red-400 mb-3">Security Checklist</h3>
+                        <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                            <li>Never expose API keys in frontend</li>
+                            <li>Always use prepared statements</li>
+                            <li>Escape all user-generated content</li>
+                            <li>Use HTTPS everywhere</li>
+                            <li>Hash passwords (never store plain text)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 9: Common Mistakes to Avoid -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Common Mistakes to Avoid</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Frontend Mistakes</h2>
+
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">1. Missing viewport meta tag</h3>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;!-- Always include this! --&gt;
+&lt;meta name="viewport"
+    content="width=device-width,
+    initial-scale=1.0"&gt;</code></pre>
+
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3 mt-4">2. Using inline styles everywhere</h3>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;!-- Bad --&gt;
+&lt;p style="color:red; font-size:16px;"&gt;
+
+&lt;!-- Good --&gt;
+&lt;p class="error-text"&gt;</code></pre>
+
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3 mt-4">3. Not handling API errors</h3>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// Bad - no error handling
+const data = await fetch(url);
+
+// Good - with error handling
+try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error('Failed');
+    const data = await response.json();
+} catch (error) {
+    showError(error.message);
+}</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Backend Mistakes</h2>
+
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">4. SQL Injection vulnerability</h3>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-red-500 text-sm"><code class="text-gray-200">// Bad - string concatenation
+const query = `SELECT * FROM users
+    WHERE name = '${name}'`;
+
+// Good - prepared statement
+const [rows] = await pool.execute(
+    'SELECT * FROM users WHERE name = ?',
+    [name]
+);</code></pre>
+
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3 mt-4">5. Hardcoded credentials</h3>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// Bad
+const password = 'my_secret_123';
+
+// Good - use .env
+const password = process.env.DB_PASSWORD;</code></pre>
+
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3 mt-4">6. Missing CORS configuration</h3>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// Results in: blocked by CORS policy
+// Fix: add cors middleware
+const cors = require('cors');
+app.use(cors());</code></pre>
+
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3 mt-4">7. Not validating input</h3>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// Always validate before database operations
+if (!name || !email) {
+    return res.status(400).json({
+        error: 'Name and email required'
+    });
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 10: What's Next -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">What's Next? Your Learning Path</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Frontend Path</h2>
+                    <div class="border-l-[3px] border-[var(--accent)] pl-5 mb-5"><h3 class="text-xl text-[var(--accent-light)] mb-2">React.js</h3><p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Component-based UI library by Facebook. Most popular for single-page applications.</p></div>
+                    <div class="border-l-[3px] border-[var(--accent)] pl-5 mb-5"><h3 class="text-xl text-[var(--accent-light)] mb-2">TypeScript</h3><p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Type-safe JavaScript. Used in large-scale applications.</p></div>
+                    <div class="border-l-[3px] border-[var(--accent)] pl-5 mb-5"><h3 class="text-xl text-[var(--accent-light)] mb-2">Tailwind CSS</h3><p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Utility-first CSS framework. Fast, modern alternative to Bootstrap.</p></div>
+                    <div class="border-l-[3px] border-[var(--accent)] pl-5 mb-5"><h3 class="text-xl text-[var(--accent-light)] mb-2">Next.js</h3><p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Full-stack React framework with server-side rendering.</p></div>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Backend Path</h2>
+                    <div class="border-l-[3px] border-[var(--accent)] pl-5 mb-5"><h3 class="text-xl text-[var(--accent-light)] mb-2">Authentication (JWT, OAuth)</h3><p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">User login systems, token-based auth.</p></div>
+                    <div class="border-l-[3px] border-[var(--accent)] pl-5 mb-5"><h3 class="text-xl text-[var(--accent-light)] mb-2">MongoDB + Mongoose</h3><p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">NoSQL database. Flexible document storage.</p></div>
+                    <div class="border-l-[3px] border-[var(--accent)] pl-5 mb-5"><h3 class="text-xl text-[var(--accent-light)] mb-2">Docker</h3><p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Containerize your applications for consistent deployment.</p></div>
+                    <div class="border-l-[3px] border-[var(--accent)] pl-5 mb-5"><h3 class="text-xl text-[var(--accent-light)] mb-2">Cloud Services (AWS/GCP)</h3><p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Deploy and scale applications in the cloud.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 11: Learning Resources -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Recommended Resources</h1>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-5">
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200 hover:-translate-y-1 transition">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Frontend Masters</h3>
+                    <ul class="ml-5 space-y-1 text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li><a href="https://frontendmasters.com/courses/web-development-v3/" target="_blank" class="text-[var(--accent)] hover:underline">Complete Intro to Web Dev v3</a></li>
+                        <li><a href="https://frontendmasters.com/courses/getting-started-javascript-v2/" target="_blank" class="text-[var(--accent)] hover:underline">Getting Started with JS v2</a></li>
+                        <li><a href="https://frontendmasters.com/courses/node-js-v3/" target="_blank" class="text-[var(--accent)] hover:underline">Intro to Node.js v3</a></li>
+                        <li><a href="https://frontendmasters.com/courses/fullstack-v3/" target="_blank" class="text-[var(--accent)] hover:underline">Full Stack for Front-End v3</a></li>
+                    </ul>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200 hover:-translate-y-1 transition">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Free Courses</h3>
+                    <ul class="ml-5 space-y-1 text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li><a href="https://www.freecodecamp.org/" target="_blank" class="text-[var(--accent)] hover:underline">freeCodeCamp</a> - Full web dev curriculum</li>
+                        <li><a href="https://www.theodinproject.com/" target="_blank" class="text-[var(--accent)] hover:underline">The Odin Project</a> - Comprehensive path</li>
+                        <li><a href="https://javascript.info/" target="_blank" class="text-[var(--accent)] hover:underline">javascript.info</a> - Deep JS tutorial</li>
+                        <li><a href="https://www.codecademy.com/" target="_blank" class="text-[var(--accent)] hover:underline">Codecademy</a> - Interactive courses</li>
+                    </ul>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200 hover:-translate-y-1 transition">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">YouTube Channels</h3>
+                    <ul class="ml-5 space-y-1 text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li><a href="https://www.youtube.com/@TraversyMedia" target="_blank" class="text-[var(--accent)] hover:underline">Traversy Media</a></li>
+                        <li><a href="https://www.youtube.com/@Fireship" target="_blank" class="text-[var(--accent)] hover:underline">Fireship</a></li>
+                        <li><a href="https://www.youtube.com/@WebDevSimplified" target="_blank" class="text-[var(--accent)] hover:underline">Web Dev Simplified</a></li>
+                        <li><a href="https://www.youtube.com/@NetNinja" target="_blank" class="text-[var(--accent)] hover:underline">The Net Ninja</a></li>
+                    </ul>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200 hover:-translate-y-1 transition">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Documentation</h3>
+                    <ul class="ml-5 space-y-1 text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li><a href="https://developer.mozilla.org/" target="_blank" class="text-[var(--accent)] hover:underline">MDN Web Docs</a> - Definitive reference</li>
+                        <li><a href="https://nodejs.org/docs/" target="_blank" class="text-[var(--accent)] hover:underline">Node.js Docs</a></li>
+                        <li><a href="https://expressjs.com/" target="_blank" class="text-[var(--accent)] hover:underline">Express.js Guide</a></li>
+                        <li><a href="https://getbootstrap.com/docs/" target="_blank" class="text-[var(--accent)] hover:underline">Bootstrap Docs</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-5">
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200 hover:-translate-y-1 transition">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Practice & Build</h3>
+                    <ul class="ml-5 space-y-1 text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li><a href="https://github.com/" target="_blank" class="text-[var(--accent)] hover:underline">GitHub</a> - Portfolio + collaboration</li>
+                        <li><a href="https://leetcode.com/" target="_blank" class="text-[var(--accent)] hover:underline">LeetCode</a> - Coding challenges</li>
+                        <li><a href="https://www.frontendmentor.io/" target="_blank" class="text-[var(--accent)] hover:underline">Frontend Mentor</a> - UI challenges</li>
+                        <li><a href="https://codepen.io/" target="_blank" class="text-[var(--accent)] hover:underline">CodePen</a> - Quick experiments</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 12: Video Resources -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Video Resources</h1>
+
+            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Web Development Roadmap 2025</h2>
+            <div class="relative w-full max-w-[800px] mx-auto my-5 aspect-video bg-black rounded-lg overflow-hidden shadow-xl">
+                <iframe class="absolute inset-0 w-full h-full border-none" src="https://www.youtube.com/embed/u72H_zZzkcw?rel=0" title="Web Development Roadmap" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 my-5">
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200 hover:-translate-y-1 transition">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Portfolio Tips</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600">Build 3-5 projects showcasing different skills. Host them on GitHub Pages or Netlify. Create a portfolio website.</p>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200 hover:-translate-y-1 transition">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Interview Prep</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600">Study JavaScript fundamentals, DOM manipulation, HTTP/REST concepts, and basic SQL for web dev interviews.</p>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200 hover:-translate-y-1 transition">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Keep Learning</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600">Technology evolves fast. Follow tech blogs, join developer communities, and build projects regularly!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 13: Exam Review -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Exam Review - Key Topics</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">HTML Topics</h2>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Document structure (DOCTYPE, head, body)</li>
+                        <li>Semantic tags and their purpose</li>
+                        <li>Forms: input types, validation</li>
+                        <li>Tables: structure, colspan, rowspan</li>
+                        <li>Links, images, lists</li>
+                    </ul>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">CSS Topics</h2>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Selectors: element, class, ID, combinators</li>
+                        <li>Specificity and cascade</li>
+                        <li>Box model: margin, padding, border</li>
+                        <li>Positioning: static, relative, absolute, fixed</li>
+                        <li>Flexbox and Grid basics</li>
+                        <li>Media queries and responsive design</li>
+                    </ul>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">JavaScript Topics</h2>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Variables (let, const), data types</li>
+                        <li>Functions (regular, arrow)</li>
+                        <li>DOM: querySelector, innerHTML, events</li>
+                        <li>Arrays and objects</li>
+                        <li>Fetch API and promises</li>
+                    </ul>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">Backend Topics</h2>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Node.js and npm basics</li>
+                        <li>Express routes and middleware</li>
+                        <li>MySQL: CREATE, SELECT, INSERT, UPDATE, DELETE</li>
+                        <li>REST API design</li>
+                        <li>SQL injection prevention</li>
+                        <li>CORS</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 14: Summary & Thank You -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Course Summary & Thank You</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">What You've Accomplished</h2>
+                    <ul class="ml-6 space-y-2 text-lg text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Built web pages with HTML5</li>
+                        <li>Styled them beautifully with CSS3</li>
+                        <li>Made them interactive with JavaScript</li>
+                        <li>Created backends with Node.js + Express</li>
+                        <li>Stored data with MySQL</li>
+                        <li>Built responsive UIs with Bootstrap</li>
+                        <li>Connected frontend to backend via REST APIs</li>
+                        <li>Learned security best practices</li>
+                    </ul>
+
+                    <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 mt-4">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-2">Remember</h3>
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">The best way to learn web development is to <strong class="text-gray-100 dark:text-gray-100 text-gray-800">build things</strong>. Start a personal project, contribute to open source, or recreate websites you admire. Every expert was once a beginner!</p>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Final Advice</h2>
+                    <ol class="ml-6 space-y-2 text-lg text-gray-300 dark:text-gray-300 text-gray-600 list-decimal">
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Build a portfolio</strong> - Showcase your work</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Use Git/GitHub</strong> - Version control everything</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Read documentation</strong> - MDN is your best friend</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Practice daily</strong> - Even 30 minutes helps</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Join communities</strong> - Stack Overflow, Discord, Reddit</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Stay curious</strong> - Technology never stops evolving</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Never stop learning</strong> - The journey has just begun!</li>
+                    </ol>
+
+                    <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 mt-4 text-center">
+                        <h2 class="text-2xl text-[var(--accent)] mb-2">Thank You!</h2>
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">It has been a pleasure teaching this course. Wishing you all the best in your web development journey!</p>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="mt-10 pt-5 border-t border-white/10 dark:border-white/10 border-gray-200 text-center text-sm text-gray-500">
+                <p><strong>Prepared by Rajiv Ramakrishnan</strong></p>
+                <p><a href="mailto:gmail@rajiv.kr" class="text-[var(--accent)] hover:underline">gmail@rajiv.kr</a> | <a href="tel:+919566134326" class="text-[var(--accent)] hover:underline">+91 9566134326</a> | <a href="https://www.linkedin.com/in/rajivramakrishnan/" target="_blank" rel="noopener" class="text-[var(--accent)] hover:underline">LinkedIn</a></p>
+                <p class="mt-2 text-gray-600">&copy; 2026 Rajiv Ramakrishnan. Licensed for educational use at Eashwari.</p>
+            </footer>
+        </section></main>
+
+    <!-- Bottom nav -->
+    <div class="max-w-[1200px] mx-auto px-5">
+        <div class="flex justify-between items-center mt-8 pt-5 border-t border-white/10 dark:border-white/10 border-gray-200 pb-8">
+            <button class="px-6 py-3 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] text-white font-medium cursor-pointer hover:scale-105 hover:shadow-lg transition border-none disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none" id="prevBtn2" onclick="changeSlide(-1)">&larr; Previous</button>
+            <div class="text-gray-500 text-sm tabular-nums"><span id="currentSlide2"></span></div>
+            <button class="px-6 py-3 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] text-white font-medium cursor-pointer hover:scale-105 hover:shadow-lg transition border-none disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none" id="nextBtn2" onclick="changeSlide(1)">Next &rarr;</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] py-8 mt-8">
+        <div class="max-w-[1200px] mx-auto px-5 text-center">
+            <p class="text-gray-900 dark:text-white text-lg font-semibold mb-4">Prepared by Rajiv Ramakrishnan</p>
+            <div class="flex flex-wrap justify-center gap-3 text-sm mb-6">
+                <a href="mailto:gmail@rajiv.kr" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    gmail@rajiv.kr
+                </a>
+                <a href="tel:+919566134326" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    +91 9566134326
+                </a>
+                <a href="https://www.linkedin.com/in/rajivramakrishnan/" target="_blank" rel="noopener" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="mr-1.5"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+                    LinkedIn
+                </a>
+            </div>
+            <p class="text-gray-600 dark:text-gray-500 text-xs">
+                &copy; 2026 Rajiv Ramakrishnan. All rights reserved. Licensed for educational use at Eashwari.
+            </p>
+        </div>
+    </footer>
+
+    </div>
+
+    <!-- Keyboard hint -->
+    <div class="fixed bottom-5 right-5 bg-black/80 px-3 py-1.5 rounded-lg text-xs text-gray-500 z-10 pointer-events-none hidden md:block" aria-hidden="true">
+        <kbd class="bg-white/10 px-1.5 py-0.5 rounded border border-white/20 font-mono text-xs">&larr;</kbd>
+        <kbd class="bg-white/10 px-1.5 py-0.5 rounded border border-white/20 font-mono text-xs">&rarr;</kbd> navigate &middot;
+        <kbd class="bg-white/10 px-1.5 py-0.5 rounded border border-white/20 font-mono text-xs">M</kbd> menu
+    </div>
+
+    <script src="../../core/slides.js" defer></script>
+</body>
+</html>

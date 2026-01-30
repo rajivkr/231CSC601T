@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Handling - Week 08 Example</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; }
+        h1 { color: #e91e63; }
+        h2 { color: #2c3e50; margin-top: 30px; }
+        .demo-box { background: #f5f5f5; padding: 30px; border-radius: 10px; margin: 20px 0; }
+        .event-box { background: #e91e63; color: white; padding: 30px; border-radius: 10px; text-align: center; cursor: pointer; transition: all 0.3s ease; margin: 10px 0; }
+        .event-box:hover { transform: scale(1.02); }
+        .output { background: #2c3e50; color: #2ecc71; padding: 15px; border-radius: 5px; font-family: monospace; margin: 10px 0; min-height: 50px; }
+        input, select { padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin: 5px; font-size: 1rem; }
+        button { background: #e91e63; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 5px; }
+        button:hover { background: #c2185b; }
+        .key-display { font-size: 2rem; padding: 20px; background: #3498db; color: white; border-radius: 10px; text-align: center; }
+        #mouse-tracker { width: 100%; height: 150px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 10px; position: relative; }
+        #mouse-pos { position: absolute; color: white; padding: 5px 10px; background: rgba(0,0,0,0.5); border-radius: 5px; pointer-events: none; }
+        .form-group { margin: 15px 0; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-group input { width: 100%; max-width: 300px; }
+        .error { color: #e74c3c; font-size: 0.85rem; }
+        .success { color: #27ae60; }
+    </style>
+</head>
+<body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+    <h1>Event Handling Demo</h1>
+
+    <h2>1. Click Events</h2>
+    <div class="demo-box">
+        <div class="event-box" id="click-box">Click me!</div>
+        <div class="output" id="click-output">Click count: 0</div>
+        <button onclick="resetClickCount()">Reset Count</button>
+    </div>
+
+    <h2>2. Mouse Events</h2>
+    <div class="demo-box">
+        <div id="mouse-tracker">
+            <span id="mouse-pos">Move mouse here</span>
+        </div>
+        <div class="output" id="mouse-output">Mouse position will appear here...</div>
+    </div>
+
+    <h2>3. Keyboard Events</h2>
+    <div class="demo-box">
+        <p>Click below and press any key:</p>
+        <input type="text" id="key-input" placeholder="Type here..." style="width: 100%; max-width: 300px;">
+        <div class="key-display" id="key-display">Press a key...</div>
+        <div class="output" id="key-output">Key info will appear here...</div>
+    </div>
+
+    <h2>4. Form Events</h2>
+    <div class="demo-box">
+        <form id="demo-form">
+            <div class="form-group">
+                <label for="username">Username (min 3 chars):</label>
+                <input type="text" id="username" placeholder="Enter username">
+                <div class="error" id="username-error"></div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" placeholder="Enter email">
+                <div class="error" id="email-error"></div>
+            </div>
+            <div class="form-group">
+                <label for="country">Country:</label>
+                <select id="country">
+                    <option value="">Select...</option>
+                    <option value="in">India</option>
+                    <option value="us">USA</option>
+                    <option value="uk">UK</option>
+                </select>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+        <div class="output" id="form-output">Form events will appear here...</div>
+    </div>
+
+    <h2>5. Event Delegation</h2>
+    <div class="demo-box">
+        <p>Click any button below (listener is on the container, not individual buttons):</p>
+        <div id="button-container" style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button data-action="save">Save</button>
+            <button data-action="edit">Edit</button>
+            <button data-action="delete">Delete</button>
+            <button data-action="cancel">Cancel</button>
+        </div>
+        <button onclick="addNewButton()">Add New Button</button>
+        <div class="output" id="delegation-output">Click a button...</div>
+    </div>
+
+    <script>
+        // 1. Click Events
+        let clickCount = 0;
+        const clickBox = document.getElementById('click-box');
+
+        clickBox.addEventListener('click', function(e) {
+            clickCount++;
+            document.getElementById('click-output').textContent = `Click count: ${clickCount}`;
+            this.style.backgroundColor = `hsl(${clickCount * 30}, 70%, 50%)`;
+        });
+
+        clickBox.addEventListener('dblclick', function(e) {
+            alert('Double clicked!');
+        });
+
+        function resetClickCount() {
+            clickCount = 0;
+            document.getElementById('click-output').textContent = 'Click count: 0';
+            clickBox.style.backgroundColor = '#e91e63';
+        }
+
+        // 2. Mouse Events
+        const tracker = document.getElementById('mouse-tracker');
+        const mousePos = document.getElementById('mouse-pos');
+        const mouseOutput = document.getElementById('mouse-output');
+
+        tracker.addEventListener('mousemove', function(e) {
+            const rect = tracker.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            mousePos.style.left = x + 10 + 'px';
+            mousePos.style.top = y + 10 + 'px';
+            mousePos.textContent = `X: ${Math.round(x)}, Y: ${Math.round(y)}`;
+
+            mouseOutput.textContent = `clientX: ${e.clientX}, clientY: ${e.clientY} | offsetX: ${e.offsetX}, offsetY: ${e.offsetY}`;
+        });
+
+        tracker.addEventListener('mouseenter', function() {
+            this.style.opacity = '0.8';
+        });
+
+        tracker.addEventListener('mouseleave', function() {
+            this.style.opacity = '1';
+            mousePos.textContent = 'Move mouse here';
+        });
+
+        // 3. Keyboard Events
+        const keyInput = document.getElementById('key-input');
+        const keyDisplay = document.getElementById('key-display');
+        const keyOutput = document.getElementById('key-output');
+
+        keyInput.addEventListener('keydown', function(e) {
+            keyDisplay.textContent = e.key === ' ' ? 'Space' : e.key;
+            keyOutput.textContent = `Key: "${e.key}" | Code: "${e.code}" | Shift: ${e.shiftKey} | Ctrl: ${e.ctrlKey} | Alt: ${e.altKey}`;
+
+            // Prevent form submission on Enter
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                keyDisplay.textContent = 'Enter (blocked)';
+            }
+        });
+
+        keyInput.addEventListener('keyup', function(e) {
+            keyDisplay.style.backgroundColor = '#3498db';
+        });
+
+        // 4. Form Events
+        const form = document.getElementById('demo-form');
+        const usernameInput = document.getElementById('username');
+        const emailInput = document.getElementById('email');
+        const countrySelect = document.getElementById('country');
+        const formOutput = document.getElementById('form-output');
+
+        // Real-time validation
+        usernameInput.addEventListener('input', function(e) {
+            const error = document.getElementById('username-error');
+            if (this.value.length < 3 && this.value.length > 0) {
+                error.textContent = 'Username must be at least 3 characters';
+            } else {
+                error.textContent = '';
+            }
+            formOutput.textContent = `Input event: "${e.target.value}"`;
+        });
+
+        emailInput.addEventListener('change', function(e) {
+            formOutput.textContent = `Email changed to: "${e.target.value}"`;
+        });
+
+        emailInput.addEventListener('focus', function(e) {
+            this.style.borderColor = '#e91e63';
+        });
+
+        emailInput.addEventListener('blur', function(e) {
+            this.style.borderColor = '#ddd';
+            const error = document.getElementById('email-error');
+            if (this.value && !this.value.includes('@')) {
+                error.textContent = 'Please enter a valid email';
+            } else {
+                error.textContent = '';
+            }
+        });
+
+        countrySelect.addEventListener('change', function(e) {
+            formOutput.textContent = `Country selected: "${e.target.value}"`;
+        });
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();  // Prevent form submission
+
+            const data = {
+                username: usernameInput.value,
+                email: emailInput.value,
+                country: countrySelect.value
+            };
+
+            formOutput.innerHTML = `<span class="success">Form submitted!</span>\nData: ${JSON.stringify(data, null, 2)}`;
+        });
+
+        // 5. Event Delegation
+        const buttonContainer = document.getElementById('button-container');
+        const delegationOutput = document.getElementById('delegation-output');
+        let buttonCount = 4;
+
+        // Single listener on container handles all buttons!
+        buttonContainer.addEventListener('click', function(e) {
+            if (e.target.tagName === 'BUTTON') {
+                const action = e.target.dataset.action;
+                delegationOutput.textContent = `Action: "${action}" | Button text: "${e.target.textContent}"`;
+
+                // Visual feedback
+                e.target.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    e.target.style.transform = '';
+                }, 100);
+            }
+        });
+
+        function addNewButton() {
+            buttonCount++;
+            const btn = document.createElement('button');
+            btn.dataset.action = `action${buttonCount}`;
+            btn.textContent = `Button ${buttonCount}`;
+            buttonContainer.appendChild(btn);
+
+            delegationOutput.textContent = 'New button added! It works automatically with delegation.';
+        }
+    </script>
+
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>

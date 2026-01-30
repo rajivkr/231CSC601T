@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Async/Await - Week 09 Example</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; }
+        h1 { color: #00bcd4; }
+        .output { background: #2c3e50; color: #2ecc71; padding: 20px; border-radius: 10px; font-family: monospace; white-space: pre-wrap; margin: 15px 0; min-height: 150px; max-height: 400px; overflow-y: auto; }
+        button { background: #00bcd4; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 5px; }
+        button:hover { background: #00acc1; }
+        .demo-area { background: #f5f5f5; padding: 20px; border-radius: 10px; margin: 20px 0; }
+        .loading { color: #f39c12; }
+        .error { color: #e74c3c; }
+        .success { color: #2ecc71; }
+        .timer { font-size: 1.2rem; margin: 10px 0; color: #00bcd4; }
+    </style>
+</head>
+<body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+    <h1>Async/Await Demo</h1>
+
+    <div class="demo-area">
+        <h2>Async/Await Basics</h2>
+        <button onclick="basicAsync()">Basic Async Function</button>
+        <button onclick="promiseVsAsync()">Promise vs Async/Await</button>
+        <button onclick="errorHandling()">Error Handling</button>
+    </div>
+
+    <div class="output" id="basicOutput">Click a button to see async/await in action...</div>
+
+    <div class="demo-area">
+        <h2>Sequential vs Parallel Execution</h2>
+        <button onclick="sequentialFetch()">Sequential (Slow)</button>
+        <button onclick="parallelFetch()">Parallel (Fast)</button>
+        <div class="timer" id="timer"></div>
+    </div>
+
+    <div class="output" id="parallelOutput">Compare sequential and parallel execution...</div>
+
+    <div class="demo-area">
+        <h2>Promise Utilities</h2>
+        <button onclick="promiseAll()">Promise.all()</button>
+        <button onclick="promiseAllSettled()">Promise.allSettled()</button>
+        <button onclick="promiseRace()">Promise.race()</button>
+    </div>
+
+    <div class="output" id="utilityOutput">Click a button to see Promise utilities...</div>
+
+    <script>
+        const API_URL = 'https://jsonplaceholder.typicode.com';
+
+        // Simulate delay
+        function delay(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        async function basicAsync() {
+            const output = document.getElementById('basicOutput');
+            output.innerHTML = '<span class="loading">Running async function...</span>';
+
+            // Simulate async operation
+            async function fetchUserData(userId) {
+                await delay(1000); // Simulate network delay
+                return {
+                    id: userId,
+                    name: 'Alice',
+                    email: 'alice@example.com'
+                };
+            }
+
+            const startTime = Date.now();
+            const user = await fetchUserData(1);
+            const elapsed = Date.now() - startTime;
+
+            output.textContent = `// Basic Async/Await
+
+// An async function always returns a Promise
+async function fetchUserData(userId) {
+    // await pauses execution until Promise resolves
+    await delay(1000);  // Simulated network delay
+
+    return {
+        id: userId,
+        name: 'Alice',
+        email: 'alice@example.com'
+    };
+}
+
+// Calling async function
+const user = await fetchUserData(1);
+console.log(user);
+
+// Result (after ${elapsed}ms):
+${JSON.stringify(user, null, 2)}
+
+// Key points:
+// 1. 'async' before function makes it return a Promise
+// 2. 'await' can only be used inside async functions
+// 3. 'await' pauses execution until Promise resolves
+// 4. Code reads like synchronous code!`;
+        }
+
+        async function promiseVsAsync() {
+            const output = document.getElementById('basicOutput');
+
+            output.textContent = `// Promise chains vs Async/Await
+
+// === Using Promises (then/catch) ===
+fetch('${API_URL}/users/1')
+    .then(response => response.json())
+    .then(user => {
+        console.log(user.name);
+        return fetch(\`${API_URL}/posts?userId=\${user.id}\`);
+    })
+    .then(response => response.json())
+    .then(posts => {
+        console.log('Posts:', posts.length);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+
+
+// === Using Async/Await (cleaner!) ===
+async function getUserWithPosts() {
+    try {
+        const userResponse = await fetch('${API_URL}/users/1');
+        const user = await userResponse.json();
+        console.log(user.name);
+
+        const postsResponse = await fetch(
+            \`${API_URL}/posts?userId=\${user.id}\`
+        );
+        const posts = await postsResponse.json();
+        console.log('Posts:', posts.length);
+
+        return { user, posts };
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+// Both do the same thing, but async/await is:
+// - Easier to read
+// - Easier to debug
+// - Uses familiar try/catch for errors`;
+        }
+
+        async function errorHandling() {
+            const output = document.getElementById('basicOutput');
+            output.innerHTML = '<span class="loading">Demonstrating error handling...</span>';
+
+            async function fetchWithRetry(url, retries = 3) {
+                for (let i = 0; i < retries; i++) {
+                    try {
+                        const response = await fetch(url);
+                        if (!response.ok) {
+                            throw new Error(`HTTP ${response.status}`);
+                        }
+                        return await response.json();
+                    } catch (error) {
+                        if (i === retries - 1) throw error;
+                        await delay(1000 * (i + 1)); // Exponential backoff
+                    }
+                }
+            }
+
+            output.textContent = `// Error Handling in Async/Await
+
+// Basic try/catch
+async function fetchData() {
+    try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error(\`HTTP error: \${response.status}\`);
+        }
+
+        const data = await response.json();
+        return data;
+
+    } catch (error) {
+        console.error('Fetch failed:', error.message);
+        throw error;  // Re-throw if needed
+    } finally {
+        console.log('Cleanup operations...');
+    }
+}
+
+
+// Retry pattern with exponential backoff
+async function fetchWithRetry(url, retries = 3) {
+    for (let i = 0; i < retries; i++) {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(\`HTTP \${response.status}\`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.log(\`Attempt \${i + 1} failed\`);
+            if (i === retries - 1) throw error;
+            await delay(1000 * (i + 1));  // Wait longer each time
+        }
+    }
+}
+
+
+// Multiple error sources
+async function complexOperation() {
+    try {
+        const user = await fetchUser();     // Might fail
+        const posts = await fetchPosts();   // Might fail
+        const comments = await fetchComments(); // Might fail
+        return { user, posts, comments };
+    } catch (error) {
+        // Catches error from ANY of the above
+        console.error('Operation failed:', error);
+    }
+}`;
+        }
+
+        async function sequentialFetch() {
+            const output = document.getElementById('parallelOutput');
+            const timer = document.getElementById('timer');
+
+            output.innerHTML = '<span class="loading">Fetching sequentially...</span>';
+            timer.textContent = 'Running...';
+
+            const startTime = Date.now();
+
+            // Sequential - one after another
+            const user1 = await fetch(`${API_URL}/users/1`).then(r => r.json());
+            const user2 = await fetch(`${API_URL}/users/2`).then(r => r.json());
+            const user3 = await fetch(`${API_URL}/users/3`).then(r => r.json());
+
+            const elapsed = Date.now() - startTime;
+            timer.textContent = `Time: ${elapsed}ms`;
+
+            output.textContent = `// Sequential Fetching (SLOW)
+
+const startTime = Date.now();
+
+// Each request waits for the previous one to complete
+const user1 = await fetch('${API_URL}/users/1').then(r => r.json());
+const user2 = await fetch('${API_URL}/users/2').then(r => r.json());
+const user3 = await fetch('${API_URL}/users/3').then(r => r.json());
+
+// Total time: ${elapsed}ms
+// (roughly 3x single request time)
+
+// Results:
+// User 1: ${user1.name}
+// User 2: ${user2.name}
+// User 3: ${user3.name}
+
+// Problem: We wait unnecessarily!
+// Each request could run at the same time.`;
+        }
+
+        async function parallelFetch() {
+            const output = document.getElementById('parallelOutput');
+            const timer = document.getElementById('timer');
+
+            output.innerHTML = '<span class="loading">Fetching in parallel...</span>';
+            timer.textContent = 'Running...';
+
+            const startTime = Date.now();
+
+            // Parallel - all at once
+            const [user1, user2, user3] = await Promise.all([
+                fetch(`${API_URL}/users/1`).then(r => r.json()),
+                fetch(`${API_URL}/users/2`).then(r => r.json()),
+                fetch(`${API_URL}/users/3`).then(r => r.json())
+            ]);
+
+            const elapsed = Date.now() - startTime;
+            timer.textContent = `Time: ${elapsed}ms`;
+
+            output.textContent = `// Parallel Fetching (FAST!)
+
+const startTime = Date.now();
+
+// All requests start at the same time
+const [user1, user2, user3] = await Promise.all([
+    fetch('${API_URL}/users/1').then(r => r.json()),
+    fetch('${API_URL}/users/2').then(r => r.json()),
+    fetch('${API_URL}/users/3').then(r => r.json())
+]);
+
+// Total time: ${elapsed}ms
+// (roughly same as single request time!)
+
+// Results:
+// User 1: ${user1.name}
+// User 2: ${user2.name}
+// User 3: ${user3.name}
+
+// Promise.all() runs all promises concurrently
+// and resolves when ALL complete.
+
+// Use parallel when requests are independent!`;
+        }
+
+        async function promiseAll() {
+            const output = document.getElementById('utilityOutput');
+            output.innerHTML = '<span class="loading">Running Promise.all()...</span>';
+
+            const startTime = Date.now();
+
+            try {
+                const results = await Promise.all([
+                    fetch(`${API_URL}/users/1`).then(r => r.json()),
+                    fetch(`${API_URL}/posts/1`).then(r => r.json()),
+                    fetch(`${API_URL}/comments/1`).then(r => r.json())
+                ]);
+
+                const elapsed = Date.now() - startTime;
+
+                output.textContent = `// Promise.all() - Wait for ALL promises
+
+const results = await Promise.all([
+    fetch('${API_URL}/users/1').then(r => r.json()),
+    fetch('${API_URL}/posts/1').then(r => r.json()),
+    fetch('${API_URL}/comments/1').then(r => r.json())
+]);
+
+// Time: ${elapsed}ms (all ran in parallel)
+
+// Returns array of results in same order:
+const [user, post, comment] = results;
+
+// User: ${results[0].name}
+// Post: "${results[1].title.substring(0, 30)}..."
+// Comment: "${results[2].name.substring(0, 30)}..."
+
+// IMPORTANT: Promise.all() FAILS FAST!
+// If ANY promise rejects, the whole thing rejects.
+// Other promises continue running but results are lost.
+
+// Use when: All results are required`;
+            } catch (error) {
+                output.innerHTML = `<span class="error">Promise.all failed: ${error.message}</span>`;
+            }
+        }
+
+        async function promiseAllSettled() {
+            const output = document.getElementById('utilityOutput');
+            output.innerHTML = '<span class="loading">Running Promise.allSettled()...</span>';
+
+            const results = await Promise.allSettled([
+                fetch(`${API_URL}/users/1`).then(r => r.json()),
+                fetch('https://invalid-url.example/api').then(r => r.json()), // Will fail
+                fetch(`${API_URL}/posts/1`).then(r => r.json())
+            ]);
+
+            output.textContent = `// Promise.allSettled() - Never rejects
+
+const results = await Promise.allSettled([
+    fetch('${API_URL}/users/1').then(r => r.json()),
+    fetch('https://invalid-url/api'),  // This will fail!
+    fetch('${API_URL}/posts/1').then(r => r.json())
+]);
+
+// Returns array of result objects:
+${JSON.stringify(results.map(r => ({
+    status: r.status,
+    value: r.status === 'fulfilled' ? (r.value.name || r.value.title || 'data') : undefined,
+    reason: r.status === 'rejected' ? 'Network error' : undefined
+})), null, 2)}
+
+// Each result has:
+// - status: 'fulfilled' or 'rejected'
+// - value: result (if fulfilled)
+// - reason: error (if rejected)
+
+// Filter successful results:
+const successful = results
+    .filter(r => r.status === 'fulfilled')
+    .map(r => r.value);
+
+// Use when: You want all results, even partial success`;
+        }
+
+        async function promiseRace() {
+            const output = document.getElementById('utilityOutput');
+            output.innerHTML = '<span class="loading">Running Promise.race()...</span>';
+
+            const startTime = Date.now();
+
+            // Race between fast and slow
+            const result = await Promise.race([
+                delay(100).then(() => 'Fast response'),
+                delay(500).then(() => 'Slow response'),
+                delay(300).then(() => 'Medium response')
+            ]);
+
+            const elapsed = Date.now() - startTime;
+
+            output.textContent = `// Promise.race() - First to settle wins
+
+const result = await Promise.race([
+    delay(100).then(() => 'Fast response'),
+    delay(500).then(() => 'Slow response'),
+    delay(300).then(() => 'Medium response')
+]);
+
+// Winner (after ${elapsed}ms): "${result}"
+
+// Only the first promise to resolve/reject matters
+// Other promises continue running but are ignored
+
+// Practical use case - Timeout:
+async function fetchWithTimeout(url, timeout = 5000) {
+    return Promise.race([
+        fetch(url),
+        new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('Timeout')), timeout)
+        )
+    ]);
+}
+
+// Related: Promise.any() (ES2021)
+// Like race, but ignores rejections
+// Only rejects if ALL promises reject`;
+        }
+    </script>
+
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Box Model - Week 04 Example</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        h1 {
+            color: #27ae60;
+        }
+
+        /* Box Model Visualization */
+        .box-model-demo {
+            background: #e74c3c;
+            padding: 30px;
+            display: inline-block;
+            margin: 20px;
+        }
+        .box-model-demo .border-box {
+            background: #f39c12;
+            border: 10px dashed #2c3e50;
+            padding: 30px;
+        }
+        .box-model-demo .padding-box {
+            background: #27ae60;
+            padding: 30px;
+        }
+        .box-model-demo .content-box {
+            background: #3498db;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .label {
+            color: white;
+            font-size: 12px;
+            text-align: center;
+            padding: 5px;
+        }
+
+        /* Padding Examples */
+        .padding-demo {
+            background: #ecf0f1;
+            margin: 10px 0;
+        }
+        .padding-demo > div {
+            background: #3498db;
+            color: white;
+            margin: 5px 0;
+        }
+        .pad-all { padding: 20px; }
+        .pad-tb-lr { padding: 10px 30px; }
+        .pad-individual { padding: 10px 20px 30px 40px; }
+
+        /* Margin Examples */
+        .margin-demo {
+            background: #bdc3c7;
+            padding: 5px;
+        }
+        .margin-demo > div {
+            background: #9b59b6;
+            color: white;
+            padding: 10px;
+        }
+        .margin-all { margin: 20px; }
+        .margin-auto { margin: 20px auto; width: 200px; text-align: center; }
+        .margin-collapse { margin: 30px 0; }
+
+        /* Border Examples */
+        .border-demo > div {
+            padding: 15px;
+            margin: 10px 0;
+            background: white;
+        }
+        .border-solid { border: 3px solid #2c3e50; }
+        .border-dashed { border: 3px dashed #e74c3c; }
+        .border-dotted { border: 3px dotted #27ae60; }
+        .border-double { border: 5px double #3498db; }
+        .border-mixed {
+            border-top: 4px solid #e74c3c;
+            border-right: 4px dashed #f39c12;
+            border-bottom: 4px dotted #27ae60;
+            border-left: 4px double #3498db;
+        }
+        .border-radius-small { border: 3px solid #2c3e50; border-radius: 10px; }
+        .border-radius-large { border: 3px solid #2c3e50; border-radius: 25px; }
+        .border-radius-circle { border: 3px solid #2c3e50; border-radius: 50%; width: 100px; height: 100px; text-align: center; line-height: 100px; }
+
+        /* Box Sizing Comparison */
+        .box-sizing-demo {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .box-sizing-demo > div {
+            width: 200px;
+            padding: 20px;
+            border: 10px solid #2c3e50;
+            background: #3498db;
+            color: white;
+            text-align: center;
+        }
+        .content-box-sizing { box-sizing: content-box; }
+        .border-box-sizing { box-sizing: border-box; }
+
+        /* Interactive Box */
+        .interactive-box {
+            width: 300px;
+            height: 150px;
+            background: #3498db;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .interactive-box:hover {
+            padding: 30px;
+            margin: 20px;
+            border: 10px solid #2c3e50;
+            background: #27ae60;
+        }
+
+        code {
+            background: #e8f5e9;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+
+        .info-box {
+            background: #e8f5e9;
+            border-left: 4px solid #27ae60;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #f39c12;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #27ae60;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+
+    <h1>The CSS Box Model</h1>
+    <p>Every HTML element is treated as a rectangular box. Understanding the box model is crucial for layout!</p>
+
+    <h2>1. Box Model Visualization</h2>
+    <p>From outside to inside: <strong>Margin</strong> → <strong>Border</strong> → <strong>Padding</strong> → <strong>Content</strong></p>
+
+    <div class="box-model-demo">
+        <div class="label">MARGIN (red)</div>
+        <div class="border-box">
+            <div class="label">BORDER (dashed)</div>
+            <div class="padding-box">
+                <div class="label">PADDING (green)</div>
+                <div class="content-box">
+                    CONTENT (blue)
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2>2. Padding</h2>
+    <p>Padding is the space between content and border (inside the box).</p>
+
+    <div class="padding-demo">
+        <div class="pad-all">padding: 20px (all sides equal)</div>
+        <div class="pad-tb-lr">padding: 10px 30px (top/bottom, left/right)</div>
+        <div class="pad-individual">padding: 10px 20px 30px 40px (top, right, bottom, left - clockwise)</div>
+    </div>
+
+    <table>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>padding: 20px</code></td>
+            <td>All four sides</td>
+        </tr>
+        <tr>
+            <td><code>padding: 10px 20px</code></td>
+            <td>Top/bottom, Left/right</td>
+        </tr>
+        <tr>
+            <td><code>padding: 10px 20px 30px</code></td>
+            <td>Top, Left/right, Bottom</td>
+        </tr>
+        <tr>
+            <td><code>padding: 10px 20px 30px 40px</code></td>
+            <td>Top, Right, Bottom, Left (clockwise)</td>
+        </tr>
+        <tr>
+            <td><code>padding-top, padding-right, etc.</code></td>
+            <td>Individual sides</td>
+        </tr>
+    </table>
+
+    <h2>3. Margin</h2>
+    <p>Margin is the space outside the border (between elements).</p>
+
+    <div class="margin-demo">
+        <div class="margin-all">margin: 20px (space around the box)</div>
+    </div>
+
+    <div class="margin-demo">
+        <div class="margin-auto">margin: auto centers horizontally!</div>
+    </div>
+
+    <div class="warning-box">
+        <h3>Margin Collapse</h3>
+        <p>When two vertical margins meet, they collapse into one (the larger value wins).</p>
+    </div>
+
+    <div class="margin-demo">
+        <div class="margin-collapse">First box with margin: 30px 0</div>
+        <div class="margin-collapse">Second box with margin: 30px 0 (margins collapse, not 60px gap!)</div>
+    </div>
+
+    <h2>4. Border</h2>
+    <p>Border is the line between padding and margin.</p>
+
+    <div class="border-demo">
+        <div class="border-solid">border: 3px solid #2c3e50</div>
+        <div class="border-dashed">border: 3px dashed #e74c3c</div>
+        <div class="border-dotted">border: 3px dotted #27ae60</div>
+        <div class="border-double">border: 5px double #3498db</div>
+        <div class="border-mixed">Different borders on each side!</div>
+    </div>
+
+    <h3>Border Radius</h3>
+    <p>Round the corners of your boxes!</p>
+    <div class="border-demo" style="display: flex; gap: 20px; flex-wrap: wrap;">
+        <div class="border-radius-small">border-radius: 10px</div>
+        <div class="border-radius-large">border-radius: 25px</div>
+        <div class="border-radius-circle">50%</div>
+    </div>
+
+    <h2>5. Box Sizing</h2>
+    <p>The most important CSS property you'll learn!</p>
+
+    <div class="box-sizing-demo">
+        <div class="content-box-sizing">
+            <strong>content-box</strong><br>
+            width: 200px<br>
+            + padding: 20px<br>
+            + border: 10px<br>
+            = 260px total!
+        </div>
+        <div class="border-box-sizing">
+            <strong>border-box</strong><br>
+            width: 200px<br>
+            (includes padding & border)<br>
+            = 200px total!
+        </div>
+    </div>
+
+    <div class="info-box">
+        <h3>Best Practice: Universal Box Sizing Reset</h3>
+        <pre><code>*, *::before, *::after {
+    box-sizing: border-box;
+}</code></pre>
+        <p>Add this to every project! It makes width/height calculations predictable.</p>
+    </div>
+
+    <h2>6. Width and Height</h2>
+    <table>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>width: 300px</code></td>
+            <td>Fixed width</td>
+        </tr>
+        <tr>
+            <td><code>width: 50%</code></td>
+            <td>50% of parent width</td>
+        </tr>
+        <tr>
+            <td><code>max-width: 600px</code></td>
+            <td>Won't exceed 600px</td>
+        </tr>
+        <tr>
+            <td><code>min-width: 200px</code></td>
+            <td>Won't shrink below 200px</td>
+        </tr>
+        <tr>
+            <td><code>height: auto</code></td>
+            <td>Height based on content (default)</td>
+        </tr>
+    </table>
+
+    <h2>7. Interactive Demo</h2>
+    <p>Hover over the box to see padding, margin, and border added!</p>
+
+    <div class="interactive-box">
+        Hover me!<br>
+        (Watch the box model change)
+    </div>
+
+    <h2>8. Calculating Total Size</h2>
+    <div class="info-box">
+        <h3>With <code>box-sizing: content-box</code> (default)</h3>
+        <p><strong>Total Width</strong> = width + padding-left + padding-right + border-left + border-right</p>
+        <p><strong>Total Height</strong> = height + padding-top + padding-bottom + border-top + border-bottom</p>
+        <p>(Margin adds space but isn't part of the element's size)</p>
+    </div>
+
+    <div class="info-box">
+        <h3>With <code>box-sizing: border-box</code></h3>
+        <p><strong>Total Width</strong> = width (padding and border are included!)</p>
+        <p><strong>Total Height</strong> = height (padding and border are included!)</p>
+        <p>Much easier to work with!</p>
+    </div>
+
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>

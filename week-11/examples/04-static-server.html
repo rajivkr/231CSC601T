@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Static File Server - Week 11 Example</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; }
+        h1 { color: #2196f3; }
+        h2 { color: #1976d2; border-bottom: 2px solid #2196f3; padding-bottom: 5px; }
+        .code-block { background: #263238; color: #82b1ff; padding: 15px; border-radius: 8px; font-family: monospace; margin: 10px 0; overflow-x: auto; white-space: pre-wrap; }
+        .terminal { background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 8px; font-family: monospace; margin: 10px 0; white-space: pre-wrap; }
+        .prompt { color: #2196f3; }
+        .comment { color: #546e7a; }
+        .note { background: #e3f2fd; padding: 15px; border-radius: 8px; border-left: 4px solid #2196f3; margin: 15px 0; }
+        .warning { background: #fff3e0; padding: 15px; border-radius: 8px; border-left: 4px solid #ff9800; margin: 15px 0; }
+        .file-tree { background: #f5f5f5; padding: 15px; border-radius: 8px; font-family: monospace; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+    <h1>Static File Server</h1>
+    <p>Build a complete static file server that serves HTML, CSS, JavaScript, and image files.</p>
+
+    <h2>Project Structure</h2>
+    <div class="file-tree">
+static-server/
+  server.js              <span class="comment"># The server code</span>
+  public/                <span class="comment"># Files to serve</span>
+    index.html
+    about.html
+    css/
+      style.css
+    js/
+      app.js
+    images/
+      logo.png
+    </div>
+
+    <h2>1. Complete Static File Server</h2>
+    <div class="code-block"><span class="comment">// server.js - Complete Static File Server</span>
+const http = require('http');
+const fs = require('fs/promises');
+const path = require('path');
+
+<span class="comment">// Configuration</span>
+const PORT = 3000;
+const PUBLIC_DIR = path.join(__dirname, 'public');
+
+<span class="comment">// MIME type mapping</span>
+const MIME_TYPES = {
+    '.html': 'text/html',
+    '.htm':  'text/html',
+    '.css':  'text/css',
+    '.js':   'text/javascript',
+    '.json': 'application/json',
+    '.png':  'image/png',
+    '.jpg':  'image/jpeg',
+    '.jpeg': 'image/jpeg',
+    '.gif':  'image/gif',
+    '.svg':  'image/svg+xml',
+    '.ico':  'image/x-icon',
+    '.webp': 'image/webp',
+    '.woff': 'font/woff',
+    '.woff2':'font/woff2',
+    '.ttf':  'font/ttf',
+    '.pdf':  'application/pdf',
+    '.zip':  'application/zip',
+    '.txt':  'text/plain',
+    '.xml':  'application/xml',
+    '.mp3':  'audio/mpeg',
+    '.mp4':  'video/mp4'
+};
+
+<span class="comment">// Get MIME type from file extension</span>
+function getMimeType(filePath) {
+    const ext = path.extname(filePath).toLowerCase();
+    return MIME_TYPES[ext] || 'application/octet-stream';
+}
+
+<span class="comment">// Create the server</span>
+const server = http.createServer(async (req, res) => {
+    <span class="comment">// Only handle GET requests</span>
+    if (req.method !== 'GET') {
+        res.writeHead(405, { 'Content-Type': 'text/plain' });
+        res.end('Method Not Allowed');
+        return;
+    }
+
+    <span class="comment">// Parse the URL</span>
+    const url = new URL(req.url, `http://${req.headers.host}`);
+    let pathname = url.pathname;
+
+    <span class="comment">// Default to index.html for root</span>
+    if (pathname === '/') {
+        pathname = '/index.html';
+    }
+
+    <span class="comment">// Security: Prevent directory traversal attacks</span>
+    const safePath = path.normalize(pathname).replace(/^(\.\.(\/|\\|$))+/, '');
+    const filePath = path.join(PUBLIC_DIR, safePath);
+
+    <span class="comment">// Make sure the path is within PUBLIC_DIR</span>
+    if (!filePath.startsWith(PUBLIC_DIR)) {
+        res.writeHead(403, { 'Content-Type': 'text/plain' });
+        res.end('Forbidden');
+        return;
+    }
+
+    try {
+        <span class="comment">// Check if file exists and is a file (not directory)</span>
+        const stats = await fs.stat(filePath);
+
+        if (stats.isDirectory()) {
+            <span class="comment">// Try to serve index.html from directory</span>
+            const indexPath = path.join(filePath, 'index.html');
+            try {
+                const content = await fs.readFile(indexPath);
+                res.writeHead(200, { 'Content-Type': 'text/html' });
+                res.end(content);
+            } catch {
+                res.writeHead(403, { 'Content-Type': 'text/plain' });
+                res.end('Directory listing not allowed');
+            }
+            return;
+        }
+
+        <span class="comment">// Read and serve the file</span>
+        const content = await fs.readFile(filePath);
+        const mimeType = getMimeType(filePath);
+
+        res.writeHead(200, {
+            'Content-Type': mimeType,
+            'Content-Length': stats.size,
+            'Cache-Control': 'public, max-age=3600' <span class="comment">// 1 hour cache</span>
+        });
+        res.end(content);
+
+        console.log(`[200] ${req.method} ${pathname} (${mimeType})`);
+
+    } catch (err) {
+        if (err.code === 'ENOENT') {
+            <span class="comment">// File not found - serve 404 page</span>
+            console.log(`[404] ${req.method} ${pathname}`);
+            res.writeHead(404, { 'Content-Type': 'text/html' });
+            res.end(`
+                &lt;!DOCTYPE html&gt;
+                &lt;html&gt;
+                &lt;head&gt;&lt;title&gt;404 - Not Found&lt;/title&gt;
+                &lt;style&gt;
+                    body { font-family: sans-serif; text-align: center; padding: 50px; }
+                    h1 { color: #f44336; font-size: 3rem; }
+                &lt;/style&gt;
+                &lt;/head&gt;
+                &lt;body&gt;
+                    &lt;h1&gt;404&lt;/h1&gt;
+                    &lt;p&gt;The file "${pathname}" was not found.&lt;/p&gt;
+                    &lt;a href="/"&gt;Go Home&lt;/a&gt;
+                &lt;/body&gt;
+                &lt;/html&gt;
+            `);
+        } else {
+            <span class="comment">// Server error</span>
+            console.error(`[500] ${err.message}`);
+            res.writeHead(500, { 'Content-Type': 'text/plain' });
+            res.end('Internal Server Error');
+        }
+    }
+});
+
+server.listen(PORT, () => {
+    console.log(`Static file server running at http://localhost:${PORT}`);
+    console.log(`Serving files from: ${PUBLIC_DIR}`);
+    console.log('Press Ctrl+C to stop');
+});</div>
+
+    <h2>2. Sample public/index.html</h2>
+    <div class="code-block"><span class="comment">&lt;!-- public/index.html --&gt;</span>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;My Static Site&lt;/title&gt;
+    &lt;link rel="stylesheet" href="/css/style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;header&gt;
+        &lt;h1&gt;Welcome to My Site&lt;/h1&gt;
+        &lt;nav&gt;
+            &lt;a href="/"&gt;Home&lt;/a&gt;
+            &lt;a href="/about.html"&gt;About&lt;/a&gt;
+        &lt;/nav&gt;
+    &lt;/header&gt;
+    &lt;main&gt;
+        &lt;p&gt;This is served by our Node.js static file server!&lt;/p&gt;
+    &lt;/main&gt;
+    &lt;script src="/js/app.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</div>
+
+    <h2>3. Sample public/css/style.css</h2>
+    <div class="code-block"><span class="comment">/* public/css/style.css */</span>
+body {
+    font-family: 'Segoe UI', sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f5f5f5;
+}
+
+header {
+    background: #2196f3;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+nav a {
+    color: white;
+    margin-right: 15px;
+}
+
+main {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}</div>
+
+    <h2>4. Streaming Large Files</h2>
+    <div class="code-block"><span class="comment">// For large files, use streams instead of reading everything into memory</span>
+
+const http = require('http');
+const fs = require('fs');
+const path = require('path');
+
+const server = http.createServer((req, res) => {
+    const filePath = path.join(__dirname, 'public', req.url === '/' ? 'index.html' : req.url);
+    const ext = path.extname(filePath).toLowerCase();
+
+    const MIME_TYPES = {
+        '.html': 'text/html',
+        '.css': 'text/css',
+        '.js': 'text/javascript',
+        '.png': 'image/png',
+        '.jpg': 'image/jpeg',
+        '.mp4': 'video/mp4'
+    };
+
+    const contentType = MIME_TYPES[ext] || 'application/octet-stream';
+
+    <span class="comment">// Use createReadStream for efficient memory usage</span>
+    const stream = fs.createReadStream(filePath);
+
+    stream.on('open', () => {
+        res.writeHead(200, { 'Content-Type': contentType });
+        stream.pipe(res); <span class="comment">// Pipe file data to response</span>
+    });
+
+    stream.on('error', (err) => {
+        if (err.code === 'ENOENT') {
+            res.writeHead(404);
+            res.end('File not found');
+        } else {
+            res.writeHead(500);
+            res.end('Server error');
+        }
+    });
+});
+
+server.listen(3000, () => console.log('Stream server on :3000'));
+
+<span class="comment">// Why streams?
+// Reading a 1GB video file:
+//   fs.readFile → 1GB in memory (bad!)
+//   fs.createReadStream → ~64KB chunks (good!)
+// The data flows from disk to network without
+// loading the entire file into memory.</span></div>
+
+    <div class="warning">
+        <strong>Security Considerations for File Servers:</strong>
+        <ul>
+            <li><strong>Directory traversal:</strong> Always sanitize paths. A request for <code>/../../../etc/passwd</code> must be blocked.</li>
+            <li><strong>Restrict to public directory:</strong> Only serve files from a designated folder.</li>
+            <li><strong>Hidden files:</strong> Don't serve <code>.env</code>, <code>.git</code>, or other hidden files.</li>
+            <li><strong>For production:</strong> Use Express.js with <code>express.static()</code> or a reverse proxy like Nginx.</li>
+        </ul>
+    </div>
+
+    <h2>Quick Comparison</h2>
+    <div class="note">
+        <strong>Our static server (this example):</strong> ~80 lines of code, handles basic file serving.
+        <br><br>
+        <strong>Express.js equivalent:</strong>
+        <div class="code-block">const express = require('express');
+const app = express();
+app.use(express.static('public'));  <span class="comment">// That's it! One line.</span>
+app.listen(3000);</div>
+        This is why we use frameworks - they handle all the edge cases for us!
+    </div>
+
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>

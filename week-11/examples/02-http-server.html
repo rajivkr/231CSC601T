@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTTP Module - Week 11 Example</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; }
+        h1 { color: #2196f3; }
+        h2 { color: #1976d2; border-bottom: 2px solid #2196f3; padding-bottom: 5px; }
+        .code-block { background: #263238; color: #82b1ff; padding: 15px; border-radius: 8px; font-family: monospace; margin: 10px 0; overflow-x: auto; white-space: pre-wrap; }
+        .terminal { background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 8px; font-family: monospace; margin: 10px 0; white-space: pre-wrap; }
+        .prompt { color: #2196f3; }
+        .comment { color: #546e7a; }
+        .note { background: #e3f2fd; padding: 15px; border-radius: 8px; border-left: 4px solid #2196f3; margin: 15px 0; }
+    </style>
+</head>
+<body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+    <h1>HTTP Module</h1>
+    <p>Build HTTP servers using Node.js built-in <code>http</code> module - no Express needed!</p>
+
+    <h2>1. Basic HTTP Server</h2>
+    <div class="code-block"><span class="comment">// basic-server.js</span>
+const http = require('http');
+
+<span class="comment">// Create server with request handler</span>
+const server = http.createServer((req, res) => {
+    <span class="comment">// req = IncomingMessage (request from client)</span>
+    <span class="comment">// res = ServerResponse (our response to client)</span>
+
+    console.log(`${req.method} ${req.url}`);
+
+    <span class="comment">// Set status code and headers</span>
+    res.writeHead(200, {
+        'Content-Type': 'text/html',
+        'X-Custom-Header': 'MyServer'
+    });
+
+    <span class="comment">// Write response body</span>
+    res.write('&lt;!DOCTYPE html&gt;');
+    res.write('&lt;html&gt;&lt;body&gt;');
+    res.write('&lt;h1&gt;Hello from Node.js!&lt;/h1&gt;');
+    res.write(`&lt;p&gt;You requested: ${req.url}&lt;/p&gt;`);
+    res.write(`&lt;p&gt;Method: ${req.method}&lt;/p&gt;`);
+    res.write(`&lt;p&gt;Time: ${new Date().toLocaleString()}&lt;/p&gt;`);
+    res.write('&lt;/body&gt;&lt;/html&gt;');
+
+    <span class="comment">// End response (MUST call this!)</span>
+    res.end();
+});
+
+<span class="comment">// Start listening on port 3000</span>
+const PORT = 3000;
+server.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+    console.log('Press Ctrl+C to stop');
+});</div>
+
+    <div class="terminal">
+<span class="prompt">$ </span>node basic-server.js
+Server running at http://localhost:3000
+<span class="comment"># Open http://localhost:3000 in your browser</span>
+    </div>
+
+    <h2>2. Responding with Different Content Types</h2>
+    <div class="code-block"><span class="comment">// content-types.js</span>
+const http = require('http');
+
+const server = http.createServer((req, res) => {
+    switch (req.url) {
+        case '/':
+            <span class="comment">// HTML response</span>
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.end(`
+                &lt;h1&gt;Content Type Demo&lt;/h1&gt;
+                &lt;ul&gt;
+                    &lt;li&gt;&lt;a href="/html"&gt;HTML Response&lt;/a&gt;&lt;/li&gt;
+                    &lt;li&gt;&lt;a href="/json"&gt;JSON Response&lt;/a&gt;&lt;/li&gt;
+                    &lt;li&gt;&lt;a href="/text"&gt;Text Response&lt;/a&gt;&lt;/li&gt;
+                    &lt;li&gt;&lt;a href="/xml"&gt;XML Response&lt;/a&gt;&lt;/li&gt;
+                &lt;/ul&gt;
+            `);
+            break;
+
+        case '/html':
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.end('&lt;h1&gt;This is HTML!&lt;/h1&gt;&lt;p&gt;With markup.&lt;/p&gt;');
+            break;
+
+        case '/json':
+            <span class="comment">// JSON response</span>
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({
+                message: 'This is JSON!',
+                timestamp: new Date().toISOString(),
+                data: [1, 2, 3]
+            }, null, 2));
+            break;
+
+        case '/text':
+            <span class="comment">// Plain text response</span>
+            res.writeHead(200, { 'Content-Type': 'text/plain' });
+            res.end('This is plain text. No formatting.');
+            break;
+
+        case '/xml':
+            <span class="comment">// XML response</span>
+            res.writeHead(200, { 'Content-Type': 'application/xml' });
+            res.end(`&lt;?xml version="1.0"?&gt;
+&lt;message&gt;
+    &lt;text&gt;This is XML!&lt;/text&gt;
+    &lt;time&gt;${new Date().toISOString()}&lt;/time&gt;
+&lt;/message&gt;`);
+            break;
+
+        default:
+            <span class="comment">// 404 Not Found</span>
+            res.writeHead(404, { 'Content-Type': 'text/html' });
+            res.end('&lt;h1&gt;404 - Not Found&lt;/h1&gt;');
+    }
+});
+
+server.listen(3000, () => {
+    console.log('Content-type demo at http://localhost:3000');
+});</div>
+
+    <h2>3. Request Details</h2>
+    <div class="code-block"><span class="comment">// request-details.js</span>
+const http = require('http');
+
+const server = http.createServer((req, res) => {
+    <span class="comment">// Log all request details</span>
+    console.log('--- New Request ---');
+    console.log('Method:', req.method);
+    console.log('URL:', req.url);
+    console.log('HTTP Version:', req.httpVersion);
+
+    <span class="comment">// Headers</span>
+    console.log('Headers:');
+    for (const [key, value] of Object.entries(req.headers)) {
+        console.log(`  ${key}: ${value}`);
+    }
+
+    <span class="comment">// Respond with request info</span>
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({
+        method: req.method,
+        url: req.url,
+        httpVersion: req.httpVersion,
+        headers: req.headers,
+        remoteAddress: req.socket.remoteAddress
+    }, null, 2));
+});
+
+server.listen(3000, () => {
+    console.log('Request inspector at http://localhost:3000');
+});</div>
+
+    <h2>4. Handling POST Requests</h2>
+    <div class="code-block"><span class="comment">// post-handler.js</span>
+const http = require('http');
+
+<span class="comment">// Helper: Parse request body</span>
+function getBody(req) {
+    return new Promise((resolve, reject) => {
+        let body = '';
+        req.on('data', chunk => {
+            body += chunk.toString();
+            <span class="comment">// Limit body size (prevent abuse)</span>
+            if (body.length > 1e6) {
+                req.destroy();
+                reject(new Error('Body too large'));
+            }
+        });
+        req.on('end', () => resolve(body));
+        req.on('error', reject);
+    });
+}
+
+const server = http.createServer(async (req, res) => {
+    <span class="comment">// Serve HTML form on GET</span>
+    if (req.method === 'GET' && req.url === '/') {
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(`
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+            &lt;head&gt;&lt;title&gt;POST Demo&lt;/title&gt;&lt;/head&gt;
+            &lt;body&gt;
+                &lt;h1&gt;Submit Data&lt;/h1&gt;
+                &lt;form method="POST" action="/submit"&gt;
+                    &lt;label&gt;Name: &lt;input name="name" required&gt;&lt;/label&gt;&lt;br&gt;&lt;br&gt;
+                    &lt;label&gt;Email: &lt;input name="email" type="email" required&gt;&lt;/label&gt;&lt;br&gt;&lt;br&gt;
+                    &lt;button type="submit"&gt;Submit&lt;/button&gt;
+                &lt;/form&gt;
+
+                &lt;h2&gt;Or send JSON:&lt;/h2&gt;
+                &lt;pre&gt;curl -X POST http://localhost:3000/api/data \\
+  -H "Content-Type: application/json" \\
+  -d '{"name":"Alice","email":"alice@example.com"}'&lt;/pre&gt;
+            &lt;/body&gt;
+            &lt;/html&gt;
+        `);
+        return;
+    }
+
+    <span class="comment">// Handle form POST</span>
+    if (req.method === 'POST' && req.url === '/submit') {
+        const body = await getBody(req);
+        <span class="comment">// Parse form data (URL-encoded)</span>
+        const params = new URLSearchParams(body);
+        const data = Object.fromEntries(params);
+
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(`
+            &lt;h1&gt;Form Received!&lt;/h1&gt;
+            &lt;p&gt;Name: ${data.name}&lt;/p&gt;
+            &lt;p&gt;Email: ${data.email}&lt;/p&gt;
+            &lt;a href="/"&gt;Back&lt;/a&gt;
+        `);
+        return;
+    }
+
+    <span class="comment">// Handle JSON POST</span>
+    if (req.method === 'POST' && req.url === '/api/data') {
+        try {
+            const body = await getBody(req);
+            const data = JSON.parse(body);
+
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({
+                message: 'Data received!',
+                received: data,
+                timestamp: new Date().toISOString()
+            }, null, 2));
+        } catch (err) {
+            res.writeHead(400, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Invalid JSON' }));
+        }
+        return;
+    }
+
+    <span class="comment">// 404</span>
+    res.writeHead(404);
+    res.end('Not Found');
+});
+
+server.listen(3000, () => {
+    console.log('POST demo at http://localhost:3000');
+});</div>
+
+    <h2>5. Server Events</h2>
+    <div class="code-block"><span class="comment">// server-events.js</span>
+const http = require('http');
+
+const server = http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Hello!');
+});
+
+<span class="comment">// Server events</span>
+server.on('listening', () => {
+    const addr = server.address();
+    console.log(`Server listening on ${addr.address}:${addr.port}`);
+});
+
+server.on('connection', (socket) => {
+    console.log('New connection from:', socket.remoteAddress);
+});
+
+server.on('close', () => {
+    console.log('Server closed');
+});
+
+server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+        console.error(`Port ${err.port} is already in use!`);
+        console.error('Try a different port or kill the other process.');
+    } else {
+        console.error('Server error:', err);
+    }
+});
+
+<span class="comment">// Graceful shutdown</span>
+process.on('SIGINT', () => {
+    console.log('\nShutting down gracefully...');
+    server.close(() => {
+        console.log('Server closed. Goodbye!');
+        process.exit(0);
+    });
+});
+
+server.listen(3000);</div>
+
+    <div class="note">
+        <strong>Comparing http module vs Express.js:</strong> Express is built on top of the http module. It adds routing, middleware, template engines, and many convenience methods. For production apps, use Express. Understanding the http module helps you understand what Express does under the hood.
+    </div>
+
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>

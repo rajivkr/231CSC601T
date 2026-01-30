@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Selectors - Week 04 Example</title>
+    <style>
+        /* Element Selector - targets all paragraphs */
+        p {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        /* Class Selector - targets elements with class="highlight" */
+        .highlight {
+            background-color: yellow;
+            padding: 5px;
+        }
+
+        /* ID Selector - targets element with id="main-title" */
+        #main-title {
+            color: #27ae60;
+            border-bottom: 3px solid #27ae60;
+            padding-bottom: 10px;
+        }
+
+        /* Grouping Selector - targets h2 AND h3 */
+        h2, h3 {
+            color: #2c3e50;
+        }
+
+        /* Descendant Selector - any p inside .container */
+        .container p {
+            margin-left: 20px;
+            border-left: 3px solid #3498db;
+            padding-left: 10px;
+        }
+
+        /* Child Selector - direct p children of .direct-parent */
+        .direct-parent > p {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        /* Adjacent Sibling Selector - p immediately after h3 */
+        h3 + p {
+            font-size: 1.1em;
+            color: #8e44ad;
+        }
+
+        /* Attribute Selector - inputs with type="text" */
+        input[type="text"] {
+            border: 2px solid #27ae60;
+            padding: 8px;
+            border-radius: 5px;
+        }
+
+        /* Pseudo-class Selector - hover state */
+        .hover-demo:hover {
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Multiple Classes */
+        .box {
+            padding: 20px;
+            margin: 10px;
+            border: 1px solid #ddd;
+        }
+        .box.special {
+            background-color: #f39c12;
+            color: white;
+        }
+
+        /* Universal Selector Example */
+        .reset-box * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+
+    <h1 id="main-title">CSS Selectors Demo</h1>
+    <p>This page demonstrates various CSS selectors. View the source code to see how each selector works!</p>
+
+    <h2>1. Element Selector</h2>
+    <p>This paragraph is styled using the element selector <code>p { }</code></p>
+    <p>All paragraphs on this page share basic styling.</p>
+
+    <h2>2. Class Selector</h2>
+    <p>This is a normal paragraph.</p>
+    <p class="highlight">This paragraph has the "highlight" class applied!</p>
+    <p>Classes can be reused on <span class="highlight">any element</span>.</p>
+
+    <h2>3. ID Selector</h2>
+    <p>The main title at the top uses <code>#main-title</code> - notice the green color and border.</p>
+    <p>IDs should be unique - only one element per ID per page!</p>
+
+    <h2>4. Grouping Selector</h2>
+    <h3>This h3 and h2 above share the same color</h3>
+    <p>We used <code>h2, h3 { }</code> to style them together.</p>
+
+    <h2>5. Descendant Selector</h2>
+    <div class="container">
+        <p>This paragraph is inside .container (has blue left border)</p>
+        <div>
+            <p>This nested paragraph is also a descendant (also has border)</p>
+        </div>
+    </div>
+    <p>This paragraph is outside .container (no border)</p>
+
+    <h2>6. Child Selector</h2>
+    <div class="direct-parent">
+        <p>I am a direct child of .direct-parent (red and bold)</p>
+        <div>
+            <p>I am nested inside a div, not a direct child (not red)</p>
+        </div>
+    </div>
+
+    <h2>7. Adjacent Sibling Selector</h2>
+    <h3>Adjacent Sibling Demo</h3>
+    <p>This paragraph comes immediately after h3 (purple, larger)</p>
+    <p>This paragraph is not adjacent to h3 (normal)</p>
+
+    <h2>8. Attribute Selector</h2>
+    <p>
+        <label>Text input (styled): <input type="text" placeholder="Type here"></label>
+    </p>
+    <p>
+        <label>Password input (not styled): <input type="password" placeholder="Password"></label>
+    </p>
+
+    <h2>9. Pseudo-class Selector</h2>
+    <p class="hover-demo" style="display: inline-block; padding: 10px; border: 1px solid #ddd;">
+        Hover over me to see the :hover effect!
+    </p>
+
+    <h2>10. Multiple Classes</h2>
+    <div class="box">Regular box with .box class</div>
+    <div class="box special">Box with both .box and .special classes</div>
+
+    <hr>
+    <h3>Selector Specificity Reference</h3>
+    <table border="1" cellpadding="10" style="border-collapse: collapse; width: 100%;">
+        <tr style="background: #27ae60; color: white;">
+            <th>Selector Type</th>
+            <th>Example</th>
+            <th>Specificity</th>
+        </tr>
+        <tr>
+            <td>Element</td>
+            <td><code>p</code></td>
+            <td>(0, 0, 1)</td>
+        </tr>
+        <tr>
+            <td>Class</td>
+            <td><code>.highlight</code></td>
+            <td>(0, 1, 0)</td>
+        </tr>
+        <tr>
+            <td>ID</td>
+            <td><code>#main-title</code></td>
+            <td>(1, 0, 0)</td>
+        </tr>
+        <tr>
+            <td>Combined</td>
+            <td><code>div.container p</code></td>
+            <td>(0, 1, 2)</td>
+        </tr>
+    </table>
+
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>

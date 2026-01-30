@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form - Week 03 Example</title>
+</head>
+<body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+    <h1>Contact Us</h1>
+    <form action="/api/contact" method="POST">
+        <p>
+            <label for="name">Your Name:</label><br>
+            <input type="text" id="name" name="name" required>
+        </p>
+        <p>
+            <label for="email">Email Address:</label><br>
+            <input type="email" id="email" name="email" required>
+        </p>
+        <p>
+            <label for="subject">Subject:</label><br>
+            <select id="subject" name="subject" required>
+                <option value="">-- Select Subject --</option>
+                <option value="general">General Inquiry</option>
+                <option value="support">Technical Support</option>
+                <option value="billing">Billing Question</option>
+                <option value="feedback">Feedback</option>
+                <option value="other">Other</option>
+            </select>
+        </p>
+        <p>
+            <label for="priority">Priority Level: <output id="priorityValue">5</output></label><br>
+            <input type="range" id="priority" name="priority" min="1" max="10" value="5" oninput="priorityValue.value = this.value">
+            <small>(1 = Low, 10 = Urgent)</small>
+        </p>
+        <p>
+            <label for="message">Message:</label><br>
+            <textarea id="message" name="message" rows="6" cols="50" required minlength="20" placeholder="Please describe your inquiry in detail (minimum 20 characters)"></textarea>
+        </p>
+        <p>
+            <label>
+                <input type="checkbox" name="copy" value="yes">
+                Send me a copy of this message
+            </label>
+        </p>
+        <p>
+            <button type="submit">Send Message</button>
+        </p>
+    </form>
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>

@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en" class="dark" data-accent="unit-5">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1a1a2e">
+    <title>Week 13 - Bootstrap & Responsive Design | 231CSC601T</title>
+    <script src="../../core/theme.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../../core/tw-config.js"></script>
+    <link rel="stylesheet" href="../../core/slides.css">
+</head>
+<body class="font-sans min-h-screen
+             bg-gradient-to-br from-navy to-navy-deep text-gray-200
+             dark:bg-gradient-to-br dark:from-navy dark:to-navy-deep dark:text-gray-200">
+
+    <a href="#main-content" class="skip-link bg-[var(--accent)] text-white px-4 py-2 rounded-lg font-semibold no-underline">Skip to content</a>
+
+    <!-- Nav header -->
+    <nav class="fixed top-0 left-0 right-0 z-50
+                bg-black/90 dark:bg-black/90 bg-white/95 dark:bg-black/90
+                backdrop-blur-md border-b-2 border-[var(--accent)]
+                px-4 py-2 flex justify-between items-center" aria-label="Slide navigation">
+        <div class="flex items-center gap-3 min-w-0">
+            <a href="../../index.html" class="text-[var(--accent)] text-sm hover:underline whitespace-nowrap hidden sm:inline">&larr; Home</a>
+            <a href="../examples/index.html" class="text-[var(--accent)] text-sm hover:underline whitespace-nowrap hidden sm:inline">&larr; Examples</a>
+            <span class="text-[var(--accent)] font-bold text-sm truncate">Week 13: Bootstrap & Responsive Design</span>
+        </div>
+        <div class="flex items-center gap-2 flex-shrink-0">
+            <button class="theme-toggle w-9 h-9 flex items-center justify-center border border-gray-600 dark:border-gray-600 border-gray-300 rounded-lg bg-transparent text-gray-400 hover:text-white cursor-pointer transition" aria-label="Switch to light mode">
+                <svg class="icon-sun w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="icon-moon w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+            <button class="px-3 py-1.5 rounded-lg bg-[var(--accent)] text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" onclick="toggleMenu()" aria-label="Open slide menu">Menu</button>
+            <button class="px-3 py-1.5 rounded-lg bg-red-500 text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" id="prevBtn" aria-label="Previous slide">Prev</button>
+            <span class="text-gray-400 text-sm tabular-nums" aria-live="polite"><span id="currentSlide">1</span> / <span id="totalSlides"></span></span>
+            <button class="px-3 py-1.5 rounded-lg bg-green-600 text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" id="nextBtn" aria-label="Next slide">Next</button>
+        </div>
+    </nav>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay fixed inset-0 z-[200] bg-black/90 dark:bg-black/90 overflow-y-auto p-6" id="menuOverlay" aria-hidden="true" role="dialog" aria-label="Slide navigation menu">
+        <button class="close-menu fixed top-6 right-6 text-4xl text-white cursor-pointer bg-transparent border-none z-[201] leading-none p-2" onclick="toggleMenu()" aria-label="Close menu">&times;</button>
+        <div class="max-w-[600px] mx-auto mt-12 p-5">
+            <h2 class="text-[var(--accent)] text-2xl font-bold text-center mb-6">Slide Navigation</h2>
+            <ul id="slideMenu" class="list-none m-0 p-0"></ul>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <main id="main-content" class="max-w-[1200px] mx-auto px-5 pt-16">
+
+        <!-- Progress bar -->
+        <div class="w-full h-1 bg-white/10 dark:bg-white/10 bg-gray-200 rounded mt-4 mb-5 overflow-hidden">
+            <div class="progress-fill h-full rounded bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)]" id="progress" style="width:0%"></div>
+        </div>
+
+        <!-- Slide 1: Title -->
+        <section class="slide active rounded-2xl p-6 md:p-10 min-h-[80vh]
+                        bg-white/5 dark:bg-white/5 bg-white dark:bg-white/5
+                        border border-white/10 dark:border-white/10 border-gray-200
+                        backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Week 13: Bootstrap & Responsive Design</h1>
+            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Unit V - Frontend Frameworks</h2>
+            <p class="text-xl text-gray-300 dark:text-gray-300 text-gray-600 my-5">Build beautiful, responsive websites faster!</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">What You'll Learn</h3>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Bootstrap 5 framework fundamentals</li>
+                        <li>Grid system and responsive layout</li>
+                        <li>Pre-built components and utilities</li>
+                        <li>Mobile-first responsive design</li>
+                    </ul>
+                </div>
+                <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">The LEGO Analogy</h3>
+                    <p class="text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">Bootstrap is like a LEGO set for websites. Instead of making every brick from scratch, you get pre-made pieces (components) that snap together to build amazing things quickly. The grid system is like the baseplate that helps you organize your pieces neatly!</p>
+                </div>
+            </div>
+
+            <p class="text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Press &rarr; or click Next to continue</strong></p>
+        </section>
+
+        <!-- Slide 2: What is Bootstrap? -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">What is Bootstrap?</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Bootstrap Overview</h2>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Most popular CSS framework in the world</li>
+                        <li>Created by Twitter (2011)</li>
+                        <li>Open-source and free to use</li>
+                        <li>Current version: Bootstrap 5</li>
+                    </ul>
+
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3 mt-4">What Bootstrap Provides</h3>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Grid System:</strong> 12-column responsive layout</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Components:</strong> Buttons, cards, navbars, modals...</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Utilities:</strong> Spacing, colors, display helpers</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">JavaScript:</strong> Interactive components</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Icons:</strong> 1,800+ free icons</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">Getting Started</h3>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;!-- Add via CDN (easiest) --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport"
+        content="width=device-width,
+        initial-scale=1.0"&gt;
+
+    &lt;!-- Bootstrap CSS --&gt;
+    &lt;link href="https://cdn.jsdelivr.net/
+    npm/bootstrap@5.3.0/dist/css/
+    bootstrap.min.css"
+    rel="stylesheet"&gt;
+
+    &lt;title&gt;My Bootstrap Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Hello Bootstrap!&lt;/h1&gt;
+
+    &lt;!-- Bootstrap JS --&gt;
+    &lt;script src="https://cdn.jsdelivr.net/
+    npm/bootstrap@5.3.0/dist/js/
+    bootstrap.bundle.min.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3: The Grid System -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">The Bootstrap Grid System</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">12-Column System</h2>
+                    <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600 mb-3">Bootstrap divides the page into 12 equal columns:</p>
+
+                    <div class="grid grid-cols-12 gap-1 my-3">
+                        <div class="bg-[var(--accent)]/30 p-2 rounded text-center border border-[var(--accent)]/50 text-sm">1</div>
+                        <div class="bg-[var(--accent)]/30 p-2 rounded text-center border border-[var(--accent)]/50 text-sm">2</div>
+                        <div class="bg-[var(--accent)]/30 p-2 rounded text-center border border-[var(--accent)]/50 text-sm">3</div>
+                        <div class="bg-[var(--accent)]/30 p-2 rounded text-center border border-[var(--accent)]/50 text-sm">4</div>
+                        <div class="bg-[var(--accent)]/30 p-2 rounded text-center border border-[var(--accent)]/50 text-sm">5</div>
+                        <div class="bg-[var(--accent)]/30 p-2 rounded text-center border border-[var(--accent)]/50 text-sm">6</div>
+                        <div class="bg-[var(--accent)]/30 p-2 rounded text-center border border-[var(--accent)]/50 text-sm">7</div>
+                        <div class="bg-[var(--accent)]/30 p-2 rounded text-center border border-[var(--accent)]/50 text-sm">8</div>
+                        <div class="bg-[var(--accent)]/30 p-2 rounded text-center border border-[var(--accent)]/50 text-sm">9</div>
+                        <div class="bg-[var(--accent)]/30 p-2 rounded text-center border border-[var(--accent)]/50 text-sm">10</div>
+                        <div class="bg-[var(--accent)]/30 p-2 rounded text-center border border-[var(--accent)]/50 text-sm">11</div>
+                        <div class="bg-[var(--accent)]/30 p-2 rounded text-center border border-[var(--accent)]/50 text-sm">12</div>
+                    </div>
+
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3 mt-4">Why 12 Columns?</h3>
+                    <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">12 is divisible by 2, 3, 4, and 6 - giving maximum layout flexibility!</p>
+
+                    <div class="grid grid-cols-12 gap-1 my-3">
+                        <div class="col-span-6 bg-[var(--accent)]/30 p-2 rounded text-center border border-[var(--accent)]/50 text-sm">col-6</div>
+                        <div class="col-span-6 bg-[var(--accent)]/30 p-2 rounded text-center border border-[var(--accent)]/50 text-sm">col-6</div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-1 my-3">
+                        <div class="col-span-4 bg-[var(--accent)]/30 p-2 rounded text-center border border-[var(--accent)]/50 text-sm">col-4</div>
+                        <div class="col-span-4 bg-[var(--accent)]/30 p-2 rounded text-center border border-[var(--accent)]/50 text-sm">col-4</div>
+                        <div class="col-span-4 bg-[var(--accent)]/30 p-2 rounded text-center border border-[var(--accent)]/50 text-sm">col-4</div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-1 my-3">
+                        <div class="col-span-3 bg-[var(--accent)]/30 p-2 rounded text-center border border-[var(--accent)]/50 text-sm">col-3</div>
+                        <div class="col-span-9 bg-[var(--accent)]/30 p-2 rounded text-center border border-[var(--accent)]/50 text-sm">col-9</div>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Grid Structure</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;!-- Container > Row > Columns --&gt;
+&lt;div class="container"&gt;
+    &lt;div class="row"&gt;
+        &lt;div class="col-6"&gt;Half width&lt;/div&gt;
+        &lt;div class="col-6"&gt;Half width&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="row"&gt;
+        &lt;div class="col-4"&gt;One third&lt;/div&gt;
+        &lt;div class="col-4"&gt;One third&lt;/div&gt;
+        &lt;div class="col-4"&gt;One third&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="row"&gt;
+        &lt;div class="col-3"&gt;Sidebar&lt;/div&gt;
+        &lt;div class="col-9"&gt;Main content&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3 mt-4">Container Types</h3>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">.container</code> - Fixed width, centered</li>
+                        <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">.container-fluid</code> - Full width</li>
+                        <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">.container-sm/md/lg</code> - Responsive width</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 4: Responsive Breakpoints -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Responsive Breakpoints</h1>
+            <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600 mb-4">Bootstrap uses breakpoints to change layout at different screen sizes:</p>
+
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse text-base">
+                    <tr>
+                        <th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Breakpoint</th>
+                        <th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Class</th>
+                        <th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Width</th>
+                        <th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Device</th>
+                    </tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Extra small</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">col-</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">&lt; 576px</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Phones (portrait)</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Small</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">col-sm-</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">&ge; 576px</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Phones (landscape)</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Medium</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">col-md-</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">&ge; 768px</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Tablets</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Large</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">col-lg-</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">&ge; 992px</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Laptops</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Extra large</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">col-xl-</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">&ge; 1200px</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Desktops</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">XXL</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">col-xxl-</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">&ge; 1400px</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Large desktops</td></tr>
+                </table>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">Responsive Example</h3>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;!-- 1 column on mobile, 2 on tablet, 3 on desktop --&gt;
+&lt;div class="row"&gt;
+    &lt;div class="col-12 col-md-6 col-lg-4"&gt;
+        Card 1
+    &lt;/div&gt;
+    &lt;div class="col-12 col-md-6 col-lg-4"&gt;
+        Card 2
+    &lt;/div&gt;
+    &lt;div class="col-12 col-md-12 col-lg-4"&gt;
+        Card 3
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+                <div>
+                    <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-3">Mobile-First Approach</h3>
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Bootstrap is mobile-first! Classes apply from that breakpoint <strong class="text-gray-100 dark:text-gray-100 text-gray-800">and up</strong>.</p>
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600 mt-2"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">col-md-6</code> means: 6 columns on medium screens and larger. On smaller screens, it defaults to full width (12 columns).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 5: Components - Buttons & Cards -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Bootstrap Components</h1>
+            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Buttons & Cards</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">Buttons</h3>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;!-- Button styles --&gt;
+&lt;button class="btn btn-primary"&gt;Primary&lt;/button&gt;
+&lt;button class="btn btn-secondary"&gt;Secondary&lt;/button&gt;
+&lt;button class="btn btn-success"&gt;Success&lt;/button&gt;
+&lt;button class="btn btn-danger"&gt;Danger&lt;/button&gt;
+&lt;button class="btn btn-warning"&gt;Warning&lt;/button&gt;
+&lt;button class="btn btn-info"&gt;Info&lt;/button&gt;
+
+&lt;!-- Outline buttons --&gt;
+&lt;button class="btn btn-outline-primary"&gt;
+    Outline
+&lt;/button&gt;
+
+&lt;!-- Sizes --&gt;
+&lt;button class="btn btn-primary btn-lg"&gt;Large&lt;/button&gt;
+&lt;button class="btn btn-primary btn-sm"&gt;Small&lt;/button&gt;
+
+&lt;!-- Block button (full width) --&gt;
+&lt;div class="d-grid"&gt;
+    &lt;button class="btn btn-primary"&gt;
+        Full Width
+    &lt;/button&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+                <div>
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">Cards</h3>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;div class="card" style="width: 18rem;"&gt;
+    &lt;img src="image.jpg"
+         class="card-img-top"
+         alt="Card image"&gt;
+    &lt;div class="card-body"&gt;
+        &lt;h5 class="card-title"&gt;Card Title&lt;/h5&gt;
+        &lt;p class="card-text"&gt;
+            Some quick example text.
+        &lt;/p&gt;
+        &lt;a href="#" class="btn btn-primary"&gt;
+            Read More
+        &lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Card with header and footer --&gt;
+&lt;div class="card"&gt;
+    &lt;div class="card-header"&gt;Featured&lt;/div&gt;
+    &lt;div class="card-body"&gt;
+        &lt;h5 class="card-title"&gt;Title&lt;/h5&gt;
+        &lt;p class="card-text"&gt;Content here.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="card-footer text-muted"&gt;
+        2 days ago
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 6: Navbar & Navigation -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Navbar & Navigation</h1>
+
+            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Responsive Navigation Bar</h2>
+            <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;nav class="navbar navbar-expand-lg navbar-dark bg-dark"&gt;
+    &lt;div class="container"&gt;
+        &lt;!-- Brand --&gt;
+        &lt;a class="navbar-brand" href="#"&gt;My Website&lt;/a&gt;
+
+        &lt;!-- Mobile toggle button --&gt;
+        &lt;button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav"&gt;
+            &lt;span class="navbar-toggler-icon"&gt;&lt;/span&gt;
+        &lt;/button&gt;
+
+        &lt;!-- Nav links (collapsible) --&gt;
+        &lt;div class="collapse navbar-collapse" id="navbarNav"&gt;
+            &lt;ul class="navbar-nav ms-auto"&gt;
+                &lt;li class="nav-item"&gt;
+                    &lt;a class="nav-link active" href="#"&gt;Home&lt;/a&gt;
+                &lt;/li&gt;
+                &lt;li class="nav-item"&gt;
+                    &lt;a class="nav-link" href="#"&gt;About&lt;/a&gt;
+                &lt;/li&gt;
+                &lt;li class="nav-item dropdown"&gt;
+                    &lt;a class="nav-link dropdown-toggle" href="#"
+                       data-bs-toggle="dropdown"&gt;Services&lt;/a&gt;
+                    &lt;ul class="dropdown-menu"&gt;
+                        &lt;li&gt;&lt;a class="dropdown-item" href="#"&gt;Web Design&lt;/a&gt;&lt;/li&gt;
+                        &lt;li&gt;&lt;a class="dropdown-item" href="#"&gt;Development&lt;/a&gt;&lt;/li&gt;
+                    &lt;/ul&gt;
+                &lt;/li&gt;
+                &lt;li class="nav-item"&gt;
+                    &lt;a class="nav-link" href="#"&gt;Contact&lt;/a&gt;
+                &lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/nav&gt;</code></pre>
+
+            <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                <h3 class="text-xl text-[var(--accent-light)] mb-3">Key Points</h3>
+                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                    <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">navbar-expand-lg</code> - Collapses on screens smaller than lg (992px)</li>
+                    <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">navbar-dark bg-dark</code> - Dark theme navbar</li>
+                    <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">ms-auto</code> - Push items to right (margin-start: auto)</li>
+                    <li>Toggle button appears on mobile with hamburger icon</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Slide 7: Forms -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Bootstrap Forms</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Form Controls</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;form&gt;
+    &lt;!-- Text input --&gt;
+    &lt;div class="mb-3"&gt;
+        &lt;label class="form-label"&gt;Name&lt;/label&gt;
+        &lt;input type="text"
+               class="form-control"
+               placeholder="Enter name"&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Email with help text --&gt;
+    &lt;div class="mb-3"&gt;
+        &lt;label class="form-label"&gt;Email&lt;/label&gt;
+        &lt;input type="email"
+               class="form-control"&gt;
+        &lt;div class="form-text"&gt;
+            We'll never share your email.
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Select dropdown --&gt;
+    &lt;div class="mb-3"&gt;
+        &lt;label class="form-label"&gt;Course&lt;/label&gt;
+        &lt;select class="form-select"&gt;
+            &lt;option&gt;Choose...&lt;/option&gt;
+            &lt;option value="1"&gt;CSE&lt;/option&gt;
+            &lt;option value="2"&gt;IT&lt;/option&gt;
+        &lt;/select&gt;
+    &lt;/div&gt;
+
+    &lt;button class="btn btn-primary"&gt;
+        Submit
+    &lt;/button&gt;
+&lt;/form&gt;</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Validation States</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;!-- Valid state --&gt;
+&lt;div class="mb-3"&gt;
+    &lt;input type="text"
+           class="form-control is-valid"
+           value="Looks good!"&gt;
+    &lt;div class="valid-feedback"&gt;
+        Looks good!
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Invalid state --&gt;
+&lt;div class="mb-3"&gt;
+    &lt;input type="text"
+           class="form-control is-invalid"&gt;
+    &lt;div class="invalid-feedback"&gt;
+        Please enter a value.
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Floating labels --&gt;
+&lt;div class="form-floating mb-3"&gt;
+    &lt;input type="email"
+           class="form-control"
+           id="floatingInput"
+           placeholder="name@example.com"&gt;
+    &lt;label for="floatingInput"&gt;
+        Email address
+    &lt;/label&gt;
+&lt;/div&gt;</code></pre>
+
+                    <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-3">Form Layout</h3>
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Use <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">.row</code> and <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">.col</code> classes to create inline form layouts. Combine with <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">.mb-3</code> for consistent spacing.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 8: Utility Classes -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Bootstrap Utility Classes</h1>
+            <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600 mb-4">Quick styling without writing custom CSS!</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Spacing</h2>
+                    <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600 mb-2">Format: <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">{property}{sides}-{size}</code></p>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;!-- Margin --&gt;
+&lt;div class="m-3"&gt;Margin all sides&lt;/div&gt;
+&lt;div class="mt-3"&gt;Margin top&lt;/div&gt;
+&lt;div class="mb-3"&gt;Margin bottom&lt;/div&gt;
+&lt;div class="ms-3"&gt;Margin start (left)&lt;/div&gt;
+&lt;div class="me-3"&gt;Margin end (right)&lt;/div&gt;
+&lt;div class="mx-auto"&gt;Center horizontally&lt;/div&gt;
+
+&lt;!-- Padding --&gt;
+&lt;div class="p-3"&gt;Padding all sides&lt;/div&gt;
+&lt;div class="py-3"&gt;Padding Y (top+bottom)&lt;/div&gt;
+&lt;div class="px-3"&gt;Padding X (left+right)&lt;/div&gt;
+
+&lt;!-- Sizes: 0, 1, 2, 3, 4, 5 --&gt;
+&lt;!-- 0=0, 1=0.25rem, 2=0.5rem,
+     3=1rem, 4=1.5rem, 5=3rem --&gt;</code></pre>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">Display</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;div class="d-none"&gt;Hidden&lt;/div&gt;
+&lt;div class="d-block"&gt;Block&lt;/div&gt;
+&lt;div class="d-flex"&gt;Flexbox&lt;/div&gt;
+&lt;div class="d-inline"&gt;Inline&lt;/div&gt;
+&lt;div class="d-grid"&gt;Grid&lt;/div&gt;
+
+&lt;!-- Responsive display --&gt;
+&lt;div class="d-none d-md-block"&gt;
+    Hidden on mobile, visible on tablet+
+&lt;/div&gt;</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Colors</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;!-- Text colors --&gt;
+&lt;p class="text-primary"&gt;Blue text&lt;/p&gt;
+&lt;p class="text-success"&gt;Green text&lt;/p&gt;
+&lt;p class="text-danger"&gt;Red text&lt;/p&gt;
+&lt;p class="text-warning"&gt;Yellow text&lt;/p&gt;
+&lt;p class="text-muted"&gt;Gray text&lt;/p&gt;
+
+&lt;!-- Background colors --&gt;
+&lt;div class="bg-primary text-white"&gt;Blue bg&lt;/div&gt;
+&lt;div class="bg-dark text-white"&gt;Dark bg&lt;/div&gt;
+&lt;div class="bg-light text-dark"&gt;Light bg&lt;/div&gt;</code></pre>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">Text & Alignment</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;p class="text-center"&gt;Centered&lt;/p&gt;
+&lt;p class="text-end"&gt;Right aligned&lt;/p&gt;
+&lt;p class="text-start"&gt;Left aligned&lt;/p&gt;
+&lt;p class="fw-bold"&gt;Bold text&lt;/p&gt;
+&lt;p class="fst-italic"&gt;Italic text&lt;/p&gt;
+&lt;p class="text-uppercase"&gt;uppercase&lt;/p&gt;
+&lt;p class="fs-1"&gt;Font size 1 (largest)&lt;/p&gt;
+&lt;p class="fs-6"&gt;Font size 6 (smallest)&lt;/p&gt;</code></pre>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">Borders & Shadows</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;div class="border"&gt;All borders&lt;/div&gt;
+&lt;div class="border-top"&gt;Top border&lt;/div&gt;
+&lt;div class="rounded"&gt;Rounded corners&lt;/div&gt;
+&lt;div class="rounded-circle"&gt;Circle&lt;/div&gt;
+&lt;div class="shadow"&gt;Box shadow&lt;/div&gt;
+&lt;div class="shadow-lg"&gt;Large shadow&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 9: Flexbox Utilities -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Flexbox & Alignment Utilities</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Flexbox Classes</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;!-- Flex container --&gt;
+&lt;div class="d-flex"&gt;...&lt;/div&gt;
+
+&lt;!-- Direction --&gt;
+&lt;div class="d-flex flex-row"&gt;...&lt;/div&gt;
+&lt;div class="d-flex flex-column"&gt;...&lt;/div&gt;
+
+&lt;!-- Justify content (main axis) --&gt;
+&lt;div class="d-flex justify-content-start"&gt;...&lt;/div&gt;
+&lt;div class="d-flex justify-content-center"&gt;...&lt;/div&gt;
+&lt;div class="d-flex justify-content-end"&gt;...&lt;/div&gt;
+&lt;div class="d-flex justify-content-between"&gt;...&lt;/div&gt;
+&lt;div class="d-flex justify-content-around"&gt;...&lt;/div&gt;
+
+&lt;!-- Align items (cross axis) --&gt;
+&lt;div class="d-flex align-items-start"&gt;...&lt;/div&gt;
+&lt;div class="d-flex align-items-center"&gt;...&lt;/div&gt;
+&lt;div class="d-flex align-items-end"&gt;...&lt;/div&gt;
+
+&lt;!-- Wrap --&gt;
+&lt;div class="d-flex flex-wrap"&gt;...&lt;/div&gt;
+
+&lt;!-- Gap --&gt;
+&lt;div class="d-flex gap-3"&gt;...&lt;/div&gt;</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Common Patterns</h2>
+
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">Center Everything</h3>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;div class="d-flex justify-content-center
+            align-items-center"
+     style="height: 300px;"&gt;
+    &lt;p&gt;I am centered!&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3 mt-4">Space Between Items</h3>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;div class="d-flex justify-content-between"&gt;
+    &lt;span&gt;Left&lt;/span&gt;
+    &lt;span&gt;Right&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3 mt-4">Responsive Flex Direction</h3>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;!-- Column on mobile, row on tablet+ --&gt;
+&lt;div class="d-flex flex-column flex-md-row"&gt;
+    &lt;div&gt;Item 1&lt;/div&gt;
+    &lt;div&gt;Item 2&lt;/div&gt;
+    &lt;div&gt;Item 3&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+                    <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-3">Pro Tip</h3>
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Combine flex utilities with responsive prefixes: <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">justify-content-md-between</code> applies only on medium+ screens.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 10: More Components -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">More Bootstrap Components</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Alerts</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;div class="alert alert-success"&gt;
+    Operation successful!
+&lt;/div&gt;
+&lt;div class="alert alert-danger
+            alert-dismissible fade show"&gt;
+    Error occurred!
+    &lt;button type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"&gt;
+    &lt;/button&gt;
+&lt;/div&gt;</code></pre>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">Badges</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;span class="badge bg-primary"&gt;New&lt;/span&gt;
+&lt;span class="badge bg-danger"&gt;4&lt;/span&gt;
+&lt;span class="badge rounded-pill bg-success"&gt;
+    Sale
+&lt;/span&gt;</code></pre>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">List Group</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;ul class="list-group"&gt;
+    &lt;li class="list-group-item active"&gt;
+        Active item
+    &lt;/li&gt;
+    &lt;li class="list-group-item"&gt;
+        Second item
+    &lt;/li&gt;
+    &lt;li class="list-group-item
+               list-group-item-danger"&gt;
+        Danger item
+    &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Modal (Popup)</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;!-- Trigger button --&gt;
+&lt;button class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#myModal"&gt;
+    Open Modal
+&lt;/button&gt;
+
+&lt;!-- Modal structure --&gt;
+&lt;div class="modal fade" id="myModal"&gt;
+    &lt;div class="modal-dialog"&gt;
+        &lt;div class="modal-content"&gt;
+            &lt;div class="modal-header"&gt;
+                &lt;h5 class="modal-title"&gt;
+                    Confirm
+                &lt;/h5&gt;
+                &lt;button class="btn-close"
+                    data-bs-dismiss="modal"&gt;
+                &lt;/button&gt;
+            &lt;/div&gt;
+            &lt;div class="modal-body"&gt;
+                &lt;p&gt;Are you sure?&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class="modal-footer"&gt;
+                &lt;button class="btn btn-secondary"
+                    data-bs-dismiss="modal"&gt;
+                    Cancel
+                &lt;/button&gt;
+                &lt;button class="btn btn-primary"&gt;
+                    Confirm
+                &lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 11: Responsive Design Principles -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Responsive Design Principles</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Mobile-First Design</h2>
+                    <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600 mb-3">Start designing for the smallest screen, then add complexity for larger ones.</p>
+
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">Why Mobile-First?</h3>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Over 60% of web traffic is mobile</li>
+                        <li>Forces focus on essential content</li>
+                        <li>Better performance on mobile</li>
+                        <li>Easier to add than remove features</li>
+                    </ul>
+
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3 mt-4">The Viewport Meta Tag</h3>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;meta name="viewport"
+    content="width=device-width,
+    initial-scale=1.0"&gt;</code></pre>
+                    <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600 mt-2">This is <strong class="text-gray-100 dark:text-gray-100 text-gray-800">required</strong> for responsive design to work!</p>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Responsive Images</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;!-- Responsive image --&gt;
+&lt;img src="photo.jpg"
+     class="img-fluid"
+     alt="Responsive image"&gt;
+
+&lt;!-- Thumbnail --&gt;
+&lt;img src="photo.jpg"
+     class="img-thumbnail"
+     alt="Thumbnail"&gt;
+
+&lt;!-- Rounded --&gt;
+&lt;img src="photo.jpg"
+     class="rounded-circle"
+     alt="Circle image"&gt;</code></pre>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">Responsive Tables</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;div class="table-responsive"&gt;
+    &lt;table class="table table-striped"&gt;
+        &lt;thead&gt;
+            &lt;tr&gt;
+                &lt;th&gt;Name&lt;/th&gt;
+                &lt;th&gt;Email&lt;/th&gt;
+                &lt;th&gt;Phone&lt;/th&gt;
+            &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+            &lt;tr&gt;
+                &lt;td&gt;Alice&lt;/td&gt;
+                &lt;td&gt;alice@mail.com&lt;/td&gt;
+                &lt;td&gt;+91 9876543210&lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/tbody&gt;
+    &lt;/table&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 12: Video Resources -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Video Resources</h1>
+
+            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Bootstrap 5 Crash Course - Traversy Media</h2>
+            <div class="relative w-full max-w-[800px] mx-auto my-5 aspect-video bg-black rounded-lg overflow-hidden shadow-xl">
+                <iframe class="absolute inset-0 w-full h-full border-none" src="https://www.youtube.com/embed/4sosXZsdy-s?rel=0" title="Bootstrap 5 Crash Course" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 my-5">
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200 hover:-translate-y-1 transition">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Frontend Masters</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600"><a href="https://frontendmasters.com/courses/css-grid-flexbox-v2/" target="_blank" class="text-[var(--accent)] hover:underline">CSS Grid & Flexbox v2</a></p>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200 hover:-translate-y-1 transition">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Bootstrap Documentation</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600"><a href="https://getbootstrap.com/docs/5.3/" target="_blank" class="text-[var(--accent)] hover:underline">getbootstrap.com/docs</a></p>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600">Official Bootstrap 5 documentation</p>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200 hover:-translate-y-1 transition">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Bootstrap Icons</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600"><a href="https://icons.getbootstrap.com/" target="_blank" class="text-[var(--accent)] hover:underline">icons.getbootstrap.com</a></p>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600">1,800+ free, open-source icons</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 my-5">
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200 hover:-translate-y-1 transition">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Bootstrap Examples</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600"><a href="https://getbootstrap.com/docs/5.3/examples/" target="_blank" class="text-[var(--accent)] hover:underline">Official Examples</a></p>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600">Ready-made template examples</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 13: Practice Exercises -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Practice Exercises</h1>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-5">
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Exercise 1: Landing Page</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600">Build a responsive landing page with:</p>
+                    <ul class="ml-5 space-y-1 text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Navbar with toggler</li>
+                        <li>Hero section with CTA</li>
+                        <li>3-column feature cards</li>
+                        <li>Contact form</li>
+                    </ul>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Exercise 2: Dashboard</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600">Create an admin dashboard:</p>
+                    <ul class="ml-5 space-y-1 text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Sidebar navigation</li>
+                        <li>Stats cards with icons</li>
+                        <li>Data table with pagination</li>
+                        <li>Responsive on all devices</li>
+                    </ul>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Exercise 3: Portfolio</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600">Design a portfolio site:</p>
+                    <ul class="ml-5 space-y-1 text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>About section</li>
+                        <li>Project cards grid</li>
+                        <li>Skills progress bars</li>
+                        <li>Contact form with validation</li>
+                    </ul>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Exercise 4: E-commerce</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600">Build a product page:</p>
+                    <ul class="ml-5 space-y-1 text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Product image carousel</li>
+                        <li>Product details card</li>
+                        <li>Related products grid</li>
+                        <li>Responsive layout</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                <h3 class="text-xl text-[var(--accent-light)] mb-2">Examples to Study</h3>
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><a href="../examples/index.html" class="text-[var(--accent)] hover:underline">View Week 13 Examples &rarr;</a></p>
+            </div>
+        </section>
+
+        <!-- Slide 14: Summary -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Week 13 Summary</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Key Concepts</h2>
+                    <ul class="ml-6 space-y-2 text-lg text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Bootstrap is a CSS framework for rapid UI development</li>
+                        <li>12-column grid system for layouts</li>
+                        <li>6 breakpoints: xs, sm, md, lg, xl, xxl</li>
+                        <li>Mobile-first approach: design small, scale up</li>
+                        <li>Pre-built components save development time</li>
+                        <li>Utility classes for quick styling</li>
+                    </ul>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">Components Covered</h2>
+                    <ul class="ml-6 space-y-2 text-lg text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Buttons, Cards, Alerts, Badges</li>
+                        <li>Navbar, Modals, List Groups</li>
+                        <li>Forms with validation states</li>
+                        <li>Tables and responsive tables</li>
+                    </ul>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Best Practices</h2>
+                    <ul class="ml-6 space-y-2 text-lg text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Always include viewport meta tag</li>
+                        <li>Use semantic Bootstrap classes</li>
+                        <li>Test on multiple screen sizes</li>
+                        <li>Use <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">img-fluid</code> for responsive images</li>
+                        <li>Avoid overriding Bootstrap with !important</li>
+                        <li>Use utility classes before writing custom CSS</li>
+                    </ul>
+
+                    <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 mt-4">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-2">Coming Next Week</h3>
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Week 14: API Integration & Full-Stack - Connecting frontend to backend!</p>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="mt-10 pt-5 border-t border-white/10 dark:border-white/10 border-gray-200 text-center text-sm text-gray-500">
+                <p><strong>Prepared by Rajiv Ramakrishnan</strong></p>
+                <p><a href="mailto:gmail@rajiv.kr" class="text-[var(--accent)] hover:underline">gmail@rajiv.kr</a> | <a href="tel:+919566134326" class="text-[var(--accent)] hover:underline">+91 9566134326</a> | <a href="https://www.linkedin.com/in/rajivramakrishnan/" target="_blank" rel="noopener" class="text-[var(--accent)] hover:underline">LinkedIn</a></p>
+                <p class="mt-2 text-gray-600">&copy; 2026 Rajiv Ramakrishnan. Licensed for educational use at Eashwari.</p>
+            </footer>
+        </section></main>
+
+    <!-- Bottom nav -->
+    <div class="max-w-[1200px] mx-auto px-5">
+        <div class="flex justify-between items-center mt-8 pt-5 border-t border-white/10 dark:border-white/10 border-gray-200 pb-8">
+            <button class="px-6 py-3 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] text-white font-medium cursor-pointer hover:scale-105 hover:shadow-lg transition border-none disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none" id="prevBtn2" onclick="changeSlide(-1)">&larr; Previous</button>
+            <div class="text-gray-500 text-sm tabular-nums"><span id="currentSlide2"></span></div>
+            <button class="px-6 py-3 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] text-white font-medium cursor-pointer hover:scale-105 hover:shadow-lg transition border-none disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none" id="nextBtn2" onclick="changeSlide(1)">Next &rarr;</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] py-8 mt-8">
+        <div class="max-w-[1200px] mx-auto px-5 text-center">
+            <p class="text-gray-900 dark:text-white text-lg font-semibold mb-4">Prepared by Rajiv Ramakrishnan</p>
+            <div class="flex flex-wrap justify-center gap-3 text-sm mb-6">
+                <a href="mailto:gmail@rajiv.kr" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    gmail@rajiv.kr
+                </a>
+                <a href="tel:+919566134326" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    +91 9566134326
+                </a>
+                <a href="https://www.linkedin.com/in/rajivramakrishnan/" target="_blank" rel="noopener" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="mr-1.5"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+                    LinkedIn
+                </a>
+            </div>
+            <p class="text-gray-600 dark:text-gray-500 text-xs">
+                &copy; 2026 Rajiv Ramakrishnan. All rights reserved. Licensed for educational use at Eashwari.
+            </p>
+        </div>
+    </footer>
+
+    </div>
+
+    <!-- Keyboard hint -->
+    <div class="fixed bottom-5 right-5 bg-black/80 px-3 py-1.5 rounded-lg text-xs text-gray-500 z-10 pointer-events-none hidden md:block" aria-hidden="true">
+        <kbd class="bg-white/10 px-1.5 py-0.5 rounded border border-white/20 font-mono text-xs">&larr;</kbd>
+        <kbd class="bg-white/10 px-1.5 py-0.5 rounded border border-white/20 font-mono text-xs">&rarr;</kbd> navigate &middot;
+        <kbd class="bg-white/10 px-1.5 py-0.5 rounded border border-white/20 font-mono text-xs">M</kbd> menu
+    </div>
+
+    <script src="../../core/slides.js" defer></script>
+</body>
+</html>

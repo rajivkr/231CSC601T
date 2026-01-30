@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en" class="dark" data-accent="unit-2">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1a1a2e">
+    <title>Week 04 - CSS Fundamentals | 231CSC601T</title>
+    <script src="../../core/theme.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../../core/tw-config.js"></script>
+    <link rel="stylesheet" href="../../core/slides.css">
+</head>
+<body class="font-sans min-h-screen
+             bg-gradient-to-br from-navy to-navy-deep text-gray-200
+             dark:bg-gradient-to-br dark:from-navy dark:to-navy-deep dark:text-gray-200">
+
+    <a href="#main-content" class="skip-link bg-[var(--accent)] text-white px-4 py-2 rounded-lg font-semibold no-underline">Skip to content</a>
+
+    <!-- Nav header -->
+    <nav class="fixed top-0 left-0 right-0 z-50
+                bg-black/90 dark:bg-black/90 bg-white/95 dark:bg-black/90
+                backdrop-blur-md border-b-2 border-[var(--accent)]
+                px-4 py-2 flex justify-between items-center" aria-label="Slide navigation">
+        <div class="flex items-center gap-3 min-w-0">
+            <a href="../../index.html" class="text-[var(--accent)] text-sm hover:underline whitespace-nowrap hidden sm:inline">&larr; Home</a>
+            <a href="../examples/index.html" class="text-[var(--accent)] text-sm hover:underline whitespace-nowrap hidden sm:inline">&larr; Examples</a>
+            <span class="text-[var(--accent)] font-bold text-sm truncate">Week 04: CSS Fundamentals</span>
+        </div>
+        <div class="flex items-center gap-2 flex-shrink-0">
+            <button class="theme-toggle w-9 h-9 flex items-center justify-center border border-gray-600 dark:border-gray-600 border-gray-300 rounded-lg bg-transparent text-gray-400 hover:text-white cursor-pointer transition" aria-label="Switch to light mode">
+                <svg class="icon-sun w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="icon-moon w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+            <button class="px-3 py-1.5 rounded-lg bg-[var(--accent)] text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" onclick="toggleMenu()" aria-label="Open slide menu">Menu</button>
+            <button class="px-3 py-1.5 rounded-lg bg-red-500 text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" id="prevBtn" aria-label="Previous slide">Prev</button>
+            <span class="text-gray-400 text-sm tabular-nums" aria-live="polite"><span id="currentSlide">1</span> / <span id="totalSlides"></span></span>
+            <button class="px-3 py-1.5 rounded-lg bg-green-600 text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" id="nextBtn" aria-label="Next slide">Next</button>
+        </div>
+    </nav>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay fixed inset-0 z-[200] bg-black/90 dark:bg-black/90 overflow-y-auto p-6" id="menuOverlay" aria-hidden="true" role="dialog" aria-label="Slide navigation menu">
+        <button class="close-menu fixed top-6 right-6 text-4xl text-white cursor-pointer bg-transparent border-none z-[201] leading-none p-2" onclick="toggleMenu()" aria-label="Close menu">&times;</button>
+        <div class="max-w-[600px] mx-auto mt-12 p-5">
+            <h2 class="text-[var(--accent)] text-2xl font-bold text-center mb-6">Slide Navigation</h2>
+            <ul id="slideMenu" class="list-none m-0 p-0"></ul>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <main id="main-content" class="max-w-[1200px] mx-auto px-5 pt-16">
+
+        <!-- Progress bar -->
+        <div class="w-full h-1 bg-white/10 dark:bg-white/10 bg-gray-200 rounded mt-4 mb-5 overflow-hidden">
+            <div class="progress-fill h-full rounded bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)]" id="progress" style="width:0%"></div>
+        </div>
+
+        <!-- Slide 1: Title -->
+        <section class="slide active rounded-2xl p-6 md:p-10 min-h-[80vh]
+                        bg-white/5 dark:bg-white/5 bg-white dark:bg-white/5
+                        border border-white/10 dark:border-white/10 border-gray-200
+                        backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Week 04: CSS Fundamentals</h1>
+            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Unit II - Cascading Style Sheets</h2>
+            <p class="text-xl text-gray-300 dark:text-gray-300 text-gray-600 my-5">Welcome to the visual side of web development!</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">What You'll Learn</h3>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>CSS syntax and how styles work</li>
+                        <li>Selectors: targeting HTML elements</li>
+                        <li>Colors, backgrounds, and text styling</li>
+                        <li>The cascade and specificity</li>
+                    </ul>
+                </div>
+                <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">The Painting Analogy</h3>
+                    <p class="text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">If HTML is the structure of a house (walls, rooms, doors), CSS is the interior design - the paint colors, wallpaper, furniture arrangement, and decorations that make it beautiful and functional!</p>
+                </div>
+            </div>
+
+            <p class="text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Press &rarr; or click Next to continue</strong></p>
+        </section>
+
+        <!-- Slide 2: What is CSS? -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">What is CSS?</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">CSS = Cascading Style Sheets</h2>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Cascading:</strong> Styles flow down and can be overridden</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Style:</strong> Visual presentation of elements</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Sheets:</strong> Collections of style rules</li>
+                    </ul>
+
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3 mt-4">Why CSS?</h3>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Separation of content (HTML) from presentation (CSS)</li>
+                        <li>Consistent styling across multiple pages</li>
+                        <li>Easier maintenance and updates</li>
+                        <li>Better accessibility and performance</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">Brief History</h3>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">1996:</strong> CSS1 released</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">1998:</strong> CSS2 added positioning, z-index</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">2011+:</strong> CSS3 modules (animations, flexbox, grid)</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Today:</strong> CSS is constantly evolving!</li>
+                    </ul>
+
+                    <div class="p-5 rounded-lg border border-red-500/30 bg-red-500/10 my-4">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-3">Industry Note</h3>
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Before CSS, styling was done with HTML attributes like <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;font&gt;</code> and <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">bgcolor</code>. Imagine changing colors on 100 pages one by one!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3: CSS Syntax -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">CSS Syntax Anatomy</h1>
+
+            <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200"><span style="background:#27ae60;color:white;padding:2px 8px;border-radius:4px;">selector</span> {
+    <span style="background:#3498db;color:white;padding:2px 8px;border-radius:4px;">property</span>: <span style="background:#e74c3c;color:white;padding:2px 8px;border-radius:4px;">value</span>;
+}</code></pre>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">Example</h3>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">h1 {
+    color: blue;
+    font-size: 24px;
+    text-align: center;
+}</code></pre>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Selector:</strong> <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">h1</code> - what to style</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Property:</strong> <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">color</code> - what aspect to change</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Value:</strong> <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">blue</code> - the new value</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Declaration:</strong> property + value pair</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Declaration Block:</strong> everything in { }</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">Rules to Remember</h3>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Properties and values separated by <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">:</code></li>
+                        <li>Each declaration ends with <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">;</code></li>
+                        <li>Multiple declarations in one block</li>
+                        <li>CSS is case-insensitive (but use lowercase)</li>
+                        <li>Whitespace is ignored (use for readability)</li>
+                    </ul>
+
+                    <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-3">Common Mistake</h3>
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Forgetting the semicolon! The browser will ignore that declaration and possibly the next one too.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 4: Ways to Add CSS -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Three Ways to Add CSS</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">1. Inline CSS</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;p style="color: red; font-size: 16px;"&gt;
+    Red text
+&lt;/p&gt;</code></pre>
+                    <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Use:</strong> Quick tests, email templates</p>
+                    <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Avoid:</strong> Regular development (hard to maintain)</p>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">2. Internal CSS</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;head&gt;
+    &lt;style&gt;
+        p { color: blue; }
+    &lt;/style&gt;
+&lt;/head&gt;</code></pre>
+                    <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Use:</strong> Single-page styles, prototyping</p>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">3. External CSS (Recommended!)</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;!-- In HTML --&gt;
+&lt;head&gt;
+    &lt;link rel="stylesheet"
+          href="styles.css"&gt;
+&lt;/head&gt;
+
+/* In styles.css */
+p { color: green; }</code></pre>
+                    <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Use:</strong> All production websites</p>
+
+                    <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-3">Why External CSS?</h3>
+                        <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                            <li>Cached by browser = faster loading</li>
+                            <li>One file styles entire website</li>
+                            <li>Easy to maintain and update</li>
+                            <li>Separation of concerns</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 5: Basic Selectors -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">CSS Selectors - Part 1</h1>
+            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Targeting Elements</h2>
+
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse text-base">
+                    <tr>
+                        <th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Selector</th>
+                        <th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Example</th>
+                        <th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">What it Selects</th>
+                    </tr>
+                    <tr class="hover:bg-white/5">
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Element</td>
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">p { }</code></td>
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">All &lt;p&gt; elements</td>
+                    </tr>
+                    <tr class="hover:bg-white/5">
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Class</td>
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">.intro { }</code></td>
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Elements with class="intro"</td>
+                    </tr>
+                    <tr class="hover:bg-white/5">
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">ID</td>
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">#header { }</code></td>
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Element with id="header"</td>
+                    </tr>
+                    <tr class="hover:bg-white/5">
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Universal</td>
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">* { }</code></td>
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">All elements</td>
+                    </tr>
+                    <tr class="hover:bg-white/5">
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Grouping</td>
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">h1, h2, h3 { }</code></td>
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">All h1, h2, and h3 elements</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">Class vs ID</h3>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Class (.)</strong> - Reusable, multiple elements</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">ID (#)</strong> - Unique, one element per page</li>
+                    </ul>
+                    <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600 mt-2">Think: Class = "students in CSE" (many), ID = "Roll number 101" (one)</p>
+                </div>
+                <div>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;!-- HTML --&gt;
+&lt;p class="highlight"&gt;One&lt;/p&gt;
+&lt;p class="highlight"&gt;Two&lt;/p&gt;
+&lt;p id="special"&gt;Unique&lt;/p&gt;
+
+/* CSS */
+.highlight { color: yellow; }
+#special { color: red; }</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 6: Combinators -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">CSS Selectors - Part 2</h1>
+            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Combinator Selectors</h2>
+
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse text-base">
+                    <tr>
+                        <th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Combinator</th>
+                        <th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Example</th>
+                        <th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">What it Selects</th>
+                    </tr>
+                    <tr class="hover:bg-white/5">
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Descendant (space)</td>
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">div p { }</code></td>
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">All &lt;p&gt; inside &lt;div&gt; (any level)</td>
+                    </tr>
+                    <tr class="hover:bg-white/5">
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Child (&gt;)</td>
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">div &gt; p { }</code></td>
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Direct &lt;p&gt; children of &lt;div&gt;</td>
+                    </tr>
+                    <tr class="hover:bg-white/5">
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Adjacent Sibling (+)</td>
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">h1 + p { }</code></td>
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">First &lt;p&gt; immediately after &lt;h1&gt;</td>
+                    </tr>
+                    <tr class="hover:bg-white/5">
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">General Sibling (~)</td>
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">h1 ~ p { }</code></td>
+                        <td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">All &lt;p&gt; siblings after &lt;h1&gt;</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">Visual Example</h3>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;div&gt;
+    &lt;p&gt;Direct child&lt;/p&gt;
+    &lt;section&gt;
+        &lt;p&gt;Nested (descendant)&lt;/p&gt;
+    &lt;/section&gt;
+&lt;/div&gt;
+&lt;p&gt;Sibling&lt;/p&gt;</code></pre>
+                </div>
+                <div>
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">Matching Rules</h3>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">/* Both paragraphs */
+div p { color: blue; }
+
+/* Only "Direct child" */
+div > p { color: red; }
+
+/* Only "Sibling" */
+div + p { color: green; }</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 7: Colors in CSS -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Colors in CSS</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Color Formats</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">/* Named Colors (140+) */
+color: red;
+color: dodgerblue;
+color: coral;
+
+/* Hexadecimal (#RRGGBB) */
+color: #ff0000;  /* red */
+color: #00ff00;  /* green */
+color: #0000ff;  /* blue */
+color: #333;     /* shorthand for #333333 */
+
+/* RGB / RGBA */
+color: rgb(255, 0, 0);
+color: rgba(255, 0, 0, 0.5);  /* 50% transparent */
+
+/* HSL / HSLA */
+color: hsl(0, 100%, 50%);     /* red */
+color: hsla(0, 100%, 50%, 0.5);</code></pre>
+                </div>
+                <div>
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">Understanding Hex</h3>
+                    <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">#RRGGBB</code> - Two digits each for Red, Green, Blue</p>
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Range: 00 (none) to FF (full)</p>
+                        <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                            <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">#000000</code> = Black</li>
+                            <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">#ffffff</code> = White</li>
+                            <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">#ff0000</code> = Pure Red</li>
+                        </ul>
+                    </div>
+
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">Color Properties</h3>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">color</code> - Text color</li>
+                        <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">background-color</code> - Background</li>
+                        <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">border-color</code> - Borders</li>
+                    </ul>
+
+                    <div class="p-5 rounded-lg border border-red-500/30 bg-red-500/10 my-4">
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Tip:</strong> Use browser DevTools color picker to find the perfect color!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 8: Text Styling -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Text Styling</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Font Properties</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">/* Font Family */
+font-family: Arial, sans-serif;
+font-family: 'Times New Roman', serif;
+font-family: 'Courier New', monospace;
+
+/* Font Size */
+font-size: 16px;
+font-size: 1.2rem;
+font-size: 1.5em;
+
+/* Font Weight */
+font-weight: normal;  /* 400 */
+font-weight: bold;    /* 700 */
+font-weight: 600;
+
+/* Font Style */
+font-style: italic;
+font-style: normal;</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Text Properties</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">/* Alignment */
+text-align: left;
+text-align: center;
+text-align: right;
+text-align: justify;
+
+/* Decoration */
+text-decoration: underline;
+text-decoration: line-through;
+text-decoration: none;  /* remove underline */
+
+/* Transform */
+text-transform: uppercase;
+text-transform: lowercase;
+text-transform: capitalize;
+
+/* Spacing */
+letter-spacing: 2px;
+word-spacing: 5px;
+line-height: 1.6;</code></pre>
+                </div>
+            </div>
+
+            <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                <h3 class="text-xl text-[var(--accent-light)] mb-3">Font Stack Best Practice</h3>
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">font-family: 'Preferred Font', 'Fallback Font', generic-family;</code></p>
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Always end with a generic family: serif, sans-serif, monospace, cursive, fantasy</p>
+            </div>
+        </section>
+
+        <!-- Slide 9: The Box Model -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">The CSS Box Model</h1>
+            <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Every HTML element is a rectangular box!</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10">
+                    <div style="background: #27ae60; padding: 20px; text-align: center; border-radius: 10px;">
+                        <div style="background: #2ecc71; padding: 20px;">
+                            <div style="background: #58d68d; padding: 20px; border: 5px dashed #fff;">
+                                <div style="background: #fff; color: #333; padding: 20px;">
+                                    Content
+                                </div>
+                                <small style="color: #fff;">Padding</small>
+                            </div>
+                            <small style="color: #fff;">Border</small>
+                        </div>
+                        <small style="color: #fff;">Margin</small>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">Box Model Layers</h3>
+                    <ol class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Content:</strong> The actual content (text, images)</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Padding:</strong> Space inside the border</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Border:</strong> Line around the padding</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Margin:</strong> Space outside the border</li>
+                    </ol>
+
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm mt-3"><code class="text-gray-200">.box {
+    width: 200px;
+    padding: 20px;
+    border: 5px solid black;
+    margin: 10px;
+}
+/* Total width = 200 + 40 + 10 + 20
+              = 270px! */</code></pre>
+                </div>
+            </div>
+
+            <div class="p-5 rounded-lg border border-red-500/30 bg-red-500/10 my-4">
+                <h3 class="text-xl text-[var(--accent-light)] mb-3">The Calculation Problem</h3>
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">By default, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">width</code> only sets content width. Add <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">box-sizing: border-box;</code> to include padding and border in the width!</p>
+            </div>
+        </section>
+
+        <!-- Slide 10: Box Model Properties -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Box Model Properties</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Padding</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">/* Individual sides */
+padding-top: 10px;
+padding-right: 20px;
+padding-bottom: 10px;
+padding-left: 20px;
+
+/* Shorthand */
+padding: 10px;           /* all sides */
+padding: 10px 20px;      /* top/bottom, left/right */
+padding: 10px 20px 15px; /* top, left/right, bottom */
+padding: 10px 20px 15px 25px; /* clockwise from top */</code></pre>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-6">Margin</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">/* Same syntax as padding */
+margin: 10px;
+margin: 10px auto;  /* center horizontally */
+margin: 0;          /* remove default margins */</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Border</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">/* Individual properties */
+border-width: 2px;
+border-style: solid;
+border-color: black;
+
+/* Shorthand */
+border: 2px solid black;
+
+/* Individual sides */
+border-top: 1px dashed red;
+border-bottom: 3px dotted blue;
+
+/* Border radius (rounded corners) */
+border-radius: 10px;
+border-radius: 50%;  /* circle! */</code></pre>
+
+                    <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-3">Border Styles</h3>
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">solid, dashed, dotted, double, groove, ridge, inset, outset, none</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 11: Cascade & Specificity -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">The Cascade & Specificity</h1>
+            <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">When multiple rules target the same element, which one wins?</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Specificity Hierarchy</h2>
+                    <ol class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">!important</strong> - Highest (avoid using!)</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Inline styles</strong> - style attribute</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">ID selectors</strong> - #header</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Class selectors</strong> - .intro</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Element selectors</strong> - p, div</li>
+                    </ol>
+
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3 mt-4">Specificity Score</h3>
+                    <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Calculate as (IDs, Classes, Elements)</p>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">p { }</code> &rarr; (0, 0, 1)</li>
+                        <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">.intro { }</code> &rarr; (0, 1, 0)</li>
+                        <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">#header { }</code> &rarr; (1, 0, 0)</li>
+                        <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">#header .nav p { }</code> &rarr; (1, 1, 1)</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">Example</h3>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;p id="intro" class="highlight"&gt;
+    Hello World
+&lt;/p&gt;
+
+/* Which color wins? */
+p { color: blue; }           /* (0,0,1) */
+.highlight { color: yellow; } /* (0,1,0) */
+#intro { color: red; }       /* (1,0,0) */
+
+/* Answer: RED wins! */</code></pre>
+
+                    <div class="p-5 rounded-lg border border-red-500/30 bg-red-500/10 my-4">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-3">Best Practice</h3>
+                        <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                            <li>Use classes for most styling</li>
+                            <li>Avoid IDs for styling (use for JS)</li>
+                            <li>Never use !important (except debugging)</li>
+                            <li>Keep selectors simple and flat</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 12: Video Resources -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Video Resources</h1>
+            <div class="relative w-full max-w-[800px] mx-auto my-5 aspect-video bg-black rounded-lg overflow-hidden shadow-xl">
+                <iframe class="absolute inset-0 w-full h-full border-none" src="https://www.youtube.com/embed/yfoY53QXEnI?rel=0" title="CSS Crash Course" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 my-5">
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200 hover:-translate-y-1 transition">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Frontend Masters</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600"><a href="https://frontendmasters.com/courses/css-foundations/" target="_blank" class="text-[var(--accent)] hover:underline">CSS Foundations</a></p>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600">Complete CSS fundamentals course</p>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200 hover:-translate-y-1 transition">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">MDN Web Docs</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600"><a href="https://developer.mozilla.org/en-US/docs/Web/CSS" target="_blank" class="text-[var(--accent)] hover:underline">CSS Reference</a></p>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600">The definitive CSS documentation</p>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200 hover:-translate-y-1 transition">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">CSS-Tricks</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600"><a href="https://css-tricks.com/" target="_blank" class="text-[var(--accent)] hover:underline">css-tricks.com</a></p>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600">Amazing tutorials and guides</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 13: Practice Exercises -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Practice Exercises</h1>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-5">
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Exercise 1: Style a Card</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600">Create a styled card component with:</p>
+                    <ul class="ml-5 space-y-1 text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Background color</li>
+                        <li>Padding and margin</li>
+                        <li>Rounded corners</li>
+                        <li>Border</li>
+                    </ul>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Exercise 2: Typography</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600">Style a blog post with:</p>
+                    <ul class="ml-5 space-y-1 text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Custom fonts</li>
+                        <li>Different heading sizes</li>
+                        <li>Line height and spacing</li>
+                        <li>Link hover effects</li>
+                    </ul>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Exercise 3: Color Schemes</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600">Create three color themes:</p>
+                    <ul class="ml-5 space-y-1 text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Light theme</li>
+                        <li>Dark theme</li>
+                        <li>High contrast theme</li>
+                    </ul>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Exercise 4: Specificity</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600">Practice selector specificity:</p>
+                    <ul class="ml-5 space-y-1 text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Override styles correctly</li>
+                        <li>Avoid using !important</li>
+                        <li>Use appropriate selectors</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                <h3 class="text-xl text-[var(--accent-light)] mb-3">Examples to Study</h3>
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><a href="../examples/index.html" class="text-[var(--accent)] hover:underline">View Week 04 Examples &rarr;</a></p>
+            </div>
+        </section>
+
+        <!-- Slide 14: Summary -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Week 04 Summary</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Key Concepts</h2>
+                    <ul class="ml-6 space-y-2 text-lg text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>CSS separates content from presentation</li>
+                        <li>Syntax: selector { property: value; }</li>
+                        <li>Three ways: inline, internal, external (best!)</li>
+                        <li>Selectors: element, class, ID, combinators</li>
+                        <li>Colors: hex, rgb, hsl, named</li>
+                        <li>Box model: content, padding, border, margin</li>
+                        <li>Specificity determines which rules win</li>
+                    </ul>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Best Practices</h2>
+                    <ul class="ml-6 space-y-2 text-lg text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Use external stylesheets</li>
+                        <li>Use classes for styling</li>
+                        <li>Keep selectors simple</li>
+                        <li>Use box-sizing: border-box</li>
+                        <li>Organize CSS logically</li>
+                        <li>Comment complex sections</li>
+                    </ul>
+
+                    <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 mt-4">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-2">Coming Next Week</h3>
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Week 05: CSS Layout & Positioning - Flexbox, Grid, and making layouts!</p>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="mt-10 pt-5 border-t border-white/10 dark:border-white/10 border-gray-200 text-center text-sm text-gray-500">
+                <p><strong>Prepared by Rajiv Ramakrishnan</strong></p>
+                <p><a href="mailto:gmail@rajiv.kr" class="text-[var(--accent)] hover:underline">gmail@rajiv.kr</a> | <a href="tel:+919566134326" class="text-[var(--accent)] hover:underline">+91 9566134326</a> | <a href="https://www.linkedin.com/in/rajivramakrishnan/" target="_blank" rel="noopener" class="text-[var(--accent)] hover:underline">LinkedIn</a></p>
+                <p class="mt-2 text-gray-600">&copy; 2026 Rajiv Ramakrishnan. Licensed for educational use at Eashwari.</p>
+            </footer>
+        </section></main>
+
+    <!-- Bottom nav -->
+    <div class="max-w-[1200px] mx-auto px-5">
+        <div class="flex justify-between items-center mt-8 pt-5 border-t border-white/10 dark:border-white/10 border-gray-200 pb-8">
+            <button class="px-6 py-3 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] text-white font-medium cursor-pointer hover:scale-105 hover:shadow-lg transition border-none disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none" id="prevBtn2" onclick="changeSlide(-1)">&larr; Previous</button>
+            <div class="text-gray-500 text-sm tabular-nums"><span id="currentSlide2"></span></div>
+            <button class="px-6 py-3 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] text-white font-medium cursor-pointer hover:scale-105 hover:shadow-lg transition border-none disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none" id="nextBtn2" onclick="changeSlide(1)">Next &rarr;</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] py-8 mt-8">
+        <div class="max-w-[1200px] mx-auto px-5 text-center">
+            <p class="text-gray-900 dark:text-white text-lg font-semibold mb-4">Prepared by Rajiv Ramakrishnan</p>
+            <div class="flex flex-wrap justify-center gap-3 text-sm mb-6">
+                <a href="mailto:gmail@rajiv.kr" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    gmail@rajiv.kr
+                </a>
+                <a href="tel:+919566134326" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    +91 9566134326
+                </a>
+                <a href="https://www.linkedin.com/in/rajivramakrishnan/" target="_blank" rel="noopener" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="mr-1.5"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+                    LinkedIn
+                </a>
+            </div>
+            <p class="text-gray-600 dark:text-gray-500 text-xs">
+                &copy; 2026 Rajiv Ramakrishnan. All rights reserved. Licensed for educational use at Eashwari.
+            </p>
+        </div>
+    </footer>
+
+    </div>
+
+    <!-- Keyboard hint -->
+    <div class="fixed bottom-5 right-5 bg-black/80 px-3 py-1.5 rounded-lg text-xs text-gray-500 z-10 pointer-events-none hidden md:block" aria-hidden="true">
+        <kbd class="bg-white/10 px-1.5 py-0.5 rounded border border-white/20 font-mono text-xs">&larr;</kbd>
+        <kbd class="bg-white/10 px-1.5 py-0.5 rounded border border-white/20 font-mono text-xs">&rarr;</kbd> navigate &middot;
+        <kbd class="bg-white/10 px-1.5 py-0.5 rounded border border-white/20 font-mono text-xs">M</kbd> menu
+    </div>
+
+    <script src="../../core/slides.js" defer></script>
+</body>
+</html>

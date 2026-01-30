@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Variables & Data Types - Week 07 Example</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 { color: #f1c40f; }
+        h2 { color: #2c3e50; margin-top: 30px; }
+        .output {
+            background: #2c3e50;
+            color: #2ecc71;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            margin: 15px 0;
+        }
+        .code-block {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #f1c40f;
+            margin: 10px 0;
+        }
+        button {
+            background: #f1c40f;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+        }
+        button:hover { background: #f39c12; }
+    </style>
+</head>
+<body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+
+    <h1>Variables & Data Types</h1>
+    <p>Open the browser console (F12) to see additional output!</p>
+
+    <h2>1. Variable Declaration</h2>
+    <div class="code-block">
+        <code>
+let name = 'John';      // Can be reassigned<br>
+const PI = 3.14159;     // Cannot be reassigned<br>
+var oldWay = 'avoid';   // Old way, don't use
+        </code>
+    </div>
+    <button onclick="demo1()">Run Demo</button>
+    <div class="output" id="output1">Click "Run Demo" to see output...</div>
+
+    <h2>2. Data Types</h2>
+    <div class="code-block">
+        <code>
+// Primitive types<br>
+let str = 'Hello';       // String<br>
+let num = 42;            // Number<br>
+let bool = true;         // Boolean<br>
+let nothing = null;      // Null<br>
+let notDefined;          // Undefined
+        </code>
+    </div>
+    <button onclick="demo2()">Run Demo</button>
+    <div class="output" id="output2">Click "Run Demo" to see output...</div>
+
+    <h2>3. Template Literals</h2>
+    <div class="code-block">
+        <code>
+let firstName = 'John';<br>
+let lastName = 'Doe';<br>
+let age = 25;<br>
+<br>
+// Old way (concatenation)<br>
+'Hello, ' + firstName + ' ' + lastName<br>
+<br>
+// New way (template literals)<br>
+`Hello, ${firstName} ${lastName}! You are ${age} years old.`
+        </code>
+    </div>
+    <button onclick="demo3()">Run Demo</button>
+    <div class="output" id="output3">Click "Run Demo" to see output...</div>
+
+    <h2>4. Type Checking</h2>
+    <div class="code-block">
+        <code>
+typeof 'hello'      // "string"<br>
+typeof 42           // "number"<br>
+typeof true         // "boolean"<br>
+typeof undefined    // "undefined"<br>
+typeof null         // "object" (JS quirk!)<br>
+typeof []           // "object"<br>
+typeof {}           // "object"
+        </code>
+    </div>
+    <button onclick="demo4()">Run Demo</button>
+    <div class="output" id="output4">Click "Run Demo" to see output...</div>
+
+    <h2>5. Arrays</h2>
+    <div class="code-block">
+        <code>
+let fruits = ['apple', 'banana', 'orange'];<br>
+let numbers = [1, 2, 3, 4, 5];<br>
+<br>
+fruits[0]        // 'apple' (first element)<br>
+fruits.length    // 3<br>
+fruits.push('mango')  // Add to end
+        </code>
+    </div>
+    <button onclick="demo5()">Run Demo</button>
+    <div class="output" id="output5">Click "Run Demo" to see output...</div>
+
+    <h2>6. Objects</h2>
+    <div class="code-block">
+        <code>
+let person = {<br>
+    name: 'John',<br>
+    age: 25,<br>
+    isStudent: true,<br>
+    greet: function() {<br>
+        return `Hello, I'm ${this.name}`;<br>
+    }<br>
+};
+        </code>
+    </div>
+    <button onclick="demo6()">Run Demo</button>
+    <div class="output" id="output6">Click "Run Demo" to see output...</div>
+
+    <script>
+        function demo1() {
+            let name = 'John';
+            const PI = 3.14159;
+
+            let output = `// Variable Declaration
+let name = 'John';
+const PI = 3.14159;
+
+name = 'Jane';  // OK - let can be reassigned
+// PI = 3;      // ERROR - const cannot be reassigned
+
+name: ${name}
+PI: ${PI}
+
+// const with objects (reference cannot change, but contents can)
+const arr = [1, 2, 3];
+arr.push(4);  // OK!
+arr: [${[1, 2, 3, 4]}]`;
+
+            document.getElementById('output1').textContent = output;
+            console.log('Demo 1:', { name, PI });
+        }
+
+        function demo2() {
+            let str = 'Hello';
+            let num = 42;
+            let decimal = 3.14;
+            let bool = true;
+            let nothing = null;
+            let notDefined;
+
+            let output = `// Data Types
+
+String:    '${str}'      → typeof: ${typeof str}
+Number:    ${num}           → typeof: ${typeof num}
+Decimal:   ${decimal}        → typeof: ${typeof decimal}
+Boolean:   ${bool}        → typeof: ${typeof bool}
+Null:      ${nothing}        → typeof: ${typeof nothing} (quirk!)
+Undefined: ${notDefined}   → typeof: ${typeof notDefined}
+
+// JavaScript has only one number type (no int/float distinction)
+// NaN is also a number!
+typeof NaN → ${typeof NaN}`;
+
+            document.getElementById('output2').textContent = output;
+        }
+
+        function demo3() {
+            let firstName = 'John';
+            let lastName = 'Doe';
+            let age = 25;
+
+            // Old way
+            let oldWay = 'Hello, ' + firstName + ' ' + lastName + '!';
+
+            // New way
+            let newWay = `Hello, ${firstName} ${lastName}! You are ${age} years old.`;
+
+            // Multi-line strings
+            let multiLine = `
+This is line 1
+This is line 2
+This is line 3`;
+
+            // Expressions in template literals
+            let expr = `2 + 2 = ${2 + 2}, doubled age = ${age * 2}`;
+
+            let output = `// Template Literals (backticks \`)
+
+Old way (concatenation):
+${oldWay}
+
+New way (template literal):
+${newWay}
+
+Multi-line strings:${multiLine}
+
+Expressions:
+${expr}`;
+
+            document.getElementById('output3').textContent = output;
+        }
+
+        function demo4() {
+            let output = `// Type Checking with typeof
+
+typeof 'hello'     → "${typeof 'hello'}"
+typeof 42          → "${typeof 42}"
+typeof 3.14        → "${typeof 3.14}"
+typeof true        → "${typeof true}"
+typeof false       → "${typeof false}"
+typeof undefined   → "${typeof undefined}"
+typeof null        → "${typeof null}" (historical bug in JS!)
+typeof Symbol()    → "${typeof Symbol()}"
+typeof []          → "${typeof []}"
+typeof {}          → "${typeof {}}"
+typeof function(){} → "${typeof function(){}}"
+
+// To check for arrays:
+Array.isArray([1,2,3]) → ${Array.isArray([1,2,3])}
+Array.isArray('hello') → ${Array.isArray('hello')}`;
+
+            document.getElementById('output4').textContent = output;
+        }
+
+        function demo5() {
+            let fruits = ['apple', 'banana', 'orange'];
+            let numbers = [1, 2, 3, 4, 5];
+
+            let output = `// Arrays
+
+let fruits = ['apple', 'banana', 'orange'];
+
+// Accessing elements (0-indexed)
+fruits[0] → '${fruits[0]}'
+fruits[1] → '${fruits[1]}'
+fruits[2] → '${fruits[2]}'
+
+// Properties
+fruits.length → ${fruits.length}
+
+// Modifying
+fruits.push('mango');     // Add to end
+fruits → [${[...fruits, 'mango'].join(', ')}]
+
+fruits.pop();             // Remove from end
+fruits.unshift('grape');  // Add to start
+fruits.shift();           // Remove from start
+
+// Useful methods
+let nums = [1, 2, 3, 4, 5];
+nums.includes(3) → ${numbers.includes(3)}
+nums.indexOf(3)  → ${numbers.indexOf(3)}
+nums.join(' - ') → '${numbers.join(' - ')}'
+nums.reverse()   → [${[...numbers].reverse().join(', ')}]`;
+
+            document.getElementById('output5').textContent = output;
+        }
+
+        function demo6() {
+            let person = {
+                name: 'John',
+                age: 25,
+                isStudent: true,
+                address: {
+                    city: 'Chennai',
+                    country: 'India'
+                },
+                greet: function() {
+                    return `Hello, I'm ${this.name}`;
+                }
+            };
+
+            let output = `// Objects
+
+let person = {
+    name: 'John',
+    age: 25,
+    isStudent: true,
+    address: { city: 'Chennai', country: 'India' }
+};
+
+// Accessing properties
+person.name       → '${person.name}'
+person['age']     → ${person['age']}
+person.address.city → '${person.address.city}'
+
+// Adding/modifying properties
+person.email = 'john@example.com';
+person.age = 26;
+
+// Methods
+person.greet() → '${person.greet()}'
+
+// Object destructuring
+const { name, age } = person;
+name → '${person.name}'
+age  → ${person.age}
+
+// Check if property exists
+'name' in person → ${'name' in person}
+person.hasOwnProperty('name') → ${person.hasOwnProperty('name')}`;
+
+            document.getElementById('output6').textContent = output;
+        }
+
+        // Run first demo on load
+        demo1();
+    </script>
+
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>

@@ -1,863 +1,562 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark" data-accent="unit-1">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Week 01 - Foundations of the Web & HTML5</title>
+    <meta name="theme-color" content="#1a1a2e">
+    <title>Week 01 - Foundations of the Web & HTML5 | 231CSC601T</title>
+    <script src="../../core/theme.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../../core/tw-config.js"></script>
+    <link rel="stylesheet" href="../../core/slides.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #eee;
-            min-height: 100vh;
-        }
-
-        /* Navigation */
-        .nav-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0,0,0,0.9);
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            border-bottom: 2px solid #4a90d9;
-        }
-
-        .nav-header h1 {
-            font-size: 1.2rem;
-            color: #4a90d9;
-        }
-
-        .nav-controls {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .nav-controls button {
-            padding: 8px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s;
-        }
-
-        .nav-controls button:hover {
-            transform: scale(1.05);
-        }
-
-        .btn-prev { background: #e74c3c; color: white; }
-        .btn-next { background: #27ae60; color: white; }
-        .btn-menu { background: #3498db; color: white; }
-
-        .slide-counter {
-            color: #aaa;
-            font-size: 0.9rem;
-        }
-
-        .back-link {
-            color: #f39c12;
-            margin-right: 15px;
-            text-decoration: none;
-        }
-
-        .back-link:hover {
-            color: #f1c40f;
-        }
-
-        /* Slides */
-        .slide {
-            display: none;
-            min-height: 100vh;
-            padding: 80px 40px 40px;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .slide.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .slide-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .slide h2 {
-            font-size: 2.5rem;
-            color: #4a90d9;
-            margin-bottom: 20px;
-            border-bottom: 3px solid #4a90d9;
-            padding-bottom: 10px;
-        }
-
-        .slide h3 {
-            font-size: 1.5rem;
-            color: #f39c12;
-            margin: 25px 0 15px;
-        }
-
-        .slide h4 {
-            font-size: 1.2rem;
-            color: #9b59b6;
-            margin: 20px 0 10px;
-        }
-
-        .slide p, .slide li {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 10px;
-        }
-
-        .slide ul, .slide ol {
-            margin-left: 30px;
-            margin-bottom: 20px;
-        }
-
-        .slide li {
-            margin-bottom: 8px;
-        }
-
-        /* Special boxes */
-        .highlight-box {
-            background: rgba(74, 144, 217, 0.2);
-            border-left: 4px solid #4a90d9;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 0 10px 10px 0;
-        }
-
-        .warning-box {
-            background: rgba(231, 76, 60, 0.2);
-            border-left: 4px solid #e74c3c;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 0 10px 10px 0;
-        }
-
-        .success-box {
-            background: rgba(39, 174, 96, 0.2);
-            border-left: 4px solid #27ae60;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 0 10px 10px 0;
-        }
-
-        .quote-box {
-            background: rgba(155, 89, 182, 0.2);
-            border-left: 4px solid #9b59b6;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 0 10px 10px 0;
-            font-style: italic;
-        }
-
-        /* Video container */
-        .video-container {
-            position: relative;
-            width: 100%;
-            max-width: 800px;
-            margin: 20px auto;
-            padding-bottom: 45%;
-            background: #000;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        /* Tables */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background: rgba(255,255,255,0.05);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        th {
-            background: rgba(74, 144, 217, 0.3);
-            color: #4a90d9;
-            font-weight: bold;
-        }
-
-        tr:hover {
-            background: rgba(255,255,255,0.05);
-        }
-
-        /* Code blocks */
-        code {
-            background: rgba(0,0,0,0.5);
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            color: #f39c12;
-        }
-
-        pre {
-            background: rgba(0,0,0,0.5);
-            padding: 20px;
-            border-radius: 10px;
-            overflow-x: auto;
-            margin: 20px 0;
-            border: 1px solid #333;
-        }
-
-        pre code {
-            background: none;
-            padding: 0;
-            color: #eee;
-        }
-
-        /* Links */
-        a {
-            color: #3498db;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        a:hover {
-            color: #5dade2;
-            text-decoration: underline;
-        }
-
-        .resource-link {
-            display: inline-block;
-            background: rgba(52, 152, 219, 0.2);
-            padding: 10px 20px;
-            border-radius: 5px;
-            margin: 5px;
-            border: 1px solid #3498db;
-        }
-
-        .resource-link:hover {
-            background: rgba(52, 152, 219, 0.4);
-            text-decoration: none;
-        }
-
-        /* Menu overlay */
-        .menu-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.95);
-            z-index: 2000;
-            overflow-y: auto;
-            padding: 20px;
-        }
-
-        .menu-overlay.active {
-            display: block;
-        }
-
-        .menu-content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding-top: 20px;
-        }
-
-        .menu-content h2 {
-            color: #4a90d9;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .menu-item {
-            display: block;
-            padding: 15px 20px;
-            margin: 5px 0;
-            background: rgba(255,255,255,0.05);
-            border-radius: 5px;
-            color: #eee;
-            cursor: pointer;
-            transition: all 0.3s;
-            border-left: 3px solid transparent;
-        }
-
-        .menu-item:hover {
-            background: rgba(74, 144, 217, 0.2);
-            border-left-color: #4a90d9;
-            text-decoration: none;
-        }
-
-        .menu-item span {
-            color: #4a90d9;
-            margin-right: 10px;
-        }
-
-        .close-menu {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            font-size: 2rem;
-            color: #eee;
-            cursor: pointer;
-            z-index: 2001;
-        }
-
-        /* Two column layout */
-        .two-columns {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin: 20px 0;
-        }
-
-        @media (max-width: 768px) {
-            .two-columns {
-                grid-template-columns: 1fr;
-            }
-            .slide h2 {
-                font-size: 1.8rem;
-            }
-        }
-
-        /* Keyboard hints */
-        .keyboard-hint {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(0,0,0,0.8);
-            padding: 10px 15px;
-            border-radius: 5px;
-            font-size: 0.8rem;
-            color: #888;
-        }
-
-        kbd {
-            background: #333;
-            padding: 2px 8px;
-            border-radius: 3px;
-            border: 1px solid #555;
-        }
-
-        /* Progress bar */
-        .progress-bar {
-            position: fixed;
-            top: 60px;
-            left: 0;
-            height: 3px;
-            background: #27ae60;
-            transition: width 0.3s;
-            z-index: 999;
-        }
-
-        /* Try this box */
-        .try-box {
-            background: rgba(241, 196, 15, 0.2);
-            border-left: 4px solid #f1c40f;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 0 10px 10px 0;
-        }
-
-        /* Section number badge */
-        .section-badge {
-            display: inline-block;
-            background: #4a90d9;
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin-bottom: 15px;
+        /* Hide navigation buttons on first/last slides */
+        #prevBtn:disabled,
+        #nextBtn:disabled,
+        #prevBtn2:disabled,
+        #nextBtn2:disabled {
+            display: none !important;
+            visibility: hidden !important;
         }
     </style>
 </head>
-<body>
-    <!-- Progress Bar -->
-    <div class="progress-bar" id="progressBar"></div>
+<body class="font-sans min-h-screen
+             bg-white text-gray-900
+             dark:bg-gradient-to-br dark:from-[#0a0a0f] dark:to-[#16161f] dark:text-gray-100">
 
-    <!-- Navigation Header -->
-    <nav class="nav-header">
-        <div>
-            <a href="../../index.html" class="back-link">&larr; Home</a>
-            <a href="../examples/index.html" class="back-link">&larr; Examples</a>
-            <span style="color: #4a90d9; font-weight: bold;">Week 01: Foundations of the Web & HTML5</span>
+    <a href="#main-content" class="skip-link btn btn-primary no-underline">Skip to content</a>
+
+    <!-- Nav header -->
+    <nav class="fixed top-0 left-0 right-0 z-50
+                bg-white/95 dark:bg-black/90
+                backdrop-blur-md border-b border-gray-200 dark:border-white/10
+                px-4 py-2.5 flex justify-between items-center" aria-label="Slide navigation">
+        <div class="flex items-center gap-3 min-w-0">
+            <a href="../../index.html" class="btn btn-nav hidden sm:inline-flex">&larr; Home</a>
+            <a href="../examples/index.html" class="btn btn-nav hidden sm:inline-flex">&larr; Examples</a>
+            <span class="text-gray-700 dark:text-gray-300 font-medium text-sm truncate">Week 01: Foundations of the Web &amp; HTML5</span>
         </div>
-        <div class="nav-controls">
-            <button class="btn-menu" onclick="toggleMenu()">Menu</button>
-            <button class="btn-prev" onclick="prevSlide()">Prev</button>
-            <span class="slide-counter" id="slideCounter">1 / 14</span>
-            <button class="btn-next" onclick="nextSlide()">Next</button>
+        <div class="flex items-center gap-2 flex-shrink-0">
+            <button class="theme-toggle btn btn-ghost p-2" aria-label="Switch to light mode">
+                <svg class="icon-sun w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="icon-moon w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+            <button class="btn btn-primary" onclick="toggleMenu()" aria-label="Open slide menu">Menu</button>
+            <button class="btn btn-secondary" id="prevBtn" aria-label="Previous slide">Prev</button>
+            <span class="text-gray-500 dark:text-gray-400 text-sm tabular-nums" aria-live="polite"><span id="currentSlide">1</span> / <span id="totalSlides"></span></span>
+            <button class="btn btn-primary" id="nextBtn" aria-label="Next slide">Next</button>
         </div>
     </nav>
 
     <!-- Menu Overlay -->
-    <div class="menu-overlay" id="menuOverlay">
-        <span class="close-menu" onclick="toggleMenu()">&times;</span>
-        <div class="menu-content">
-            <h2>Jump to Section</h2>
-            <a class="menu-item" onclick="goToSlide(0)"><span>01</span> Why This Week Matters</a>
-            <a class="menu-item" onclick="goToSlide(1)"><span>02</span> Internet vs World Wide Web</a>
-            <a class="menu-item" onclick="goToSlide(2)"><span>03</span> Client-Server Model</a>
-            <a class="menu-item" onclick="goToSlide(3)"><span>04</span> What Happens When You Type a URL</a>
-            <a class="menu-item" onclick="goToSlide(4)"><span>05</span> Understanding URLs</a>
-            <a class="menu-item" onclick="goToSlide(5)"><span>06</span> Static vs Dynamic Websites</a>
-            <a class="menu-item" onclick="goToSlide(6)"><span>07</span> What HTML Is (and Is Not)</a>
-            <a class="menu-item" onclick="goToSlide(7)"><span>08</span> Basic HTML Page Structure</a>
-            <a class="menu-item" onclick="goToSlide(8)"><span>09</span> Common HTML Tags</a>
-            <a class="menu-item" onclick="goToSlide(9)"><span>10</span> Forms & Accessibility</a>
-            <a class="menu-item" onclick="goToSlide(10)"><span>11</span> Exercises</a>
-            <a class="menu-item" onclick="goToSlide(11)"><span>12</span> Key Takeaways</a>
-            <a class="menu-item" onclick="goToSlide(12)"><span>13</span> Quick Reference</a>
-            <a class="menu-item" onclick="goToSlide(13)"><span>14</span> Free Resources</a>
+    <div class="menu-overlay fixed inset-0 z-[200] bg-black/90 overflow-y-auto p-6" id="menuOverlay" aria-hidden="true" role="dialog" aria-label="Slide navigation menu">
+        <button class="close-menu fixed top-6 right-6 text-4xl text-white cursor-pointer bg-transparent border-none z-[201] leading-none p-2" onclick="toggleMenu()" aria-label="Close menu">&times;</button>
+        <div class="max-w-[600px] mx-auto mt-12 p-5">
+            <h2 class="text-[var(--accent)] text-2xl font-bold text-center mb-6">Slide Navigation</h2>
+            <ul id="slideMenu" class="list-none m-0 p-0"></ul>
         </div>
     </div>
 
-    <!-- SLIDE 0: Why This Week Matters -->
-    <section class="slide active" id="slide-0">
-        <div class="slide-content">
-            <span class="section-badge">Section 01</span>
-            <h2>Why This Week Matters</h2>
+    <!-- Main content -->
+    <main id="main-content" class="max-w-[1200px] mx-auto px-5 pt-16">
 
-            <div class="quote-box">
-                <p>"Most people learn web development backwards - tools first, understanding later."</p>
-                <p>"Frameworks change. Browsers don't."</p>
+        <!-- Progress bar -->
+        <div class="w-full h-1 bg-gray-200 dark:bg-white/10 rounded mt-4 mb-5 overflow-hidden">
+            <div class="progress-fill h-full rounded bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)]" id="progress" style="width:0%"></div>
+        </div>
+
+        <!-- Slide 1: Hero / Title -->
+        <section class="slide active p-8 md:p-16 min-h-[80vh]">
+            <div class="flex flex-col justify-center min-h-[70vh]">
+            <span class="inline-block bg-[var(--accent)]/20 text-[var(--accent)] px-4 py-1.5 rounded-full text-sm font-semibold mb-6 w-fit tracking-wide uppercase">Unit I &mdash; Web Foundations</span>
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-4 leading-tight">Foundations of the Web<br><span class="text-[var(--accent)]">&amp; HTML5</span></h1>
+            <p class="text-xl md:text-2xl text-gray-500 dark:text-gray-400 font-light mb-10">Week 01 &bull; 231CSC601T &mdash; Web Technologies</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl">
+                <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6">
+                    <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3">What You'll Learn</h3>
+                    <ul class="space-y-2 text-gray-600 dark:text-gray-300">
+                        <li>Internet vs World Wide Web</li>
+                        <li>Client-Server architecture</li>
+                        <li>How a URL becomes a page</li>
+                        <li>HTML5 fundamentals</li>
+                    </ul>
+                </div>
+                <div class="rounded-xl bg-purple-500/5 border border-purple-500/20 p-6 italic">
+                    <p class="text-gray-600 dark:text-gray-300 text-lg leading-relaxed">"Most people learn web development backwards &mdash; tools first, understanding later."</p>
+                    <p class="text-gray-600 dark:text-gray-300 text-lg leading-relaxed mt-3">"Frameworks change. Browsers don't."</p>
+                </div>
             </div>
+            </div>
+        </section>
 
-            <h3>The Problem with Skipping Foundations</h3>
-            <ul>
-                <li>CSS depends on <strong>HTML structure</strong></li>
-                <li>JavaScript depends on <strong>the DOM</strong></li>
-                <li>Backend depends on <strong>request-response</strong></li>
+        <!-- Slide 2: Why This Week Matters -->
+        <section class="slide p-6 md:p-12 min-h-[80vh]">
+            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-[var(--accent)] mb-2">Why This Week Matters</h1>
+            <div class="h-1 w-20 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] rounded mb-8"></div>
+
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">The Problem with Skipping Foundations</h3>
+            <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-600 dark:text-gray-300">
+                <li>CSS depends on <strong class="text-gray-900 dark:text-white">HTML structure</strong></li>
+                <li>JavaScript depends on <strong class="text-gray-900 dark:text-white">the DOM</strong></li>
+                <li>Backend depends on <strong class="text-gray-900 dark:text-white">request-response</strong></li>
             </ul>
 
-            <h3>What Happens When You Skip Foundations</h3>
-            <div class="warning-box">
-                <table>
-                    <tr><th>Week</th><th>Problem</th><th>You'll Say</th></tr>
-                    <tr><td>Week 3</td><td>CSS doesn't work</td><td>"Why won't this center?"</td></tr>
-                    <tr><td>Week 5</td><td>JavaScript confusing</td><td>"Why is my element null?"</td></tr>
-                    <tr><td>Week 8</td><td>Node.js makes no sense</td><td>"What is a request object?"</td></tr>
-                    <tr><td>Interview</td><td>"How does a website load?"</td><td>Silence.</td></tr>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">What Happens When You Skip Foundations</h3>
+            <div class="rounded-xl bg-red-500/5 border border-red-500/20 p-6 my-6">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-base">
+                        <thead><tr>
+                            <th class="p-3 text-left text-red-400 font-semibold border-b border-red-500/20">Week</th>
+                            <th class="p-3 text-left text-red-400 font-semibold border-b border-red-500/20">Problem</th>
+                            <th class="p-3 text-left text-red-400 font-semibold border-b border-red-500/20">You'll Say</th>
+                        </tr></thead>
+                        <tbody class="divide-y divide-white/5">
+                            <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-3">Week 3</td><td class="p-3">CSS doesn't work</td><td class="p-3">"Why won't this center?"</td></tr>
+                            <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-3">Week 5</td><td class="p-3">JavaScript confusing</td><td class="p-3">"Why is my element null?"</td></tr>
+                            <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-3">Week 8</td><td class="p-3">Node.js makes no sense</td><td class="p-3">"What is a request object?"</td></tr>
+                            <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-3">Interview</td><td class="p-3">"How does a website load?"</td><td class="p-3">Silence.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Real-World Examples</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+                <div class="rounded-xl bg-red-500/5 border border-red-500/20 p-6">
+                    <h4 class="text-base font-semibold text-red-400 mb-2">Flipkart Big Billion Day Crash (2014)</h4>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">Site crashed during biggest sale. Developers didn't understand HTTP connections at scale.</p>
+                </div>
+                <div class="rounded-xl bg-green-500/5 border border-green-500/20 p-6">
+                    <h4 class="text-base font-semibold text-green-400 mb-2">WhatsApp's 55-Engineer Team</h4>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">Served 900 million users with 55 engineers. Every engineer deeply understood network fundamentals.</p>
+                </div>
+            </div>
+
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">The House Foundation Analogy</h3>
+            <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6 my-6">
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300">"Imagine building a house. You're excited about the kitchen, the paint colors, the furniture."</p>
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300 mt-2">"But if the foundation cracks, nothing else matters."</p>
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300 mt-2"><strong class="text-gray-900 dark:text-white">"HTML is your foundation. Get it wrong, and everything built on top wobbles."</strong></p>
+            </div>
+        </section>
+
+        <!-- Slide 3: Internet vs World Wide Web -->
+        <section class="slide p-6 md:p-12 min-h-[80vh]">
+            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-[var(--accent)] mb-2">Internet vs World Wide Web</h1>
+            <div class="h-1 w-20 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] rounded mb-8"></div>
+
+            <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6 my-6">
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300"><strong class="text-gray-900 dark:text-white">Internet:</strong> Network of connected computers (infrastructure)</p>
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300 mt-2"><strong class="text-gray-900 dark:text-white">World Wide Web:</strong> Websites running on the internet (a service)</p>
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300 mt-4 italic">"The internet is like roads. The web is like cars. Roads existed before cars."</p>
+            </div>
+
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Historical Context</h3>
+            <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-600 dark:text-gray-300">
+                <li><strong class="text-gray-900 dark:text-white">1969:</strong> ARPANET (US military project &mdash; internet's beginning)</li>
+                <li><strong class="text-gray-900 dark:text-white">1971:</strong> Email invented</li>
+                <li><strong class="text-gray-900 dark:text-white">1991:</strong> World Wide Web created by Tim Berners-Lee at CERN</li>
+            </ul>
+            <p class="text-lg text-gray-600 dark:text-gray-300 mt-3"><strong class="text-gray-900 dark:text-white">Email is 20 years older than the Web!</strong></p>
+
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">What Uses Internet vs What is "The Web"?</h3>
+            <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-white/10 my-6">
+                <table class="w-full text-base">
+                    <thead class="bg-[var(--accent)]/10"><tr>
+                        <th class="p-4 text-left text-[var(--accent)] font-semibold">Service</th>
+                        <th class="p-4 text-left text-[var(--accent)] font-semibold">Uses Internet?</th>
+                        <th class="p-4 text-left text-[var(--accent)] font-semibold">Is it "The Web"?</th>
+                    </tr></thead>
+                    <tbody class="divide-y divide-gray-100 dark:divide-white/5">
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">Gmail in browser</td><td class="p-4">Yes</td><td class="p-4">Yes</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">Gmail app</td><td class="p-4">Yes</td><td class="p-4">No (uses APIs)</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">WhatsApp</td><td class="p-4">Yes</td><td class="p-4">No</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">Netflix in browser</td><td class="p-4">Yes</td><td class="p-4">Yes</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">Netflix app</td><td class="p-4">Yes</td><td class="p-4">No (mostly)</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">PUBG/Online games</td><td class="p-4">Yes</td><td class="p-4">No</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">UPI Payments (GPay)</td><td class="p-4">Yes</td><td class="p-4">No</td></tr>
+                    </tbody>
                 </table>
             </div>
 
-            <h3>Real-World Examples</h3>
-            <div class="two-columns">
-                <div class="warning-box">
-                    <h4>Flipkart Big Billion Day Crash (2014)</h4>
-                    <p>Site crashed during biggest sale. Developers didn't understand HTTP connections at scale.</p>
-                </div>
-                <div class="success-box">
-                    <h4>WhatsApp's 55-Engineer Team</h4>
-                    <p>Served 900 million users with 55 engineers. Every engineer deeply understood network fundamentals.</p>
-                </div>
+            <div class="rounded-xl bg-green-500/5 border border-green-500/20 p-6 my-6">
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300"><strong class="text-gray-900 dark:text-white">Key distinction:</strong> The web specifically means <strong class="text-gray-900 dark:text-white">browser + server + HTTP</strong>.</p>
             </div>
 
-            <h3>The House Foundation Analogy</h3>
-            <div class="highlight-box">
-                <p>"Imagine building a house. You're excited about the kitchen, the paint colors, the furniture."</p>
-                <p>"But if the foundation cracks, nothing else matters."</p>
-                <p><strong>"HTML is your foundation. Get it wrong, and everything built on top wobbles."</strong></p>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Video: The Internet Explained</h3>
+            <div class="relative w-full max-w-[800px] mx-auto my-6 aspect-video bg-black rounded-xl overflow-hidden shadow-2xl shadow-black/40">
+                <iframe class="absolute inset-0 w-full h-full border-none" src="https://www.youtube.com/embed/7_LPdttKXPc?rel=0" title="The Internet Explained" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
-        </div>
-    </section>
+            <p class="text-center text-sm text-gray-500">Computerphile &mdash; Watch 0:00 to 3:20</p>
 
-    <!-- SLIDE 1: Internet vs Web -->
-    <section class="slide" id="slide-1">
-        <div class="slide-content">
-            <span class="section-badge">Section 02</span>
-            <h2>Internet vs World Wide Web</h2>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Learn More</h3>
+            <a href="https://www.internetfundamentals.com/" target="_blank" class="btn btn-link m-1">Internet Fundamentals (FREE) &mdash; Jen Kramer</a>
+        </section>
 
-            <div class="highlight-box">
-                <p><strong>Internet:</strong> Network of connected computers (infrastructure)</p>
-                <p><strong>World Wide Web:</strong> Websites running on the internet (a service)</p>
-                <p style="margin-top: 15px;"><em>"The internet is like roads. The web is like cars. Roads existed before cars."</em></p>
-            </div>
+        <!-- Slide 4: Client-Server Model -->
+        <section class="slide p-6 md:p-12 min-h-[80vh]">
+            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-[var(--accent)] mb-2">Client-Server Model</h1>
+            <div class="h-1 w-20 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] rounded mb-8"></div>
 
-            <h3>Historical Context</h3>
-            <ul>
-                <li><strong>1969:</strong> ARPANET (US military project - internet's beginning)</li>
-                <li><strong>1971:</strong> Email invented</li>
-                <li><strong>1991:</strong> World Wide Web created by Tim Berners-Lee at CERN</li>
-            </ul>
-            <p><strong>Email is 20 years older than the Web!</strong></p>
-
-            <h3>What Uses Internet vs What is "The Web"?</h3>
-            <table>
-                <tr><th>Service</th><th>Uses Internet?</th><th>Is it "The Web"?</th></tr>
-                <tr><td>Gmail in browser</td><td>Yes</td><td>Yes</td></tr>
-                <tr><td>Gmail app</td><td>Yes</td><td>No (uses APIs)</td></tr>
-                <tr><td>WhatsApp</td><td>Yes</td><td>No</td></tr>
-                <tr><td>Netflix in browser</td><td>Yes</td><td>Yes</td></tr>
-                <tr><td>Netflix app</td><td>Yes</td><td>No (mostly)</td></tr>
-                <tr><td>PUBG/Online games</td><td>Yes</td><td>No</td></tr>
-                <tr><td>UPI Payments (GPay)</td><td>Yes</td><td>No</td></tr>
-            </table>
-
-            <div class="success-box">
-                <p><strong>Key distinction:</strong> The web specifically means <strong>browser + server + HTTP</strong>.</p>
-            </div>
-
-            <h3>Video: The Internet Explained</h3>
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/7_LPdttKXPc?rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>
-            <p style="text-align: center; color: #888;">Computerphile - Watch 0:00 to 3:20</p>
-
-            <h3>Learn More</h3>
-            <a href="https://www.internetfundamentals.com/" target="_blank" class="resource-link">Internet Fundamentals (FREE) - Jen Kramer</a>
-        </div>
-    </section>
-
-    <!-- SLIDE 2: Client-Server Model -->
-    <section class="slide" id="slide-2">
-        <div class="slide-content">
-            <span class="section-badge">Section 03</span>
-            <h2>Client-Server Model</h2>
-
-            <h3>How Every Website Works</h3>
-            <div class="highlight-box">
-                <ol>
-                    <li>Browser sends a <strong>request</strong></li>
-                    <li>Server sends a <strong>response</strong></li>
-                    <li>Browser <strong>renders</strong> the page</li>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3">How Every Website Works</h3>
+            <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6 my-6">
+                <ol class="ml-6 space-y-2 text-lg leading-relaxed text-gray-600 dark:text-gray-300 list-decimal">
+                    <li>Browser sends a <strong class="text-gray-900 dark:text-white">request</strong></li>
+                    <li>Server sends a <strong class="text-gray-900 dark:text-white">response</strong></li>
+                    <li>Browser <strong class="text-gray-900 dark:text-white">renders</strong> the page</li>
                 </ol>
-                <p style="margin-top: 15px;">This applies to ALL websites - simple or complex.</p>
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300 mt-4">This applies to ALL websites &mdash; simple or complex.</p>
             </div>
 
-            <h3>The Restaurant Analogy</h3>
-            <table>
-                <tr><th>Restaurant</th><th>Web Equivalent</th></tr>
-                <tr><td>Customer</td><td>Browser (Client)</td></tr>
-                <tr><td>Menu card</td><td>Frontend/UI</td></tr>
-                <tr><td>Waiter</td><td>HTTP Protocol</td></tr>
-                <tr><td>Order slip</td><td>HTTP Request</td></tr>
-                <tr><td>Kitchen</td><td>Server</td></tr>
-                <tr><td>Chef</td><td>Backend code</td></tr>
-                <tr><td>Recipe book</td><td>Database</td></tr>
-                <tr><td>Prepared dish</td><td>HTTP Response</td></tr>
-            </table>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">The Restaurant Analogy</h3>
+            <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-white/10 my-6">
+                <table class="w-full text-base">
+                    <thead class="bg-[var(--accent)]/10"><tr>
+                        <th class="p-4 text-left text-[var(--accent)] font-semibold">Restaurant</th>
+                        <th class="p-4 text-left text-[var(--accent)] font-semibold">Web Equivalent</th>
+                    </tr></thead>
+                    <tbody class="divide-y divide-gray-100 dark:divide-white/5">
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">Customer</td><td class="p-4">Browser (Client)</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">Menu card</td><td class="p-4">Frontend/UI</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">Waiter</td><td class="p-4">HTTP Protocol</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">Order slip</td><td class="p-4">HTTP Request</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">Kitchen</td><td class="p-4">Server</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">Chef</td><td class="p-4">Backend code</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">Recipe book</td><td class="p-4">Database</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">Prepared dish</td><td class="p-4">HTTP Response</td></tr>
+                    </tbody>
+                </table>
+            </div>
 
-            <h3>Key Concept: Stateless</h3>
-            <div class="warning-box">
-                <p><strong>"The server has no memory of previous requests."</strong></p>
-                <p>Each request is independent. This is why:</p>
-                <ul>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Key Concept: Stateless</h3>
+            <div class="rounded-xl bg-red-500/5 border border-red-500/20 p-6 my-6">
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300"><strong class="text-gray-900 dark:text-white">"The server has no memory of previous requests."</strong></p>
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300 mt-2">Each request is independent. This is why:</p>
+                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-600 dark:text-gray-300 mt-2">
                     <li>You have to log in again after closing a tab</li>
                     <li>Banking apps log you out after inactivity</li>
                     <li>OTPs expire after a few minutes</li>
                 </ul>
-                <p>Cookies and sessions are mechanisms to simulate memory!</p>
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300 mt-2">Cookies and sessions are mechanisms to simulate memory!</p>
             </div>
 
-            <h3>One Page Load = Many Requests</h3>
-            <div class="try-box">
-                <strong>Try This:</strong> Open browser dev tools (F12 → Network tab), refresh any page. Each row is a separate request-response conversation.
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">One Page Load = Many Requests</h3>
+            <div class="rounded-xl bg-yellow-500/5 border border-yellow-500/20 p-6 my-6">
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300"><strong class="text-yellow-400">Try This:</strong> Open browser dev tools (F12 &rarr; Network tab), refresh any page. Each row is a separate request-response conversation.</p>
             </div>
 
-            <h3>Real Examples</h3>
-            <div class="two-columns">
-                <div class="highlight-box">
-                    <h4>Swiggy Order Tracking</h4>
-                    <p>Your app sends a request every few seconds: "Where is my order?" Server responds. Repeat.</p>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Real Examples</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+                <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6">
+                    <h4 class="text-base font-semibold text-[var(--accent-light)] mb-2">Swiggy Order Tracking</h4>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">Your app sends a request every few seconds: "Where is my order?" Server responds. Repeat.</p>
                 </div>
-                <div class="highlight-box">
-                    <h4>BookMyShow Ticket Race</h4>
-                    <p>1000 people, 1000 separate requests. First come, first served. Server doesn't know you've been waiting!</p>
+                <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6">
+                    <h4 class="text-base font-semibold text-[var(--accent-light)] mb-2">BookMyShow Ticket Race</h4>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">1000 people, 1000 separate requests. First come, first served. Server doesn't know you've been waiting!</p>
                 </div>
             </div>
 
-            <h3>Learn More</h3>
-            <a href="https://frontendmasters.com/courses/fullstack-v3/how-the-internet-works/" target="_blank" class="resource-link">Full Stack v3 - How the Internet Works</a>
-        </div>
-    </section>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Learn More</h3>
+            <a href="https://frontendmasters.com/courses/fullstack-v3/how-the-internet-works/" target="_blank" class="btn btn-link m-1">Full Stack v3 &mdash; How the Internet Works</a>
+        </section>
 
-    <!-- SLIDE 3: URL to Page Journey -->
-    <section class="slide" id="slide-3">
-        <div class="slide-content">
-            <span class="section-badge">Section 04</span>
-            <h2>What Happens When You Type a URL</h2>
+        <!-- Slide 5: What Happens When You Type a URL -->
+        <section class="slide p-6 md:p-12 min-h-[80vh]">
+            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-[var(--accent)] mb-2">What Happens When You Type a URL</h1>
+            <div class="h-1 w-20 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] rounded mb-8"></div>
 
-            <div class="quote-box">
-                <p>"In interviews, I ask 'What happens when you type a URL?' - 90% of candidates can't answer properly."</p>
+            <div class="rounded-xl bg-purple-500/5 border border-purple-500/20 p-6 my-6 italic">
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300">"In interviews, I ask 'What happens when you type a URL?' &mdash; 90% of candidates can't answer properly."</p>
             </div>
 
-            <h3>The Complete Journey</h3>
-
-            <div class="highlight-box">
-                <h4>Step 1: You type "google.com" and press Enter</h4>
-                <p>The browser doesn't know what google.com means. Computers only understand IP addresses (like 142.250.192.46).</p>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-4 mt-8">The Complete Journey</h3>
+            <div class="space-y-4">
+                <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-5">
+                    <h4 class="text-base font-semibold text-[var(--accent-light)] mb-1">Step 1: You type "google.com" and press Enter</h4>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">The browser doesn't know what google.com means. Computers only understand IP addresses (like 142.250.192.46).</p>
+                </div>
+                <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-5">
+                    <h4 class="text-base font-semibold text-[var(--accent-light)] mb-1">Step 2: Browser checks local cache</h4>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">"Have I been here before?" If yes and cache is fresh, skip ahead. This is why sites load faster on second visit.</p>
+                </div>
+                <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-5">
+                    <h4 class="text-base font-semibold text-[var(--accent-light)] mb-1">Step 3: DNS Resolution</h4>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed"><strong class="text-gray-900 dark:text-white">DNS = Internet's phonebook.</strong> Browser asks: "What is the IP for google.com?"</p>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed mt-1">Goes through: Router &rarr; ISP &rarr; Root DNS &rarr; TLD DNS &rarr; Authoritative DNS</p>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed mt-1"><strong class="text-gray-900 dark:text-white">Important: DNS only gives addresses. It NEVER gives web pages.</strong></p>
+                </div>
+                <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-5">
+                    <h4 class="text-base font-semibold text-[var(--accent-light)] mb-1">Step 4: TCP Connection (Handshake)</h4>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">Like calling someone and waiting for them to pick up. For HTTPS: additional encryption handshake.</p>
+                </div>
+                <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-5">
+                    <h4 class="text-base font-semibold text-[var(--accent-light)] mb-1">Steps 5-7: Request &rarr; Process &rarr; Response</h4>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">Browser sends: "GET / HTTP/1.1" &rarr; Server processes &rarr; Sends back: status + headers + HTML</p>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed mt-1">Status codes: <strong class="text-gray-900 dark:text-white">200</strong> = success, <strong class="text-gray-900 dark:text-white">404</strong> = not found, <strong class="text-gray-900 dark:text-white">500</strong> = server error</p>
+                </div>
+                <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-5">
+                    <h4 class="text-base font-semibold text-[var(--accent-light)] mb-1">Step 8: Browser Parsing &amp; Rendering</h4>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">Browser reads HTML top to bottom, requests CSS/JS/images, then paints pixels on screen.</p>
+                </div>
             </div>
 
-            <div class="highlight-box">
-                <h4>Step 2: Browser checks local cache</h4>
-                <p>"Have I been here before?" If yes and cache is fresh, skip ahead. This is why sites load faster on second visit.</p>
-            </div>
-
-            <div class="highlight-box">
-                <h4>Step 3: DNS Resolution</h4>
-                <p><strong>DNS = Internet's phonebook.</strong> Browser asks: "What is the IP for google.com?"</p>
-                <p>Goes through: Router → ISP → Root DNS → TLD DNS → Authoritative DNS</p>
-                <p><strong>Important: DNS only gives addresses. It NEVER gives web pages.</strong></p>
-            </div>
-
-            <div class="highlight-box">
-                <h4>Step 4: TCP Connection (Handshake)</h4>
-                <p>Like calling someone and waiting for them to pick up. For HTTPS: additional encryption handshake.</p>
-            </div>
-
-            <div class="highlight-box">
-                <h4>Step 5-7: Request → Process → Response</h4>
-                <p>Browser sends: "GET / HTTP/1.1" → Server processes → Sends back: status + headers + HTML</p>
-                <p>Status codes: <strong>200</strong> = success, <strong>404</strong> = not found, <strong>500</strong> = server error</p>
-            </div>
-
-            <div class="highlight-box">
-                <h4>Step 8: Browser Parsing & Rendering</h4>
-                <p>Browser reads HTML top to bottom, requests CSS/JS/images, then paints pixels on screen.</p>
-            </div>
-
-            <h3>The Flow Diagram</h3>
-            <pre><code>[You] → [Browser] → [DNS] → [Server] → [Browser] → [Screen]
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">The Flow Diagram</h3>
+            <div class="rounded-xl overflow-hidden my-6 shadow-lg">
+                <div class="bg-gray-800 px-4 py-2 flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                    <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                    <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                </div>
+                <pre class="bg-[#0d1117] p-6 overflow-x-auto text-sm"><code class="text-gray-200">[You] &rarr; [Browser] &rarr; [DNS] &rarr; [Server] &rarr; [Browser] &rarr; [Screen]
          cache?      IP?     request    parse
                              response   render</code></pre>
+            </div>
 
-            <h3>Common Misconceptions</h3>
-            <div class="warning-box">
-                <ul>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Common Misconceptions</h3>
+            <div class="rounded-xl bg-red-500/5 border border-red-500/20 p-6 my-6">
+                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-600 dark:text-gray-300">
                     <li>DNS does NOT give you the website. It only gives you the address.</li>
                     <li>The server does NOT push content to you. You ask, it responds.</li>
                     <li>HTTPS encryption happens AFTER DNS. DNS queries are often unencrypted.</li>
                 </ul>
             </div>
 
-            <h3>Video: How the Web Works</h3>
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/hJHvdBlSxug?rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Video: How the Web Works</h3>
+            <div class="relative w-full max-w-[800px] mx-auto my-6 aspect-video bg-black rounded-xl overflow-hidden shadow-2xl shadow-black/40">
+                <iframe class="absolute inset-0 w-full h-full border-none" src="https://www.youtube.com/embed/hJHvdBlSxug?rel=0" title="How the Web Works" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
-            <p style="text-align: center; color: #888;">Fireship - Watch 0:00 to 4:15</p>
+            <p class="text-center text-sm text-gray-500">Fireship &mdash; Watch 0:00 to 4:15</p>
 
-            <h3>Real Examples</h3>
-            <div class="two-columns">
-                <div class="warning-box">
-                    <h4>Jio DNS Blocking</h4>
-                    <p>Some sites blocked on Jio work on Airtel. ISPs block at DNS level. Using 8.8.8.8 or 1.1.1.1 bypasses this.</p>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Real Examples</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+                <div class="rounded-xl bg-red-500/5 border border-red-500/20 p-6">
+                    <h4 class="text-base font-semibold text-red-400 mb-2">Jio DNS Blocking</h4>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">Some sites blocked on Jio work on Airtel. ISPs block at DNS level. Using 8.8.8.8 or 1.1.1.1 bypasses this.</p>
                 </div>
-                <div class="success-box">
-                    <h4>Netflix CDN Magic</h4>
-                    <p>DNS routes you to Mumbai/Chennai servers, not US. That's why streaming starts fast!</p>
+                <div class="rounded-xl bg-green-500/5 border border-green-500/20 p-6">
+                    <h4 class="text-base font-semibold text-green-400 mb-2">Netflix CDN Magic</h4>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">DNS routes you to Mumbai/Chennai servers, not US. That's why streaming starts fast!</p>
                 </div>
             </div>
 
-            <a href="https://frontendmasters.com/courses/fullstack-v3/dns-urls/" target="_blank" class="resource-link">Full Stack v3 - DNS & URLs Lesson</a>
-        </div>
-    </section>
+            <a href="https://frontendmasters.com/courses/fullstack-v3/dns-urls/" target="_blank" class="btn btn-link m-1">Full Stack v3 &mdash; DNS &amp; URLs Lesson</a>
+        </section>
 
-    <!-- SLIDE 4: Understanding URLs -->
-    <section class="slide" id="slide-4">
-        <div class="slide-content">
-            <span class="section-badge">Section 05</span>
-            <h2>Understanding URLs</h2>
+        <!-- Slide 6: Understanding URLs -->
+        <section class="slide p-6 md:p-12 min-h-[80vh]">
+            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-[var(--accent)] mb-2">Understanding URLs</h1>
+            <div class="h-1 w-20 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] rounded mb-8"></div>
 
-            <div class="highlight-box">
-                <p><strong>URLs are instructions, not just addresses.</strong></p>
+            <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6 my-6">
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300"><strong class="text-gray-900 dark:text-white">URLs are instructions, not just addresses.</strong></p>
             </div>
 
-            <h3>Dissecting a Real URL</h3>
-            <pre><code>https://www.amazon.in/s?k=laptop&ref=nav_bb
-└─┬──┘ └────┬─────┘ └┘ └─────────┬───────┘
-  │         │        │           │
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Dissecting a Real URL</h3>
+            <div class="rounded-xl overflow-hidden my-6 shadow-lg">
+                <div class="bg-gray-800 px-4 py-2 flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                    <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                    <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                </div>
+                <pre class="bg-[#0d1117] p-6 overflow-x-auto text-sm"><code class="text-gray-200">https://www.amazon.in/s?k=laptop&amp;ref=nav_bb
+&boxur;&HorizontalLine;&HorizontalLine;&HorizontalLine;&boxul; &boxur;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&boxul; &boxur;&boxul; &boxur;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&HorizontalLine;&boxul;
+  |         |        |           |
 Protocol  Domain   Path    Query String
  (how)   (where)  (what)  (extra details)</code></pre>
+            </div>
 
-            <table>
-                <tr><th>Part</th><th>Example</th><th>Meaning</th></tr>
-                <tr><td>Protocol</td><td><code>https://</code></td><td>Encrypted conversation (HTTP = postcard, HTTPS = sealed envelope)</td></tr>
-                <tr><td>Domain</td><td><code>www.amazon.in</code></td><td>Subdomain (www) + main domain (amazon) + TLD (in for India)</td></tr>
-                <tr><td>Path</td><td><code>/s</code></td><td>What page or resource (/s = search)</td></tr>
-                <tr><td>Query</td><td><code>?k=laptop</code></td><td>Extra info (search keyword = laptop)</td></tr>
-            </table>
+            <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-white/10 my-6">
+                <table class="w-full text-base">
+                    <thead class="bg-[var(--accent)]/10"><tr>
+                        <th class="p-4 text-left text-[var(--accent)] font-semibold">Part</th>
+                        <th class="p-4 text-left text-[var(--accent)] font-semibold">Example</th>
+                        <th class="p-4 text-left text-[var(--accent)] font-semibold">Meaning</th>
+                    </tr></thead>
+                    <tbody class="divide-y divide-gray-100 dark:divide-white/5">
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">Protocol</td><td class="p-4"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">https://</code></td><td class="p-4">Encrypted conversation (HTTP = postcard, HTTPS = sealed envelope)</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">Domain</td><td class="p-4"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">www.amazon.in</code></td><td class="p-4">Subdomain (www) + main domain (amazon) + TLD (in for India)</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">Path</td><td class="p-4"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">/s</code></td><td class="p-4">What page or resource (/s = search)</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">Query</td><td class="p-4"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">?k=laptop</code></td><td class="p-4">Extra info (search keyword = laptop)</td></tr>
+                    </tbody>
+                </table>
+            </div>
 
-            <h3>Why This Matters</h3>
-            <p>When debugging, you'll read URLs constantly. Seeing <code>?error=auth_failed</code> in a URL tells you exactly what went wrong.</p>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Why This Matters</h3>
+            <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300">When debugging, you'll read URLs constantly. Seeing <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">?error=auth_failed</code> in a URL tells you exactly what went wrong.</p>
 
-            <h3>Real-Life Examples</h3>
-            <div class="two-columns">
-                <div class="highlight-box">
-                    <h4>Flipkart Search</h4>
-                    <p>URL: <code>flipkart.com/search?q=laptop</code></p>
-                    <p>Change to <code>?q=phone</code> and see phone results!</p>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Real-Life Examples</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+                <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6">
+                    <h4 class="text-base font-semibold text-[var(--accent-light)] mb-2">Flipkart Search</h4>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">URL: <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">flipkart.com/search?q=laptop</code></p>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed mt-1">Change to <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">?q=phone</code> and see phone results!</p>
                 </div>
-                <div class="highlight-box">
-                    <h4>YouTube Timestamp</h4>
-                    <p>URL ending with <code>?t=120</code> starts video at 120 seconds.</p>
-                    <p>You can manually edit this!</p>
+                <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6">
+                    <h4 class="text-base font-semibold text-[var(--accent-light)] mb-2">YouTube Timestamp</h4>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">URL ending with <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">?t=120</code> starts video at 120 seconds.</p>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed mt-1">You can manually edit this!</p>
                 </div>
             </div>
 
-            <div class="success-box">
-                <h4>UTM Tracking in Marketing</h4>
-                <p><code>?utm_source=email&utm_campaign=sale</code></p>
-                <p>How companies know you clicked from their email, not Instagram.</p>
+            <div class="rounded-xl bg-green-500/5 border border-green-500/20 p-6 my-6">
+                <h4 class="text-base font-semibold text-green-400 mb-2">UTM Tracking in Marketing</h4>
+                <p class="text-gray-600 dark:text-gray-300 leading-relaxed"><code class="bg-green-500/20 text-green-400 px-2 py-0.5 rounded font-mono text-sm">?utm_source=email&amp;utm_campaign=sale</code></p>
+                <p class="text-gray-600 dark:text-gray-300 leading-relaxed mt-1">How companies know you clicked from their email, not Instagram.</p>
             </div>
 
-            <h3>Video: URL Explained</h3>
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/Vp7W8h6z6Wk?rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Video: URL Explained</h3>
+            <div class="relative w-full max-w-[800px] mx-auto my-6 aspect-video bg-black rounded-xl overflow-hidden shadow-2xl shadow-black/40">
+                <iframe class="absolute inset-0 w-full h-full border-none" src="https://www.youtube.com/embed/5Jr-_Za5yQM?rel=0" title="URL Explained" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
-            <p style="text-align: center; color: #888;">Web Dev Simplified - Watch 0:00 to 3:00</p>
-        </div>
-    </section>
+            <p class="text-center text-sm text-gray-500">Danielle Thé &mdash; Watch 0:00 to 3:00</p>
+        </section>
 
-    <!-- SLIDE 5: Static vs Dynamic -->
-    <section class="slide" id="slide-5">
-        <div class="slide-content">
-            <span class="section-badge">Section 06</span>
-            <h2>Static vs Dynamic Websites</h2>
+        <!-- Slide 7: Static vs Dynamic Websites -->
+        <section class="slide p-6 md:p-12 min-h-[80vh]">
+            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-[var(--accent)] mb-2">Static vs Dynamic Websites</h1>
+            <div class="h-1 w-20 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] rounded mb-8"></div>
 
-            <div class="two-columns">
-                <div class="highlight-box">
-                    <h3>Static</h3>
-                    <p>Same content for everyone</p>
-                    <ul>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+                <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6">
+                    <h3 class="text-xl font-semibold text-[var(--accent-light)] mb-3">Static</h3>
+                    <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300">Same content for everyone</p>
+                    <ul class="ml-6 space-y-1 text-gray-600 dark:text-gray-300 mt-2">
                         <li>Personal portfolios</li>
                         <li>Company landing pages</li>
                         <li>Documentation sites</li>
                     </ul>
-                    <p><em>HTML file exists on disk. Server just reads and sends it.</em></p>
+                    <p class="text-gray-500 dark:text-gray-400 italic mt-3">HTML file exists on disk. Server just reads and sends it.</p>
                 </div>
-                <div class="highlight-box">
-                    <h3>Dynamic</h3>
-                    <p>Content changes based on data/user</p>
-                    <ul>
+                <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6">
+                    <h3 class="text-xl font-semibold text-[var(--accent-light)] mb-3">Dynamic</h3>
+                    <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300">Content changes based on data/user</p>
+                    <ul class="ml-6 space-y-1 text-gray-600 dark:text-gray-300 mt-2">
                         <li>Amazon product pages</li>
                         <li>Instagram feed</li>
                         <li>Search results</li>
                     </ul>
-                    <p><em>HTML is created on-the-fly when you request it.</em></p>
+                    <p class="text-gray-500 dark:text-gray-400 italic mt-3">HTML is created on-the-fly when you request it.</p>
                 </div>
             </div>
 
-            <h3>Restaurant Menu Analogy</h3>
-            <table>
-                <tr><th>Type</th><th>Restaurant Equivalent</th></tr>
-                <tr><td>Static</td><td>Laminated printed menu - same for everyone</td></tr>
-                <tr><td>Dynamic</td><td>Chef's specials based on your preferences and what's available</td></tr>
-            </table>
-
-            <h3>The Key Insight</h3>
-            <div class="try-box">
-                <p><strong>Try This:</strong> Open <code>amazon.in</code> → Right-click → View Page Source</p>
-                <p>What you see is <strong>plain HTML</strong>. The browser has no idea it was generated by Python, Java, or Node.js.</p>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Restaurant Menu Analogy</h3>
+            <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-white/10 my-6">
+                <table class="w-full text-base">
+                    <thead class="bg-[var(--accent)]/10"><tr>
+                        <th class="p-4 text-left text-[var(--accent)] font-semibold">Type</th>
+                        <th class="p-4 text-left text-[var(--accent)] font-semibold">Restaurant Equivalent</th>
+                    </tr></thead>
+                    <tbody class="divide-y divide-gray-100 dark:divide-white/5">
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">Static</td><td class="p-4">Laminated printed menu &mdash; same for everyone</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">Dynamic</td><td class="p-4">Chef's specials based on your preferences and what's available</td></tr>
+                    </tbody>
+                </table>
             </div>
 
-            <div class="success-box">
-                <p><strong>Core Insight:</strong> Dynamic websites still send static HTML. The generation happens on the server, but what arrives at your browser is always HTML.</p>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">The Key Insight</h3>
+            <div class="rounded-xl bg-yellow-500/5 border border-yellow-500/20 p-6 my-6">
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300"><strong class="text-yellow-400">Try This:</strong> Open <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">amazon.in</code> &rarr; Right-click &rarr; View Page Source</p>
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300 mt-2">What you see is <strong class="text-gray-900 dark:text-white">plain HTML</strong>. The browser has no idea it was generated by Python, Java, or Node.js.</p>
             </div>
 
-            <h3>Real Examples</h3>
-            <div class="two-columns">
-                <div class="highlight-box">
-                    <h4>Wikipedia vs Amazon</h4>
-                    <p>Wikipedia: mostly static, articles don't change per user.</p>
-                    <p>Amazon: your homepage shows YOUR recommendations, YOUR cart.</p>
+            <div class="rounded-xl bg-green-500/5 border border-green-500/20 p-6 my-6">
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300"><strong class="text-gray-900 dark:text-white">Core Insight:</strong> Dynamic websites still send static HTML. The generation happens on the server, but what arrives at your browser is always HTML.</p>
+            </div>
+
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Real Examples</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+                <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6">
+                    <h4 class="text-base font-semibold text-[var(--accent-light)] mb-2">Wikipedia vs Amazon</h4>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">Wikipedia: mostly static, articles don't change per user.</p>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed mt-1">Amazon: your homepage shows YOUR recommendations, YOUR cart.</p>
                 </div>
-                <div class="warning-box">
-                    <h4>Swiggy "Prices may vary"</h4>
-                    <p>Prices generated dynamically based on location, time, surge pricing. Someone else might see different prices!</p>
+                <div class="rounded-xl bg-red-500/5 border border-red-500/20 p-6">
+                    <h4 class="text-base font-semibold text-red-400 mb-2">Swiggy "Prices may vary"</h4>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">Prices generated dynamically based on location, time, surge pricing. Someone else might see different prices!</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- SLIDE 6: What HTML Is -->
-    <section class="slide" id="slide-6">
-        <div class="slide-content">
-            <span class="section-badge">Section 07</span>
-            <h2>What HTML Is (and Is Not)</h2>
+        <!-- Slide 8: What HTML Is (and Is Not) -->
+        <section class="slide p-6 md:p-12 min-h-[80vh]">
+            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-[var(--accent)] mb-2">What HTML Is (and Is Not)</h1>
+            <div class="h-1 w-20 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] rounded mb-8"></div>
 
-            <h3>HyperText Markup Language</h3>
-            <ul>
-                <li><strong>HyperText:</strong> Text with links - documents that connect to other documents</li>
-                <li><strong>Markup:</strong> You're "marking up" content to give it meaning</li>
-                <li><strong>Language:</strong> NOT a programming language - a markup language</li>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3">HyperText Markup Language</h3>
+            <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-600 dark:text-gray-300">
+                <li><strong class="text-gray-900 dark:text-white">HyperText:</strong> Text with links &mdash; documents that connect to other documents</li>
+                <li><strong class="text-gray-900 dark:text-white">Markup:</strong> You're "marking up" content to give it meaning</li>
+                <li><strong class="text-gray-900 dark:text-white">Language:</strong> NOT a programming language &mdash; a markup language</li>
             </ul>
 
-            <h3>What HTML Cannot Do</h3>
-            <div class="warning-box">
-                <ul>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">What HTML Cannot Do</h3>
+            <div class="rounded-xl bg-red-500/5 border border-red-500/20 p-6 my-6">
+                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-600 dark:text-gray-300">
                     <li>HTML cannot think</li>
                     <li>HTML cannot loop</li>
                     <li>HTML cannot make decisions</li>
-                    <li><strong>HTML only describes structure and meaning</strong></li>
+                    <li><strong class="text-gray-900 dark:text-white">HTML only describes structure and meaning</strong></li>
                 </ul>
-                <p>Programming languages have: variables, loops, conditions, functions. HTML has none. This is a strength, not a weakness.</p>
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300 mt-3">Programming languages have: variables, loops, conditions, functions. HTML has none. This is a strength, not a weakness.</p>
             </div>
 
-            <h3>The Three Technologies</h3>
-            <table>
-                <tr><th>Technology</th><th>Role</th><th>Analogy (Human Body)</th><th>Analogy (House)</th></tr>
-                <tr><td>HTML</td><td>Structure</td><td>Skeleton</td><td>Walls, rooms, doors</td></tr>
-                <tr><td>CSS</td><td>Appearance</td><td>Skin, clothes</td><td>Paint, decor</td></tr>
-                <tr><td>JavaScript</td><td>Behavior</td><td>Muscles, brain</td><td>Electricity, plumbing</td></tr>
-            </table>
-
-            <div class="highlight-box">
-                <p>"You can have a skeleton without skin (HTML without CSS). It works. It's ugly, but it works."</p>
-                <p>"You cannot have skin without a skeleton. CSS without HTML is meaningless."</p>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">The Three Technologies</h3>
+            <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-white/10 my-6">
+                <table class="w-full text-base">
+                    <thead class="bg-[var(--accent)]/10"><tr>
+                        <th class="p-4 text-left text-[var(--accent)] font-semibold">Technology</th>
+                        <th class="p-4 text-left text-[var(--accent)] font-semibold">Role</th>
+                        <th class="p-4 text-left text-[var(--accent)] font-semibold">Human Body</th>
+                        <th class="p-4 text-left text-[var(--accent)] font-semibold">House</th>
+                    </tr></thead>
+                    <tbody class="divide-y divide-gray-100 dark:divide-white/5">
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4 font-semibold">HTML</td><td class="p-4">Structure</td><td class="p-4">Skeleton</td><td class="p-4">Walls, rooms, doors</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4 font-semibold">CSS</td><td class="p-4">Appearance</td><td class="p-4">Skin, clothes</td><td class="p-4">Paint, decor</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4 font-semibold">JavaScript</td><td class="p-4">Behavior</td><td class="p-4">Muscles, brain</td><td class="p-4">Electricity, plumbing</td></tr>
+                    </tbody>
+                </table>
             </div>
 
-            <h3>Why This Matters</h3>
-            <div class="two-columns">
-                <div class="success-box">
-                    <h4>Screen Readers & Accessibility</h4>
-                    <p>India has 12 million blind people. If your HTML says 'button' vs 'div styled as button', the difference is whether they can use your site.</p>
+            <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6 my-6">
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300">"You can have a skeleton without skin (HTML without CSS). It works. It's ugly, but it works."</p>
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300 mt-2">"You cannot have skin without a skeleton. CSS without HTML is meaningless."</p>
+            </div>
+
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Why This Matters</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+                <div class="rounded-xl bg-green-500/5 border border-green-500/20 p-6">
+                    <h4 class="text-base font-semibold text-green-400 mb-2">Screen Readers &amp; Accessibility</h4>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">India has 12 million blind people. If your HTML says 'button' vs 'div styled as button', the difference is whether they can use your site.</p>
                 </div>
-                <div class="success-box">
-                    <h4>SEO & Google Ranking</h4>
-                    <p>Google reads your HTML. Proper <code>&lt;h1&gt;</code> vs <code>&lt;div class='big-text'&gt;</code> = better ranking = more users.</p>
+                <div class="rounded-xl bg-green-500/5 border border-green-500/20 p-6">
+                    <h4 class="text-base font-semibold text-green-400 mb-2">SEO &amp; Google Ranking</h4>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">Google reads your HTML. Proper <code class="bg-green-500/20 text-green-400 px-2 py-0.5 rounded font-mono text-sm">&lt;h1&gt;</code> vs <code class="bg-green-500/20 text-green-400 px-2 py-0.5 rounded font-mono text-sm">&lt;div class='big-text'&gt;</code> = better ranking = more users.</p>
                 </div>
             </div>
 
-            <h3>Learn More</h3>
-            <a href="https://btholt.github.io/complete-intro-to-web-dev-v3/" target="_blank" class="resource-link">Complete Intro to Web Dev v3 (FREE Notes)</a>
-            <a href="https://frontendmasters.com/courses/web-development-v3/" target="_blank" class="resource-link">Frontend Masters Videos (FREE)</a>
-        </div>
-    </section>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Learn More</h3>
+            <div class="flex flex-wrap gap-2">
+                <a href="https://btholt.github.io/complete-intro-to-web-dev-v3/" target="_blank" class="btn btn-link">Complete Intro to Web Dev v3 (FREE Notes)</a>
+                <a href="https://frontendmasters.com/courses/web-development-v3/" target="_blank" class="btn btn-link">Frontend Masters Videos (FREE)</a>
+            </div>
+        </section>
 
-    <!-- SLIDE 7: HTML Structure -->
-    <section class="slide" id="slide-7">
-        <div class="slide-content">
-            <span class="section-badge">Section 08</span>
-            <h2>Basic HTML Page Structure</h2>
+        <!-- Slide 9: Basic HTML Page Structure -->
+        <section class="slide p-6 md:p-12 min-h-[80vh]">
+            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-[var(--accent)] mb-2">Basic HTML Page Structure</h1>
+            <div class="h-1 w-20 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] rounded mb-8"></div>
 
-            <h3>The Minimal HTML Document</h3>
-            <pre><code>&lt;!DOCTYPE html&gt;
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3">The Minimal HTML Document</h3>
+            <div class="rounded-xl overflow-hidden my-6 shadow-lg">
+                <div class="bg-gray-800 px-4 py-2 flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                    <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                    <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                    <span class="ml-2 text-gray-400 text-xs">index.html</span>
+                </div>
+                <pre class="bg-[#0d1117] p-6 overflow-x-auto text-sm"><code class="text-gray-200">&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
 &lt;head&gt;
     &lt;meta charset="UTF-8"&gt;
@@ -869,76 +568,98 @@ Protocol  Domain   Path    Query String
     &lt;p&gt;This is my first web page.&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
+            </div>
 
-            <h3>What Each Line Means</h3>
-            <table>
-                <tr><th>Line</th><th>Purpose</th></tr>
-                <tr><td><code>&lt;!DOCTYPE html&gt;</code></td><td>Tells browser: "I'm writing modern HTML5" (without it, browsers enter "quirks mode")</td></tr>
-                <tr><td><code>&lt;html lang="en"&gt;</code></td><td>Root element. <code>lang</code> helps screen readers pronounce correctly</td></tr>
-                <tr><td><code>&lt;head&gt;</code></td><td>Metadata - info ABOUT the page, not ON the page</td></tr>
-                <tr><td><code>&lt;meta charset="UTF-8"&gt;</code></td><td>Supports all languages - Hindi, Chinese, emojis. Without it = garbage characters</td></tr>
-                <tr><td><code>&lt;meta viewport...&gt;</code></td><td>Makes page work on mobile. Without it = zoomed out on phones</td></tr>
-                <tr><td><code>&lt;title&gt;</code></td><td>Text in browser tab + Google search results</td></tr>
-                <tr><td><code>&lt;body&gt;</code></td><td>Everything visible on the page</td></tr>
-            </table>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">What Each Line Means</h3>
+            <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-white/10 my-6">
+                <table class="w-full text-base">
+                    <thead class="bg-[var(--accent)]/10"><tr>
+                        <th class="p-4 text-left text-[var(--accent)] font-semibold">Line</th>
+                        <th class="p-4 text-left text-[var(--accent)] font-semibold">Purpose</th>
+                    </tr></thead>
+                    <tbody class="divide-y divide-gray-100 dark:divide-white/5">
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;!DOCTYPE html&gt;</code></td><td class="p-4">Tells browser: "I'm writing modern HTML5" (without it, browsers enter "quirks mode")</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;html lang="en"&gt;</code></td><td class="p-4">Root element. <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">lang</code> helps screen readers pronounce correctly</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;head&gt;</code></td><td class="p-4">Metadata &mdash; info ABOUT the page, not ON the page</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;meta charset="UTF-8"&gt;</code></td><td class="p-4">Supports all languages &mdash; Hindi, Chinese, emojis. Without it = garbage characters</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;meta viewport...&gt;</code></td><td class="p-4">Makes page work on mobile. Without it = zoomed out on phones</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;title&gt;</code></td><td class="p-4">Text in browser tab + Google search results</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;body&gt;</code></td><td class="p-4">Everything visible on the page</td></tr>
+                    </tbody>
+                </table>
+            </div>
 
-            <h3>Real Disasters from Missing These</h3>
-            <div class="two-columns">
-                <div class="warning-box">
-                    <h4>The Encoding Bug</h4>
-                    <p>A startup lost customer data - Hindi/Tamil names became garbage characters. One line of <code>charset</code> could have prevented it.</p>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Real Disasters from Missing These</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+                <div class="rounded-xl bg-red-500/5 border border-red-500/20 p-6">
+                    <h4 class="text-base font-semibold text-red-400 mb-2">The Encoding Bug</h4>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">A startup lost customer data &mdash; Hindi/Tamil names became garbage characters. One line of <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">charset</code> could have prevented it.</p>
                 </div>
-                <div class="warning-box">
-                    <h4>Mobile Viewport Disaster</h4>
-                    <p>Student's portfolio looked great on laptop. Recruiter opened on phone - tiny, unreadable. Lost the opportunity.</p>
+                <div class="rounded-xl bg-red-500/5 border border-red-500/20 p-6">
+                    <h4 class="text-base font-semibold text-red-400 mb-2">Mobile Viewport Disaster</h4>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">Student's portfolio looked great on laptop. Recruiter opened on phone &mdash; tiny, unreadable. Lost the opportunity.</p>
                 </div>
             </div>
 
-            <h3>Live Examples</h3>
-            <p><a href="../examples/01-basic.html" target="_blank" class="resource-link">Open Basic HTML Example</a></p>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Live Examples</h3>
+            <a href="../examples/01-basic.html" target="_blank" class="btn btn-link m-1">Open Basic HTML Example</a>
 
-            <h3>Learn More</h3>
-            <a href="https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/HTML_basics" target="_blank" class="resource-link">MDN HTML Basics</a>
-            <a href="https://frontendmasters.com/bootcamp/introduction-html/" target="_blank" class="resource-link">Intro to HTML (FREE) - Jen Kramer</a>
-        </div>
-    </section>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Learn More</h3>
+            <div class="flex flex-wrap gap-2">
+                <a href="https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/HTML_basics" target="_blank" class="btn btn-link">MDN HTML Basics</a>
+                <a href="https://frontendmasters.com/bootcamp/introduction-html/" target="_blank" class="btn btn-link">Intro to HTML (FREE) &mdash; Jen Kramer</a>
+            </div>
+        </section>
 
-    <!-- SLIDE 8: HTML Tags -->
-    <section class="slide" id="slide-8">
-        <div class="slide-content">
-            <span class="section-badge">Section 09</span>
-            <h2>Common HTML Tags</h2>
+        <!-- Slide 10: Common HTML Tags -->
+        <section class="slide p-6 md:p-12 min-h-[80vh]">
+            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-[var(--accent)] mb-2">Common HTML Tags</h1>
+            <div class="h-1 w-20 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] rounded mb-8"></div>
 
-            <h3>Essential Tags</h3>
-            <div class="two-columns">
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3">Essential Tags</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
                 <div>
-                    <h4>Text Content</h4>
-                    <table>
-                        <tr><td><code>&lt;h1&gt;-&lt;h6&gt;</code></td><td>Headings (hierarchy!)</td></tr>
-                        <tr><td><code>&lt;p&gt;</code></td><td>Paragraph</td></tr>
-                        <tr><td><code>&lt;strong&gt;</code></td><td>Important (bold)</td></tr>
-                        <tr><td><code>&lt;em&gt;</code></td><td>Emphasized (italic)</td></tr>
-                        <tr><td><code>&lt;div&gt;</code></td><td>Block container</td></tr>
-                        <tr><td><code>&lt;span&gt;</code></td><td>Inline container</td></tr>
-                    </table>
+                    <h4 class="text-base font-semibold text-[var(--accent-light)] mb-2">Text Content</h4>
+                    <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-white/10">
+                        <table class="w-full text-base">
+                            <tbody class="divide-y divide-gray-100 dark:divide-white/5">
+                                <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-3"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;h1&gt;-&lt;h6&gt;</code></td><td class="p-3">Headings (hierarchy!)</td></tr>
+                                <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-3"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;p&gt;</code></td><td class="p-3">Paragraph</td></tr>
+                                <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-3"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;strong&gt;</code></td><td class="p-3">Important (bold)</td></tr>
+                                <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-3"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;em&gt;</code></td><td class="p-3">Emphasized (italic)</td></tr>
+                                <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-3"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;div&gt;</code></td><td class="p-3">Block container</td></tr>
+                                <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-3"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;span&gt;</code></td><td class="p-3">Inline container</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div>
-                    <h4>Links, Media, Lists</h4>
-                    <table>
-                        <tr><td><code>&lt;a href=""&gt;</code></td><td>Link</td></tr>
-                        <tr><td><code>&lt;img src="" alt=""&gt;</code></td><td>Image</td></tr>
-                        <tr><td><code>&lt;ul&gt; &lt;li&gt;</code></td><td>Bullet list</td></tr>
-                        <tr><td><code>&lt;ol&gt; &lt;li&gt;</code></td><td>Numbered list</td></tr>
-                        <tr><td><code>&lt;table&gt;</code></td><td>Data table</td></tr>
-                    </table>
+                    <h4 class="text-base font-semibold text-[var(--accent-light)] mb-2">Links, Media, Lists</h4>
+                    <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-white/10">
+                        <table class="w-full text-base">
+                            <tbody class="divide-y divide-gray-100 dark:divide-white/5">
+                                <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-3"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;a href=""&gt;</code></td><td class="p-3">Link</td></tr>
+                                <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-3"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;img src="" alt=""&gt;</code></td><td class="p-3">Image</td></tr>
+                                <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-3"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;ul&gt; &lt;li&gt;</code></td><td class="p-3">Bullet list</td></tr>
+                                <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-3"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;ol&gt; &lt;li&gt;</code></td><td class="p-3">Numbered list</td></tr>
+                                <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-3"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;table&gt;</code></td><td class="p-3">Data table</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
-            <h3>The Heading Hierarchy Rule</h3>
-            <div class="warning-box">
-                <p><strong>Wrong:</strong> Using <code>&lt;h1&gt;</code> because you want big text</p>
-                <p>Headings define document outline, like a book's table of contents. Screen readers navigate by headings.</p>
-                <pre><code>&lt;!-- WRONG --&gt;
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">The Heading Hierarchy Rule</h3>
+            <div class="rounded-xl bg-red-500/5 border border-red-500/20 p-6 my-6">
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300"><strong class="text-gray-900 dark:text-white">Wrong:</strong> Using <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;h1&gt;</code> because you want big text</p>
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300 mt-2">Headings define document outline, like a book's table of contents. Screen readers navigate by headings.</p>
+                <div class="rounded-xl overflow-hidden my-4 shadow-lg">
+                    <div class="bg-gray-800 px-4 py-2 flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                        <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                        <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                    </div>
+                    <pre class="bg-[#0d1117] p-6 overflow-x-auto text-sm"><code class="text-gray-200">&lt;!-- WRONG --&gt;
 &lt;h1&gt;Welcome&lt;/h1&gt;
 &lt;h4&gt;About Us&lt;/h4&gt;  &lt;!-- Why skip h2, h3? --&gt;
 
@@ -946,43 +667,51 @@ Protocol  Domain   Path    Query String
 &lt;h1&gt;Welcome&lt;/h1&gt;
 &lt;h2&gt;About Us&lt;/h2&gt;
 &lt;h3&gt;Our Team&lt;/h3&gt;</code></pre>
-                <p><strong>Rule:</strong> Only one <code>&lt;h1&gt;</code> per page. Don't skip levels.</p>
+                </div>
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300"><strong class="text-gray-900 dark:text-white">Rule:</strong> Only one <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;h1&gt;</code> per page. Don't skip levels.</p>
             </div>
 
-            <h3>Tables Are for Data, Not Layout</h3>
-            <p>In the early web, people used <code>&lt;table&gt;</code> for page layouts. Bad practice. Tables are for tabular data only. CSS handles layout now.</p>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Tables Are for Data, Not Layout</h3>
+            <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300">In the early web, people used <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;table&gt;</code> for page layouts. Bad practice. Tables are for tabular data only. CSS handles layout now.</p>
 
-            <h3>Avoid "Div Soup"</h3>
-            <p>New developers put everything in <code>&lt;div&gt;</code> tags. Use semantic tags instead:</p>
-            <p><code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;footer&gt;</code></p>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Avoid "Div Soup"</h3>
+            <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300">New developers put everything in <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;div&gt;</code> tags. Use semantic tags instead:</p>
+            <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300 mt-1"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;header&gt;</code>, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;nav&gt;</code>, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;main&gt;</code>, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;article&gt;</code>, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;section&gt;</code>, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;footer&gt;</code></p>
 
-            <div class="success-box">
-                <p><strong>Why Wikipedia ranks #1:</strong> Perfect heading structure. One h1, h2s for sections, h3s for subsections. Google loves clear structure.</p>
+            <div class="rounded-xl bg-green-500/5 border border-green-500/20 p-6 my-6">
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300"><strong class="text-gray-900 dark:text-white">Why Wikipedia ranks #1:</strong> Perfect heading structure. One h1, h2s for sections, h3s for subsections. Google loves clear structure.</p>
             </div>
 
-            <h3>Video: HTML Tags</h3>
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/bWPMSSsVdPk?rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Video: HTML Tags</h3>
+            <div class="relative w-full max-w-[800px] mx-auto my-6 aspect-video bg-black rounded-xl overflow-hidden shadow-2xl shadow-black/40">
+                <iframe class="absolute inset-0 w-full h-full border-none" src="https://www.youtube.com/embed/bWPMSSsVdPk?rel=0" title="HTML Tags" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
-            <p style="text-align: center; color: #888;">Net Ninja - Watch 0:00 to 4:30</p>
+            <p class="text-center text-sm text-gray-500">Net Ninja &mdash; Watch 0:00 to 4:30</p>
 
-            <h3>Examples</h3>
-            <a href="../examples/04-table.html" target="_blank" class="resource-link">Tables Example</a>
-            <a href="../examples/05-semantic.html" target="_blank" class="resource-link">Semantic HTML Example</a>
-            <a href="../examples/06-links-images.html" target="_blank" class="resource-link">Links & Images Example</a>
-        </div>
-    </section>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Examples</h3>
+            <div class="flex flex-wrap gap-2">
+                <a href="../examples/04-table.html" target="_blank" class="btn btn-link">Tables Example</a>
+                <a href="../examples/05-semantic.html" target="_blank" class="btn btn-link">Semantic HTML Example</a>
+                <a href="../examples/06-links-images.html" target="_blank" class="btn btn-link">Links &amp; Images Example</a>
+            </div>
+        </section>
 
-    <!-- SLIDE 9: Forms & Accessibility -->
-    <section class="slide" id="slide-9">
-        <div class="slide-content">
-            <span class="section-badge">Section 10</span>
-            <h2>Forms & Accessibility</h2>
+        <!-- Slide 11: Forms & Accessibility -->
+        <section class="slide p-6 md:p-12 min-h-[80vh]">
+            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-[var(--accent)] mb-2">Forms &amp; Accessibility</h1>
+            <div class="h-1 w-20 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] rounded mb-8"></div>
 
-            <h3>Forms: How Users Talk to Servers</h3>
-            <p>Login, Signup, Payments - all forms. Forms collect data and send it to servers.</p>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3">Forms: How Users Talk to Servers</h3>
+            <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300 mb-4">Login, Signup, Payments &mdash; all forms. Forms collect data and send it to servers.</p>
 
-            <pre><code>&lt;form&gt;
+            <div class="rounded-xl overflow-hidden my-6 shadow-lg">
+                <div class="bg-gray-800 px-4 py-2 flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                    <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                    <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                    <span class="ml-2 text-gray-400 text-xs">form.html</span>
+                </div>
+                <pre class="bg-[#0d1117] p-6 overflow-x-auto text-sm"><code class="text-gray-200">&lt;form&gt;
   &lt;label for="name"&gt;Name:&lt;/label&gt;
   &lt;input type="text" id="name" name="name" required /&gt;
 
@@ -991,307 +720,320 @@ Protocol  Domain   Path    Query String
 
   &lt;button type="submit"&gt;Submit&lt;/button&gt;
 &lt;/form&gt;</code></pre>
+            </div>
 
-            <p>The <code>for</code> attribute in <code>&lt;label&gt;</code> links to the <code>id</code> of the input for accessibility.</p>
+            <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300">The <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">for</code> attribute in <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;label&gt;</code> links to the <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">id</code> of the input for accessibility.</p>
 
-            <h3>The Restaurant Order Slip Analogy</h3>
-            <table>
-                <tr><th>Form Element</th><th>Order Slip Equivalent</th></tr>
-                <tr><td>Form</td><td>The order slip itself</td></tr>
-                <tr><td>Input fields</td><td>Lines to fill (Starter: ___, Main: ___)</td></tr>
-                <tr><td>Required fields</td><td>Items marked with asterisk</td></tr>
-                <tr><td>Submit button</td><td>Handing slip to waiter</td></tr>
-                <tr><td>Validation</td><td>"Sorry, we're out of paneer"</td></tr>
-            </table>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">The Restaurant Order Slip Analogy</h3>
+            <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-white/10 my-6">
+                <table class="w-full text-base">
+                    <thead class="bg-[var(--accent)]/10"><tr>
+                        <th class="p-4 text-left text-[var(--accent)] font-semibold">Form Element</th>
+                        <th class="p-4 text-left text-[var(--accent)] font-semibold">Order Slip Equivalent</th>
+                    </tr></thead>
+                    <tbody class="divide-y divide-gray-100 dark:divide-white/5">
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">Form</td><td class="p-4">The order slip itself</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">Input fields</td><td class="p-4">Lines to fill (Starter: ___, Main: ___)</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">Required fields</td><td class="p-4">Items marked with asterisk</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">Submit button</td><td class="p-4">Handing slip to waiter</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">Validation</td><td class="p-4">"Sorry, we're out of paneer"</td></tr>
+                    </tbody>
+                </table>
+            </div>
 
-            <h3>Why Accessibility Matters</h3>
-            <div class="two-columns">
-                <div class="warning-box">
-                    <h4>Domino's Pizza Lawsuit (2019)</h4>
-                    <p>A blind man sued Domino's because he couldn't order pizza using a screen reader. <strong>Domino's lost.</strong></p>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Why Accessibility Matters</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+                <div class="rounded-xl bg-red-500/5 border border-red-500/20 p-6">
+                    <h4 class="text-base font-semibold text-red-400 mb-2">Domino's Pizza Lawsuit (2019)</h4>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">A blind man sued Domino's because he couldn't order pizza using a screen reader. <strong class="text-gray-900 dark:text-white">Domino's lost.</strong></p>
                 </div>
-                <div class="success-box">
-                    <h4>12 Million Potential Users</h4>
-                    <p>India has 12+ million blind people, 60+ million with disabilities. Good HTML respects all users.</p>
+                <div class="rounded-xl bg-green-500/5 border border-green-500/20 p-6">
+                    <h4 class="text-base font-semibold text-green-400 mb-2">12 Million Potential Users</h4>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">India has 12+ million blind people, 60+ million with disabilities. Good HTML respects all users.</p>
                 </div>
             </div>
 
-            <div class="highlight-box">
-                <h4>The OTP Problem</h4>
-                <p>Ever tried clicking a small OTP box on mobile? If the label is clickable, "Enter OTP" becomes a tap target. Small HTML improvement, big usability gain.</p>
+            <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6 my-6">
+                <h4 class="text-base font-semibold text-[var(--accent-light)] mb-2">The OTP Problem</h4>
+                <p class="text-gray-600 dark:text-gray-300 leading-relaxed">Ever tried clicking a small OTP box on mobile? If the label is clickable, "Enter OTP" becomes a tap target. Small HTML improvement, big usability gain.</p>
             </div>
 
-            <h3>Example</h3>
-            <a href="../examples/03-registration-form.html" target="_blank" class="resource-link">Registration Form Example</a>
-            <a href="https://frontendmasters.com/bootcamp/html-forms/" target="_blank" class="resource-link">HTML Forms Course (FREE)</a>
-        </div>
-    </section>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Examples</h3>
+            <div class="flex flex-wrap gap-2">
+                <a href="../examples/03-registration-form.html" target="_blank" class="btn btn-link">Registration Form Example</a>
+                <a href="https://frontendmasters.com/bootcamp/html-forms/" target="_blank" class="btn btn-link">HTML Forms Course (FREE)</a>
+            </div>
+        </section>
 
-    <!-- SLIDE 10: Exercises -->
-    <section class="slide" id="slide-10">
-        <div class="slide-content">
-            <span class="section-badge">Section 11</span>
-            <h2>Exercises</h2>
+        <!-- Slide 12: Exercises -->
+        <section class="slide p-6 md:p-12 min-h-[80vh]">
+            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-[var(--accent)] mb-2">Exercises</h1>
+            <div class="h-1 w-20 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] rounded mb-8"></div>
 
-            <h3>Exercise 1: Personal Profile Page</h3>
-            <div class="highlight-box">
-                <p>Create an HTML page about yourself with:</p>
-                <ul>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3">Exercise 1: Personal Profile Page</h3>
+            <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6 my-6">
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300">Create an HTML page about yourself with:</p>
+                <ul class="ml-6 space-y-2 text-gray-600 dark:text-gray-300 mt-2">
                     <li>Your name as heading</li>
                     <li>A paragraph about yourself (bio)</li>
                     <li>A list of your hobbies</li>
                     <li>An image (optional)</li>
                     <li>Contact links (email, LinkedIn)</li>
                 </ul>
-                <p><strong>Solution:</strong> <a href="../examples/02-profile.html" target="_blank">examples/02-profile.html</a></p>
+                <p class="text-gray-600 dark:text-gray-300 mt-3"><strong class="text-gray-900 dark:text-white">Solution:</strong> <a href="../examples/02-profile.html" target="_blank" class="text-[var(--accent)] hover:underline">examples/02-profile.html</a></p>
             </div>
 
-            <h3>Exercise 2: Student Registration Form</h3>
-            <div class="highlight-box">
-                <p>Create a student registration form with:</p>
-                <ul>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Exercise 2: Student Registration Form</h3>
+            <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6 my-6">
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300">Create a student registration form with:</p>
+                <ul class="ml-6 space-y-2 text-gray-600 dark:text-gray-300 mt-2">
                     <li>Name, Email, Phone fields</li>
                     <li>Roll Number field</li>
                     <li>Department dropdown</li>
                     <li>Year of study dropdown</li>
                     <li>Submit button</li>
                 </ul>
-                <p><strong>Solution:</strong> <a href="../examples/03-registration-form.html" target="_blank">examples/03-registration-form.html</a></p>
+                <p class="text-gray-600 dark:text-gray-300 mt-3"><strong class="text-gray-900 dark:text-white">Solution:</strong> <a href="../examples/03-registration-form.html" target="_blank" class="text-[var(--accent)] hover:underline">examples/03-registration-form.html</a></p>
             </div>
 
-            <div class="warning-box">
-                <p><strong>HTML only.</strong> No CSS or JavaScript for now.</p>
+            <div class="rounded-xl bg-red-500/5 border border-red-500/20 p-6 my-6">
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300"><strong class="text-gray-900 dark:text-white">HTML only.</strong> No CSS or JavaScript for now.</p>
             </div>
 
-            <h3>Common Mistakes to Avoid</h3>
-            <p>See intentional errors for learning: <a href="../examples/07-common-mistakes.html" target="_blank">examples/07-common-mistakes.html</a></p>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Common Mistakes to Avoid</h3>
+            <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300">See intentional errors for learning: <a href="../examples/07-common-mistakes.html" target="_blank" class="text-[var(--accent)] hover:underline">examples/07-common-mistakes.html</a></p>
 
-            <h3>All Examples</h3>
-            <a href="../examples/index.html" target="_blank" class="resource-link">Open All Examples</a>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">All Examples</h3>
+            <a href="../examples/index.html" target="_blank" class="btn btn-link">Open All Examples</a>
 
-            <h3>Homework</h3>
-            <div class="success-box">
-                <ul>
-                    <li><strong>Rebuild both pages from scratch</strong> - copy-paste creates confusion, rebuilding creates memory</li>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Homework</h3>
+            <div class="rounded-xl bg-green-500/5 border border-green-500/20 p-6 my-6">
+                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-600 dark:text-gray-300">
+                    <li><strong class="text-gray-900 dark:text-white">Rebuild both pages from scratch</strong> &mdash; copy-paste creates confusion, rebuilding creates memory</li>
                     <li>Add one new field to the form</li>
                     <li>Be ready to explain your tag choices</li>
                 </ul>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- SLIDE 11: Key Takeaways -->
-    <section class="slide" id="slide-11">
-        <div class="slide-content">
-            <span class="section-badge">Section 12</span>
-            <h2>Key Takeaways</h2>
+        <!-- Slide 13: Key Takeaways -->
+        <section class="slide p-6 md:p-12 min-h-[80vh]">
+            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-[var(--accent)] mb-2">Key Takeaways</h1>
+            <div class="h-1 w-20 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] rounded mb-8"></div>
 
-            <div class="highlight-box">
-                <h3>What You Learned Today</h3>
-                <ul>
-                    <li><strong>Internet vs Web:</strong> Internet is infrastructure, Web is a service (browser + server + HTTP)</li>
-                    <li><strong>Client-Server:</strong> Browser asks, server responds. Stateless = no memory.</li>
-                    <li><strong>URL Journey:</strong> DNS → TCP → Request → Response → Render</li>
-                    <li><strong>HTML:</strong> Structure and meaning, not appearance or behavior</li>
+            <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6 my-6">
+                <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3">What You Learned Today</h3>
+                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-600 dark:text-gray-300">
+                    <li><strong class="text-gray-900 dark:text-white">Internet vs Web:</strong> Internet is infrastructure, Web is a service (browser + server + HTTP)</li>
+                    <li><strong class="text-gray-900 dark:text-white">Client-Server:</strong> Browser asks, server responds. Stateless = no memory.</li>
+                    <li><strong class="text-gray-900 dark:text-white">URL Journey:</strong> DNS &rarr; TCP &rarr; Request &rarr; Response &rarr; Render</li>
+                    <li><strong class="text-gray-900 dark:text-white">HTML:</strong> Structure and meaning, not appearance or behavior</li>
                 </ul>
             </div>
 
-            <div class="success-box">
-                <h3>Core Principles</h3>
-                <ul>
+            <div class="rounded-xl bg-green-500/5 border border-green-500/20 p-6 my-6">
+                <h3 class="text-lg font-semibold text-green-400 mb-3">Core Principles</h3>
+                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-600 dark:text-gray-300">
                     <li>Web follows a client-server model</li>
                     <li>HTML defines structure, not appearance</li>
                     <li>Fundamentals compound over time</li>
-                    <li><strong>Looking things up is normal - even professionals do it</strong></li>
+                    <li><strong class="text-gray-900 dark:text-white">Looking things up is normal &mdash; even professionals do it</strong></li>
                 </ul>
             </div>
 
-            <h3>What's Next</h3>
-            <div class="quote-box">
-                <p><strong>Next week:</strong> HTML Structure, Lists & Tables</p>
-                <p>Still no CSS. We're building the foundation properly.</p>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">What's Next</h3>
+            <div class="rounded-xl bg-purple-500/5 border border-purple-500/20 p-6 my-6 italic">
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300"><strong class="text-gray-900 dark:text-white">Next week:</strong> HTML Structure, Lists &amp; Tables</p>
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300 mt-2">Still no CSS. We're building the foundation properly.</p>
             </div>
 
-            <h3>Remember</h3>
-            <div class="highlight-box">
-                <p>"The highest-paid engineers aren't framework experts. They understand how things work underneath."</p>
-                <p>"If you can rebuild something from scratch, you've actually learned it."</p>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Remember</h3>
+            <div class="rounded-xl bg-[var(--accent)]/5 border border-[var(--accent)]/20 p-6 my-6">
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300">"The highest-paid engineers aren't framework experts. They understand how things work underneath."</p>
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300 mt-2">"If you can rebuild something from scratch, you've actually learned it."</p>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- SLIDE 12: Quick Reference -->
-    <section class="slide" id="slide-12">
-        <div class="slide-content">
-            <span class="section-badge">Section 13</span>
-            <h2>Quick Reference</h2>
+        <!-- Slide 14: Quick Reference -->
+        <section class="slide p-6 md:p-12 min-h-[80vh]">
+            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-[var(--accent)] mb-2">Quick Reference</h1>
+            <div class="h-1 w-20 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] rounded mb-8"></div>
 
-            <h3>Emergency Tag Reference</h3>
-            <div class="two-columns">
-                <table>
-                    <tr><th>What you want</th><th>Tag</th></tr>
-                    <tr><td>Big heading</td><td><code>&lt;h1&gt;</code></td></tr>
-                    <tr><td>Smaller headings</td><td><code>&lt;h2&gt;-&lt;h6&gt;</code></td></tr>
-                    <tr><td>Paragraph</td><td><code>&lt;p&gt;</code></td></tr>
-                    <tr><td>Bold</td><td><code>&lt;strong&gt;</code></td></tr>
-                    <tr><td>Italic</td><td><code>&lt;em&gt;</code></td></tr>
-                    <tr><td>Link</td><td><code>&lt;a href=""&gt;</code></td></tr>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3">Emergency Tag Reference</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+                <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-white/10">
+                    <table class="w-full text-base">
+                        <thead class="bg-[var(--accent)]/10"><tr>
+                            <th class="p-3 text-left text-[var(--accent)] font-semibold">What you want</th>
+                            <th class="p-3 text-left text-[var(--accent)] font-semibold">Tag</th>
+                        </tr></thead>
+                        <tbody class="divide-y divide-gray-100 dark:divide-white/5">
+                            <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-3">Big heading</td><td class="p-3"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;h1&gt;</code></td></tr>
+                            <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-3">Smaller headings</td><td class="p-3"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;h2&gt;-&lt;h6&gt;</code></td></tr>
+                            <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-3">Paragraph</td><td class="p-3"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;p&gt;</code></td></tr>
+                            <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-3">Bold</td><td class="p-3"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;strong&gt;</code></td></tr>
+                            <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-3">Italic</td><td class="p-3"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;em&gt;</code></td></tr>
+                            <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-3">Link</td><td class="p-3"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;a href=""&gt;</code></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-white/10">
+                    <table class="w-full text-base">
+                        <thead class="bg-[var(--accent)]/10"><tr>
+                            <th class="p-3 text-left text-[var(--accent)] font-semibold">What you want</th>
+                            <th class="p-3 text-left text-[var(--accent)] font-semibold">Tag</th>
+                        </tr></thead>
+                        <tbody class="divide-y divide-gray-100 dark:divide-white/5">
+                            <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-3">Image</td><td class="p-3"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;img src="" alt=""&gt;</code></td></tr>
+                            <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-3">Bullet list</td><td class="p-3"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;ul&gt;&lt;li&gt;</code></td></tr>
+                            <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-3">Numbered list</td><td class="p-3"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;ol&gt;&lt;li&gt;</code></td></tr>
+                            <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-3">Table</td><td class="p-3"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;table&gt;&lt;tr&gt;&lt;td&gt;</code></td></tr>
+                            <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-3">Line break</td><td class="p-3"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;br&gt;</code></td></tr>
+                            <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-3">Container</td><td class="p-3"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;div&gt;</code></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">VS Code Shortcuts</h3>
+            <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-white/10 my-6">
+                <table class="w-full text-base">
+                    <thead class="bg-[var(--accent)]/10"><tr>
+                        <th class="p-4 text-left text-[var(--accent)] font-semibold">Action</th>
+                        <th class="p-4 text-left text-[var(--accent)] font-semibold">Windows/Linux</th>
+                        <th class="p-4 text-left text-[var(--accent)] font-semibold">Mac</th>
+                    </tr></thead>
+                    <tbody class="divide-y divide-gray-100 dark:divide-white/5">
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">Save file</td><td class="p-4">Ctrl + S</td><td class="p-4">Cmd + S</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">Undo</td><td class="p-4">Ctrl + Z</td><td class="p-4">Cmd + Z</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">Comment line</td><td class="p-4">Ctrl + /</td><td class="p-4">Cmd + /</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">Format document</td><td class="p-4">Shift + Alt + F</td><td class="p-4">Shift + Opt + F</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">HTML boilerplate</td><td class="p-4" colspan="2">Type <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">!</code> then Tab</td></tr>
+                    </tbody>
                 </table>
-                <table>
-                    <tr><th>What you want</th><th>Tag</th></tr>
-                    <tr><td>Image</td><td><code>&lt;img src="" alt=""&gt;</code></td></tr>
-                    <tr><td>Bullet list</td><td><code>&lt;ul&gt;&lt;li&gt;</code></td></tr>
-                    <tr><td>Numbered list</td><td><code>&lt;ol&gt;&lt;li&gt;</code></td></tr>
-                    <tr><td>Table</td><td><code>&lt;table&gt;&lt;tr&gt;&lt;td&gt;</code></td></tr>
-                    <tr><td>Line break</td><td><code>&lt;br&gt;</code></td></tr>
-                    <tr><td>Container</td><td><code>&lt;div&gt;</code></td></tr>
+            </div>
+
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">HTTP Status Codes</h3>
+            <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-white/10 my-6">
+                <table class="w-full text-base">
+                    <thead class="bg-[var(--accent)]/10"><tr>
+                        <th class="p-4 text-left text-[var(--accent)] font-semibold">Code</th>
+                        <th class="p-4 text-left text-[var(--accent)] font-semibold">Meaning</th>
+                        <th class="p-4 text-left text-[var(--accent)] font-semibold">Restaurant Analogy</th>
+                    </tr></thead>
+                    <tbody class="divide-y divide-gray-100 dark:divide-white/5">
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4 font-semibold text-green-400">200</td><td class="p-4">Success</td><td class="p-4">Order served!</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4 font-semibold text-yellow-400">404</td><td class="p-4">Not Found</td><td class="p-4">"That dish is not on our menu"</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4 font-semibold text-red-400">500</td><td class="p-4">Server Error</td><td class="p-4">"Kitchen is on fire!"</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4 font-semibold text-orange-400">403</td><td class="p-4">Forbidden</td><td class="p-4">"VIP area, membership required"</td></tr>
+                    </tbody>
                 </table>
             </div>
 
-            <h3>VS Code Shortcuts</h3>
-            <table>
-                <tr><th>Action</th><th>Windows/Linux</th><th>Mac</th></tr>
-                <tr><td>Save file</td><td>Ctrl + S</td><td>Cmd + S</td></tr>
-                <tr><td>Undo</td><td>Ctrl + Z</td><td>Cmd + Z</td></tr>
-                <tr><td>Comment line</td><td>Ctrl + /</td><td>Cmd + /</td></tr>
-                <tr><td>Format document</td><td>Shift + Alt + F</td><td>Shift + Opt + F</td></tr>
-                <tr><td>HTML boilerplate</td><td colspan="2">Type <code>!</code> then Tab</td></tr>
-            </table>
-
-            <h3>HTTP Status Codes</h3>
-            <table>
-                <tr><th>Code</th><th>Meaning</th><th>Restaurant Analogy</th></tr>
-                <tr><td>200</td><td>Success</td><td>Order served!</td></tr>
-                <tr><td>404</td><td>Not Found</td><td>"That dish is not on our menu"</td></tr>
-                <tr><td>500</td><td>Server Error</td><td>"Kitchen is on fire!"</td></tr>
-                <tr><td>403</td><td>Forbidden</td><td>"VIP area, membership required"</td></tr>
-            </table>
-
-            <h3>When Stuck</h3>
-            <div class="success-box">
-                <p>Say: "Let me look that up on MDN - this is exactly what professionals do."</p>
-                <p>Go to: <a href="https://developer.mozilla.org" target="_blank">developer.mozilla.org</a></p>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">When Stuck</h3>
+            <div class="rounded-xl bg-green-500/5 border border-green-500/20 p-6 my-6">
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300">Say: "Let me look that up on MDN &mdash; this is exactly what professionals do."</p>
+                <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300 mt-2">Go to: <a href="https://developer.mozilla.org" target="_blank" class="text-[var(--accent)] hover:underline">developer.mozilla.org</a></p>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- SLIDE 13: Resources -->
-    <section class="slide" id="slide-13">
-        <div class="slide-content">
-            <span class="section-badge">Section 14</span>
-            <h2>Free Resources for Self-Study</h2>
+        <!-- Slide 15: Free Resources -->
+        <section class="slide p-6 md:p-12 min-h-[80vh]">
+            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-[var(--accent)] mb-2">Free Resources for Self-Study</h1>
+            <div class="h-1 w-20 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] rounded mb-8"></div>
 
-            <h3>Video References (Short Clips)</h3>
-            <table>
-                <tr><th>Topic</th><th>Video</th><th>Watch Time</th></tr>
-                <tr><td>How the Internet Works</td><td><a href="https://www.youtube.com/watch?v=7_LPdttKXPc" target="_blank">Computerphile</a></td><td>0:00-3:20</td></tr>
-                <tr><td>How the Web Works</td><td><a href="https://www.youtube.com/watch?v=hJHvdBlSxug" target="_blank">Fireship</a></td><td>0:00-4:15</td></tr>
-                <tr><td>URL Explained</td><td><a href="https://www.youtube.com/watch?v=Vp7W8h6z6Wk" target="_blank">Web Dev Simplified</a></td><td>0:00-3:00</td></tr>
-                <tr><td>HTML Tags</td><td><a href="https://www.youtube.com/watch?v=bWPMSSsVdPk" target="_blank">Net Ninja</a></td><td>0:00-4:30</td></tr>
-            </table>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3">Video References (Short Clips)</h3>
+            <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-white/10 my-6">
+                <table class="w-full text-base">
+                    <thead class="bg-[var(--accent)]/10"><tr>
+                        <th class="p-4 text-left text-[var(--accent)] font-semibold">Topic</th>
+                        <th class="p-4 text-left text-[var(--accent)] font-semibold">Video</th>
+                        <th class="p-4 text-left text-[var(--accent)] font-semibold">Watch Time</th>
+                    </tr></thead>
+                    <tbody class="divide-y divide-gray-100 dark:divide-white/5">
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">How the Internet Works</td><td class="p-4"><a href="https://www.youtube.com/watch?v=7_LPdttKXPc" target="_blank" class="text-[var(--accent)] hover:underline">Computerphile</a></td><td class="p-4">0:00-3:20</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">How the Web Works</td><td class="p-4"><a href="https://www.youtube.com/watch?v=hJHvdBlSxug" target="_blank" class="text-[var(--accent)] hover:underline">Fireship</a></td><td class="p-4">0:00-4:15</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">URL Explained</td><td class="p-4"><a href="https://www.youtube.com/watch?v=Vp7W8h6z6Wk" target="_blank" class="text-[var(--accent)] hover:underline">Web Dev Simplified</a></td><td class="p-4">0:00-3:00</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4">HTML Tags</td><td class="p-4"><a href="https://www.youtube.com/watch?v=bWPMSSsVdPk" target="_blank" class="text-[var(--accent)] hover:underline">Net Ninja</a></td><td class="p-4">0:00-4:30</td></tr>
+                    </tbody>
+                </table>
+            </div>
 
-            <h3>Free Courses (Frontend Masters Bootcamp - No Payment Required)</h3>
-            <table>
-                <tr><th>Course</th><th>Instructor</th><th>Duration</th></tr>
-                <tr><td><a href="https://www.internetfundamentals.com/" target="_blank">Internet Fundamentals</a></td><td>Jen Kramer</td><td>~1 hour</td></tr>
-                <tr><td><a href="https://frontendmasters.com/bootcamp/introduction-html/" target="_blank">Introduction to HTML</a></td><td>Jen Kramer</td><td>1h 47m</td></tr>
-                <tr><td><a href="https://frontendmasters.com/bootcamp/introduction-css/" target="_blank">Introduction to CSS</a></td><td>Jen Kramer</td><td>4h 11m</td></tr>
-                <tr><td><a href="https://frontendmasters.com/bootcamp/introduction-javascript/" target="_blank">Introduction to JavaScript</a></td><td>Brian Holt</td><td>5h 23m</td></tr>
-                <tr><td><a href="https://frontendmasters.com/courses/web-development-v3/" target="_blank">Complete Intro to Web Dev v3</a></td><td>Brian Holt</td><td>~12 hours</td></tr>
-            </table>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Free Courses (Frontend Masters Bootcamp)</h3>
+            <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-white/10 my-6">
+                <table class="w-full text-base">
+                    <thead class="bg-[var(--accent)]/10"><tr>
+                        <th class="p-4 text-left text-[var(--accent)] font-semibold">Course</th>
+                        <th class="p-4 text-left text-[var(--accent)] font-semibold">Instructor</th>
+                        <th class="p-4 text-left text-[var(--accent)] font-semibold">Duration</th>
+                    </tr></thead>
+                    <tbody class="divide-y divide-gray-100 dark:divide-white/5">
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4"><a href="https://www.internetfundamentals.com/" target="_blank" class="text-[var(--accent)] hover:underline">Internet Fundamentals</a></td><td class="p-4">Jen Kramer</td><td class="p-4">~1 hour</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4"><a href="https://frontendmasters.com/bootcamp/introduction-html/" target="_blank" class="text-[var(--accent)] hover:underline">Introduction to HTML</a></td><td class="p-4">Jen Kramer</td><td class="p-4">1h 47m</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4"><a href="https://frontendmasters.com/bootcamp/introduction-css/" target="_blank" class="text-[var(--accent)] hover:underline">Introduction to CSS</a></td><td class="p-4">Jen Kramer</td><td class="p-4">4h 11m</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4"><a href="https://frontendmasters.com/bootcamp/introduction-javascript/" target="_blank" class="text-[var(--accent)] hover:underline">Introduction to JavaScript</a></td><td class="p-4">Brian Holt</td><td class="p-4">5h 23m</td></tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition"><td class="p-4"><a href="https://frontendmasters.com/courses/web-development-v3/" target="_blank" class="text-[var(--accent)] hover:underline">Complete Intro to Web Dev v3</a></td><td class="p-4">Brian Holt</td><td class="p-4">~12 hours</td></tr>
+                    </tbody>
+                </table>
+            </div>
 
-            <h3>Free Course Notes (No Video Required)</h3>
-            <a href="https://btholt.github.io/complete-intro-to-web-dev-v3/" target="_blank" class="resource-link">Brian Holt's Complete Intro to Web Dev</a>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Free Course Notes</h3>
+            <a href="https://btholt.github.io/complete-intro-to-web-dev-v3/" target="_blank" class="btn btn-link m-1">Brian Holt's Complete Intro to Web Dev</a>
 
-            <h3>Specific Deep-Dive Lessons</h3>
-            <ul>
-                <li><a href="https://frontendmasters.com/courses/fullstack-v3/how-the-internet-works/" target="_blank">How the Internet Works</a></li>
-                <li><a href="https://frontendmasters.com/courses/fullstack-v3/dns-urls/" target="_blank">DNS & URLs</a></li>
-                <li><a href="https://frontendmasters.com/courses/web-development-v3/the-dom/" target="_blank">The DOM</a></li>
-                <li><a href="https://frontendmasters.com/bootcamp/html-forms/" target="_blank">HTML Forms</a></li>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Deep-Dive Lessons</h3>
+            <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-600 dark:text-gray-300">
+                <li><a href="https://frontendmasters.com/courses/fullstack-v3/how-the-internet-works/" target="_blank" class="text-[var(--accent)] hover:underline">How the Internet Works</a></li>
+                <li><a href="https://frontendmasters.com/courses/fullstack-v3/dns-urls/" target="_blank" class="text-[var(--accent)] hover:underline">DNS &amp; URLs</a></li>
+                <li><a href="https://frontendmasters.com/courses/web-development-v3/the-dom/" target="_blank" class="text-[var(--accent)] hover:underline">The DOM</a></li>
+                <li><a href="https://frontendmasters.com/bootcamp/html-forms/" target="_blank" class="text-[var(--accent)] hover:underline">HTML Forms</a></li>
             </ul>
 
-            <h3>Reference Documentation</h3>
-            <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" class="resource-link">MDN Web Docs - HTML</a>
+            <h3 class="text-lg font-semibold text-[var(--accent-light)] mb-3 mt-8">Reference</h3>
+            <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" class="btn btn-link m-1">MDN Web Docs &mdash; HTML</a>
+        </section>
+
+    </main>
+
+    <!-- Bottom nav -->
+    <div class="max-w-[1200px] mx-auto px-5">
+        <div class="flex justify-between items-center mt-8 pt-5 border-t border-gray-200 dark:border-white/10 pb-8">
+            <button class="px-6 py-3 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] text-white font-medium cursor-pointer hover:scale-105 hover:shadow-lg transition border-none disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none" id="prevBtn2" onclick="changeSlide(-1)">&larr; Previous</button>
+            <div class="text-gray-500 text-sm tabular-nums"><span id="currentSlide2"></span></div>
+            <button class="px-6 py-3 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] text-white font-medium cursor-pointer hover:scale-105 hover:shadow-lg transition border-none disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none" id="nextBtn2" onclick="changeSlide(1)">Next &rarr;</button>
         </div>
-    </section>
+    </div>
 
     <!-- Footer -->
-    <footer style="background: rgba(0,0,0,0.8); padding: 20px; text-align: center; border-top: 2px solid #4a90d9; margin-top: 40px;">
-        <p style="color: #4a90d9; font-size: 1.1rem; margin-bottom: 10px;"><strong>Prepared by Rajiv Ramakrishnan</strong></p>
-        <p style="color: #aaa; margin-bottom: 5px;">
-            <a href="mailto:rajiv@buyproperly.ca" style="color: #3498db;">rajiv@buyproperly.ca</a> |
-            <a href="tel:+919566134326" style="color: #3498db;">+91 9566134326</a>
-        </p>
-        <p style="color: #666; font-size: 0.85rem; margin-top: 15px;">
-            &copy; 2025 Rajiv Ramakrishnan. All rights reserved.<br>
-            Licensed for educational use at SRM University.
-        </p>
+    <footer class="border-t-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] py-8 mt-8">
+        <div class="max-w-[1200px] mx-auto px-5 text-center">
+            <p class="text-gray-900 dark:text-white text-lg font-semibold mb-4">Prepared by Rajiv Ramakrishnan</p>
+            <div class="flex flex-wrap justify-center gap-3 text-sm mb-6">
+                <a href="mailto:gmail@rajiv.kr" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    gmail@rajiv.kr
+                </a>
+                <a href="tel:+919566134326" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    +91 9566134326
+                </a>
+                <a href="https://www.linkedin.com/in/rajivramakrishnan/" target="_blank" rel="noopener" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="mr-1.5"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    LinkedIn
+                </a>
+            </div>
+            <p class="text-gray-600 dark:text-gray-500 text-xs">
+                &copy; 2026 Rajiv Ramakrishnan. All rights reserved. Licensed for educational use at Eashwari.
+            </p>
+        </div>
     </footer>
 
     <!-- Keyboard hint -->
-    <div class="keyboard-hint">
-        <kbd>&larr;</kbd> <kbd>&rarr;</kbd> to navigate | <kbd>M</kbd> menu
+    <div class="fixed bottom-5 right-5 bg-black/80 px-3 py-1.5 rounded-lg text-xs text-gray-500 z-10 pointer-events-none hidden md:block" aria-hidden="true">
+        <kbd class="bg-white/10 px-1.5 py-0.5 rounded border border-white/20 font-mono text-xs">&larr;</kbd>
+        <kbd class="bg-white/10 px-1.5 py-0.5 rounded border border-white/20 font-mono text-xs">&rarr;</kbd> navigate &middot;
+        <kbd class="bg-white/10 px-1.5 py-0.5 rounded border border-white/20 font-mono text-xs">M</kbd> menu
     </div>
 
-    <script>
-        let currentSlide = 0;
-        const totalSlides = 14;
-
-        function showSlide(index) {
-            document.querySelectorAll('.slide').forEach(slide => {
-                slide.classList.remove('active');
-            });
-
-            document.getElementById(`slide-${index}`).classList.add('active');
-            document.getElementById('slideCounter').textContent = `${index + 1} / ${totalSlides}`;
-
-            const progress = ((index + 1) / totalSlides) * 100;
-            document.getElementById('progressBar').style.width = `${progress}%`;
-
-            window.scrollTo(0, 0);
-        }
-
-        function nextSlide() {
-            if (currentSlide < totalSlides - 1) {
-                currentSlide++;
-                showSlide(currentSlide);
-            }
-        }
-
-        function prevSlide() {
-            if (currentSlide > 0) {
-                currentSlide--;
-                showSlide(currentSlide);
-            }
-        }
-
-        function goToSlide(index) {
-            currentSlide = index;
-            showSlide(currentSlide);
-            toggleMenu();
-        }
-
-        function toggleMenu() {
-            document.getElementById('menuOverlay').classList.toggle('active');
-        }
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'ArrowRight' || e.key === ' ') {
-                e.preventDefault();
-                nextSlide();
-            } else if (e.key === 'ArrowLeft') {
-                prevSlide();
-            } else if (e.key === 'Escape') {
-                if (document.getElementById('menuOverlay').classList.contains('active')) {
-                    toggleMenu();
-                }
-            } else if (e.key === 'm' || e.key === 'M') {
-                toggleMenu();
-            }
-        });
-
-        showSlide(0);
-    </script>
+    <script src="../../core/slides.js" defer></script>
 </body>
 </html>

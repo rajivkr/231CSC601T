@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Routing - Week 11 Example</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; }
+        h1 { color: #2196f3; }
+        h2 { color: #1976d2; border-bottom: 2px solid #2196f3; padding-bottom: 5px; }
+        .code-block { background: #263238; color: #82b1ff; padding: 15px; border-radius: 8px; font-family: monospace; margin: 10px 0; overflow-x: auto; white-space: pre-wrap; }
+        .terminal { background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 8px; font-family: monospace; margin: 10px 0; white-space: pre-wrap; }
+        .prompt { color: #2196f3; }
+        .comment { color: #546e7a; }
+        .note { background: #e3f2fd; padding: 15px; border-radius: 8px; border-left: 4px solid #2196f3; margin: 15px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        th, td { padding: 10px; text-align: left; border: 1px solid #ddd; }
+        th { background: #2196f3; color: white; }
+        tr:nth-child(even) { background: #f5f5f5; }
+    </style>
+</head>
+<body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+    <h1>Routing with Node.js HTTP Module</h1>
+
+    <h2>1. URL Parsing</h2>
+    <div class="code-block"><span class="comment">// url-parsing.js</span>
+const { URL } = require('url');
+
+<span class="comment">// Parse a full URL</span>
+const myUrl = new URL('http://localhost:3000/search?q=nodejs&page=2&sort=date');
+
+console.log('Protocol:', myUrl.protocol);   <span class="comment">// 'http:'</span>
+console.log('Host:', myUrl.host);           <span class="comment">// 'localhost:3000'</span>
+console.log('Hostname:', myUrl.hostname);   <span class="comment">// 'localhost'</span>
+console.log('Port:', myUrl.port);           <span class="comment">// '3000'</span>
+console.log('Pathname:', myUrl.pathname);   <span class="comment">// '/search'</span>
+console.log('Search:', myUrl.search);       <span class="comment">// '?q=nodejs&page=2&sort=date'</span>
+
+<span class="comment">// Get individual query parameters</span>
+console.log('q:', myUrl.searchParams.get('q'));       <span class="comment">// 'nodejs'</span>
+console.log('page:', myUrl.searchParams.get('page')); <span class="comment">// '2'</span>
+console.log('sort:', myUrl.searchParams.get('sort')); <span class="comment">// 'date'</span>
+
+<span class="comment">// Check if parameter exists</span>
+console.log('Has q:', myUrl.searchParams.has('q'));    <span class="comment">// true</span>
+console.log('Has limit:', myUrl.searchParams.has('limit')); <span class="comment">// false</span>
+
+<span class="comment">// Get all parameters as object</span>
+const params = Object.fromEntries(myUrl.searchParams);
+console.log('All params:', params);
+<span class="comment">// { q: 'nodejs', page: '2', sort: 'date' }</span></div>
+
+    <h2>2. Basic Router</h2>
+    <div class="code-block"><span class="comment">// router.js</span>
+const http = require('http');
+const { URL } = require('url');
+
+const server = http.createServer((req, res) => {
+    const baseURL = `http://${req.headers.host}`;
+    const url = new URL(req.url, baseURL);
+    const path = url.pathname;
+    const method = req.method;
+
+    <span class="comment">// Simple routing using if/else</span>
+    if (method === 'GET' && path === '/') {
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(`
+            &lt;h1&gt;Home Page&lt;/h1&gt;
+            &lt;nav&gt;
+                &lt;a href="/"&gt;Home&lt;/a&gt; |
+                &lt;a href="/about"&gt;About&lt;/a&gt; |
+                &lt;a href="/contact"&gt;Contact&lt;/a&gt; |
+                &lt;a href="/api/users"&gt;API: Users&lt;/a&gt; |
+                &lt;a href="/search?q=node&amp;page=1"&gt;Search&lt;/a&gt;
+            &lt;/nav&gt;
+        `);
+    }
+    else if (method === 'GET' && path === '/about') {
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end('&lt;h1&gt;About Page&lt;/h1&gt;&lt;a href="/"&gt;Home&lt;/a&gt;');
+    }
+    else if (method === 'GET' && path === '/contact') {
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end('&lt;h1&gt;Contact Page&lt;/h1&gt;&lt;a href="/"&gt;Home&lt;/a&gt;');
+    }
+    else if (method === 'GET' && path === '/search') {
+        const query = url.searchParams.get('q') || '';
+        const page = url.searchParams.get('page') || '1';
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(`
+            &lt;h1&gt;Search Results&lt;/h1&gt;
+            &lt;p&gt;Query: "${query}"&lt;/p&gt;
+            &lt;p&gt;Page: ${page}&lt;/p&gt;
+            &lt;a href="/"&gt;Home&lt;/a&gt;
+        `);
+    }
+    else if (method === 'GET' && path === '/api/users') {
+        const users = [
+            { id: 1, name: 'Alice' },
+            { id: 2, name: 'Bob' }
+        ];
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(users, null, 2));
+    }
+    else {
+        res.writeHead(404, { 'Content-Type': 'text/html' });
+        res.end(`
+            &lt;h1&gt;404 - Page Not Found&lt;/h1&gt;
+            &lt;p&gt;The page "${path}" does not exist.&lt;/p&gt;
+            &lt;a href="/"&gt;Go Home&lt;/a&gt;
+        `);
+    }
+});
+
+server.listen(3000, () => console.log('Router demo at http://localhost:3000'));</div>
+
+    <h2>3. Route Pattern Matching</h2>
+    <div class="code-block"><span class="comment">// pattern-matching.js</span>
+const http = require('http');
+const { URL } = require('url');
+
+<span class="comment">// Simple route pattern matcher</span>
+function matchRoute(pattern, path) {
+    const patternParts = pattern.split('/').filter(Boolean);
+    const pathParts = path.split('/').filter(Boolean);
+
+    if (patternParts.length !== pathParts.length) return null;
+
+    const params = {};
+    for (let i = 0; i &lt; patternParts.length; i++) {
+        if (patternParts[i].startsWith(':')) {
+            <span class="comment">// Dynamic segment - extract parameter</span>
+            const paramName = patternParts[i].slice(1);
+            params[paramName] = pathParts[i];
+        } else if (patternParts[i] !== pathParts[i]) {
+            return null; <span class="comment">// No match</span>
+        }
+    }
+    return params;
+}
+
+<span class="comment">// Test the matcher</span>
+console.log(matchRoute('/users/:id', '/users/42'));
+<span class="comment">// { id: '42' }</span>
+
+console.log(matchRoute('/users/:userId/posts/:postId', '/users/5/posts/99'));
+<span class="comment">// { userId: '5', postId: '99' }</span>
+
+console.log(matchRoute('/users/:id', '/products/42'));
+<span class="comment">// null (no match)</span>
+
+<span class="comment">// Use in server</span>
+const server = http.createServer((req, res) => {
+    const url = new URL(req.url, `http://${req.headers.host}`);
+    const path = url.pathname;
+
+    res.setHeader('Content-Type', 'application/json');
+
+    <span class="comment">// Match: /users/:id</span>
+    let params = matchRoute('/users/:id', path);
+    if (req.method === 'GET' && params) {
+        res.writeHead(200);
+        res.end(JSON.stringify({
+            route: '/users/:id',
+            userId: params.id,
+            message: `Fetching user ${params.id}`
+        }));
+        return;
+    }
+
+    <span class="comment">// Match: /users/:userId/posts/:postId</span>
+    params = matchRoute('/users/:userId/posts/:postId', path);
+    if (req.method === 'GET' && params) {
+        res.writeHead(200);
+        res.end(JSON.stringify({
+            route: '/users/:userId/posts/:postId',
+            userId: params.userId,
+            postId: params.postId,
+            message: `Fetching post ${params.postId} by user ${params.userId}`
+        }));
+        return;
+    }
+
+    <span class="comment">// No match</span>
+    res.writeHead(404);
+    res.end(JSON.stringify({ error: 'Route not found' }));
+});
+
+server.listen(3000, () => console.log('Pattern matching demo on :3000'));</div>
+
+    <h2>4. Mini Router Class</h2>
+    <div class="code-block"><span class="comment">// mini-router.js</span>
+const http = require('http');
+const { URL } = require('url');
+
+<span class="comment">// A simplified Express-like router</span>
+class Router {
+    constructor() {
+        this.routes = [];
+    }
+
+    get(path, handler) {
+        this.routes.push({ method: 'GET', path, handler });
+    }
+
+    post(path, handler) {
+        this.routes.push({ method: 'POST', path, handler });
+    }
+
+    put(path, handler) {
+        this.routes.push({ method: 'PUT', path, handler });
+    }
+
+    delete(path, handler) {
+        this.routes.push({ method: 'DELETE', path, handler });
+    }
+
+    handle(req, res) {
+        const url = new URL(req.url, `http://${req.headers.host}`);
+        req.pathname = url.pathname;
+        req.query = Object.fromEntries(url.searchParams);
+
+        for (const route of this.routes) {
+            if (route.method !== req.method) continue;
+
+            <span class="comment">// Check for exact match or parameter match</span>
+            const params = this._match(route.path, req.pathname);
+            if (params !== null) {
+                req.params = params;
+                route.handler(req, res);
+                return;
+            }
+        }
+
+        <span class="comment">// No route matched</span>
+        res.writeHead(404, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Not Found' }));
+    }
+
+    _match(pattern, path) {
+        const pp = pattern.split('/').filter(Boolean);
+        const up = path.split('/').filter(Boolean);
+        if (pp.length !== up.length) return null;
+
+        const params = {};
+        for (let i = 0; i &lt; pp.length; i++) {
+            if (pp[i].startsWith(':')) {
+                params[pp[i].slice(1)] = up[i];
+            } else if (pp[i] !== up[i]) {
+                return null;
+            }
+        }
+        return params;
+    }
+
+    listen(port, callback) {
+        const server = http.createServer((req, res) => this.handle(req, res));
+        server.listen(port, callback);
+        return server;
+    }
+}
+
+<span class="comment">// Usage - looks like Express!</span>
+const app = new Router();
+
+app.get('/', (req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end('&lt;h1&gt;Mini Router!&lt;/h1&gt;');
+});
+
+app.get('/api/users', (req, res) => {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify([
+        { id: 1, name: 'Alice' },
+        { id: 2, name: 'Bob' }
+    ]));
+});
+
+app.get('/api/users/:id', (req, res) => {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({
+        message: `User ${req.params.id}`,
+        query: req.query
+    }));
+});
+
+app.listen(3000, () => console.log('Mini router on http://localhost:3000'));</div>
+
+    <div class="note">
+        This mini-router demonstrates the core idea behind Express.js routing. Express adds much more: middleware, error handling, template engines, and convenience methods.
+    </div>
+
+    <h2>Route Design Reference</h2>
+    <table>
+        <tr><th>Pattern</th><th>Example URL</th><th>Params</th></tr>
+        <tr><td>/users</td><td>/users</td><td>(none)</td></tr>
+        <tr><td>/users/:id</td><td>/users/42</td><td>{ id: '42' }</td></tr>
+        <tr><td>/users/:id/posts</td><td>/users/5/posts</td><td>{ id: '5' }</td></tr>
+        <tr><td>/search?q=term</td><td>/search?q=node</td><td>query: { q: 'node' }</td></tr>
+    </table>
+
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>

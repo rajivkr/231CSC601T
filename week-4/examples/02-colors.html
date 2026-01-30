@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colors in CSS - Week 04 Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #27ae60;
+        }
+
+        .color-box {
+            display: inline-block;
+            width: 150px;
+            height: 100px;
+            margin: 10px;
+            border-radius: 10px;
+            text-align: center;
+            line-height: 100px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        /* Named Colors */
+        .named-red { background-color: red; color: white; }
+        .named-blue { background-color: dodgerblue; color: white; }
+        .named-coral { background-color: coral; color: white; }
+        .named-teal { background-color: teal; color: white; }
+
+        /* Hex Colors */
+        .hex-1 { background-color: #ff0000; color: white; }
+        .hex-2 { background-color: #00ff00; color: black; }
+        .hex-3 { background-color: #0000ff; color: white; }
+        .hex-4 { background-color: #333333; color: white; }
+        .hex-5 { background-color: #f1c40f; color: black; }
+
+        /* RGB Colors */
+        .rgb-1 { background-color: rgb(255, 0, 0); color: white; }
+        .rgb-2 { background-color: rgb(46, 204, 113); color: white; }
+        .rgb-3 { background-color: rgb(155, 89, 182); color: white; }
+
+        /* RGBA Colors (with transparency) */
+        .rgba-demo {
+            width: 300px;
+            height: 150px;
+            background: url('https://picsum.photos/300/150') center/cover;
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .rgba-overlay {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 20px;
+            color: white;
+        }
+        .rgba-1 { background-color: rgba(0, 0, 0, 0.3); }
+        .rgba-2 { background-color: rgba(0, 0, 0, 0.6); }
+        .rgba-3 { background-color: rgba(0, 0, 0, 0.9); }
+
+        /* HSL Colors */
+        .hsl-1 { background-color: hsl(0, 100%, 50%); color: white; }
+        .hsl-2 { background-color: hsl(120, 100%, 50%); color: black; }
+        .hsl-3 { background-color: hsl(240, 100%, 50%); color: white; }
+        .hsl-4 { background-color: hsl(300, 100%, 50%); color: white; }
+
+        /* Gradient Examples */
+        .gradient-1 {
+            background: linear-gradient(to right, #ff6b6b, #feca57);
+            width: 100%;
+            height: 60px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+        .gradient-2 {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            width: 100%;
+            height: 60px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+        .gradient-3 {
+            background: radial-gradient(circle, #74b9ff, #0984e3);
+            width: 100%;
+            height: 60px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #27ae60;
+            color: white;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+
+    <h1>Colors in CSS</h1>
+    <p>CSS provides multiple ways to specify colors. Let's explore each method!</p>
+
+    <h2>1. Named Colors</h2>
+    <p>CSS supports 140+ named colors. Easy to remember but limited options.</p>
+    <div>
+        <div class="color-box named-red">red</div>
+        <div class="color-box named-blue">dodgerblue</div>
+        <div class="color-box named-coral">coral</div>
+        <div class="color-box named-teal">teal</div>
+    </div>
+
+    <h2>2. Hexadecimal Colors</h2>
+    <p>Format: <code>#RRGGBB</code> - Two hex digits (00-FF) for Red, Green, Blue</p>
+    <div>
+        <div class="color-box hex-1">#ff0000</div>
+        <div class="color-box hex-2">#00ff00</div>
+        <div class="color-box hex-3">#0000ff</div>
+        <div class="color-box hex-4">#333333</div>
+        <div class="color-box hex-5">#f1c40f</div>
+    </div>
+    <p><strong>Shorthand:</strong> <code>#f00</code> = <code>#ff0000</code> (when pairs are same)</p>
+
+    <h2>3. RGB Colors</h2>
+    <p>Format: <code>rgb(red, green, blue)</code> - Values from 0-255</p>
+    <div>
+        <div class="color-box rgb-1">rgb(255,0,0)</div>
+        <div class="color-box rgb-2">rgb(46,204,113)</div>
+        <div class="color-box rgb-3">rgb(155,89,182)</div>
+    </div>
+
+    <h2>4. RGBA Colors (with Transparency)</h2>
+    <p>Format: <code>rgba(red, green, blue, alpha)</code> - Alpha is 0 (transparent) to 1 (opaque)</p>
+
+    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+        <div class="rgba-demo">
+            <div class="rgba-overlay rgba-1">rgba(0,0,0, 0.3)</div>
+        </div>
+        <div class="rgba-demo">
+            <div class="rgba-overlay rgba-2">rgba(0,0,0, 0.6)</div>
+        </div>
+        <div class="rgba-demo">
+            <div class="rgba-overlay rgba-3">rgba(0,0,0, 0.9)</div>
+        </div>
+    </div>
+
+    <h2>5. HSL Colors</h2>
+    <p>Format: <code>hsl(hue, saturation%, lightness%)</code></p>
+    <ul>
+        <li><strong>Hue:</strong> Color wheel degree (0-360). 0=red, 120=green, 240=blue</li>
+        <li><strong>Saturation:</strong> 0%=gray, 100%=full color</li>
+        <li><strong>Lightness:</strong> 0%=black, 50%=normal, 100%=white</li>
+    </ul>
+    <div>
+        <div class="color-box hsl-1">hsl(0,100%,50%)</div>
+        <div class="color-box hsl-2">hsl(120,100%,50%)</div>
+        <div class="color-box hsl-3">hsl(240,100%,50%)</div>
+        <div class="color-box hsl-4">hsl(300,100%,50%)</div>
+    </div>
+
+    <h2>6. CSS Gradients</h2>
+    <p>Create smooth color transitions</p>
+
+    <h3>Linear Gradient</h3>
+    <div class="gradient-1"></div>
+    <code>background: linear-gradient(to right, #ff6b6b, #feca57);</code>
+
+    <div class="gradient-2"></div>
+    <code>background: linear-gradient(135deg, #667eea, #764ba2);</code>
+
+    <h3>Radial Gradient</h3>
+    <div class="gradient-3"></div>
+    <code>background: radial-gradient(circle, #74b9ff, #0984e3);</code>
+
+    <h2>Color Format Comparison</h2>
+    <table>
+        <tr>
+            <th>Format</th>
+            <th>Example</th>
+            <th>Use Case</th>
+        </tr>
+        <tr>
+            <td>Named</td>
+            <td><code>red, blue, coral</code></td>
+            <td>Quick prototyping, readability</td>
+        </tr>
+        <tr>
+            <td>Hex</td>
+            <td><code>#ff6b6b</code></td>
+            <td>Most common, compact, design tools</td>
+        </tr>
+        <tr>
+            <td>RGB</td>
+            <td><code>rgb(255, 107, 107)</code></td>
+            <td>Programmatic manipulation</td>
+        </tr>
+        <tr>
+            <td>RGBA</td>
+            <td><code>rgba(255, 107, 107, 0.5)</code></td>
+            <td>When you need transparency</td>
+        </tr>
+        <tr>
+            <td>HSL</td>
+            <td><code>hsl(4, 100%, 71%)</code></td>
+            <td>Creating color variations easily</td>
+        </tr>
+    </table>
+
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File System Module - Week 11 Example</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; }
+        h1 { color: #2196f3; }
+        h2 { color: #1976d2; border-bottom: 2px solid #2196f3; padding-bottom: 5px; }
+        .code-block { background: #263238; color: #82b1ff; padding: 15px; border-radius: 8px; font-family: monospace; margin: 10px 0; overflow-x: auto; white-space: pre-wrap; }
+        .terminal { background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 8px; font-family: monospace; margin: 10px 0; white-space: pre-wrap; }
+        .prompt { color: #2196f3; }
+        .comment { color: #546e7a; }
+        .note { background: #e3f2fd; padding: 15px; border-radius: 8px; border-left: 4px solid #2196f3; margin: 15px 0; }
+        .warning { background: #fff3e0; padding: 15px; border-radius: 8px; border-left: 4px solid #ff9800; margin: 15px 0; }
+    </style>
+</head>
+<body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+    <h1>File System Module</h1>
+    <p>The <code>fs</code> module provides methods for interacting with the file system. These are Node.js code references.</p>
+
+    <div class="note">
+        Save these as <code>.js</code> files and run with <code>node filename.js</code> to test them.
+    </div>
+
+    <h2>1. Reading Files</h2>
+    <div class="code-block"><span class="comment">// read-files.js</span>
+const fs = require('fs');
+const fsPromises = require('fs/promises');
+
+<span class="comment">// ========================================
+// METHOD 1: Synchronous (Blocking)
+// ========================================</span>
+try {
+    const data = fs.readFileSync('sample.txt', 'utf-8');
+    console.log('Sync read:', data);
+} catch (err) {
+    console.error('Error reading file:', err.message);
+}
+
+<span class="comment">// ========================================
+// METHOD 2: Callback (Non-blocking)
+// ========================================</span>
+fs.readFile('sample.txt', 'utf-8', (err, data) => {
+    if (err) {
+        console.error('Callback error:', err.message);
+        return;
+    }
+    console.log('Callback read:', data);
+});
+
+<span class="comment">// ========================================
+// METHOD 3: Promise-based (Modern - Recommended!)
+// ========================================</span>
+async function readFileAsync() {
+    try {
+        const data = await fsPromises.readFile('sample.txt', 'utf-8');
+        console.log('Async read:', data);
+    } catch (err) {
+        console.error('Async error:', err.message);
+    }
+}
+readFileAsync();
+
+<span class="comment">// Read as Buffer (binary data)</span>
+async function readBinary() {
+    const buffer = await fsPromises.readFile('image.png');
+    console.log('File size:', buffer.length, 'bytes');
+    console.log('First bytes:', buffer.slice(0, 10));
+}</div>
+
+    <h2>2. Writing Files</h2>
+    <div class="code-block"><span class="comment">// write-files.js</span>
+const fs = require('fs/promises');
+
+async function writeExamples() {
+    <span class="comment">// Write a new file (creates or overwrites)</span>
+    await fs.writeFile('output.txt', 'Hello, Node.js!\nThis is line 2.');
+    console.log('File written!');
+
+    <span class="comment">// Write JSON data</span>
+    const users = [
+        { id: 1, name: 'Alice', email: 'alice@example.com' },
+        { id: 2, name: 'Bob', email: 'bob@example.com' }
+    ];
+    await fs.writeFile('users.json', JSON.stringify(users, null, 2));
+    console.log('JSON file written!');
+
+    <span class="comment">// Append to file</span>
+    await fs.appendFile('output.txt', '\nAppended line 3!');
+    console.log('Content appended!');
+
+    <span class="comment">// Read back to verify</span>
+    const content = await fs.readFile('output.txt', 'utf-8');
+    console.log('File contents:\n' + content);
+}
+
+writeExamples().catch(console.error);</div>
+
+    <h2>3. Directory Operations</h2>
+    <div class="code-block"><span class="comment">// directories.js</span>
+const fs = require('fs/promises');
+const path = require('path');
+
+async function directoryOperations() {
+    <span class="comment">// Create a directory</span>
+    await fs.mkdir('test-dir', { recursive: true });
+    console.log('Directory created!');
+
+    <span class="comment">// Create nested directories</span>
+    await fs.mkdir('projects/web/src', { recursive: true });
+    console.log('Nested directories created!');
+
+    <span class="comment">// Create some test files</span>
+    await fs.writeFile('test-dir/file1.txt', 'Content 1');
+    await fs.writeFile('test-dir/file2.txt', 'Content 2');
+    await fs.writeFile('test-dir/data.json', '{"key":"value"}');
+
+    <span class="comment">// List directory contents</span>
+    const files = await fs.readdir('test-dir');
+    console.log('Files:', files);
+    <span class="comment">// ['data.json', 'file1.txt', 'file2.txt']</span>
+
+    <span class="comment">// List with file type info</span>
+    const entries = await fs.readdir('test-dir', { withFileTypes: true });
+    for (const entry of entries) {
+        const type = entry.isDirectory() ? 'DIR' : 'FILE';
+        const ext = path.extname(entry.name);
+        console.log(`  [${type}] ${entry.name} (${ext || 'no ext'})`);
+    }
+
+    <span class="comment">// Get file statistics</span>
+    const stats = await fs.stat('test-dir/file1.txt');
+    console.log('File stats:', {
+        size: stats.size + ' bytes',
+        created: stats.birthtime.toLocaleString(),
+        modified: stats.mtime.toLocaleString(),
+        isFile: stats.isFile(),
+        isDirectory: stats.isDirectory()
+    });
+
+    <span class="comment">// Check if path exists</span>
+    try {
+        await fs.access('test-dir');
+        console.log('test-dir exists!');
+    } catch {
+        console.log('test-dir does not exist');
+    }
+
+    <span class="comment">// Clean up - remove directory and contents</span>
+    await fs.rm('test-dir', { recursive: true });
+    await fs.rm('projects', { recursive: true });
+    console.log('Cleaned up!');
+}
+
+directoryOperations().catch(console.error);</div>
+
+    <h2>4. File Copy and Move</h2>
+    <div class="code-block"><span class="comment">// copy-move.js</span>
+const fs = require('fs/promises');
+
+async function copyAndMove() {
+    <span class="comment">// Create a source file</span>
+    await fs.writeFile('source.txt', 'Original content');
+
+    <span class="comment">// Copy file</span>
+    await fs.copyFile('source.txt', 'copy.txt');
+    console.log('File copied!');
+
+    <span class="comment">// Rename/Move file</span>
+    await fs.rename('copy.txt', 'renamed.txt');
+    console.log('File renamed!');
+
+    <span class="comment">// Verify</span>
+    const content = await fs.readFile('renamed.txt', 'utf-8');
+    console.log('Content:', content);
+
+    <span class="comment">// Delete files</span>
+    await fs.unlink('source.txt');
+    await fs.unlink('renamed.txt');
+    console.log('Files deleted!');
+}
+
+copyAndMove().catch(console.error);</div>
+
+    <h2>5. Path Module</h2>
+    <div class="code-block"><span class="comment">// path-demo.js</span>
+const path = require('path');
+
+<span class="comment">// Join path segments safely</span>
+const filePath = path.join('/users', 'alice', 'documents', 'report.pdf');
+console.log('Joined:', filePath);
+<span class="comment">// /users/alice/documents/report.pdf</span>
+
+<span class="comment">// Resolve to absolute path</span>
+const absolute = path.resolve('src', 'index.js');
+console.log('Resolved:', absolute);
+<span class="comment">// /full/path/to/project/src/index.js</span>
+
+<span class="comment">// Get parts of a path</span>
+console.log('Directory:', path.dirname(filePath));
+<span class="comment">// /users/alice/documents</span>
+
+console.log('Filename:', path.basename(filePath));
+<span class="comment">// report.pdf</span>
+
+console.log('Extension:', path.extname(filePath));
+<span class="comment">// .pdf</span>
+
+console.log('Name only:', path.basename(filePath, '.pdf'));
+<span class="comment">// report</span>
+
+<span class="comment">// Parse path into object</span>
+const parsed = path.parse('/home/user/docs/file.txt');
+console.log('Parsed:', parsed);
+<span class="comment">// { root: '/', dir: '/home/user/docs',
+//   base: 'file.txt', ext: '.txt', name: 'file' }</span>
+
+<span class="comment">// Normalize messy paths</span>
+console.log(path.normalize('/foo/bar//baz/../qux'));
+<span class="comment">// /foo/bar/qux</span></div>
+
+    <div class="warning">
+        <strong>Always use <code>path.join()</code></strong> instead of string concatenation:
+        <div class="code-block"><span class="comment">// BAD - breaks on Windows</span>
+const bad = __dirname + '/data/' + filename;
+
+<span class="comment">// GOOD - works everywhere</span>
+const good = path.join(__dirname, 'data', filename);</div>
+    </div>
+
+    <h2>6. Practical Example: Simple Logger</h2>
+    <div class="code-block"><span class="comment">// logger.js</span>
+const fs = require('fs/promises');
+const path = require('path');
+
+class FileLogger {
+    constructor(logDir = 'logs') {
+        this.logDir = logDir;
+        this.initialized = false;
+    }
+
+    async init() {
+        await fs.mkdir(this.logDir, { recursive: true });
+        this.initialized = true;
+    }
+
+    getLogFile() {
+        const date = new Date().toISOString().split('T')[0];
+        return path.join(this.logDir, `${date}.log`);
+    }
+
+    async log(level, message) {
+        if (!this.initialized) await this.init();
+
+        const timestamp = new Date().toISOString();
+        const line = `[${timestamp}] [${level.toUpperCase()}] ${message}\n`;
+        await fs.appendFile(this.getLogFile(), line);
+    }
+
+    async info(msg)  { await this.log('INFO', msg); }
+    async warn(msg)  { await this.log('WARN', msg); }
+    async error(msg) { await this.log('ERROR', msg); }
+
+    async readLogs(date) {
+        const file = date
+            ? path.join(this.logDir, `${date}.log`)
+            : this.getLogFile();
+        try {
+            return await fs.readFile(file, 'utf-8');
+        } catch {
+            return 'No logs found for this date.';
+        }
+    }
+}
+
+<span class="comment">// Usage</span>
+async function main() {
+    const logger = new FileLogger();
+    await logger.info('Application started');
+    await logger.info('User logged in: alice');
+    await logger.warn('Disk space running low');
+    await logger.error('Database connection failed');
+
+    const logs = await logger.readLogs();
+    console.log(logs);
+}
+
+main().catch(console.error);</div>
+
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Basics - Week 10 Example</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; }
+        h1 { color: #4caf50; }
+        h2 { color: #388e3c; border-bottom: 2px solid #4caf50; padding-bottom: 5px; }
+        .output { background: #2c3e50; color: #2ecc71; padding: 20px; border-radius: 10px; font-family: monospace; white-space: pre-wrap; margin: 15px 0; }
+        .code-block { background: #263238; color: #aed581; padding: 15px; border-radius: 8px; font-family: monospace; margin: 10px 0; overflow-x: auto; white-space: pre-wrap; }
+        .note { background: #e8f5e9; padding: 15px; border-radius: 8px; border-left: 4px solid #4caf50; margin: 15px 0; }
+        .terminal { background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 8px; font-family: monospace; margin: 10px 0; }
+        .terminal .prompt { color: #4caf50; }
+        .terminal .comment { color: #6a9955; }
+    </style>
+</head>
+<body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+    <h1>Node.js Basics</h1>
+    <p>This page shows Node.js concepts as reference code. To run these examples, save them as <code>.js</code> files and run with <code>node filename.js</code>.</p>
+
+    <div class="note">
+        <strong>Note:</strong> Node.js code runs on the server, not in the browser. These code snippets are displayed for reference and learning.
+    </div>
+
+    <h2>1. Hello World</h2>
+    <div class="code-block">// hello.js
+console.log('Hello from Node.js!');
+console.log('Node version:', process.version);
+console.log('Platform:', process.platform);
+console.log('Architecture:', process.arch);</div>
+
+    <div class="terminal">
+        <span class="prompt">$ </span>node hello.js<br>
+        Hello from Node.js!<br>
+        Node version: v20.11.0<br>
+        Platform: darwin<br>
+        Architecture: arm64
+    </div>
+
+    <h2>2. The Process Object</h2>
+    <div class="code-block">// process-demo.js
+
+// Current working directory
+console.log('CWD:', process.cwd());
+
+// Command line arguments
+// Run: node process-demo.js hello world
+console.log('Arguments:', process.argv);
+// ['node-path', 'script-path', 'hello', 'world']
+
+// Get user arguments only
+const args = process.argv.slice(2);
+console.log('User args:', args);
+
+// Environment variables
+console.log('HOME:', process.env.HOME);
+console.log('PATH:', process.env.PATH);
+
+// Set environment variable
+process.env.MY_VAR = 'hello';
+console.log('MY_VAR:', process.env.MY_VAR);
+
+// Memory usage
+const memory = process.memoryUsage();
+console.log('Memory:', {
+    rss: `${(memory.rss / 1024 / 1024).toFixed(2)} MB`,
+    heapUsed: `${(memory.heapUsed / 1024 / 1024).toFixed(2)} MB`
+});
+
+// Process ID
+console.log('PID:', process.pid);
+
+// Exit with code
+// process.exit(0);  // 0 = success, 1 = error</div>
+
+    <h2>3. Timers (Same as Browser)</h2>
+    <div class="code-block">// timers.js
+
+// setTimeout - run once after delay
+setTimeout(() => {
+    console.log('This runs after 2 seconds');
+}, 2000);
+
+// setInterval - run repeatedly
+let count = 0;
+const interval = setInterval(() => {
+    count++;
+    console.log(`Count: ${count}`);
+    if (count >= 5) {
+        clearInterval(interval);
+        console.log('Interval cleared!');
+    }
+}, 1000);
+
+// setImmediate - run in next iteration (Node.js only)
+setImmediate(() => {
+    console.log('This runs in the next event loop iteration');
+});
+
+// process.nextTick - run before next I/O (Node.js only)
+process.nextTick(() => {
+    console.log('This runs before any I/O event');
+});</div>
+
+    <h2>4. Event Emitter</h2>
+    <div class="code-block">// events.js
+const EventEmitter = require('events');
+
+// Create an emitter
+const emitter = new EventEmitter();
+
+// Register event listener
+emitter.on('greet', (name) => {
+    console.log(`Hello, ${name}!`);
+});
+
+// Register one-time listener
+emitter.once('welcome', () => {
+    console.log('Welcome! (This only fires once)');
+});
+
+// Emit events
+emitter.emit('greet', 'Alice');    // "Hello, Alice!"
+emitter.emit('greet', 'Bob');      // "Hello, Bob!"
+emitter.emit('welcome');           // "Welcome! ..."
+emitter.emit('welcome');           // (nothing - once already fired)
+
+// Custom event-based class
+class UserService extends EventEmitter {
+    createUser(name) {
+        // ... create user logic ...
+        const user = { id: Date.now(), name };
+        this.emit('userCreated', user);
+        return user;
+    }
+}
+
+const service = new UserService();
+service.on('userCreated', (user) => {
+    console.log('New user created:', user);
+});
+service.createUser('Charlie');</div>
+
+    <h2>5. The Global Object</h2>
+    <div class="code-block">// globals.js
+
+// In Browser: window, document
+// In Node.js: global, process
+
+// Some globals available in Node.js:
+console.log(typeof global);      // 'object'
+console.log(typeof process);     // 'object'
+console.log(typeof __dirname);   // 'string' (current directory)
+console.log(typeof __filename);  // 'string' (current file)
+console.log(typeof require);     // 'function'
+console.log(typeof module);      // 'object'
+console.log(typeof exports);     // 'object'
+
+// __dirname and __filename
+console.log('Directory:', __dirname);
+// /Users/you/projects/my-app
+
+console.log('File:', __filename);
+// /Users/you/projects/my-app/globals.js
+
+// Note: __dirname and __filename are NOT available
+// in ES Modules. Use import.meta.url instead:
+// import { fileURLToPath } from 'url';
+// const __filename = fileURLToPath(import.meta.url);</div>
+
+    <h2>6. Buffer (Binary Data)</h2>
+    <div class="code-block">// buffer.js
+
+// Create buffer from string
+const buf1 = Buffer.from('Hello Node.js');
+console.log(buf1);           // &lt;Buffer 48 65 6c 6c 6f ...>
+console.log(buf1.toString()); // 'Hello Node.js'
+console.log(buf1.length);     // 13 (bytes)
+
+// Create empty buffer
+const buf2 = Buffer.alloc(10);  // 10 bytes, filled with 0
+console.log(buf2);              // &lt;Buffer 00 00 00 00 ...>
+
+// Write to buffer
+buf2.write('Hi');
+console.log(buf2.toString());   // 'Hi'
+
+// Buffer encoding
+const buf3 = Buffer.from('Hello', 'utf-8');
+console.log(buf3.toString('hex'));     // '48656c6c6f'
+console.log(buf3.toString('base64')); // 'SGVsbG8='
+
+// Useful for: file operations, network data, cryptography</div>
+
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>

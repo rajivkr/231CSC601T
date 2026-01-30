@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Objects - Week 09 Example</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; }
+        h1 { color: #00bcd4; }
+        .output { background: #2c3e50; color: #2ecc71; padding: 20px; border-radius: 10px; font-family: monospace; white-space: pre-wrap; margin: 15px 0; min-height: 150px; }
+        button { background: #00bcd4; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 5px; }
+        button:hover { background: #00acc1; }
+        .demo-area { background: #f5f5f5; padding: 20px; border-radius: 10px; margin: 20px 0; }
+        .code-block { background: #263238; color: #aed581; padding: 15px; border-radius: 8px; font-family: monospace; margin: 10px 0; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+    <h1>JavaScript Objects Demo</h1>
+
+    <div class="demo-area">
+        <h2>Try Object Operations</h2>
+        <button onclick="createObject()">Create Object</button>
+        <button onclick="accessProperties()">Access Properties</button>
+        <button onclick="objectMethods()">Object Methods</button>
+        <button onclick="prototypeDemo()">Prototypes</button>
+        <button onclick="classDemo()">ES6 Classes</button>
+        <button onclick="destructuring()">Destructuring</button>
+    </div>
+
+    <div class="output" id="output">Click a button to see examples...</div>
+
+    <h2>Code Examples</h2>
+
+    <h3>Creating Objects</h3>
+    <div class="code-block">
+const person = {
+    name: 'Alice',
+    age: 25,
+    greet() {
+        return `Hi, I'm ${this.name}`;
+    }
+};
+    </div>
+
+    <h3>Accessing Properties</h3>
+    <div class="code-block">
+// Dot notation
+person.name         // 'Alice'
+
+// Bracket notation (for dynamic keys)
+const key = 'age';
+person[key]         // 25
+
+// Check if property exists
+'name' in person    // true
+    </div>
+
+    <script>
+        function createObject() {
+            // Object literal
+            const person = {
+                name: 'Alice',
+                age: 25,
+                email: 'alice@example.com',
+                isStudent: true,
+                courses: ['Math', 'Physics']
+            };
+
+            // Using constructor
+            function Car(make, model) {
+                this.make = make;
+                this.model = model;
+            }
+            const myCar = new Car('Toyota', 'Corolla');
+
+            // Using Object.create
+            const baseObj = { type: 'base' };
+            const derived = Object.create(baseObj);
+            derived.name = 'derived';
+
+            document.getElementById('output').textContent = `// Object Literal
+const person = {
+    name: 'Alice',
+    age: 25,
+    email: 'alice@example.com',
+    isStudent: true,
+    courses: ['Math', 'Physics']
+};
+
+console.log(person);
+// ${JSON.stringify(person, null, 2)}
+
+// Constructor Function
+function Car(make, model) {
+    this.make = make;
+    this.model = model;
+}
+const myCar = new Car('Toyota', 'Corolla');
+// ${JSON.stringify(myCar)}
+
+// Object.create()
+const baseObj = { type: 'base' };
+const derived = Object.create(baseObj);
+derived.name = 'derived';
+// derived inherits 'type' from baseObj`;
+        }
+
+        function accessProperties() {
+            const user = {
+                name: 'Bob',
+                age: 30,
+                'favorite-color': 'blue'
+            };
+
+            const dynamicKey = 'age';
+
+            document.getElementById('output').textContent = `const user = {
+    name: 'Bob',
+    age: 30,
+    'favorite-color': 'blue'
+};
+
+// Dot notation
+user.name                    // '${user.name}'
+user.age                     // ${user.age}
+
+// Bracket notation (required for special chars)
+user['favorite-color']       // '${user['favorite-color']}'
+
+// Dynamic property access
+const key = 'age';
+user[key]                    // ${user[dynamicKey]}
+
+// Check if property exists
+'name' in user               // ${'name' in user}
+user.hasOwnProperty('age')   // ${user.hasOwnProperty('age')}
+'toString' in user           // ${'toString' in user} (inherited)
+user.hasOwnProperty('toString') // ${user.hasOwnProperty('toString')}
+
+// Get all keys/values
+Object.keys(user)            // ${JSON.stringify(Object.keys(user))}
+Object.values(user)          // ${JSON.stringify(Object.values(user))}
+Object.entries(user)         // ${JSON.stringify(Object.entries(user))}`;
+        }
+
+        function objectMethods() {
+            const calculator = {
+                value: 0,
+                add(n) {
+                    this.value += n;
+                    return this;
+                },
+                subtract(n) {
+                    this.value -= n;
+                    return this;
+                },
+                getValue() {
+                    return this.value;
+                },
+                reset() {
+                    this.value = 0;
+                    return this;
+                }
+            };
+
+            calculator.add(10).subtract(3).add(5);
+            const result = calculator.getValue();
+            calculator.reset();
+
+            document.getElementById('output').textContent = `// Object with Methods
+const calculator = {
+    value: 0,
+
+    add(n) {
+        this.value += n;
+        return this;  // Enable chaining
+    },
+
+    subtract(n) {
+        this.value -= n;
+        return this;
+    },
+
+    getValue() {
+        return this.value;
+    }
+};
+
+// Method chaining
+calculator.add(10).subtract(3).add(5);
+calculator.getValue()  // ${result}
+
+// 'this' refers to the object calling the method
+
+// Object.assign - merge objects
+const defaults = { theme: 'dark', lang: 'en' };
+const userPrefs = { theme: 'light' };
+const merged = Object.assign({}, defaults, userPrefs);
+// ${JSON.stringify(Object.assign({}, { theme: 'dark', lang: 'en' }, { theme: 'light' }))}
+
+// Spread operator (modern)
+const merged2 = { ...defaults, ...userPrefs };
+// Same result as above`;
+        }
+
+        function prototypeDemo() {
+            const animal = {
+                eat() {
+                    return `${this.name} is eating`;
+                },
+                sleep() {
+                    return `${this.name} is sleeping`;
+                }
+            };
+
+            const dog = Object.create(animal);
+            dog.name = 'Buddy';
+            dog.bark = function() {
+                return `${this.name} says Woof!`;
+            };
+
+            document.getElementById('output').textContent = `// Prototype-based Inheritance
+const animal = {
+    eat() {
+        return \`\${this.name} is eating\`;
+    },
+    sleep() {
+        return \`\${this.name} is sleeping\`;
+    }
+};
+
+// Create object with animal as prototype
+const dog = Object.create(animal);
+dog.name = 'Buddy';
+dog.bark = function() {
+    return \`\${this.name} says Woof!\`;
+};
+
+// dog inherits from animal
+dog.bark()   // '${dog.bark()}'
+dog.eat()    // '${dog.eat()}' (inherited)
+dog.sleep()  // '${dog.sleep()}' (inherited)
+
+// Check prototype chain
+Object.getPrototypeOf(dog) === animal  // true
+animal.isPrototypeOf(dog)              // true
+
+// dog's own properties
+Object.keys(dog)  // ['name', 'bark']
+
+// All properties (including inherited)
+for (let key in dog) {
+    console.log(key);  // name, bark, eat, sleep
+}`;
+        }
+
+        function classDemo() {
+            class Animal {
+                constructor(name) {
+                    this.name = name;
+                }
+
+                speak() {
+                    return `${this.name} makes a sound`;
+                }
+            }
+
+            class Dog extends Animal {
+                constructor(name, breed) {
+                    super(name);
+                    this.breed = breed;
+                }
+
+                speak() {
+                    return `${this.name} barks!`;
+                }
+
+                fetch() {
+                    return `${this.name} fetches the ball`;
+                }
+            }
+
+            const buddy = new Dog('Buddy', 'Golden Retriever');
+
+            document.getElementById('output').textContent = `// ES6 Classes (syntactic sugar over prototypes)
+
+class Animal {
+    constructor(name) {
+        this.name = name;
+    }
+
+    speak() {
+        return \`\${this.name} makes a sound\`;
+    }
+}
+
+class Dog extends Animal {
+    constructor(name, breed) {
+        super(name);  // Call parent constructor
+        this.breed = breed;
+    }
+
+    speak() {  // Override parent method
+        return \`\${this.name} barks!\`;
+    }
+
+    fetch() {
+        return \`\${this.name} fetches the ball\`;
+    }
+}
+
+const buddy = new Dog('Buddy', 'Golden Retriever');
+
+buddy.name     // '${buddy.name}'
+buddy.breed    // '${buddy.breed}'
+buddy.speak()  // '${buddy.speak()}'
+buddy.fetch()  // '${buddy.fetch()}'
+
+// instanceof checks
+buddy instanceof Dog     // ${buddy instanceof Dog}
+buddy instanceof Animal  // ${buddy instanceof Animal}`;
+        }
+
+        function destructuring() {
+            const person = {
+                name: 'Alice',
+                age: 25,
+                city: 'Chennai',
+                country: 'India'
+            };
+
+            const { name, age } = person;
+            const { city: location, country = 'Unknown' } = person;
+
+            const numbers = [1, 2, 3, 4, 5];
+            const [first, second, ...rest] = numbers;
+
+            document.getElementById('output').textContent = `// Object Destructuring
+const person = {
+    name: 'Alice',
+    age: 25,
+    city: 'Chennai',
+    country: 'India'
+};
+
+// Basic destructuring
+const { name, age } = person;
+name  // '${name}'
+age   // ${age}
+
+// Rename variable
+const { city: location } = person;
+location  // '${location}'
+
+// Default values
+const { zip = '000000' } = person;
+zip  // '000000'
+
+// Array Destructuring
+const numbers = [1, 2, 3, 4, 5];
+const [first, second, ...rest] = numbers;
+first   // ${first}
+second  // ${second}
+rest    // ${JSON.stringify(rest)}
+
+// Function parameter destructuring
+function greet({ name, age }) {
+    return \`Hello \${name}, you are \${age}\`;
+}
+greet(person)  // 'Hello Alice, you are 25'
+
+// Swap variables
+let a = 1, b = 2;
+[a, b] = [b, a];
+// a = 2, b = 1`;
+        }
+    </script>
+
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>

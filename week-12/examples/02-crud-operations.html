@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Operations - Week 12 Example</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a2e;
+            color: #e0e0e0;
+        }
+        h1, h2, h3 {
+            color: #ff9800;
+        }
+        pre {
+            background: #0d1117;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            border-left: 4px solid #ff9800;
+        }
+        code {
+            font-family: 'Consolas', 'Monaco', monospace;
+            color: #e0e0e0;
+        }
+        .inline-code {
+            background: rgba(255,152,0,0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #ffb74d;
+        }
+        a {
+            color: #ffb74d;
+        }
+        .crud-section {
+            margin: 30px 0;
+            padding: 25px;
+            border-radius: 10px;
+        }
+        .create-section {
+            background: rgba(76,175,80,0.1);
+            border: 1px solid rgba(76,175,80,0.3);
+        }
+        .create-section h2 { color: #4caf50; }
+        .read-section {
+            background: rgba(33,150,243,0.1);
+            border: 1px solid rgba(33,150,243,0.3);
+        }
+        .read-section h2 { color: #2196f3; }
+        .update-section {
+            background: rgba(255,152,0,0.1);
+            border: 1px solid rgba(255,152,0,0.3);
+        }
+        .update-section h2 { color: #ff9800; }
+        .delete-section {
+            background: rgba(244,67,54,0.1);
+            border: 1px solid rgba(244,67,54,0.3);
+        }
+        .delete-section h2 { color: #f44336; }
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: white;
+            margin-right: 10px;
+        }
+        .badge-create { background: #4caf50; }
+        .badge-read { background: #2196f3; }
+        .badge-update { background: #ff9800; }
+        .badge-delete { background: #f44336; }
+        .note {
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+
+    <h1>CRUD Operations with Node.js and MySQL</h1>
+    <p>Complete examples of Create, Read, Update, and Delete operations.</p>
+
+    <h2>Database Setup</h2>
+    <p>First, create the database and table:</p>
+    <pre><code>-- Run this in MySQL
+CREATE DATABASE IF NOT EXISTS school;
+USE school;
+
+CREATE TABLE IF NOT EXISTS students (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(150) UNIQUE NOT NULL,
+    age INT,
+    grade VARCHAR(10),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Insert sample data
+INSERT INTO students (name, email, age, grade) VALUES
+    ('Alice Johnson', 'alice@school.com', 20, 'A'),
+    ('Bob Smith', 'bob@school.com', 22, 'B+'),
+    ('Charlie Brown', 'charlie@school.com', 21, 'A-');</code></pre>
+
+    <h2>Database Connection Module</h2>
+    <pre><code>// db.js
+const mysql = require('mysql2/promise');
+
+const pool = mysql.createPool({
+    host: 'localhost',
+    user: 'root',
+    password: 'your_password',
+    database: 'school',
+    waitForConnections: true,
+    connectionLimit: 10
+});
+
+module.exports = pool;</code></pre>
+
+    <!-- CREATE Section -->
+    <div class="crud-section create-section">
+        <h2><span class="badge badge-create">C</span> CREATE - Insert Operations</h2>
+
+        <h3>Insert Single Record</h3>
+        <pre><code>const pool = require('./db');
+
+async function createStudent(studentData) {
+    const { name, email, age, grade } = studentData;
+
+    try {
+        const [result] = await pool.execute(
+            'INSERT INTO students (name, email, age, grade) VALUES (?, ?, ?, ?)',
+            [name, email, age, grade]
+        );
+
+        console.log('Student created with ID:', result.insertId);
+        return {
+            id: result.insertId,
+            ...studentData
+        };
+    } catch (error) {
+        if (error.code === 'ER_DUP_ENTRY') {
+            throw new Error('Email already exists');
+        }
+        throw error;
+    }
+}
+
+// Usage
+createStudent({
+    name: 'David Wilson',
+    email: 'david@school.com',
+    age: 19,
+    grade: 'B'
+}).then(student => console.log('Created:', student))
+  .catch(err => console.error('Error:', err.message));</code></pre>
+
+        <h3>Insert Multiple Records</h3>
+        <pre><code>async function createManyStudents(studentsArray) {
+    const values = studentsArray.map(s => [s.name, s.email, s.age, s.grade]);
+
+    const [result] = await pool.query(
+        'INSERT INTO students (name, email, age, grade) VALUES ?',
+        [values]
+    );
+
+    console.log('Inserted', result.affectedRows, 'students');
+    return result.affectedRows;
+}
+
+// Usage
+createManyStudents([
+    { name: 'Eve Davis', email: 'eve@school.com', age: 20, grade: 'A' },
+    { name: 'Frank Miller', email: 'frank@school.com', age: 21, grade: 'B+' }
+]);</code></pre>
+    </div>
+
+    <!-- READ Section -->
+    <div class="crud-section read-section">
+        <h2><span class="badge badge-read">R</span> READ - Select Operations</h2>
+
+        <h3>Get All Records</h3>
+        <pre><code>async function getAllStudents() {
+    const [rows] = await pool.execute('SELECT * FROM students ORDER BY name');
+    return rows;
+}
+
+// Usage
+getAllStudents().then(students => {
+    console.log('All students:');
+    students.forEach(s => console.log(`- ${s.name} (${s.email})`));
+});</code></pre>
+
+        <h3>Get Single Record by ID</h3>
+        <pre><code>async function getStudentById(id) {
+    const [rows] = await pool.execute(
+        'SELECT * FROM students WHERE id = ?',
+        [id]
+    );
+
+    if (rows.length === 0) {
+        return null;
+    }
+    return rows[0];
+}
+
+// Usage
+getStudentById(1).then(student => {
+    if (student) {
+        console.log('Found:', student.name);
+    } else {
+        console.log('Student not found');
+    }
+});</code></pre>
+
+        <h3>Search with Filters</h3>
+        <pre><code>async function searchStudents(filters) {
+    let query = 'SELECT * FROM students WHERE 1=1';
+    const params = [];
+
+    if (filters.name) {
+        query += ' AND name LIKE ?';
+        params.push(`%${filters.name}%`);
+    }
+
+    if (filters.minAge) {
+        query += ' AND age >= ?';
+        params.push(filters.minAge);
+    }
+
+    if (filters.maxAge) {
+        query += ' AND age <= ?';
+        params.push(filters.maxAge);
+    }
+
+    if (filters.grade) {
+        query += ' AND grade = ?';
+        params.push(filters.grade);
+    }
+
+    query += ' ORDER BY name';
+
+    const [rows] = await pool.execute(query, params);
+    return rows;
+}
+
+// Usage - Find students named "A*" with grade "A"
+searchStudents({ name: 'A', grade: 'A' })
+    .then(results => console.log('Found:', results.length, 'students'));</code></pre>
+
+        <h3>Pagination</h3>
+        <pre><code>async function getStudentsPaginated(page = 1, limit = 10) {
+    const offset = (page - 1) * limit;
+
+    // Get total count
+    const [countResult] = await pool.execute(
+        'SELECT COUNT(*) as total FROM students'
+    );
+    const total = countResult[0].total;
+
+    // Get paginated data
+    const [rows] = await pool.execute(
+        'SELECT * FROM students ORDER BY id LIMIT ? OFFSET ?',
+        [limit, offset]
+    );
+
+    return {
+        data: rows,
+        pagination: {
+            page,
+            limit,
+            total,
+            totalPages: Math.ceil(total / limit)
+        }
+    };
+}
+
+// Usage - Get page 2 with 5 items per page
+getStudentsPaginated(2, 5).then(result => {
+    console.log('Page', result.pagination.page, 'of', result.pagination.totalPages);
+    console.log('Students:', result.data.map(s => s.name));
+});</code></pre>
+    </div>
+
+    <!-- UPDATE Section -->
+    <div class="crud-section update-section">
+        <h2><span class="badge badge-update">U</span> UPDATE - Modify Operations</h2>
+
+        <h3>Update Single Field</h3>
+        <pre><code>async function updateStudentEmail(id, newEmail) {
+    const [result] = await pool.execute(
+        'UPDATE students SET email = ? WHERE id = ?',
+        [newEmail, id]
+    );
+
+    if (result.affectedRows === 0) {
+        throw new Error('Student not found');
+    }
+
+    return true;
+}
+
+// Usage
+updateStudentEmail(1, 'alice.new@school.com')
+    .then(() => console.log('Email updated'))
+    .catch(err => console.error(err.message));</code></pre>
+
+        <h3>Update Multiple Fields</h3>
+        <pre><code>async function updateStudent(id, updates) {
+    // Build dynamic query
+    const fields = [];
+    const values = [];
+
+    if (updates.name !== undefined) {
+        fields.push('name = ?');
+        values.push(updates.name);
+    }
+    if (updates.email !== undefined) {
+        fields.push('email = ?');
+        values.push(updates.email);
+    }
+    if (updates.age !== undefined) {
+        fields.push('age = ?');
+        values.push(updates.age);
+    }
+    if (updates.grade !== undefined) {
+        fields.push('grade = ?');
+        values.push(updates.grade);
+    }
+
+    if (fields.length === 0) {
+        throw new Error('No fields to update');
+    }
+
+    values.push(id); // Add id for WHERE clause
+
+    const query = `UPDATE students SET ${fields.join(', ')} WHERE id = ?`;
+    const [result] = await pool.execute(query, values);
+
+    return result.affectedRows > 0;
+}
+
+// Usage - Update name and grade
+updateStudent(2, { name: 'Robert Smith', grade: 'A' })
+    .then(updated => console.log('Updated:', updated));</code></pre>
+
+        <h3>Upsert (Insert or Update)</h3>
+        <pre><code>async function upsertStudent(student) {
+    const { email, name, age, grade } = student;
+
+    const [result] = await pool.execute(
+        `INSERT INTO students (name, email, age, grade)
+         VALUES (?, ?, ?, ?)
+         ON DUPLICATE KEY UPDATE
+         name = VALUES(name),
+         age = VALUES(age),
+         grade = VALUES(grade)`,
+        [name, email, age, grade]
+    );
+
+    // affectedRows: 1 = inserted, 2 = updated
+    return {
+        action: result.affectedRows === 1 ? 'inserted' : 'updated',
+        id: result.insertId || null
+    };
+}
+
+// Usage - Will update if email exists, insert if not
+upsertStudent({
+    email: 'alice@school.com',
+    name: 'Alice Johnson Updated',
+    age: 21,
+    grade: 'A+'
+});</code></pre>
+    </div>
+
+    <!-- DELETE Section -->
+    <div class="crud-section delete-section">
+        <h2><span class="badge badge-delete">D</span> DELETE - Remove Operations</h2>
+
+        <h3>Delete by ID</h3>
+        <pre><code>async function deleteStudent(id) {
+    const [result] = await pool.execute(
+        'DELETE FROM students WHERE id = ?',
+        [id]
+    );
+
+    if (result.affectedRows === 0) {
+        return { deleted: false, message: 'Student not found' };
+    }
+
+    return { deleted: true, message: 'Student deleted successfully' };
+}
+
+// Usage
+deleteStudent(5).then(result => console.log(result.message));</code></pre>
+
+        <h3>Soft Delete (Recommended)</h3>
+        <pre><code>-- First, add a deleted_at column to your table
+-- ALTER TABLE students ADD COLUMN deleted_at TIMESTAMP NULL;
+
+async function softDeleteStudent(id) {
+    const [result] = await pool.execute(
+        'UPDATE students SET deleted_at = NOW() WHERE id = ? AND deleted_at IS NULL',
+        [id]
+    );
+
+    return result.affectedRows > 0;
+}
+
+// Get only active students
+async function getActiveStudents() {
+    const [rows] = await pool.execute(
+        'SELECT * FROM students WHERE deleted_at IS NULL ORDER BY name'
+    );
+    return rows;
+}
+
+// Restore deleted student
+async function restoreStudent(id) {
+    const [result] = await pool.execute(
+        'UPDATE students SET deleted_at = NULL WHERE id = ?',
+        [id]
+    );
+    return result.affectedRows > 0;
+}</code></pre>
+
+        <div class="note">
+            <strong>Why Soft Delete?</strong>
+            <ul>
+                <li>Data can be recovered if deleted by mistake</li>
+                <li>Maintains referential integrity</li>
+                <li>Useful for audit trails</li>
+                <li>Can permanently delete later (after grace period)</li>
+            </ul>
+        </div>
+
+        <h3>Delete with Conditions</h3>
+        <pre><code>async function deleteOldRecords(daysOld) {
+    const [result] = await pool.execute(
+        `DELETE FROM students
+         WHERE created_at < DATE_SUB(NOW(), INTERVAL ? DAY)`,
+        [daysOld]
+    );
+
+    console.log(`Deleted ${result.affectedRows} old records`);
+    return result.affectedRows;
+}
+
+// Usage - Delete records older than 365 days
+deleteOldRecords(365);</code></pre>
+    </div>
+
+    <h2>Complete CRUD Module</h2>
+    <pre><code>// studentModel.js - Complete CRUD module
+const pool = require('./db');
+
+const StudentModel = {
+    // CREATE
+    async create(data) {
+        const { name, email, age, grade } = data;
+        const [result] = await pool.execute(
+            'INSERT INTO students (name, email, age, grade) VALUES (?, ?, ?, ?)',
+            [name, email, age, grade]
+        );
+        return { id: result.insertId, ...data };
+    },
+
+    // READ
+    async findAll() {
+        const [rows] = await pool.execute('SELECT * FROM students ORDER BY name');
+        return rows;
+    },
+
+    async findById(id) {
+        const [rows] = await pool.execute('SELECT * FROM students WHERE id = ?', [id]);
+        return rows[0] || null;
+    },
+
+    async findByEmail(email) {
+        const [rows] = await pool.execute('SELECT * FROM students WHERE email = ?', [email]);
+        return rows[0] || null;
+    },
+
+    // UPDATE
+    async update(id, data) {
+        const { name, email, age, grade } = data;
+        const [result] = await pool.execute(
+            'UPDATE students SET name = ?, email = ?, age = ?, grade = ? WHERE id = ?',
+            [name, email, age, grade, id]
+        );
+        return result.affectedRows > 0;
+    },
+
+    // DELETE
+    async delete(id) {
+        const [result] = await pool.execute('DELETE FROM students WHERE id = ?', [id]);
+        return result.affectedRows > 0;
+    }
+};
+
+module.exports = StudentModel;</code></pre>
+
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>

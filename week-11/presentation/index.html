@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en" class="dark" data-accent="unit-4">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1a1a2e">
+    <title>Week 11 - Node.js File System & HTTP | 231CSC601T</title>
+    <script src="../../core/theme.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../../core/tw-config.js"></script>
+    <link rel="stylesheet" href="../../core/slides.css">
+</head>
+<body class="font-sans min-h-screen
+             bg-gradient-to-br from-navy to-navy-deep text-gray-200
+             dark:bg-gradient-to-br dark:from-navy dark:to-navy-deep dark:text-gray-200">
+
+    <a href="#main-content" class="skip-link bg-[var(--accent)] text-white px-4 py-2 rounded-lg font-semibold no-underline">Skip to content</a>
+
+    <!-- Nav header -->
+    <nav class="fixed top-0 left-0 right-0 z-50
+                bg-black/90 dark:bg-black/90 bg-white/95 dark:bg-black/90
+                backdrop-blur-md border-b-2 border-[var(--accent)]
+                px-4 py-2 flex justify-between items-center" aria-label="Slide navigation">
+        <div class="flex items-center gap-3 min-w-0">
+            <a href="../../index.html" class="text-[var(--accent)] text-sm hover:underline whitespace-nowrap hidden sm:inline">&larr; Home</a>
+            <a href="../examples/index.html" class="text-[var(--accent)] text-sm hover:underline whitespace-nowrap hidden sm:inline">&larr; Examples</a>
+            <span class="text-[var(--accent)] font-bold text-sm truncate">Week 11: Node.js File System & HTTP</span>
+        </div>
+        <div class="flex items-center gap-2 flex-shrink-0">
+            <button class="theme-toggle w-9 h-9 flex items-center justify-center border border-gray-600 dark:border-gray-600 border-gray-300 rounded-lg bg-transparent text-gray-400 hover:text-white cursor-pointer transition" aria-label="Switch to light mode">
+                <svg class="icon-sun w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="icon-moon w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+            <button class="px-3 py-1.5 rounded-lg bg-[var(--accent)] text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" onclick="toggleMenu()" aria-label="Open slide menu">Menu</button>
+            <button class="px-3 py-1.5 rounded-lg bg-red-500 text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" id="prevBtn" aria-label="Previous slide">Prev</button>
+            <span class="text-gray-400 text-sm tabular-nums" aria-live="polite"><span id="currentSlide">1</span> / <span id="totalSlides"></span></span>
+            <button class="px-3 py-1.5 rounded-lg bg-green-600 text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" id="nextBtn" aria-label="Next slide">Next</button>
+        </div>
+    </nav>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay fixed inset-0 z-[200] bg-black/90 dark:bg-black/90 overflow-y-auto p-6" id="menuOverlay" aria-hidden="true" role="dialog" aria-label="Slide navigation menu">
+        <button class="close-menu fixed top-6 right-6 text-4xl text-white cursor-pointer bg-transparent border-none z-[201] leading-none p-2" onclick="toggleMenu()" aria-label="Close menu">&times;</button>
+        <div class="max-w-[600px] mx-auto mt-12 p-5">
+            <h2 class="text-[var(--accent)] text-2xl font-bold text-center mb-6">Slide Navigation</h2>
+            <ul id="slideMenu" class="list-none m-0 p-0"></ul>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <main id="main-content" class="max-w-[1200px] mx-auto px-5 pt-16">
+
+        <!-- Progress bar -->
+        <div class="w-full h-1 bg-white/10 dark:bg-white/10 bg-gray-200 rounded mt-4 mb-5 overflow-hidden">
+            <div class="progress-fill h-full rounded bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)]" id="progress" style="width:0%"></div>
+        </div>
+
+        <!-- Slide 1 -->
+        <section class="slide active rounded-2xl p-6 md:p-10 min-h-[80vh]
+                        bg-white/5 dark:bg-white/5 bg-white dark:bg-white/5
+                        border border-white/10 dark:border-white/10 border-gray-200
+                        backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Week 11: Node.js File System & HTTP</h1>
+            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Unit IV - Server-Side Development</h2>
+            <p class="text-xl text-gray-300 dark:text-gray-300 text-gray-600 my-5">Working with files and building HTTP servers from scratch!</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">What You'll Learn</h3>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>File System (fs) module</li>
+                        <li>Reading and writing files</li>
+                        <li>Path module for file paths</li>
+                        <li>HTTP module - building servers</li>
+                        <li>Request handling and routing</li>
+                        <li>Serving static files</li>
+                    </ul>
+                </div>
+                <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3">Why Built-in Modules?</h3>
+                    <p class="text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">Before using Express.js, it's important to understand what happens under the hood. The <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">fs</code> and <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">http</code> modules are the foundation of Node.js server development!</p>
+                </div>
+            </div>
+
+            <p class="text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Press &rarr; or click Next to continue</strong></p>
+        </section>
+
+        <!-- Slide 2 -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">The Path Module</h1>
+            <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Utility module for working with file and directory paths - works cross-platform!</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Common Methods</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">const path = require('path');
+
+// Join path segments
+path.join('/users', 'alice', 'docs')
+// → '/users/alice/docs'
+
+// Resolve to absolute path
+path.resolve('src', 'index.js')
+// → '/full/path/to/src/index.js'
+
+// Get file extension
+path.extname('app.js')      // '.js'
+path.extname('style.css')   // '.css'
+path.extname('README')      // ''
+
+// Get filename
+path.basename('/path/to/file.js')    // 'file.js'
+path.basename('/path/to/file.js', '.js') // 'file'
+
+// Get directory name
+path.dirname('/path/to/file.js')
+// → '/path/to'</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Path Parsing</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// Parse a path into components
+path.parse('/home/user/docs/file.txt')
+// {
+//   root: '/',
+//   dir: '/home/user/docs',
+//   base: 'file.txt',
+//   name: 'file',
+//   ext: '.txt'
+// }
+
+// Build path from components
+path.format({
+    dir: '/home/user',
+    base: 'file.txt'
+})
+// → '/home/user/file.txt'
+
+// Normalize a path
+path.normalize('/foo/bar//baz/../qux')
+// → '/foo/bar/qux'
+
+// Platform-specific separator
+path.sep  // '/' on Unix, '\\' on Windows</code></pre>
+
+                    <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Always use <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">path.join()</code> instead of string concatenation for file paths!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3 -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">File System - Reading Files</h1>
+            <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">The <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">fs</code> module lets you read, write, and manage files.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Synchronous (Blocking)</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">const fs = require('fs');
+
+// Read entire file (blocks execution)
+try {
+    const data = fs.readFileSync(
+        'hello.txt',
+        'utf-8'
+    );
+    console.log(data);
+} catch (err) {
+    console.error('Error:', err.message);
+}
+
+// Read as Buffer (binary)
+const buffer = fs.readFileSync('image.png');
+console.log(buffer.length); // bytes</code></pre>
+
+                    <div class="p-5 rounded-lg border border-red-500/30 bg-red-500/10 my-4">
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Avoid Sync methods in servers!</strong> They block the entire process. Use async alternatives.</p>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Asynchronous (Non-blocking)</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">const fs = require('fs');
+
+// Callback-based
+fs.readFile('hello.txt', 'utf-8', (err, data) => {
+    if (err) {
+        console.error('Error:', err.message);
+        return;
+    }
+    console.log(data);
+});
+
+// Promise-based (Modern!)
+const fsPromises = require('fs/promises');
+
+async function readMyFile() {
+    try {
+        const data = await fsPromises.readFile(
+            'hello.txt',
+            'utf-8'
+        );
+        console.log(data);
+    } catch (err) {
+        console.error('Error:', err.message);
+    }
+}
+readMyFile();</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 4 -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">File System - Writing Files</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Write File</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">const fs = require('fs/promises');
+
+// Write entire file (creates or overwrites)
+async function writeExample() {
+    await fs.writeFile(
+        'output.txt',
+        'Hello, Node.js!'
+    );
+    console.log('File written!');
+}
+
+// Write JSON
+async function writeJSON() {
+    const data = {
+        users: [
+            { id: 1, name: 'Alice' },
+            { id: 2, name: 'Bob' }
+        ]
+    };
+
+    await fs.writeFile(
+        'data.json',
+        JSON.stringify(data, null, 2)
+    );
+}
+
+// Write with options
+await fs.writeFile('file.txt', content, {
+    encoding: 'utf-8',
+    flag: 'w'    // w=write, a=append
+});</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Append to File</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">const fs = require('fs/promises');
+
+// Append to file (creates if doesn't exist)
+async function appendLog(message) {
+    const timestamp = new Date().toISOString();
+    const line = `[${timestamp}] ${message}\n`;
+
+    await fs.appendFile('app.log', line);
+}
+
+appendLog('Server started');
+appendLog('User logged in');</code></pre>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-5">Copy & Rename</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// Copy file
+await fs.copyFile('source.txt', 'dest.txt');
+
+// Rename / Move file
+await fs.rename('old-name.txt', 'new-name.txt');
+
+// Move to different directory
+await fs.rename(
+    'downloads/file.txt',
+    'archive/file.txt'
+);</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 5 -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">File System - Directories</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Directory Operations</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">const fs = require('fs/promises');
+
+// Create directory
+await fs.mkdir('new-folder');
+
+// Create nested directories
+await fs.mkdir('path/to/deep/folder', {
+    recursive: true
+});
+
+// Read directory contents
+const files = await fs.readdir('.');
+console.log(files);
+// ['app.js', 'package.json', 'node_modules']
+
+// Read with file types
+const entries = await fs.readdir('.', {
+    withFileTypes: true
+});
+entries.forEach(entry => {
+    if (entry.isDirectory()) {
+        console.log(`DIR:  ${entry.name}`);
+    } else {
+        console.log(`FILE: ${entry.name}`);
+    }
+});
+
+// Remove directory
+await fs.rmdir('empty-folder');
+await fs.rm('folder-with-files', {
+    recursive: true
+});</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">File Information</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">const fs = require('fs/promises');
+
+// Get file stats
+const stats = await fs.stat('app.js');
+
+console.log('Size:', stats.size, 'bytes');
+console.log('Created:', stats.birthtime);
+console.log('Modified:', stats.mtime);
+console.log('Is file:', stats.isFile());
+console.log('Is dir:', stats.isDirectory());
+
+// Check if file/dir exists
+async function exists(path) {
+    try {
+        await fs.access(path);
+        return true;
+    } catch {
+        return false;
+    }
+}
+
+if (await exists('config.json')) {
+    console.log('Config exists!');
+}
+
+// Watch for file changes
+const watcher = fs.watch('.');
+for await (const event of watcher) {
+    console.log(event.eventType, event.filename);
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 6 -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Streams</h1>
+            <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Process data piece by piece instead of loading everything into memory.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Why Streams?</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// BAD: Loads entire file into memory
+const data = fs.readFileSync('large-file.csv');
+// 500MB file = 500MB in memory!
+
+// GOOD: Process in chunks
+const stream = fs.createReadStream('large-file.csv');
+stream.on('data', (chunk) => {
+    // Process chunk (64KB at a time)
+    console.log('Chunk size:', chunk.length);
+});
+stream.on('end', () => {
+    console.log('Done reading!');
+});</code></pre>
+
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3 mt-4">Stream Types</h3>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Readable:</strong> Source of data (fs.createReadStream)</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Writable:</strong> Destination (fs.createWriteStream)</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Transform:</strong> Modify data in transit</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Duplex:</strong> Both read and write</li>
+                    </ul>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Piping Streams</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">const fs = require('fs');
+
+// Copy file using streams
+const readStream = fs.createReadStream('input.txt');
+const writeStream = fs.createWriteStream('output.txt');
+
+readStream.pipe(writeStream);
+
+writeStream.on('finish', () => {
+    console.log('Copy complete!');
+});
+
+// Stream with HTTP
+const http = require('http');
+const server = http.createServer((req, res) => {
+    // Stream a large file to client
+    const stream = fs.createReadStream('big-video.mp4');
+    stream.pipe(res);  // Efficient!
+});
+
+// Compress while streaming
+const zlib = require('zlib');
+const gzip = zlib.createGzip();
+
+fs.createReadStream('input.txt')
+    .pipe(gzip)
+    .pipe(fs.createWriteStream('input.txt.gz'));</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 7 -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">The HTTP Module</h1>
+            <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Create HTTP servers without any framework - the foundation of Express.js!</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Basic HTTP Server</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">const http = require('http');
+
+const server = http.createServer((req, res) => {
+    // req = IncomingMessage (what client sent)
+    // res = ServerResponse (what we send back)
+
+    // Set response headers
+    res.writeHead(200, {
+        'Content-Type': 'text/html'
+    });
+
+    // Write response body
+    res.write('&lt;h1&gt;Hello World!&lt;/h1&gt;');
+
+    // End the response
+    res.end();
+});
+
+// Start listening
+server.listen(3000, () => {
+    console.log('Server on http://localhost:3000');
+});</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Request Properties</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">const server = http.createServer((req, res) => {
+    // Request information
+    console.log('Method:', req.method);
+    // 'GET', 'POST', 'PUT', 'DELETE'
+
+    console.log('URL:', req.url);
+    // '/about', '/api/users?page=2'
+
+    console.log('Headers:', req.headers);
+    // { host: 'localhost:3000', ... }
+
+    // Response shortcuts
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain');
+    res.end('Hello World');
+});</code></pre>
+
+                    <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Express.js is built on top of Node's <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">http</code> module! Understanding this helps you understand Express.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 8 -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">URL Parsing</h1>
+            <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Parse request URLs to extract paths and query parameters.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">URL Module</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">const { URL } = require('url');
+
+// Parse a URL
+const myUrl = new URL(
+    'http://localhost:3000/search?q=node&page=2'
+);
+
+console.log(myUrl.pathname); // '/search'
+console.log(myUrl.search);   // '?q=node&page=2'
+
+// Get query parameters
+console.log(myUrl.searchParams.get('q'));
+// 'node'
+
+console.log(myUrl.searchParams.get('page'));
+// '2'
+
+// Iterate all parameters
+for (const [key, value] of myUrl.searchParams) {
+    console.log(`${key}: ${value}`);
+}
+// q: node
+// page: 2</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Using in HTTP Server</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">const http = require('http');
+
+const server = http.createServer((req, res) => {
+    // Parse the request URL
+    const baseURL = `http://${req.headers.host}`;
+    const url = new URL(req.url, baseURL);
+
+    console.log('Path:', url.pathname);
+    console.log('Query:', Object.fromEntries(
+        url.searchParams
+    ));
+
+    // Route based on path
+    if (url.pathname === '/') {
+        res.writeHead(200, {
+            'Content-Type': 'text/html'
+        });
+        res.end('&lt;h1&gt;Home&lt;/h1&gt;');
+    } else if (url.pathname === '/about') {
+        res.writeHead(200, {
+            'Content-Type': 'text/html'
+        });
+        res.end('&lt;h1&gt;About&lt;/h1&gt;');
+    } else {
+        res.writeHead(404);
+        res.end('Not Found');
+    }
+});
+
+server.listen(3000);</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 9 -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Routing with HTTP Module</h1>
+            <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Handle different URLs and HTTP methods without a framework.</p>
+
+            <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">const http = require('http');
+const { URL } = require('url');
+
+// In-memory data
+let todos = [
+    { id: 1, text: 'Learn Node.js', done: false },
+    { id: 2, text: 'Build a server', done: false }
+];
+let nextId = 3;
+
+const server = http.createServer((req, res) => {
+    const url = new URL(req.url, `http://${req.headers.host}`);
+    const path = url.pathname;
+
+    // Set JSON content type for API
+    res.setHeader('Content-Type', 'application/json');
+
+    // GET /api/todos
+    if (req.method === 'GET' && path === '/api/todos') {
+        res.writeHead(200);
+        res.end(JSON.stringify(todos));
+    }
+    // GET /api/todos/:id
+    else if (req.method === 'GET' && path.match(/^\/api\/todos\/\d+$/)) {
+        const id = parseInt(path.split('/')[3]);
+        const todo = todos.find(t => t.id === id);
+        if (todo) {
+            res.writeHead(200);
+            res.end(JSON.stringify(todo));
+        } else {
+            res.writeHead(404);
+            res.end(JSON.stringify({ error: 'Not found' }));
+        }
+    }
+    // POST /api/todos
+    else if (req.method === 'POST' && path === '/api/todos') {
+        let body = '';
+        req.on('data', chunk => body += chunk);
+        req.on('end', () => {
+            const { text } = JSON.parse(body);
+            const todo = { id: nextId++, text, done: false };
+            todos.push(todo);
+            res.writeHead(201);
+            res.end(JSON.stringify(todo));
+        });
+    }
+    // 404
+    else {
+        res.writeHead(404);
+        res.end(JSON.stringify({ error: 'Route not found' }));
+    }
+});
+
+server.listen(3000, () => console.log('Server on http://localhost:3000'));</code></pre>
+        </section>
+
+        <!-- Slide 10 -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Serving Static Files</h1>
+            <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Build a file server that serves HTML, CSS, JS, and images.</p>
+
+            <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">const http = require('http');
+const fs = require('fs/promises');
+const path = require('path');
+
+// MIME type mapping
+const MIME_TYPES = {
+    '.html': 'text/html',
+    '.css':  'text/css',
+    '.js':   'text/javascript',
+    '.json': 'application/json',
+    '.png':  'image/png',
+    '.jpg':  'image/jpeg',
+    '.gif':  'image/gif',
+    '.svg':  'image/svg+xml',
+    '.ico':  'image/x-icon',
+    '.txt':  'text/plain'
+};
+
+const PUBLIC_DIR = path.join(__dirname, 'public');
+
+const server = http.createServer(async (req, res) => {
+    try {
+        // Map URL to file path
+        let filePath = path.join(PUBLIC_DIR, req.url);
+
+        // Default to index.html for directory requests
+        if (req.url === '/') {
+            filePath = path.join(PUBLIC_DIR, 'index.html');
+        }
+
+        // Get file extension and MIME type
+        const ext = path.extname(filePath);
+        const contentType = MIME_TYPES[ext] || 'application/octet-stream';
+
+        // Read and serve the file
+        const content = await fs.readFile(filePath);
+        res.writeHead(200, { 'Content-Type': contentType });
+        res.end(content);
+
+    } catch (err) {
+        if (err.code === 'ENOENT') {
+            res.writeHead(404, { 'Content-Type': 'text/html' });
+            res.end('&lt;h1&gt;404 - File Not Found&lt;/h1&gt;');
+        } else {
+            res.writeHead(500);
+            res.end('Internal Server Error');
+        }
+    }
+});
+
+server.listen(3000, () => console.log('File server on http://localhost:3000'));</code></pre>
+
+            <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">This is essentially what <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">express.static()</code> does under the hood!</p>
+            </div>
+        </section>
+
+        <!-- Slide 11 -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Handling POST Data</h1>
+            <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Request body arrives in chunks that must be collected.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Reading Request Body</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">const http = require('http');
+
+const server = http.createServer((req, res) => {
+    if (req.method === 'POST') {
+        let body = '';
+
+        // Collect data chunks
+        req.on('data', (chunk) => {
+            body += chunk.toString();
+        });
+
+        // All data received
+        req.on('end', () => {
+            const data = JSON.parse(body);
+            console.log('Received:', data);
+
+            res.writeHead(200, {
+                'Content-Type': 'application/json'
+            });
+            res.end(JSON.stringify({
+                received: data,
+                message: 'Data processed!'
+            }));
+        });
+
+        // Handle errors
+        req.on('error', (err) => {
+            res.writeHead(400);
+            res.end('Bad request');
+        });
+    }
+});</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Helper Function</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// Reusable body parser
+function parseBody(req) {
+    return new Promise((resolve, reject) => {
+        let body = '';
+        req.on('data', chunk => body += chunk);
+        req.on('end', () => {
+            try {
+                resolve(JSON.parse(body));
+            } catch (e) {
+                reject(new Error('Invalid JSON'));
+            }
+        });
+        req.on('error', reject);
+    });
+}
+
+// Usage
+const server = http.createServer(
+    async (req, res) => {
+        if (req.method === 'POST') {
+            try {
+                const data = await parseBody(req);
+                res.writeHead(201, {
+                    'Content-Type': 'application/json'
+                });
+                res.end(JSON.stringify(data));
+            } catch (err) {
+                res.writeHead(400);
+                res.end('Invalid request body');
+            }
+        }
+    }
+);</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 12 -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Video Resources</h1>
+            <div class="relative w-full max-w-[800px] mx-auto my-5 aspect-video bg-black rounded-lg overflow-hidden shadow-xl">
+                <iframe class="absolute inset-0 w-full h-full border-none" src="https://www.youtube.com/embed/Oe421EPjeBE?rel=0" title="Node.js File System" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 my-5">
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200 hover:-translate-y-1 transition">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Frontend Masters</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600"><a href="https://frontendmasters.com/courses/digging-into-node/" target="_blank" class="text-[var(--accent)] hover:underline">Digging Into Node.js</a></p>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200 hover:-translate-y-1 transition">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Node.js Docs - fs</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600"><a href="https://nodejs.org/api/fs.html" target="_blank" class="text-[var(--accent)] hover:underline">File System Module</a></p>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200 hover:-translate-y-1 transition">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Node.js Docs - http</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600"><a href="https://nodejs.org/api/http.html" target="_blank" class="text-[var(--accent)] hover:underline">HTTP Module</a></p>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200 hover:-translate-y-1 transition">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Node.js Docs - path</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600"><a href="https://nodejs.org/api/path.html" target="_blank" class="text-[var(--accent)] hover:underline">Path Module</a></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 13 -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Practice Exercises</h1>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-5">
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Exercise 1: File Logger</h3>
+                    <ul class="ml-5 space-y-1 text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Write logs to a file</li>
+                        <li>Append timestamps</li>
+                        <li>Rotate log files</li>
+                    </ul>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Exercise 2: Static File Server</h3>
+                    <ul class="ml-5 space-y-1 text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Serve HTML/CSS/JS files</li>
+                        <li>Handle MIME types</li>
+                        <li>404 error pages</li>
+                    </ul>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Exercise 3: JSON Data API</h3>
+                    <ul class="ml-5 space-y-1 text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Read data from JSON file</li>
+                        <li>CRUD operations via HTTP</li>
+                        <li>Persist changes to file</li>
+                    </ul>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Exercise 4: File Explorer</h3>
+                    <ul class="ml-5 space-y-1 text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>List directory contents</li>
+                        <li>Navigate folders via URLs</li>
+                        <li>Download files</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><a href="../examples/index.html" class="text-[var(--accent)] hover:underline">View Week 11 Examples &rarr;</a></p>
+            </div>
+        </section>
+
+        <!-- Slide 14 -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Week 11 Summary</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Key Concepts</h2>
+                    <ul class="ml-6 space-y-2 text-lg text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">path</code> module for cross-platform paths</li>
+                        <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">fs</code> module for file operations</li>
+                        <li>Sync vs Async (prefer async!)</li>
+                        <li>Streams for large files</li>
+                        <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">http</code> module for servers</li>
+                        <li>URL parsing and routing</li>
+                        <li>Serving static files</li>
+                        <li>Handling POST body data</li>
+                    </ul>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">fs/promises Quick Reference</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">const fs = require('fs/promises');
+
+await fs.readFile(path, 'utf-8')
+await fs.writeFile(path, data)
+await fs.appendFile(path, data)
+await fs.copyFile(src, dest)
+await fs.rename(old, new)
+await fs.rm(path)
+await fs.mkdir(path)
+await fs.readdir(path)
+await fs.stat(path)</code></pre>
+
+                    <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 mt-4">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-2">Next Week</h3>
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Week 12: Databases and MongoDB!</p>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="mt-10 pt-5 border-t border-white/10 dark:border-white/10 border-gray-200 text-center text-sm text-gray-500">
+                <p><strong>Prepared by Rajiv Ramakrishnan</strong></p>
+                <p><a href="mailto:gmail@rajiv.kr" class="text-[var(--accent)] hover:underline">gmail@rajiv.kr</a> | <a href="tel:+919566134326" class="text-[var(--accent)] hover:underline">+91 9566134326</a> | <a href="https://www.linkedin.com/in/rajivramakrishnan/" target="_blank" rel="noopener" class="text-[var(--accent)] hover:underline">LinkedIn</a></p>
+                <p class="mt-2 text-gray-600">&copy; 2026 Rajiv Ramakrishnan. Licensed for educational use at Eashwari.</p>
+            </footer>
+        </section></main>
+
+    <!-- Bottom nav -->
+    <div class="max-w-[1200px] mx-auto px-5">
+        <div class="flex justify-between items-center mt-8 pt-5 border-t border-white/10 dark:border-white/10 border-gray-200 pb-8">
+            <button class="px-6 py-3 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] text-white font-medium cursor-pointer hover:scale-105 hover:shadow-lg transition border-none disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none" id="prevBtn2" onclick="changeSlide(-1)">&larr; Previous</button>
+            <div class="text-gray-500 text-sm tabular-nums"><span id="currentSlide2"></span></div>
+            <button class="px-6 py-3 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] text-white font-medium cursor-pointer hover:scale-105 hover:shadow-lg transition border-none disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none" id="nextBtn2" onclick="changeSlide(1)">Next &rarr;</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] py-8 mt-8">
+        <div class="max-w-[1200px] mx-auto px-5 text-center">
+            <p class="text-gray-900 dark:text-white text-lg font-semibold mb-4">Prepared by Rajiv Ramakrishnan</p>
+            <div class="flex flex-wrap justify-center gap-3 text-sm mb-6">
+                <a href="mailto:gmail@rajiv.kr" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    gmail@rajiv.kr
+                </a>
+                <a href="tel:+919566134326" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    +91 9566134326
+                </a>
+                <a href="https://www.linkedin.com/in/rajivramakrishnan/" target="_blank" rel="noopener" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="mr-1.5"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+                    LinkedIn
+                </a>
+            </div>
+            <p class="text-gray-600 dark:text-gray-500 text-xs">
+                &copy; 2026 Rajiv Ramakrishnan. All rights reserved. Licensed for educational use at Eashwari.
+            </p>
+        </div>
+    </footer>
+
+    </div>
+
+    <!-- Keyboard hint -->
+    <div class="fixed bottom-5 right-5 bg-black/80 px-3 py-1.5 rounded-lg text-xs text-gray-500 z-10 pointer-events-none hidden md:block" aria-hidden="true">
+        <kbd class="bg-white/10 px-1.5 py-0.5 rounded border border-white/20 font-mono text-xs">&larr;</kbd>
+        <kbd class="bg-white/10 px-1.5 py-0.5 rounded border border-white/20 font-mono text-xs">&rarr;</kbd> navigate &middot;
+        <kbd class="bg-white/10 px-1.5 py-0.5 rounded border border-white/20 font-mono text-xs">M</kbd> menu
+    </div>
+
+    <script src="../../core/slides.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typography - Week 04 Example</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 {
+            color: #27ae60;
+        }
+
+        /* Font Family Examples */
+        .font-serif { font-family: 'Times New Roman', Georgia, serif; }
+        .font-sans { font-family: Arial, Helvetica, sans-serif; }
+        .font-mono { font-family: 'Courier New', Consolas, monospace; }
+        .font-cursive { font-family: 'Brush Script MT', cursive; }
+
+        /* Font Size Examples */
+        .size-12 { font-size: 12px; }
+        .size-16 { font-size: 16px; }
+        .size-20 { font-size: 20px; }
+        .size-24 { font-size: 24px; }
+        .size-2em { font-size: 2em; }
+        .size-1-5rem { font-size: 1.5rem; }
+
+        /* Font Weight Examples */
+        .weight-normal { font-weight: normal; }
+        .weight-bold { font-weight: bold; }
+        .weight-100 { font-weight: 100; }
+        .weight-400 { font-weight: 400; }
+        .weight-700 { font-weight: 700; }
+        .weight-900 { font-weight: 900; }
+
+        /* Font Style Examples */
+        .style-normal { font-style: normal; }
+        .style-italic { font-style: italic; }
+        .style-oblique { font-style: oblique; }
+
+        /* Text Alignment */
+        .align-left { text-align: left; }
+        .align-center { text-align: center; }
+        .align-right { text-align: right; }
+        .align-justify { text-align: justify; }
+
+        /* Text Decoration */
+        .deco-underline { text-decoration: underline; }
+        .deco-overline { text-decoration: overline; }
+        .deco-through { text-decoration: line-through; }
+        .deco-none { text-decoration: none; }
+        .deco-fancy { text-decoration: underline wavy #e74c3c; }
+
+        /* Text Transform */
+        .transform-upper { text-transform: uppercase; }
+        .transform-lower { text-transform: lowercase; }
+        .transform-cap { text-transform: capitalize; }
+
+        /* Text Spacing */
+        .spacing-letters { letter-spacing: 5px; }
+        .spacing-words { word-spacing: 20px; }
+        .line-height-tight { line-height: 1.0; }
+        .line-height-normal { line-height: 1.6; }
+        .line-height-loose { line-height: 2.5; }
+
+        /* Text Shadow */
+        .shadow-basic { text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .shadow-glow { text-shadow: 0 0 10px #27ae60; }
+        .shadow-multi { text-shadow: 1px 1px 0 #e74c3c, 2px 2px 0 #f39c12, 3px 3px 0 #27ae60; }
+
+        .demo-box {
+            background: #f9f9f9;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #27ae60;
+        }
+
+        .demo-text {
+            padding: 10px;
+            margin: 5px 0;
+            background: #fff;
+            border: 1px solid #ddd;
+        }
+
+        code {
+            background: #e8f5e9;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #27ae60;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+
+    <h1>CSS Typography</h1>
+    <p>Typography is the art of arranging text. Good typography makes content readable and visually appealing.</p>
+
+    <h2>1. Font Family</h2>
+    <p>Different font families create different moods and readability levels.</p>
+    <div class="demo-box">
+        <p class="demo-text font-serif">Serif fonts have small lines at ends of letters. (Times New Roman)</p>
+        <p class="demo-text font-sans">Sans-serif fonts are clean and modern. (Arial)</p>
+        <p class="demo-text font-mono">Monospace fonts have equal character widths. (Courier)</p>
+        <p class="demo-text font-cursive">Cursive fonts mimic handwriting. (Brush Script)</p>
+    </div>
+    <p><strong>Best Practice:</strong> Always provide fallback fonts: <code>font-family: 'Primary', 'Fallback', generic;</code></p>
+
+    <h2>2. Font Size</h2>
+    <div class="demo-box">
+        <p class="demo-text size-12">12px - Small text</p>
+        <p class="demo-text size-16">16px - Default browser size (recommended base)</p>
+        <p class="demo-text size-20">20px - Slightly larger</p>
+        <p class="demo-text size-24">24px - Heading size</p>
+        <p class="demo-text size-1-5rem">1.5rem - Relative to root (scalable)</p>
+    </div>
+
+    <h3>Size Units</h3>
+    <table>
+        <tr>
+            <th>Unit</th>
+            <th>Description</th>
+            <th>Use Case</th>
+        </tr>
+        <tr>
+            <td><code>px</code></td>
+            <td>Pixels - fixed size</td>
+            <td>Borders, fine control</td>
+        </tr>
+        <tr>
+            <td><code>em</code></td>
+            <td>Relative to parent element</td>
+            <td>Component-level scaling</td>
+        </tr>
+        <tr>
+            <td><code>rem</code></td>
+            <td>Relative to root (html) element</td>
+            <td>Global sizing (recommended)</td>
+        </tr>
+        <tr>
+            <td><code>%</code></td>
+            <td>Percentage of parent</td>
+            <td>Fluid layouts</td>
+        </tr>
+    </table>
+
+    <h2>3. Font Weight</h2>
+    <div class="demo-box">
+        <p class="demo-text weight-100">Weight 100 - Thin</p>
+        <p class="demo-text weight-normal">Weight normal (400)</p>
+        <p class="demo-text weight-700">Weight 700 - Bold</p>
+        <p class="demo-text weight-900">Weight 900 - Black (Heaviest)</p>
+    </div>
+
+    <h2>4. Font Style</h2>
+    <div class="demo-box">
+        <p class="demo-text style-normal">Normal style - upright text</p>
+        <p class="demo-text style-italic">Italic style - slanted text for emphasis</p>
+        <p class="demo-text style-oblique">Oblique style - mechanically slanted</p>
+    </div>
+
+    <h2>5. Text Alignment</h2>
+    <div class="demo-box">
+        <p class="demo-text align-left">Left aligned text (default for LTR languages)</p>
+        <p class="demo-text align-center">Center aligned text - good for headings</p>
+        <p class="demo-text align-right">Right aligned text - used for numbers, dates</p>
+        <p class="demo-text align-justify">Justified text stretches to fill the line. This paragraph has extra text to demonstrate how justify spreads words evenly across the line, creating straight edges on both sides.</p>
+    </div>
+
+    <h2>6. Text Decoration</h2>
+    <div class="demo-box">
+        <p class="demo-text deco-underline">Underlined text - commonly used for links</p>
+        <p class="demo-text deco-overline">Overlined text - rarely used</p>
+        <p class="demo-text deco-through">Strikethrough text - shows deleted content</p>
+        <p class="demo-text deco-fancy">Fancy wavy underline with custom color!</p>
+        <p class="demo-text"><a href="#" class="deco-none">Link with text-decoration: none (no underline)</a></p>
+    </div>
+
+    <h2>7. Text Transform</h2>
+    <div class="demo-box">
+        <p class="demo-text transform-upper">this text is transformed to uppercase</p>
+        <p class="demo-text transform-lower">THIS TEXT IS TRANSFORMED TO LOWERCASE</p>
+        <p class="demo-text transform-cap">each word starts with capital letter</p>
+    </div>
+
+    <h2>8. Text Spacing</h2>
+    <div class="demo-box">
+        <p class="demo-text spacing-letters">L E T T E R   S P A C I N G (letter-spacing: 5px)</p>
+        <p class="demo-text spacing-words">Word spacing makes gaps bigger between words</p>
+        <p class="demo-text line-height-tight">Tight line height (1.0) makes text cramped.<br>Second line is very close to the first.</p>
+        <p class="demo-text line-height-loose">Loose line height (2.5) gives lots of breathing room.<br>Second line has more space above it.</p>
+    </div>
+
+    <h2>9. Text Shadow</h2>
+    <div class="demo-box">
+        <p class="demo-text shadow-basic" style="font-size: 24px;">Basic shadow effect</p>
+        <p class="demo-text shadow-glow" style="font-size: 24px; color: #27ae60;">Glowing text effect</p>
+        <p class="demo-text shadow-multi" style="font-size: 24px;">Multiple shadows for 3D effect</p>
+    </div>
+    <p><code>text-shadow: horizontal vertical blur color;</code></p>
+
+    <h2>Complete Typography Example</h2>
+    <div style="background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <h1 style="font-family: Georgia, serif; font-size: 2.5rem; color: #2c3e50; margin-bottom: 10px;">Article Title</h1>
+        <p style="color: #7f8c8d; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;">Published January 28, 2025</p>
+        <p style="font-size: 1.2rem; line-height: 1.8; color: #34495e; text-align: justify;">
+            This is a well-formatted article paragraph. Notice the comfortable line height, readable font size,
+            and appropriate text color. Good typography enhances readability and creates a pleasant reading
+            experience. The contrast between the dark text and light background reduces eye strain.
+        </p>
+        <blockquote style="border-left: 4px solid #27ae60; padding-left: 20px; margin: 20px 0; font-style: italic; color: #7f8c8d;">
+            "Typography is the craft of endowing human language with a durable visual form." - Robert Bringhurst
+        </blockquote>
+    </div>
+
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>

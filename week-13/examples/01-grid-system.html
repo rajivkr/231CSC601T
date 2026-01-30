@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap Grid System - Week 13 Example</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .demo-col {
+            background-color: #9c27b0;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #7b1fa2;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .demo-col-alt {
+            background-color: #ce93d8;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #ba68c8;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+        }
+        h2 {
+            color: #9c27b0;
+            border-bottom: 2px solid #9c27b0;
+            padding-bottom: 10px;
+        }
+        .code-block {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #9c27b0;
+            margin: 15px 0;
+            font-family: monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-4">
+        <p><a href="index.html">&larr; Back to Examples</a></p>
+
+        <h1 class="mb-4" style="color: #9c27b0;">Bootstrap Grid System Demo</h1>
+        <p class="lead">Resize your browser window to see the responsive behavior!</p>
+
+        <!-- Section 1: Basic 12-Column Grid -->
+        <section>
+            <h2>1. The 12-Column Grid</h2>
+            <p>Bootstrap divides the page into 12 equal columns:</p>
+            <div class="row g-2">
+                <div class="col-1"><div class="demo-col">1</div></div>
+                <div class="col-1"><div class="demo-col-alt">2</div></div>
+                <div class="col-1"><div class="demo-col">3</div></div>
+                <div class="col-1"><div class="demo-col-alt">4</div></div>
+                <div class="col-1"><div class="demo-col">5</div></div>
+                <div class="col-1"><div class="demo-col-alt">6</div></div>
+                <div class="col-1"><div class="demo-col">7</div></div>
+                <div class="col-1"><div class="demo-col-alt">8</div></div>
+                <div class="col-1"><div class="demo-col">9</div></div>
+                <div class="col-1"><div class="demo-col-alt">10</div></div>
+                <div class="col-1"><div class="demo-col">11</div></div>
+                <div class="col-1"><div class="demo-col-alt">12</div></div>
+            </div>
+            <div class="code-block">&lt;div class="row"&gt;
+    &lt;div class="col-1"&gt;1&lt;/div&gt;
+    &lt;div class="col-1"&gt;2&lt;/div&gt;
+    ... (12 columns total)
+&lt;/div&gt;</div>
+        </section>
+
+        <!-- Section 2: Equal Columns -->
+        <section>
+            <h2>2. Equal Width Columns</h2>
+
+            <h5>Two equal columns (col-6 + col-6):</h5>
+            <div class="row mb-3">
+                <div class="col-6"><div class="demo-col">col-6</div></div>
+                <div class="col-6"><div class="demo-col-alt">col-6</div></div>
+            </div>
+
+            <h5>Three equal columns (col-4 + col-4 + col-4):</h5>
+            <div class="row mb-3">
+                <div class="col-4"><div class="demo-col">col-4</div></div>
+                <div class="col-4"><div class="demo-col-alt">col-4</div></div>
+                <div class="col-4"><div class="demo-col">col-4</div></div>
+            </div>
+
+            <h5>Four equal columns (col-3 each):</h5>
+            <div class="row mb-3">
+                <div class="col-3"><div class="demo-col">col-3</div></div>
+                <div class="col-3"><div class="demo-col-alt">col-3</div></div>
+                <div class="col-3"><div class="demo-col">col-3</div></div>
+                <div class="col-3"><div class="demo-col-alt">col-3</div></div>
+            </div>
+
+            <h5>Six equal columns (col-2 each):</h5>
+            <div class="row">
+                <div class="col-2"><div class="demo-col">col-2</div></div>
+                <div class="col-2"><div class="demo-col-alt">col-2</div></div>
+                <div class="col-2"><div class="demo-col">col-2</div></div>
+                <div class="col-2"><div class="demo-col-alt">col-2</div></div>
+                <div class="col-2"><div class="demo-col">col-2</div></div>
+                <div class="col-2"><div class="demo-col-alt">col-2</div></div>
+            </div>
+        </section>
+
+        <!-- Section 3: Unequal Columns -->
+        <section>
+            <h2>3. Unequal Columns (Sidebar + Content)</h2>
+
+            <h5>Sidebar (col-3) + Content (col-9):</h5>
+            <div class="row mb-3">
+                <div class="col-3"><div class="demo-col">Sidebar<br>col-3</div></div>
+                <div class="col-9"><div class="demo-col-alt">Main Content<br>col-9</div></div>
+            </div>
+
+            <h5>Sidebar (col-4) + Content (col-8):</h5>
+            <div class="row mb-3">
+                <div class="col-4"><div class="demo-col">Sidebar<br>col-4</div></div>
+                <div class="col-8"><div class="demo-col-alt">Main Content<br>col-8</div></div>
+            </div>
+
+            <h5>Three columns: Sidebar (col-2) + Content (col-7) + Aside (col-3):</h5>
+            <div class="row">
+                <div class="col-2"><div class="demo-col">Nav<br>col-2</div></div>
+                <div class="col-7"><div class="demo-col-alt">Content<br>col-7</div></div>
+                <div class="col-3"><div class="demo-col">Aside<br>col-3</div></div>
+            </div>
+        </section>
+
+        <!-- Section 4: Responsive Columns -->
+        <section>
+            <h2>4. Responsive Columns (Resize Your Browser!)</h2>
+            <p class="text-muted">Columns change at different breakpoints. Try resizing your browser window!</p>
+
+            <h5>Full on mobile, half on tablet, third on desktop:</h5>
+            <div class="row mb-3">
+                <div class="col-12 col-md-6 col-lg-4"><div class="demo-col">col-12 col-md-6 col-lg-4</div></div>
+                <div class="col-12 col-md-6 col-lg-4"><div class="demo-col-alt">col-12 col-md-6 col-lg-4</div></div>
+                <div class="col-12 col-md-12 col-lg-4"><div class="demo-col">col-12 col-md-12 col-lg-4</div></div>
+            </div>
+            <div class="code-block">&lt;div class="row"&gt;
+    &lt;div class="col-12 col-md-6 col-lg-4"&gt;...&lt;/div&gt;
+    &lt;div class="col-12 col-md-6 col-lg-4"&gt;...&lt;/div&gt;
+    &lt;div class="col-12 col-md-12 col-lg-4"&gt;...&lt;/div&gt;
+&lt;/div&gt;
+
+Breakpoints:
+- xs (&lt;576px): 1 column (col-12)
+- md (768px+): 2 columns (col-md-6)
+- lg (992px+): 3 columns (col-lg-4)</div>
+
+            <h5>Full on mobile, sidebar layout on desktop:</h5>
+            <div class="row">
+                <div class="col-12 col-lg-3"><div class="demo-col">Sidebar<br>col-12 col-lg-3</div></div>
+                <div class="col-12 col-lg-9"><div class="demo-col-alt">Main Content<br>col-12 col-lg-9</div></div>
+            </div>
+        </section>
+
+        <!-- Section 5: Auto & Equal Columns -->
+        <section>
+            <h2>5. Auto-width & Equal Columns</h2>
+
+            <h5>Auto equal columns (col):</h5>
+            <div class="row mb-3">
+                <div class="col"><div class="demo-col">Auto</div></div>
+                <div class="col"><div class="demo-col-alt">Auto</div></div>
+                <div class="col"><div class="demo-col">Auto</div></div>
+            </div>
+
+            <h5>One fixed, rest auto:</h5>
+            <div class="row mb-3">
+                <div class="col"><div class="demo-col">Auto</div></div>
+                <div class="col-6"><div class="demo-col-alt">Fixed col-6</div></div>
+                <div class="col"><div class="demo-col">Auto</div></div>
+            </div>
+
+            <h5>Auto-size based on content (col-auto):</h5>
+            <div class="row">
+                <div class="col-auto"><div class="demo-col">Short</div></div>
+                <div class="col-auto"><div class="demo-col-alt">Variable width content here</div></div>
+                <div class="col"><div class="demo-col">Rest of space</div></div>
+            </div>
+        </section>
+
+        <!-- Section 6: Nested Grids -->
+        <section>
+            <h2>6. Nested Grids</h2>
+            <div class="row">
+                <div class="col-8">
+                    <div class="demo-col" style="background: #7b1fa2;">
+                        Parent: col-8
+                        <div class="row mt-2">
+                            <div class="col-6"><div class="demo-col-alt">Nested col-6</div></div>
+                            <div class="col-6"><div class="demo-col-alt">Nested col-6</div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4"><div class="demo-col" style="min-height: 120px;">col-4</div></div>
+            </div>
+            <div class="code-block">&lt;div class="row"&gt;
+    &lt;div class="col-8"&gt;
+        Parent
+        &lt;div class="row"&gt;  &lt;!-- Nested row --&gt;
+            &lt;div class="col-6"&gt;Nested&lt;/div&gt;
+            &lt;div class="col-6"&gt;Nested&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="col-4"&gt;Sidebar&lt;/div&gt;
+&lt;/div&gt;</div>
+        </section>
+
+        <!-- Section 7: Gutter (Gap) -->
+        <section>
+            <h2>7. Gutters (Spacing Between Columns)</h2>
+
+            <h5>Default gutter (g-3):</h5>
+            <div class="row g-3 mb-4">
+                <div class="col-4"><div class="demo-col">g-3</div></div>
+                <div class="col-4"><div class="demo-col-alt">g-3</div></div>
+                <div class="col-4"><div class="demo-col">g-3</div></div>
+            </div>
+
+            <h5>No gutter (g-0):</h5>
+            <div class="row g-0 mb-4">
+                <div class="col-4"><div class="demo-col" style="border-radius: 0;">g-0</div></div>
+                <div class="col-4"><div class="demo-col-alt" style="border-radius: 0;">g-0</div></div>
+                <div class="col-4"><div class="demo-col" style="border-radius: 0;">g-0</div></div>
+            </div>
+
+            <h5>Large gutter (g-5):</h5>
+            <div class="row g-5">
+                <div class="col-4"><div class="demo-col">g-5</div></div>
+                <div class="col-4"><div class="demo-col-alt">g-5</div></div>
+                <div class="col-4"><div class="demo-col">g-5</div></div>
+            </div>
+        </section>
+
+        <hr>
+        <p><a href="index.html">&larr; Back to Examples</a></p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MySQL Connection - Week 12 Example</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a2e;
+            color: #e0e0e0;
+        }
+        h1, h2, h3 {
+            color: #ff9800;
+        }
+        pre {
+            background: #0d1117;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            border-left: 4px solid #ff9800;
+        }
+        code {
+            font-family: 'Consolas', 'Monaco', monospace;
+            color: #e0e0e0;
+        }
+        .inline-code {
+            background: rgba(255,152,0,0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #ffb74d;
+        }
+        a {
+            color: #ffb74d;
+        }
+        .note {
+            background: rgba(255,152,0,0.1);
+            border: 1px solid rgba(255,152,0,0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .warning {
+            background: rgba(244,67,54,0.1);
+            border: 1px solid rgba(244,67,54,0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .step {
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+
+    <h1>MySQL Connection in Node.js</h1>
+    <p>This example demonstrates different ways to connect Node.js to a MySQL database.</p>
+
+    <div class="step">
+        <h2>Step 1: Install Dependencies</h2>
+        <p>First, initialize a Node.js project and install the mysql2 package:</p>
+        <pre><code># Initialize project
+npm init -y
+
+# Install mysql2 (recommended over mysql)
+npm install mysql2</code></pre>
+    </div>
+
+    <div class="step">
+        <h2>Step 2: Simple Connection</h2>
+        <p>Create a file called <span class="inline-code">db-simple.js</span>:</p>
+        <pre><code>// db-simple.js
+const mysql = require('mysql2');
+
+// Create a single connection
+const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'your_password',
+    database: 'school'
+});
+
+// Connect to the database
+connection.connect((err) => {
+    if (err) {
+        console.error('Error connecting to MySQL:', err.message);
+        return;
+    }
+    console.log('Connected to MySQL database!');
+    console.log('Connection ID:', connection.threadId);
+});
+
+// Run a simple query
+connection.query('SELECT 1 + 1 AS result', (err, results) => {
+    if (err) {
+        console.error('Query error:', err);
+        return;
+    }
+    console.log('Test query result:', results[0].result);
+});
+
+// Close connection when done
+connection.end((err) => {
+    if (err) {
+        console.error('Error closing connection:', err);
+        return;
+    }
+    console.log('Connection closed.');
+});</code></pre>
+    </div>
+
+    <div class="step">
+        <h2>Step 3: Connection Pool (Recommended)</h2>
+        <p>For production applications, use a connection pool. Create <span class="inline-code">db-pool.js</span>:</p>
+        <pre><code>// db-pool.js
+const mysql = require('mysql2');
+
+// Create a connection pool
+const pool = mysql.createPool({
+    host: 'localhost',
+    user: 'root',
+    password: 'your_password',
+    database: 'school',
+
+    // Pool specific settings
+    waitForConnections: true,  // Wait if no connections available
+    connectionLimit: 10,        // Maximum connections in pool
+    queueLimit: 0,             // Unlimited waiting requests
+    enableKeepAlive: true,     // Keep connections alive
+    keepAliveInitialDelay: 0   // Start keepalive immediately
+});
+
+// Test the pool
+pool.query('SELECT NOW() as current_time', (err, results) => {
+    if (err) {
+        console.error('Pool query error:', err);
+        return;
+    }
+    console.log('Current database time:', results[0].current_time);
+});
+
+// Export for use in other files
+module.exports = pool;</code></pre>
+
+        <div class="note">
+            <strong>Why use a pool?</strong>
+            <ul>
+                <li>Reuses connections instead of creating new ones</li>
+                <li>Better performance for multiple concurrent requests</li>
+                <li>Automatically manages connection lifecycle</li>
+                <li>Handles connection errors gracefully</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="step">
+        <h2>Step 4: Promise-based Connection (Modern Approach)</h2>
+        <p>Use async/await with promises. Create <span class="inline-code">db-promise.js</span>:</p>
+        <pre><code>// db-promise.js
+const mysql = require('mysql2/promise');
+
+// Configuration object
+const dbConfig = {
+    host: 'localhost',
+    user: 'root',
+    password: 'your_password',
+    database: 'school',
+    waitForConnections: true,
+    connectionLimit: 10
+};
+
+// Create promise-based pool
+const pool = mysql.createPool(dbConfig);
+
+// Example usage with async/await
+async function testConnection() {
+    try {
+        // Get a connection from pool
+        const connection = await pool.getConnection();
+        console.log('Connected successfully!');
+
+        // Run a query
+        const [rows] = await connection.execute('SELECT * FROM students LIMIT 5');
+        console.log('Students:', rows);
+
+        // Release connection back to pool
+        connection.release();
+
+    } catch (error) {
+        console.error('Database error:', error.message);
+    }
+}
+
+// Run the test
+testConnection();
+
+// Export pool for other modules
+module.exports = pool;</code></pre>
+    </div>
+
+    <div class="step">
+        <h2>Step 5: Environment Variables for Security</h2>
+        <p>Never hardcode credentials! Create <span class="inline-code">.env</span> file:</p>
+        <pre><code># .env file (add to .gitignore!)
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=your_password
+DB_NAME=school
+DB_CONNECTION_LIMIT=10</code></pre>
+
+        <p>Install dotenv and use environment variables:</p>
+        <pre><code>npm install dotenv</code></pre>
+
+        <pre><code>// db-secure.js
+require('dotenv').config();
+const mysql = require('mysql2/promise');
+
+const pool = mysql.createPool({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    connectionLimit: parseInt(process.env.DB_CONNECTION_LIMIT) || 10
+});
+
+module.exports = pool;</code></pre>
+
+        <div class="warning">
+            <strong>Security Warning:</strong> Always add <span class="inline-code">.env</span> to your <span class="inline-code">.gitignore</span> file to prevent accidentally committing credentials to version control!
+        </div>
+    </div>
+
+    <div class="step">
+        <h2>Complete Example: Database Module</h2>
+        <p>A reusable database module for your projects. Create <span class="inline-code">database.js</span>:</p>
+        <pre><code>// database.js - Reusable database module
+require('dotenv').config();
+const mysql = require('mysql2/promise');
+
+class Database {
+    constructor() {
+        this.pool = null;
+    }
+
+    // Initialize the connection pool
+    async connect() {
+        if (this.pool) return this.pool;
+
+        this.pool = mysql.createPool({
+            host: process.env.DB_HOST || 'localhost',
+            user: process.env.DB_USER || 'root',
+            password: process.env.DB_PASSWORD || '',
+            database: process.env.DB_NAME || 'test',
+            waitForConnections: true,
+            connectionLimit: 10,
+            queueLimit: 0
+        });
+
+        // Test connection
+        try {
+            const connection = await this.pool.getConnection();
+            console.log('Database connected successfully');
+            connection.release();
+        } catch (error) {
+            console.error('Database connection failed:', error.message);
+            throw error;
+        }
+
+        return this.pool;
+    }
+
+    // Execute a query with parameters
+    async query(sql, params = []) {
+        const pool = await this.connect();
+        const [results] = await pool.execute(sql, params);
+        return results;
+    }
+
+    // Get a single row
+    async getOne(sql, params = []) {
+        const results = await this.query(sql, params);
+        return results[0] || null;
+    }
+
+    // Close all connections
+    async close() {
+        if (this.pool) {
+            await this.pool.end();
+            this.pool = null;
+            console.log('Database connections closed');
+        }
+    }
+}
+
+// Export singleton instance
+module.exports = new Database();</code></pre>
+
+        <p>Usage in your application:</p>
+        <pre><code>// app.js
+const db = require('./database');
+
+async function main() {
+    try {
+        // Query all students
+        const students = await db.query('SELECT * FROM students');
+        console.log('All students:', students);
+
+        // Get single student
+        const student = await db.getOne(
+            'SELECT * FROM students WHERE id = ?',
+            [1]
+        );
+        console.log('Student #1:', student);
+
+        // Insert new student
+        const result = await db.query(
+            'INSERT INTO students (name, email, age) VALUES (?, ?, ?)',
+            ['John Doe', 'john@example.com', 22]
+        );
+        console.log('Inserted ID:', result.insertId);
+
+    } catch (error) {
+        console.error('Error:', error.message);
+    } finally {
+        await db.close();
+    }
+}
+
+main();</code></pre>
+    </div>
+
+    <h2>Summary</h2>
+    <ul>
+        <li><strong>Simple Connection:</strong> Good for scripts, closes after use</li>
+        <li><strong>Connection Pool:</strong> Best for web servers, reuses connections</li>
+        <li><strong>Promise/Async:</strong> Modern approach with clean syntax</li>
+        <li><strong>Environment Variables:</strong> Essential for security</li>
+    </ul>
+
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Methods - Week 09 Example</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; }
+        h1 { color: #00bcd4; }
+        .output { background: #2c3e50; color: #2ecc71; padding: 20px; border-radius: 10px; font-family: monospace; white-space: pre-wrap; margin: 15px 0; min-height: 150px; }
+        button { background: #00bcd4; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 5px; }
+        button:hover { background: #00acc1; }
+        .demo-area { background: #f5f5f5; padding: 20px; border-radius: 10px; margin: 20px 0; }
+        textarea { width: 100%; height: 150px; font-family: monospace; padding: 10px; border-radius: 5px; border: 1px solid #ddd; }
+        .error { color: #e74c3c; }
+        .success { color: #2ecc71; }
+        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    </style>
+</head>
+<body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+    <h1>JSON Methods Demo</h1>
+
+    <div class="demo-area">
+        <h2>JSON.parse() - String to Object</h2>
+        <textarea id="jsonInput">{
+    "name": "Alice",
+    "age": 25,
+    "hobbies": ["reading", "coding"],
+    "address": {
+        "city": "Chennai",
+        "zip": "600001"
+    }
+}</textarea>
+        <br>
+        <button onclick="parseJSON()">Parse JSON</button>
+        <button onclick="parseWithReviver()">Parse with Reviver</button>
+    </div>
+
+    <div class="output" id="parseOutput">Click "Parse JSON" to see the result...</div>
+
+    <div class="demo-area">
+        <h2>JSON.stringify() - Object to String</h2>
+        <button onclick="basicStringify()">Basic Stringify</button>
+        <button onclick="prettyPrint()">Pretty Print</button>
+        <button onclick="filterProperties()">Filter Properties</button>
+        <button onclick="customReplacer()">Custom Replacer</button>
+    </div>
+
+    <div class="output" id="stringifyOutput">Click a stringify button to see the result...</div>
+
+    <div class="demo-area">
+        <h2>Common Operations</h2>
+        <button onclick="deepClone()">Deep Clone Object</button>
+        <button onclick="localStorageDemo()">LocalStorage Demo</button>
+        <button onclick="validateJSON()">Validate JSON</button>
+    </div>
+
+    <div class="output" id="commonOutput">Click a button to see examples...</div>
+
+    <script>
+        function parseJSON() {
+            const input = document.getElementById('jsonInput').value;
+            const output = document.getElementById('parseOutput');
+
+            try {
+                const parsed = JSON.parse(input);
+
+                output.innerHTML = `<span class="success">// Successfully parsed!</span>
+
+const jsonString = \`${input}\`;
+
+const obj = JSON.parse(jsonString);
+
+// Accessing parsed data:
+obj.name           // "${parsed.name}"
+obj.age            // ${parsed.age}
+obj.hobbies        // ${JSON.stringify(parsed.hobbies)}
+obj.hobbies[0]     // "${parsed.hobbies[0]}"
+obj.address.city   // "${parsed.address.city}"
+
+// Type of parsed result:
+typeof obj         // "object"
+Array.isArray(obj.hobbies)  // true`;
+            } catch (error) {
+                output.innerHTML = `<span class="error">// Parse Error!</span>
+
+${error.message}
+
+// Common JSON syntax errors:
+// - Missing quotes around keys
+// - Single quotes instead of double quotes
+// - Trailing commas
+// - Comments in JSON`;
+            }
+        }
+
+        function parseWithReviver() {
+            const jsonWithDate = `{
+    "name": "Event",
+    "date": "2024-03-15T10:30:00.000Z",
+    "price": "99.99"
+}`;
+            const output = document.getElementById('parseOutput');
+
+            const parsed = JSON.parse(jsonWithDate, (key, value) => {
+                if (key === 'date') {
+                    return new Date(value);
+                }
+                if (key === 'price') {
+                    return parseFloat(value);
+                }
+                return value;
+            });
+
+            output.textContent = `// JSON.parse with Reviver Function
+
+const jsonString = \`${jsonWithDate}\`;
+
+// Reviver transforms values during parsing
+const obj = JSON.parse(jsonString, (key, value) => {
+    if (key === 'date') {
+        return new Date(value);  // Convert to Date object
+    }
+    if (key === 'price') {
+        return parseFloat(value); // Convert to number
+    }
+    return value;
+});
+
+// Results:
+obj.name           // "${parsed.name}"
+obj.date           // ${parsed.date}
+obj.date instanceof Date  // ${parsed.date instanceof Date}
+obj.price          // ${parsed.price}
+typeof obj.price   // "${typeof parsed.price}"`;
+        }
+
+        function basicStringify() {
+            const user = {
+                name: 'Alice',
+                age: 25,
+                email: 'alice@example.com'
+            };
+
+            const json = JSON.stringify(user);
+
+            document.getElementById('stringifyOutput').textContent = `// Basic JSON.stringify()
+
+const user = {
+    name: 'Alice',
+    age: 25,
+    email: 'alice@example.com'
+};
+
+const json = JSON.stringify(user);
+
+// Result (compact):
+${json}
+
+// Type: "${typeof json}"
+// Length: ${json.length} characters`;
+        }
+
+        function prettyPrint() {
+            const data = {
+                users: [
+                    { id: 1, name: 'Alice' },
+                    { id: 2, name: 'Bob' }
+                ],
+                total: 2
+            };
+
+            const compact = JSON.stringify(data);
+            const pretty = JSON.stringify(data, null, 2);
+            const tabs = JSON.stringify(data, null, '\t');
+
+            document.getElementById('stringifyOutput').textContent = `// Pretty Printing with JSON.stringify()
+
+const data = {
+    users: [
+        { id: 1, name: 'Alice' },
+        { id: 2, name: 'Bob' }
+    ],
+    total: 2
+};
+
+// Compact (default)
+JSON.stringify(data)
+${compact}
+
+// With 2-space indentation
+JSON.stringify(data, null, 2)
+${pretty}
+
+// With tab indentation
+JSON.stringify(data, null, '\\t')`;
+        }
+
+        function filterProperties() {
+            const user = {
+                name: 'Alice',
+                age: 25,
+                password: 'secret123',
+                email: 'alice@example.com',
+                ssn: '123-45-6789'
+            };
+
+            const safeJson = JSON.stringify(user, ['name', 'age', 'email']);
+            const parsed = JSON.parse(safeJson);
+
+            document.getElementById('stringifyOutput').textContent = `// Filtering Properties with Replacer Array
+
+const user = {
+    name: 'Alice',
+    age: 25,
+    password: 'secret123',    // sensitive!
+    email: 'alice@example.com',
+    ssn: '123-45-6789'        // sensitive!
+};
+
+// Only include safe properties
+const safeJson = JSON.stringify(user, ['name', 'age', 'email']);
+
+${safeJson}
+
+// Parsed back:
+${JSON.stringify(parsed, null, 2)}
+
+// Sensitive data (password, ssn) excluded!`;
+        }
+
+        function customReplacer() {
+            const data = {
+                name: 'Product',
+                price: 29.99,
+                created: new Date(),
+                callback: function() { return 'test'; },
+                metadata: undefined
+            };
+
+            const json = JSON.stringify(data, (key, value) => {
+                if (typeof value === 'function') {
+                    return '[Function]';
+                }
+                if (value instanceof Date) {
+                    return value.toISOString();
+                }
+                if (value === undefined) {
+                    return null;
+                }
+                return value;
+            }, 2);
+
+            document.getElementById('stringifyOutput').textContent = `// Custom Replacer Function
+
+const data = {
+    name: 'Product',
+    price: 29.99,
+    created: new Date(),
+    callback: function() { return 'test'; },
+    metadata: undefined
+};
+
+// Custom replacer handles special types
+const json = JSON.stringify(data, (key, value) => {
+    if (typeof value === 'function') {
+        return '[Function]';  // Functions aren't valid JSON
+    }
+    if (value instanceof Date) {
+        return value.toISOString();  // Convert Date to string
+    }
+    if (value === undefined) {
+        return null;  // Convert undefined to null
+    }
+    return value;
+}, 2);
+
+${json}
+
+// Note: By default, JSON.stringify:
+// - Ignores functions
+// - Ignores undefined values
+// - Converts Date to ISO string`;
+        }
+
+        function deepClone() {
+            const original = {
+                name: 'Alice',
+                scores: [90, 85, 92],
+                address: {
+                    city: 'Chennai',
+                    zip: '600001'
+                }
+            };
+
+            // Deep clone using JSON
+            const clone = JSON.parse(JSON.stringify(original));
+
+            // Modify clone
+            clone.name = 'Bob';
+            clone.scores.push(88);
+            clone.address.city = 'Mumbai';
+
+            document.getElementById('commonOutput').textContent = `// Deep Cloning with JSON
+
+const original = {
+    name: 'Alice',
+    scores: [90, 85, 92],
+    address: {
+        city: 'Chennai',
+        zip: '600001'
+    }
+};
+
+// Deep clone using JSON.parse(JSON.stringify())
+const clone = JSON.parse(JSON.stringify(original));
+
+// Modify clone
+clone.name = 'Bob';
+clone.scores.push(88);
+clone.address.city = 'Mumbai';
+
+// Original unchanged!
+original.name           // '${original.name}'
+original.scores         // ${JSON.stringify(original.scores)}
+original.address.city   // '${original.address.city}'
+
+// Clone modified:
+clone.name              // '${clone.name}'
+clone.scores            // ${JSON.stringify(clone.scores)}
+clone.address.city      // '${clone.address.city}'
+
+// Limitation: Doesn't work with:
+// - Functions
+// - Dates (become strings)
+// - undefined
+// - Circular references`;
+        }
+
+        function localStorageDemo() {
+            const userData = {
+                name: 'Alice',
+                preferences: {
+                    theme: 'dark',
+                    language: 'en'
+                },
+                lastVisit: new Date().toISOString()
+            };
+
+            // Save to localStorage
+            localStorage.setItem('userData', JSON.stringify(userData));
+
+            // Retrieve from localStorage
+            const retrieved = JSON.parse(localStorage.getItem('userData'));
+
+            document.getElementById('commonOutput').textContent = `// LocalStorage with JSON
+
+const userData = {
+    name: 'Alice',
+    preferences: {
+        theme: 'dark',
+        language: 'en'
+    },
+    lastVisit: new Date().toISOString()
+};
+
+// Save to localStorage (must be string)
+localStorage.setItem('userData', JSON.stringify(userData));
+
+// Retrieve and parse
+const retrieved = JSON.parse(localStorage.getItem('userData'));
+
+// Retrieved data:
+${JSON.stringify(retrieved, null, 2)}
+
+// Access retrieved data:
+retrieved.name                    // '${retrieved.name}'
+retrieved.preferences.theme       // '${retrieved.preferences.theme}'
+
+// Check if item exists
+if (localStorage.getItem('userData')) {
+    // Item exists
+}
+
+// Remove item
+// localStorage.removeItem('userData');
+
+// Clear all
+// localStorage.clear();`;
+        }
+
+        function validateJSON() {
+            const validJSON = '{"name": "Alice", "age": 25}';
+            const invalidJSON = "{name: 'Alice', age: 25}";
+
+            function isValidJSON(str) {
+                try {
+                    JSON.parse(str);
+                    return true;
+                } catch (e) {
+                    return false;
+                }
+            }
+
+            document.getElementById('commonOutput').textContent = `// JSON Validation
+
+function isValidJSON(str) {
+    try {
+        JSON.parse(str);
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
+// Valid JSON
+const valid = '{"name": "Alice", "age": 25}';
+isValidJSON(valid)  // ${isValidJSON(validJSON)}
+
+// Invalid JSON (unquoted keys, single quotes)
+const invalid = "{name: 'Alice', age: 25}";
+isValidJSON(invalid)  // ${isValidJSON(invalidJSON)}
+
+// Common validation errors:
+// 1. Unquoted property names
+//    {name: "Alice"}  ❌
+//    {"name": "Alice"}  ✓
+
+// 2. Single quotes
+//    {'name': 'Alice'}  ❌
+//    {"name": "Alice"}  ✓
+
+// 3. Trailing commas
+//    {"name": "Alice",}  ❌
+//    {"name": "Alice"}  ✓
+
+// 4. Comments
+//    {"name": "Alice" /* comment */}  ❌`;
+        }
+    </script>
+
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>

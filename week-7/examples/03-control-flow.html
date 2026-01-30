@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control Flow - Week 07 Example</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 { color: #f1c40f; }
+        h2 { color: #2c3e50; margin-top: 30px; }
+        .output {
+            background: #2c3e50;
+            color: #2ecc71;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            margin: 15px 0;
+        }
+        .controls {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        input, select {
+            padding: 8px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 5px;
+        }
+        button {
+            background: #f1c40f;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+        }
+        button:hover { background: #f39c12; }
+    </style>
+</head>
+<body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+
+    <h1>Control Flow</h1>
+
+    <h2>1. If / Else Statement</h2>
+    <div class="controls">
+        <label>Enter age: <input type="number" id="age" value="25" min="0" max="150"></label>
+        <button onclick="checkAge()">Check Age Category</button>
+    </div>
+    <div class="output" id="output1">Enter an age and click the button...</div>
+
+    <h2>2. Ternary Operator</h2>
+    <div class="controls">
+        <label>Enter score (0-100): <input type="number" id="score" value="75" min="0" max="100"></label>
+        <button onclick="checkScore()">Check Pass/Fail</button>
+    </div>
+    <div class="output" id="output2">Enter a score and click the button...</div>
+
+    <h2>3. Switch Statement</h2>
+    <div class="controls">
+        <label>Select day:
+            <select id="day">
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+            </select>
+        </label>
+        <button onclick="checkDay()">Check Day Type</button>
+    </div>
+    <div class="output" id="output3">Select a day and click the button...</div>
+
+    <h2>4. For Loop</h2>
+    <div class="controls">
+        <label>Count to: <input type="number" id="countTo" value="10" min="1" max="20"></label>
+        <button onclick="demoForLoop()">Run For Loop</button>
+    </div>
+    <div class="output" id="output4">Enter a number and click the button...</div>
+
+    <h2>5. While Loop</h2>
+    <div class="controls">
+        <button onclick="demoWhileLoop()">Run While Loop</button>
+        <button onclick="demoDoWhile()">Run Do-While Loop</button>
+    </div>
+    <div class="output" id="output5">Click a button to see the loop in action...</div>
+
+    <h2>6. For...of and For...in</h2>
+    <div class="controls">
+        <button onclick="demoForOf()">For...of (Arrays)</button>
+        <button onclick="demoForIn()">For...in (Objects)</button>
+    </div>
+    <div class="output" id="output6">Click a button to see the difference...</div>
+
+    <h2>7. Break and Continue</h2>
+    <div class="controls">
+        <button onclick="demoBreak()">Demo Break</button>
+        <button onclick="demoContinue()">Demo Continue</button>
+    </div>
+    <div class="output" id="output7">Click a button...</div>
+
+    <h2>8. FizzBuzz Challenge</h2>
+    <div class="controls">
+        <label>Count to: <input type="number" id="fizzBuzzTo" value="20" min="1" max="100"></label>
+        <button onclick="fizzBuzz()">Run FizzBuzz</button>
+    </div>
+    <div class="output" id="output8">The classic programming interview question!</div>
+
+    <script>
+        function checkAge() {
+            const age = parseInt(document.getElementById('age').value);
+            let result = '';
+            let category = '';
+
+            if (age < 0) {
+                category = 'Invalid age!';
+            } else if (age < 13) {
+                category = 'Child';
+            } else if (age < 20) {
+                category = 'Teenager';
+            } else if (age < 60) {
+                category = 'Adult';
+            } else {
+                category = 'Senior';
+            }
+
+            result = `// If / Else Statement
+
+const age = ${age};
+
+if (age < 0) {
+    category = 'Invalid age!';
+} else if (age < 13) {
+    category = 'Child';
+} else if (age < 20) {
+    category = 'Teenager';
+} else if (age < 60) {
+    category = 'Adult';
+} else {
+    category = 'Senior';
+}
+
+Result: Age ${age} → "${category}"`;
+
+            document.getElementById('output1').textContent = result;
+        }
+
+        function checkScore() {
+            const score = parseInt(document.getElementById('score').value);
+
+            // Ternary operator
+            const passOrFail = score >= 40 ? 'PASS' : 'FAIL';
+
+            // Nested ternary (not recommended for complex logic)
+            const grade = score >= 90 ? 'A'
+                        : score >= 80 ? 'B'
+                        : score >= 70 ? 'C'
+                        : score >= 60 ? 'D'
+                        : score >= 40 ? 'E'
+                        : 'F';
+
+            const result = `// Ternary Operator
+// condition ? valueIfTrue : valueIfFalse
+
+const score = ${score};
+
+// Simple ternary
+const passOrFail = score >= 40 ? 'PASS' : 'FAIL';
+Result: "${passOrFail}"
+
+// Nested ternary (grades)
+const grade = score >= 90 ? 'A'
+            : score >= 80 ? 'B'
+            : score >= 70 ? 'C'
+            : score >= 60 ? 'D'
+            : score >= 40 ? 'E'
+            : 'F';
+Grade: "${grade}"
+
+Note: For complex logic, prefer if/else for readability!`;
+
+            document.getElementById('output2').textContent = result;
+        }
+
+        function checkDay() {
+            const day = document.getElementById('day').value;
+            let dayType = '';
+            let message = '';
+
+            switch (day) {
+                case 'Monday':
+                    message = 'Start of the work week!';
+                    dayType = 'Weekday';
+                    break;
+                case 'Tuesday':
+                case 'Wednesday':
+                case 'Thursday':
+                    message = 'Middle of the work week';
+                    dayType = 'Weekday';
+                    break;
+                case 'Friday':
+                    message = 'TGIF!';
+                    dayType = 'Weekday';
+                    break;
+                case 'Saturday':
+                case 'Sunday':
+                    message = 'Time to relax!';
+                    dayType = 'Weekend';
+                    break;
+                default:
+                    message = 'Unknown day';
+            }
+
+            const result = `// Switch Statement
+
+const day = '${day}';
+
+switch (day) {
+    case 'Monday':
+        message = 'Start of the work week!';
+        break;
+    case 'Tuesday':
+    case 'Wednesday':
+    case 'Thursday':
+        message = 'Middle of the work week';
+        break;
+    // ... etc
+
+    default:
+        message = 'Unknown day';
+}
+
+Result: ${day} is a ${dayType}
+Message: "${message}"
+
+Note: Don't forget the 'break' statement!`;
+
+            document.getElementById('output3').textContent = result;
+        }
+
+        function demoForLoop() {
+            const n = parseInt(document.getElementById('countTo').value);
+            let numbers = [];
+
+            for (let i = 1; i <= n; i++) {
+                numbers.push(i);
+            }
+
+            // Sum using for loop
+            let sum = 0;
+            for (let i = 1; i <= n; i++) {
+                sum += i;
+            }
+
+            const result = `// For Loop
+// for (initialization; condition; increment)
+
+for (let i = 1; i <= ${n}; i++) {
+    console.log(i);
+}
+
+Output: ${numbers.join(', ')}
+
+// Sum of 1 to ${n}:
+let sum = 0;
+for (let i = 1; i <= ${n}; i++) {
+    sum += i;
+}
+Sum = ${sum}
+
+// Looping through array:
+const fruits = ['apple', 'banana', 'orange'];
+for (let i = 0; i < fruits.length; i++) {
+    console.log(fruits[i]);
+}`;
+
+            document.getElementById('output4').textContent = result;
+        }
+
+        function demoWhileLoop() {
+            let count = 0;
+            let numbers = [];
+
+            while (count < 5) {
+                numbers.push(count);
+                count++;
+            }
+
+            const result = `// While Loop
+// while (condition) { ... }
+
+let count = 0;
+
+while (count < 5) {
+    console.log(count);
+    count++;
+}
+
+Output: ${numbers.join(', ')}
+
+// While is useful when you don't know
+// how many iterations you need
+
+// Example: Keep rolling until you get 6
+let rolls = 0;
+let dice;
+while (dice !== 6) {
+    dice = Math.floor(Math.random() * 6) + 1;
+    rolls++;
+}`;
+
+            document.getElementById('output5').textContent = result;
+        }
+
+        function demoDoWhile() {
+            let count = 10;  // Already >= 5!
+            let numbers = [];
+
+            do {
+                numbers.push(count);
+                count++;
+            } while (count < 5);
+
+            const result = `// Do-While Loop
+// do { ... } while (condition)
+
+// Runs AT LEAST ONCE, even if condition is false!
+
+let count = 10;  // Already >= 5!
+
+do {
+    console.log(count);
+    count++;
+} while (count < 5);
+
+Output: ${numbers.join(', ')}
+
+// Notice: It ran once even though 10 >= 5!
+// The condition is checked AFTER the first run.`;
+
+            document.getElementById('output5').textContent = result;
+        }
+
+        function demoForOf() {
+            const fruits = ['apple', 'banana', 'orange'];
+            let output = [];
+
+            for (const fruit of fruits) {
+                output.push(fruit);
+            }
+
+            const result = `// For...of Loop (for Arrays and Iterables)
+
+const fruits = ['apple', 'banana', 'orange'];
+
+for (const fruit of fruits) {
+    console.log(fruit);
+}
+
+Output:
+${output.join('\n')}
+
+// With index using entries():
+for (const [index, fruit] of fruits.entries()) {
+    console.log(\`\${index}: \${fruit}\`);
+}
+
+${fruits.map((f, i) => `${i}: ${f}`).join('\n')}
+
+// Also works with strings:
+for (const char of 'Hello') {
+    console.log(char);
+}`;
+
+            document.getElementById('output6').textContent = result;
+        }
+
+        function demoForIn() {
+            const person = {
+                name: 'John',
+                age: 25,
+                city: 'Chennai'
+            };
+
+            let output = [];
+            for (const key in person) {
+                output.push(`${key}: ${person[key]}`);
+            }
+
+            const result = `// For...in Loop (for Object Properties)
+
+const person = {
+    name: 'John',
+    age: 25,
+    city: 'Chennai'
+};
+
+for (const key in person) {
+    console.log(\`\${key}: \${person[key]}\`);
+}
+
+Output:
+${output.join('\n')}
+
+// Note: for...in iterates over KEYS/PROPERTIES
+// Don't use for...in with arrays (use for...of instead)!
+
+// Modern alternatives:
+Object.keys(person)   → ${JSON.stringify(Object.keys(person))}
+Object.values(person) → ${JSON.stringify(Object.values(person))}
+Object.entries(person) → ${JSON.stringify(Object.entries(person))}`;
+
+            document.getElementById('output6').textContent = result;
+        }
+
+        function demoBreak() {
+            let output = [];
+
+            for (let i = 0; i < 10; i++) {
+                if (i === 5) {
+                    output.push('Breaking at 5!');
+                    break;
+                }
+                output.push(i);
+            }
+
+            const result = `// Break Statement
+// Exits the loop entirely
+
+for (let i = 0; i < 10; i++) {
+    if (i === 5) {
+        console.log('Breaking at 5!');
+        break;  // Exit loop
+    }
+    console.log(i);
+}
+
+Output:
+${output.join('\n')}
+
+// Loop stopped at 5, never reached 6-9`;
+
+            document.getElementById('output7').textContent = result;
+        }
+
+        function demoContinue() {
+            let output = [];
+
+            for (let i = 0; i < 10; i++) {
+                if (i === 5) {
+                    output.push('Skipping 5...');
+                    continue;
+                }
+                output.push(i);
+            }
+
+            const result = `// Continue Statement
+// Skips current iteration, continues loop
+
+for (let i = 0; i < 10; i++) {
+    if (i === 5) {
+        console.log('Skipping 5...');
+        continue;  // Skip to next iteration
+    }
+    console.log(i);
+}
+
+Output:
+${output.join('\n')}
+
+// Only 5 was skipped, loop continued to 9`;
+
+            document.getElementById('output7').textContent = result;
+        }
+
+        function fizzBuzz() {
+            const n = parseInt(document.getElementById('fizzBuzzTo').value);
+            let output = [];
+
+            for (let i = 1; i <= n; i++) {
+                if (i % 3 === 0 && i % 5 === 0) {
+                    output.push('FizzBuzz');
+                } else if (i % 3 === 0) {
+                    output.push('Fizz');
+                } else if (i % 5 === 0) {
+                    output.push('Buzz');
+                } else {
+                    output.push(i);
+                }
+            }
+
+            const result = `// FizzBuzz - Classic Interview Question
+// Print 1 to n, but:
+// - Multiples of 3: print "Fizz"
+// - Multiples of 5: print "Buzz"
+// - Multiples of both: print "FizzBuzz"
+
+for (let i = 1; i <= ${n}; i++) {
+    if (i % 3 === 0 && i % 5 === 0) {
+        console.log('FizzBuzz');
+    } else if (i % 3 === 0) {
+        console.log('Fizz');
+    } else if (i % 5 === 0) {
+        console.log('Buzz');
+    } else {
+        console.log(i);
+    }
+}
+
+Output:
+${output.join(', ')}`;
+
+            document.getElementById('output8').textContent = result;
+        }
+
+        // Run initial demos
+        checkAge();
+    </script>
+
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>

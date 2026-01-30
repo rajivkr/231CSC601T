@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Cheatsheet - Week 15 Example</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: #f8f9fa; }
+        .tech-header {
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px 10px 0 0;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+        .html-header { background: #e34c26; }
+        .css-header { background: #264de4; }
+        .js-header { background: #f7df1e; color: #333; }
+        .node-header { background: #68a063; }
+        .mysql-header { background: #4479a1; }
+        .bootstrap-header { background: #7952b3; }
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        .section-card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        h2 { color: #795548; }
+    </style>
+</head>
+<body>
+    <div class="container py-4">
+        <p><a href="index.html">&larr; Back to Examples</a></p>
+
+        <h1 class="mb-2" style="color: #795548;">231CSC601T - Complete Course Cheatsheet</h1>
+        <p class="lead text-muted mb-4">Quick reference for all technologies covered in the Web Technologies course.</p>
+
+        <!-- HTML -->
+        <div class="section-card card">
+            <div class="tech-header html-header">HTML5 - Structure</div>
+            <div class="card-body">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <h5>Document Structure</h5>
+                        <div class="code-block"><pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Page Title&lt;/title&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;header&gt;...&lt;/header&gt;
+    &lt;nav&gt;...&lt;/nav&gt;
+    &lt;main&gt;...&lt;/main&gt;
+    &lt;footer&gt;...&lt;/footer&gt;
+    &lt;script src="app.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre></div>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Common Elements</h5>
+                        <div class="code-block"><pre>&lt;!-- Headings --&gt;
+&lt;h1&gt; to &lt;h6&gt;
+
+&lt;!-- Text --&gt;
+&lt;p&gt;, &lt;span&gt;, &lt;strong&gt;, &lt;em&gt;
+
+&lt;!-- Links & Images --&gt;
+&lt;a href="url"&gt;Link&lt;/a&gt;
+&lt;img src="img.jpg" alt="description"&gt;
+
+&lt;!-- Lists --&gt;
+&lt;ul&gt;&lt;li&gt;...&lt;/li&gt;&lt;/ul&gt;  (unordered)
+&lt;ol&gt;&lt;li&gt;...&lt;/li&gt;&lt;/ol&gt;  (ordered)
+
+&lt;!-- Divisions --&gt;
+&lt;div&gt; (block), &lt;span&gt; (inline)
+
+&lt;!-- Semantic --&gt;
+&lt;header&gt;, &lt;nav&gt;, &lt;main&gt;,
+&lt;section&gt;, &lt;article&gt;, &lt;aside&gt;, &lt;footer&gt;</pre></div>
+
+                        <h5>Forms</h5>
+                        <div class="code-block"><pre>&lt;form action="/submit" method="POST"&gt;
+    &lt;input type="text" name="name" required&gt;
+    &lt;input type="email" name="email"&gt;
+    &lt;input type="password" name="pass"&gt;
+    &lt;select name="option"&gt;
+        &lt;option value="1"&gt;One&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;textarea name="msg"&gt;&lt;/textarea&gt;
+    &lt;button type="submit"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;</pre></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CSS -->
+        <div class="section-card card">
+            <div class="tech-header css-header">CSS3 - Styling</div>
+            <div class="card-body">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <h5>Selectors & Box Model</h5>
+                        <div class="code-block"><pre>/* Selectors */
+element { }     /* h1, p, div */
+.class { }      /* .card, .btn */
+#id { }         /* #header */
+parent child { } /* div p */
+parent > child { } /* div > p (direct) */
+
+/* Box Model */
+.box {
+    width: 200px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    margin: 10px;
+    box-sizing: border-box; /* include padding in width */
+}
+
+/* Colors */
+color: #ff0000;           /* hex */
+color: rgb(255, 0, 0);    /* rgb */
+color: rgba(0,0,0,0.5);   /* transparent */
+color: hsl(0, 100%, 50%); /* hsl */</pre></div>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Flexbox & Grid</h5>
+                        <div class="code-block"><pre>/* Flexbox */
+.flex-container {
+    display: flex;
+    justify-content: center;  /* main axis */
+    align-items: center;      /* cross axis */
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* Grid */
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Positioning */
+position: static;    /* default */
+position: relative;  /* offset from normal */
+position: absolute;  /* relative to parent */
+position: fixed;     /* relative to viewport */
+position: sticky;    /* scroll-aware */</pre></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- JavaScript -->
+        <div class="section-card card">
+            <div class="tech-header js-header">JavaScript - Interactivity</div>
+            <div class="card-body">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <h5>Basics</h5>
+                        <div class="code-block"><pre>// Variables
+const name = 'Alice';  // constant
+let age = 25;          // can change
+// never use var
+
+// Functions
+function add(a, b) { return a + b; }
+const add = (a, b) => a + b;  // arrow
+
+// Arrays
+const arr = [1, 2, 3];
+arr.push(4);
+arr.map(x => x * 2);   // [2, 4, 6, 8]
+arr.filter(x => x > 2); // [3, 4]
+
+// Objects
+const user = { name: 'Alice', age: 25 };
+user.name;              // 'Alice'
+const { name, age } = user; // destructure
+
+// Template Literals
+const msg = `Hello ${name}, age: ${age}`;</pre></div>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>DOM & Events</h5>
+                        <div class="code-block"><pre>// Select elements
+document.getElementById('id');
+document.querySelector('.class');
+document.querySelectorAll('p');
+
+// Modify elements
+element.textContent = 'text';
+element.innerHTML = '&lt;b&gt;bold&lt;/b&gt;';
+element.style.color = 'red';
+element.classList.add('active');
+
+// Events
+button.addEventListener('click', (e) => {
+    e.preventDefault();
+    console.log('Clicked!');
+});
+
+// Fetch API
+async function getData() {
+    const res = await fetch('/api/data');
+    const data = await res.json();
+    return data;
+}
+
+// POST Request
+await fetch('/api/data', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: 'Bob' })
+});</pre></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Node.js -->
+        <div class="section-card card">
+            <div class="tech-header node-header">Node.js + Express - Backend</div>
+            <div class="card-body">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <h5>Express Setup</h5>
+                        <div class="code-block"><pre>// npm init -y
+// npm install express cors dotenv
+
+const express = require('express');
+const cors = require('cors');
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+// GET route
+app.get('/api/items', (req, res) => {
+    res.json({ data: items });
+});
+
+// POST route
+app.post('/api/items', (req, res) => {
+    const { name } = req.body;
+    // ... create item
+    res.status(201).json({ data: newItem });
+});
+
+// PUT route
+app.put('/api/items/:id', (req, res) => {
+    const { id } = req.params;
+    // ... update item
+    res.json({ data: updated });
+});
+
+// DELETE route
+app.delete('/api/items/:id', (req, res) => {
+    // ... delete item
+    res.json({ message: 'Deleted' });
+});
+
+app.listen(3000);</pre></div>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Middleware & Error Handling</h5>
+                        <div class="code-block"><pre>// Custom middleware
+app.use((req, res, next) => {
+    console.log(`${req.method} ${req.path}`);
+    next(); // pass to next handler
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({
+        error: 'Something went wrong'
+    });
+});
+
+// Route with async error handling
+app.get('/api/data', async (req, res) => {
+    try {
+        const data = await fetchData();
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({
+            error: error.message
+        });
+    }
+});
+
+// Serve static files
+app.use(express.static('public'));
+
+// Environment variables
+require('dotenv').config();
+const port = process.env.PORT || 3000;</pre></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MySQL -->
+        <div class="section-card card">
+            <div class="tech-header mysql-header">MySQL - Database</div>
+            <div class="card-body">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <h5>SQL Commands</h5>
+                        <div class="code-block"><pre>-- Create
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(150) UNIQUE
+);
+
+-- Insert
+INSERT INTO users (name, email)
+VALUES ('Alice', 'alice@mail.com');
+
+-- Select
+SELECT * FROM users;
+SELECT name, email FROM users WHERE id = 1;
+SELECT * FROM users ORDER BY name LIMIT 10;
+
+-- Update
+UPDATE users SET name = 'Bob' WHERE id = 1;
+
+-- Delete
+DELETE FROM users WHERE id = 1;</pre></div>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Node.js + MySQL</h5>
+                        <div class="code-block"><pre>// npm install mysql2 dotenv
+const mysql = require('mysql2/promise');
+
+const pool = mysql.createPool({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
+});
+
+// Prepared statement (SAFE!)
+const [rows] = await pool.execute(
+    'SELECT * FROM users WHERE id = ?',
+    [userId]
+);
+
+// Insert
+const [result] = await pool.execute(
+    'INSERT INTO users (name, email) VALUES (?, ?)',
+    [name, email]
+);
+console.log('ID:', result.insertId);
+
+// NEVER do this (SQL injection):
+// `SELECT * FROM users WHERE name = '${name}'`</pre></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bootstrap -->
+        <div class="section-card card">
+            <div class="tech-header bootstrap-header">Bootstrap 5 - UI Framework</div>
+            <div class="card-body">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <h5>Grid System</h5>
+                        <div class="code-block"><pre>&lt;!-- CDN --&gt;
+&lt;link href="...bootstrap.min.css" rel="stylesheet"&gt;
+
+&lt;!-- Grid: container > row > col --&gt;
+&lt;div class="container"&gt;
+    &lt;div class="row"&gt;
+        &lt;div class="col-12 col-md-6 col-lg-4"&gt;
+            Responsive column
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+Breakpoints:
+xs: &lt;576px  | col-
+sm: 576px+  | col-sm-
+md: 768px+  | col-md-
+lg: 992px+  | col-lg-
+xl: 1200px+ | col-xl-</pre></div>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Common Classes</h5>
+                        <div class="code-block"><pre>/* Spacing: {property}{sides}-{size} */
+m-3, mt-3, mb-3, mx-auto  /* margin */
+p-3, pt-3, pb-3, px-3     /* padding */
+
+/* Display & Flex */
+d-flex, d-none, d-block
+justify-content-center
+align-items-center
+
+/* Text */
+text-center, text-start, text-end
+fw-bold, fst-italic
+text-primary, text-danger
+
+/* Background */
+bg-primary, bg-dark, bg-light
+
+/* Components */
+btn btn-primary btn-lg
+card card-body card-header
+alert alert-success
+table table-striped
+form-control form-select
+navbar navbar-dark bg-dark</pre></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4 mb-4">
+            <p class="text-muted">Bookmark this page for quick reference during exams and projects!</p>
+        </div>
+
+        <hr>
+        <p><a href="index.html">&larr; Back to Examples</a></p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

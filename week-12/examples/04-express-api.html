@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Express REST API with MySQL - Week 12 Example</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a2e;
+            color: #e0e0e0;
+        }
+        h1, h2, h3 {
+            color: #ff9800;
+        }
+        pre {
+            background: #0d1117;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            border-left: 4px solid #ff9800;
+        }
+        code {
+            font-family: 'Consolas', 'Monaco', monospace;
+            color: #e0e0e0;
+        }
+        .inline-code {
+            background: rgba(255,152,0,0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #ffb74d;
+        }
+        a {
+            color: #ffb74d;
+        }
+        .file-section {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .file-header {
+            background: rgba(255,152,0,0.2);
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .file-icon {
+            font-size: 1.5rem;
+        }
+        .endpoint {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 5px;
+        }
+        .method {
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            min-width: 70px;
+            text-align: center;
+        }
+        .get { background: #4caf50; }
+        .post { background: #2196f3; }
+        .put { background: #ff9800; }
+        .delete { background: #f44336; }
+        .note {
+            background: rgba(255,152,0,0.1);
+            border: 1px solid rgba(255,152,0,0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .curl-example {
+            background: #0a0a0a;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border: 1px solid #333;
+        }
+    </style>
+</head>
+<body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+
+    <h1>Complete Express REST API with MySQL</h1>
+    <p>Build a full-featured REST API for managing students with CRUD operations.</p>
+
+    <h2>Project Structure</h2>
+    <pre><code>student-api/
+  |-- package.json
+  |-- .env
+  |-- server.js           # Main application entry
+  |-- config/
+  |     |-- database.js   # Database connection
+  |-- models/
+  |     |-- Student.js    # Student model
+  |-- routes/
+  |     |-- students.js   # Student routes
+  |-- middleware/
+        |-- errorHandler.js</code></pre>
+
+    <h2>API Endpoints</h2>
+    <div class="endpoint">
+        <span class="method get">GET</span>
+        <code>/api/students</code>
+        <span>- Get all students (with pagination)</span>
+    </div>
+    <div class="endpoint">
+        <span class="method get">GET</span>
+        <code>/api/students/:id</code>
+        <span>- Get single student by ID</span>
+    </div>
+    <div class="endpoint">
+        <span class="method post">POST</span>
+        <code>/api/students</code>
+        <span>- Create new student</span>
+    </div>
+    <div class="endpoint">
+        <span class="method put">PUT</span>
+        <code>/api/students/:id</code>
+        <span>- Update student</span>
+    </div>
+    <div class="endpoint">
+        <span class="method delete">DELETE</span>
+        <code>/api/students/:id</code>
+        <span>- Delete student</span>
+    </div>
+
+    <div class="file-section">
+        <div class="file-header">
+            <span class="file-icon">1.</span>
+            <strong>package.json</strong>
+        </div>
+        <pre><code>{
+  "name": "student-api",
+  "version": "1.0.0",
+  "description": "REST API for student management",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mysql2": "^3.6.0",
+    "dotenv": "^16.3.1",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}</code></pre>
+        <p>Install dependencies:</p>
+        <pre><code>npm install</code></pre>
+    </div>
+
+    <div class="file-section">
+        <div class="file-header">
+            <span class="file-icon">2.</span>
+            <strong>.env</strong>
+        </div>
+        <pre><code># Database Configuration
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=your_password
+DB_NAME=school
+DB_CONNECTION_LIMIT=10
+
+# Server Configuration
+PORT=3000
+NODE_ENV=development</code></pre>
+        <div class="note">
+            <strong>Important:</strong> Add <span class="inline-code">.env</span> to your <span class="inline-code">.gitignore</span> file!
+        </div>
+    </div>
+
+    <div class="file-section">
+        <div class="file-header">
+            <span class="file-icon">3.</span>
+            <strong>config/database.js</strong>
+        </div>
+        <pre><code>// config/database.js
+const mysql = require('mysql2/promise');
+
+const pool = mysql.createPool({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    waitForConnections: true,
+    connectionLimit: parseInt(process.env.DB_CONNECTION_LIMIT) || 10,
+    queueLimit: 0
+});
+
+// Test connection on startup
+pool.getConnection()
+    .then(connection => {
+        console.log('Database connected successfully');
+        connection.release();
+    })
+    .catch(err => {
+        console.error('Database connection failed:', err.message);
+        process.exit(1);
+    });
+
+module.exports = pool;</code></pre>
+    </div>
+
+    <div class="file-section">
+        <div class="file-header">
+            <span class="file-icon">4.</span>
+            <strong>models/Student.js</strong>
+        </div>
+        <pre><code>// models/Student.js
+const pool = require('../config/database');
+
+class Student {
+    // Get all students with pagination
+    static async findAll(page = 1, limit = 10) {
+        const offset = (page - 1) * limit;
+
+        // Get total count
+        const [countResult] = await pool.execute(
+            'SELECT COUNT(*) as total FROM students'
+        );
+        const total = countResult[0].total;
+
+        // Get paginated data
+        const [rows] = await pool.execute(
+            'SELECT * FROM students ORDER BY id DESC LIMIT ? OFFSET ?',
+            [limit, offset]
+        );
+
+        return {
+            data: rows,
+            pagination: {
+                page: parseInt(page),
+                limit: parseInt(limit),
+                total,
+                totalPages: Math.ceil(total / limit)
+            }
+        };
+    }
+
+    // Get single student by ID
+    static async findById(id) {
+        const [rows] = await pool.execute(
+            'SELECT * FROM students WHERE id = ?',
+            [id]
+        );
+        return rows[0] || null;
+    }
+
+    // Get student by email
+    static async findByEmail(email) {
+        const [rows] = await pool.execute(
+            'SELECT * FROM students WHERE email = ?',
+            [email]
+        );
+        return rows[0] || null;
+    }
+
+    // Create new student
+    static async create(studentData) {
+        const { name, email, age, grade } = studentData;
+
+        const [result] = await pool.execute(
+            `INSERT INTO students (name, email, age, grade)
+             VALUES (?, ?, ?, ?)`,
+            [name, email, age, grade]
+        );
+
+        return {
+            id: result.insertId,
+            name,
+            email,
+            age,
+            grade
+        };
+    }
+
+    // Update student
+    static async update(id, studentData) {
+        const { name, email, age, grade } = studentData;
+
+        const [result] = await pool.execute(
+            `UPDATE students
+             SET name = ?, email = ?, age = ?, grade = ?
+             WHERE id = ?`,
+            [name, email, age, grade, id]
+        );
+
+        if (result.affectedRows === 0) {
+            return null;
+        }
+
+        return { id, name, email, age, grade };
+    }
+
+    // Delete student
+    static async delete(id) {
+        const [result] = await pool.execute(
+            'DELETE FROM students WHERE id = ?',
+            [id]
+        );
+
+        return result.affectedRows > 0;
+    }
+
+    // Search students
+    static async search(query) {
+        const [rows] = await pool.execute(
+            `SELECT * FROM students
+             WHERE name LIKE ? OR email LIKE ?
+             ORDER BY name`,
+            [`%${query}%`, `%${query}%`]
+        );
+        return rows;
+    }
+}
+
+module.exports = Student;</code></pre>
+    </div>
+
+    <div class="file-section">
+        <div class="file-header">
+            <span class="file-icon">5.</span>
+            <strong>middleware/errorHandler.js</strong>
+        </div>
+        <pre><code>// middleware/errorHandler.js
+
+// Custom error class
+class ApiError extends Error {
+    constructor(statusCode, message) {
+        super(message);
+        this.statusCode = statusCode;
+    }
+}
+
+// Error handling middleware
+const errorHandler = (err, req, res, next) => {
+    console.error('Error:', err);
+
+    // Handle known API errors
+    if (err instanceof ApiError) {
+        return res.status(err.statusCode).json({
+            success: false,
+            error: err.message
+        });
+    }
+
+    // Handle MySQL duplicate entry error
+    if (err.code === 'ER_DUP_ENTRY') {
+        return res.status(400).json({
+            success: false,
+            error: 'Duplicate entry. This email already exists.'
+        });
+    }
+
+    // Handle MySQL foreign key error
+    if (err.code === 'ER_NO_REFERENCED_ROW_2') {
+        return res.status(400).json({
+            success: false,
+            error: 'Referenced record not found.'
+        });
+    }
+
+    // Generic server error
+    res.status(500).json({
+        success: false,
+        error: process.env.NODE_ENV === 'production'
+            ? 'Internal server error'
+            : err.message
+    });
+};
+
+module.exports = { ApiError, errorHandler };</code></pre>
+    </div>
+
+    <div class="file-section">
+        <div class="file-header">
+            <span class="file-icon">6.</span>
+            <strong>routes/students.js</strong>
+        </div>
+        <pre><code>// routes/students.js
+const express = require('express');
+const router = express.Router();
+const Student = require('../models/Student');
+const { ApiError } = require('../middleware/errorHandler');
+
+// GET /api/students - Get all students
+router.get('/', async (req, res, next) => {
+    try {
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+
+        // Search functionality
+        if (req.query.search) {
+            const students = await Student.search(req.query.search);
+            return res.json({
+                success: true,
+                count: students.length,
+                data: students
+            });
+        }
+
+        const result = await Student.findAll(page, limit);
+
+        res.json({
+            success: true,
+            ...result
+        });
+    } catch (error) {
+        next(error);
+    }
+});
+
+// GET /api/students/:id - Get single student
+router.get('/:id', async (req, res, next) => {
+    try {
+        const student = await Student.findById(req.params.id);
+
+        if (!student) {
+            throw new ApiError(404, 'Student not found');
+        }
+
+        res.json({
+            success: true,
+            data: student
+        });
+    } catch (error) {
+        next(error);
+    }
+});
+
+// POST /api/students - Create student
+router.post('/', async (req, res, next) => {
+    try {
+        const { name, email, age, grade } = req.body;
+
+        // Validation
+        if (!name || !email) {
+            throw new ApiError(400, 'Name and email are required');
+        }
+
+        // Check if email exists
+        const existing = await Student.findByEmail(email);
+        if (existing) {
+            throw new ApiError(400, 'Email already registered');
+        }
+
+        const student = await Student.create({ name, email, age, grade });
+
+        res.status(201).json({
+            success: true,
+            message: 'Student created successfully',
+            data: student
+        });
+    } catch (error) {
+        next(error);
+    }
+});
+
+// PUT /api/students/:id - Update student
+router.put('/:id', async (req, res, next) => {
+    try {
+        const { name, email, age, grade } = req.body;
+
+        // Check if student exists
+        const existing = await Student.findById(req.params.id);
+        if (!existing) {
+            throw new ApiError(404, 'Student not found');
+        }
+
+        // Check if email is being changed to an existing one
+        if (email && email !== existing.email) {
+            const emailExists = await Student.findByEmail(email);
+            if (emailExists) {
+                throw new ApiError(400, 'Email already in use');
+            }
+        }
+
+        const student = await Student.update(req.params.id, {
+            name: name || existing.name,
+            email: email || existing.email,
+            age: age !== undefined ? age : existing.age,
+            grade: grade || existing.grade
+        });
+
+        res.json({
+            success: true,
+            message: 'Student updated successfully',
+            data: student
+        });
+    } catch (error) {
+        next(error);
+    }
+});
+
+// DELETE /api/students/:id - Delete student
+router.delete('/:id', async (req, res, next) => {
+    try {
+        const student = await Student.findById(req.params.id);
+
+        if (!student) {
+            throw new ApiError(404, 'Student not found');
+        }
+
+        await Student.delete(req.params.id);
+
+        res.json({
+            success: true,
+            message: 'Student deleted successfully',
+            data: { id: req.params.id }
+        });
+    } catch (error) {
+        next(error);
+    }
+});
+
+module.exports = router;</code></pre>
+    </div>
+
+    <div class="file-section">
+        <div class="file-header">
+            <span class="file-icon">7.</span>
+            <strong>server.js</strong>
+        </div>
+        <pre><code>// server.js
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const studentRoutes = require('./routes/students');
+const { errorHandler } = require('./middleware/errorHandler');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Request logging (development)
+if (process.env.NODE_ENV !== 'production') {
+    app.use((req, res, next) => {
+        console.log(`${req.method} ${req.path}`);
+        next();
+    });
+}
+
+// Routes
+app.use('/api/students', studentRoutes);
+
+// Health check endpoint
+app.get('/health', (req, res) => {
+    res.json({ status: 'OK', timestamp: new Date().toISOString() });
+});
+
+// 404 handler
+app.use((req, res) => {
+    res.status(404).json({
+        success: false,
+        error: 'Endpoint not found'
+    });
+});
+
+// Error handler (must be last)
+app.use(errorHandler);
+
+// Start server
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+});</code></pre>
+    </div>
+
+    <h2>Testing the API</h2>
+
+    <h3>Using cURL</h3>
+    <div class="curl-example">
+        <p><strong>Get all students:</strong></p>
+        <pre><code>curl http://localhost:3000/api/students</code></pre>
+    </div>
+
+    <div class="curl-example">
+        <p><strong>Get single student:</strong></p>
+        <pre><code>curl http://localhost:3000/api/students/1</code></pre>
+    </div>
+
+    <div class="curl-example">
+        <p><strong>Create student:</strong></p>
+        <pre><code>curl -X POST http://localhost:3000/api/students \
+  -H "Content-Type: application/json" \
+  -d '{"name": "John Doe", "email": "john@school.com", "age": 20, "grade": "A"}'</code></pre>
+    </div>
+
+    <div class="curl-example">
+        <p><strong>Update student:</strong></p>
+        <pre><code>curl -X PUT http://localhost:3000/api/students/1 \
+  -H "Content-Type: application/json" \
+  -d '{"name": "John Smith", "grade": "A+"}'</code></pre>
+    </div>
+
+    <div class="curl-example">
+        <p><strong>Delete student:</strong></p>
+        <pre><code>curl -X DELETE http://localhost:3000/api/students/1</code></pre>
+    </div>
+
+    <div class="curl-example">
+        <p><strong>Search students:</strong></p>
+        <pre><code>curl "http://localhost:3000/api/students?search=john"</code></pre>
+    </div>
+
+    <div class="curl-example">
+        <p><strong>Pagination:</strong></p>
+        <pre><code>curl "http://localhost:3000/api/students?page=2&limit=5"</code></pre>
+    </div>
+
+    <h2>Database Setup Script</h2>
+    <pre><code>-- Run this SQL to set up the database
+CREATE DATABASE IF NOT EXISTS school;
+USE school;
+
+CREATE TABLE IF NOT EXISTS students (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(150) UNIQUE NOT NULL,
+    age INT,
+    grade VARCHAR(10),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Insert sample data
+INSERT INTO students (name, email, age, grade) VALUES
+    ('Alice Johnson', 'alice@school.com', 20, 'A'),
+    ('Bob Smith', 'bob@school.com', 22, 'B+'),
+    ('Charlie Brown', 'charlie@school.com', 21, 'A-'),
+    ('Diana Prince', 'diana@school.com', 19, 'A+'),
+    ('Edward Norton', 'edward@school.com', 23, 'B');</code></pre>
+
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Positioning - Week 05 Example</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            padding-top: 80px; /* Space for fixed header */
+        }
+
+        /* Fixed Header */
+        .fixed-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #e67e22;
+            color: white;
+            padding: 15px 20px;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            color: #e67e22;
+        }
+
+        .demo-section {
+            margin: 40px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+
+        .demo-container {
+            background: #ecf0f1;
+            padding: 20px;
+            min-height: 200px;
+            position: relative;
+            border: 2px dashed #bdc3c7;
+            margin: 15px 0;
+        }
+
+        .box {
+            padding: 15px 20px;
+            color: white;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        /* Static - Default */
+        .static-box {
+            background: #3498db;
+            position: static;
+        }
+
+        /* Relative */
+        .relative-container .original {
+            background: #bdc3c7;
+            color: #333;
+        }
+        .relative-box {
+            background: #9b59b6;
+            position: relative;
+            top: 30px;
+            left: 50px;
+        }
+
+        /* Absolute */
+        .absolute-container {
+            position: relative; /* Parent needs this! */
+        }
+        .absolute-box {
+            background: #e74c3c;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .absolute-corner {
+            background: #27ae60;
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+        }
+
+        /* Fixed - the header is fixed */
+
+        /* Sticky */
+        .sticky-container {
+            height: 400px;
+            overflow-y: scroll;
+            background: #fff;
+            border: 2px solid #e67e22;
+        }
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            background: #f39c12;
+            color: white;
+            padding: 10px 15px;
+            font-weight: bold;
+        }
+        .scroll-content {
+            padding: 15px;
+        }
+        .scroll-content p {
+            margin-bottom: 15px;
+        }
+
+        /* Z-index demo */
+        .z-index-container {
+            position: relative;
+            height: 200px;
+        }
+        .z-box {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            border-radius: 10px;
+        }
+        .z-box-1 {
+            background: #e74c3c;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        .z-box-2 {
+            background: #27ae60;
+            top: 30px;
+            left: 60px;
+            z-index: 2;
+        }
+        .z-box-3 {
+            background: #3498db;
+            top: 60px;
+            left: 120px;
+            z-index: 3;
+        }
+
+        code {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+
+        .info-box {
+            background: #e8f5e9;
+            border-left: 4px solid #27ae60;
+            padding: 15px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <header class="fixed-header">
+        <a href="index.html" style="color: white;">&larr; Back to Examples</a> |
+        This header has <code style="background: rgba(255,255,255,0.2);">position: fixed</code> - it stays while you scroll!
+    </header>
+
+    <h1>CSS Positioning Demo</h1>
+    <p>This page demonstrates different CSS position values. Scroll to see fixed and sticky in action!</p>
+
+    <!-- Static -->
+    <div class="demo-section">
+        <h2>1. Static (Default)</h2>
+        <p><code>position: static</code> - Elements flow normally. top/left/right/bottom have no effect.</p>
+        <div class="demo-container">
+            <div class="box static-box">Static Box 1</div>
+            <div class="box static-box" style="margin-top: 10px;">Static Box 2</div>
+            <div class="box static-box" style="margin-top: 10px;">Static Box 3</div>
+        </div>
+    </div>
+
+    <!-- Relative -->
+    <div class="demo-section">
+        <h2>2. Relative</h2>
+        <p><code>position: relative</code> - Offset from normal position. Original space is preserved!</p>
+        <div class="demo-container relative-container">
+            <div class="box original">(Original position - dashed)</div>
+            <div class="box relative-box">Relative: top: 30px; left: 50px</div>
+            <p style="margin-top: 60px;">Notice the gap where the box originally was!</p>
+        </div>
+        <div class="info-box">
+            <strong>Key Point:</strong> The element moves, but its original space in the document flow is preserved.
+        </div>
+    </div>
+
+    <!-- Absolute -->
+    <div class="demo-section">
+        <h2>3. Absolute</h2>
+        <p><code>position: absolute</code> - Positioned relative to nearest positioned ancestor (or viewport).</p>
+        <div class="demo-container absolute-container">
+            <p>This container has <code>position: relative</code> (the positioned ancestor)</p>
+            <div class="box absolute-box">Absolute: top: 20px; right: 20px</div>
+            <div class="box absolute-corner">Absolute: bottom: 10px; left: 10px</div>
+        </div>
+        <div class="info-box">
+            <strong>Key Point:</strong> Absolute elements are removed from the flow. They don't affect other elements.
+        </div>
+    </div>
+
+    <!-- Fixed -->
+    <div class="demo-section">
+        <h2>4. Fixed</h2>
+        <p><code>position: fixed</code> - Positioned relative to viewport. Stays in place when scrolling.</p>
+        <p><strong>Example:</strong> Look at the orange header at the top of this page!</p>
+        <pre><code>.fixed-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}</code></pre>
+        <div class="info-box">
+            <strong>Common Uses:</strong> Fixed headers, floating action buttons, cookie banners, chat widgets.
+        </div>
+    </div>
+
+    <!-- Sticky -->
+    <div class="demo-section">
+        <h2>5. Sticky</h2>
+        <p><code>position: sticky</code> - Acts like relative until scroll threshold, then sticks like fixed.</p>
+        <p>Scroll inside the box below to see sticky headers:</p>
+
+        <div class="sticky-container">
+            <div class="sticky-header">Section A - I'm Sticky!</div>
+            <div class="scroll-content">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+            </div>
+
+            <div class="sticky-header">Section B - I'm Also Sticky!</div>
+            <div class="scroll-content">
+                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+                <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>
+            </div>
+
+            <div class="sticky-header">Section C - Me Too!</div>
+            <div class="scroll-content">
+                <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.</p>
+                <p>Sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+                <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Z-Index -->
+    <div class="demo-section">
+        <h2>6. Z-Index (Stacking Order)</h2>
+        <p><code>z-index</code> controls which positioned elements appear on top.</p>
+
+        <div class="demo-container z-index-container">
+            <div class="z-box z-box-1">z-index: 1</div>
+            <div class="z-box z-box-2">z-index: 2</div>
+            <div class="z-box z-box-3">z-index: 3</div>
+        </div>
+
+        <div class="info-box">
+            <strong>Note:</strong> z-index only works on positioned elements (not static). Higher values appear on top.
+        </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="demo-section">
+        <h2>Summary Table</h2>
+        <table border="1" cellpadding="10" style="width: 100%; border-collapse: collapse;">
+            <tr style="background: #e67e22; color: white;">
+                <th>Position</th>
+                <th>Relative To</th>
+                <th>In Document Flow?</th>
+                <th>Use Case</th>
+            </tr>
+            <tr>
+                <td>static</td>
+                <td>Normal flow</td>
+                <td>Yes</td>
+                <td>Default behavior</td>
+            </tr>
+            <tr>
+                <td>relative</td>
+                <td>Its normal position</td>
+                <td>Yes (space preserved)</td>
+                <td>Minor offsets, parent for absolute</td>
+            </tr>
+            <tr>
+                <td>absolute</td>
+                <td>Nearest positioned ancestor</td>
+                <td>No</td>
+                <td>Overlays, tooltips, dropdowns</td>
+            </tr>
+            <tr>
+                <td>fixed</td>
+                <td>Viewport</td>
+                <td>No</td>
+                <td>Fixed headers, floating buttons</td>
+            </tr>
+            <tr>
+                <td>sticky</td>
+                <td>Scroll container</td>
+                <td>Yes (until stuck)</td>
+                <td>Sticky headers, table headers</td>
+            </tr>
+        </table>
+    </div>
+
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>

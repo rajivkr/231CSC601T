@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Schedule - Week 02 Example</title>
+</head>
+<body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+
+    <h1>CSE Department - Weekly Schedule</h1>
+
+    <table border="1">
+        <caption>3rd Year CSE - Semester 6 Timetable</caption>
+        <thead>
+            <tr>
+                <th scope="col">Time</th>
+                <th scope="col">Monday</th>
+                <th scope="col">Tuesday</th>
+                <th scope="col">Wednesday</th>
+                <th scope="col">Thursday</th>
+                <th scope="col">Friday</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">9:00 - 10:00</th>
+                <td>Web Technologies</td>
+                <td>DBMS</td>
+                <td>Web Technologies</td>
+                <td>Operating Systems</td>
+                <td>DBMS</td>
+            </tr>
+            <tr>
+                <th scope="row">10:00 - 11:00</th>
+                <td>Operating Systems</td>
+                <td>Web Technologies</td>
+                <td>DBMS</td>
+                <td>Web Technologies</td>
+                <td>Operating Systems</td>
+            </tr>
+            <tr>
+                <th scope="row">11:00 - 12:00</th>
+                <td>Computer Networks</td>
+                <td>Operating Systems</td>
+                <td>Computer Networks</td>
+                <td>DBMS</td>
+                <td>Computer Networks</td>
+            </tr>
+            <tr>
+                <th scope="row">12:00 - 1:00</th>
+                <td colspan="5" style="text-align: center;"><strong>LUNCH BREAK</strong></td>
+            </tr>
+            <tr>
+                <th scope="row">1:00 - 3:00</th>
+                <td>Web Tech Lab</td>
+                <td>DBMS Lab</td>
+                <td>Free Period</td>
+                <td>OS Lab</td>
+                <td>Project Work</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6"><em>Note: Lab sessions are 2 hours. Schedule subject to change.</em></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <hr>
+
+    <h2>Explanation</h2>
+    <ul>
+        <li><code>&lt;caption&gt;</code> describes the table for all users</li>
+        <li><code>scope="col"</code> indicates column headers</li>
+        <li><code>scope="row"</code> indicates row headers (time slots)</li>
+        <li><code>colspan="5"</code> makes lunch break span all day columns</li>
+        <li><code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code>, <code>&lt;tfoot&gt;</code> organize the table</li>
+    </ul>
+
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>

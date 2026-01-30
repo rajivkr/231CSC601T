@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en" class="dark" data-accent="unit-1">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1a1a2e">
+    <title>Week 03 - HTML Forms & Data Flow | 231CSC601T</title>
+    <script src="../../core/theme.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../../core/tw-config.js"></script>
+    <link rel="stylesheet" href="../../core/slides.css">
+</head>
+<body class="font-sans min-h-screen
+             bg-gradient-to-br from-navy to-navy-deep text-gray-200
+             dark:bg-gradient-to-br dark:from-navy dark:to-navy-deep dark:text-gray-200">
+
+    <a href="#main-content" class="skip-link bg-[var(--accent)] text-white px-4 py-2 rounded-lg font-semibold no-underline">Skip to content</a>
+
+    <!-- Nav header -->
+    <nav class="fixed top-0 left-0 right-0 z-50
+                bg-black/90 dark:bg-black/90 bg-white/95 dark:bg-black/90
+                backdrop-blur-md border-b-2 border-[var(--accent)]
+                px-4 py-2 flex justify-between items-center" aria-label="Slide navigation">
+        <div class="flex items-center gap-3 min-w-0">
+            <a href="../../index.html" class="text-[var(--accent)] text-sm hover:underline whitespace-nowrap hidden sm:inline">&larr; Home</a>
+            <a href="../examples/index.html" class="text-[var(--accent)] text-sm hover:underline whitespace-nowrap hidden sm:inline">&larr; Examples</a>
+            <span class="text-[var(--accent)] font-bold text-sm truncate">Week 03: HTML Forms & Data Flow</span>
+        </div>
+        <div class="flex items-center gap-2 flex-shrink-0">
+            <button class="theme-toggle w-9 h-9 flex items-center justify-center border border-gray-600 dark:border-gray-600 border-gray-300 rounded-lg bg-transparent text-gray-400 hover:text-white cursor-pointer transition" aria-label="Switch to light mode">
+                <svg class="icon-sun w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="icon-moon w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+            <button class="px-3 py-1.5 rounded-lg bg-[var(--accent)] text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" onclick="toggleMenu()" aria-label="Open slide menu">Menu</button>
+            <button class="px-3 py-1.5 rounded-lg bg-red-500 text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" id="prevBtn" aria-label="Previous slide">Prev</button>
+            <span class="text-gray-400 text-sm tabular-nums" aria-live="polite"><span id="currentSlide">1</span> / <span id="totalSlides"></span></span>
+            <button class="px-3 py-1.5 rounded-lg bg-green-600 text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" id="nextBtn" aria-label="Next slide">Next</button>
+        </div>
+    </nav>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay fixed inset-0 z-[200] bg-black/90 dark:bg-black/90 overflow-y-auto p-6" id="menuOverlay" aria-hidden="true" role="dialog" aria-label="Slide navigation menu">
+        <button class="close-menu fixed top-6 right-6 text-4xl text-white cursor-pointer bg-transparent border-none z-[201] leading-none p-2" onclick="toggleMenu()" aria-label="Close menu">&times;</button>
+        <div class="max-w-[600px] mx-auto mt-12 p-5">
+            <h2 class="text-[var(--accent)] text-2xl font-bold text-center mb-6">Slide Navigation</h2>
+            <ul id="slideMenu" class="list-none m-0 p-0"></ul>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <main id="main-content" class="max-w-[1200px] mx-auto px-5 pt-16">
+
+        <!-- Progress bar -->
+        <div class="w-full h-1 bg-white/10 dark:bg-white/10 bg-gray-200 rounded mt-4 mb-5 overflow-hidden">
+            <div class="progress-fill h-full rounded bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)]" id="progress" style="width:0%"></div>
+        </div>
+
+        <!-- Slide 1: Forms as Communication -->
+        <section class="slide active rounded-2xl p-6 md:p-10 min-h-[80vh]
+                        bg-white/5 dark:bg-white/5 bg-white dark:bg-white/5
+                        border border-white/10 dark:border-white/10 border-gray-200
+                        backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Forms as Communication</h1>
+            <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4 italic">
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">"Forms are how users talk to servers."</p>
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">"Every login, signup, search, payment = form submission."</p>
+            </div>
+            <h3 class="text-xl text-[var(--accent-light)] mb-3">What Are Forms Used For?</h3>
+            <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Authentication</strong> - Login, signup, password reset</li>
+                <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Search</strong> - Google, Amazon, YouTube search bars</li>
+                <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Data Entry</strong> - Registration, profiles, surveys</li>
+                <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">E-commerce</strong> - Checkout, payment, shipping info</li>
+                <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Communication</strong> - Contact forms, comments, feedback</li>
+            </ul>
+            <h3 class="text-xl text-[var(--accent-light)] mb-3">The Restaurant Order Slip Analogy</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse text-base">
+                    <tr><th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Form Element</th><th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Order Slip Equivalent</th></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;form&gt;</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">The order slip itself</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Input fields</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Lines to fill (Starter: ___, Main: ___)</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Required fields</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Items marked with asterisk *</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Submit button</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Handing slip to waiter</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Server processing</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Kitchen reading and cooking</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Validation</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">"Sorry, we're out of paneer"</td></tr>
+                </table>
+            </div>
+            <div class="p-5 rounded-lg border border-green-500/30 bg-green-500/10 my-4">
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Unit I Completion:</strong> This is the final week of HTML. After this, we move to CSS!</p>
+            </div>
+        </section>
+
+        <!-- Slide 2: The Form Element -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">The Form Element</h1>
+            <h3 class="text-xl text-[var(--accent-light)] mb-3">Basic Structure</h3>
+            <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;form action="/submit" method="POST"&gt;
+    &lt;!-- form controls go here --&gt;
+    &lt;button type="submit"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+            <h3 class="text-xl text-[var(--accent-light)] mb-3">Form Attributes</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse text-base">
+                    <tr><th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Attribute</th><th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Purpose</th><th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Example</th></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">action</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Where to send data</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">"/api/register"</code></td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">method</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">How to send (GET/POST)</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">"POST"</code></td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">enctype</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Encoding type</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">"multipart/form-data"</code> for files</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">autocomplete</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Browser autofill</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">"on"</code> or <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">"off"</code></td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">novalidate</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Skip validation</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">(boolean attribute)</td></tr>
+                </table>
+            </div>
+            <h3 class="text-xl text-[var(--accent-light)] mb-3">Forms Work Without JavaScript!</h3>
+            <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">When you click submit:</p>
+                <ol class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                    <li>Browser collects all input values</li>
+                    <li>Browser sends HTTP request to <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">action</code> URL</li>
+                    <li>Server processes and responds</li>
+                    <li>Browser shows new page (or same page with results)</li>
+                </ol>
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">This is the same request-response model from Week 01!</p>
+            </div>
+        </section>
+
+        <!-- Slide 3: Text Input Types -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Text Input Types</h1>
+            <h3 class="text-xl text-[var(--accent-light)] mb-3">Basic Text Inputs</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse text-base">
+                    <tr><th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Type</th><th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Use Case</th><th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Special Behavior</th></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">text</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Generic single-line text</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">None</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">password</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Passwords</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Hides characters</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">email</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Email addresses</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Validates email format</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">tel</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Phone numbers</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Shows number pad on mobile</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">url</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Website URLs</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Validates URL format</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">search</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Search queries</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">May show clear button</td></tr>
+                </table>
+            </div>
+            <h3 class="text-xl text-[var(--accent-light)] mb-3">Number Inputs</h3>
+            <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;input type="number" min="0" max="100" step="5"&gt;
+&lt;input type="range" min="0" max="100" value="50"&gt;</code></pre>
+            <h3 class="text-xl text-[var(--accent-light)] mb-3">Date/Time Inputs</h3>
+            <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;input type="date"&gt;
+&lt;input type="time"&gt;
+&lt;input type="datetime-local"&gt;
+&lt;input type="month"&gt;
+&lt;input type="week"&gt;</code></pre>
+            <div class="p-5 rounded-lg border border-green-500/30 bg-green-500/10 my-4">
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Mobile Benefit:</strong> Using the right input type shows the appropriate keyboard on mobile devices!</p>
+            </div>
+        </section>
+
+        <!-- Slide 4: Selection Inputs -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Selection Inputs</h1>
+            <h3 class="text-xl text-[var(--accent-light)] mb-3">Checkboxes (Multiple Selection)</h3>
+            <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;label&gt;
+    &lt;input type="checkbox" name="interests" value="html"&gt;
+    HTML
+&lt;/label&gt;
+&lt;label&gt;
+    &lt;input type="checkbox" name="interests" value="css"&gt;
+    CSS
+&lt;/label&gt;
+&lt;label&gt;
+    &lt;input type="checkbox" name="interests" value="js"&gt;
+    JavaScript
+&lt;/label&gt;</code></pre>
+            <h3 class="text-xl text-[var(--accent-light)] mb-3">Radio Buttons (Single Selection)</h3>
+            <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;label&gt;
+    &lt;input type="radio" name="gender" value="male"&gt;
+    Male
+&lt;/label&gt;
+&lt;label&gt;
+    &lt;input type="radio" name="gender" value="female"&gt;
+    Female
+&lt;/label&gt;
+&lt;label&gt;
+    &lt;input type="radio" name="gender" value="other"&gt;
+    Other
+&lt;/label&gt;</code></pre>
+            <div class="p-5 rounded-lg border border-red-500/30 bg-red-500/10 my-4">
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Key Difference:</strong></p>
+                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                    <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Checkboxes:</strong> Each has unique or same name, multiple can be selected</li>
+                    <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Radio:</strong> Same name = same group, only ONE can be selected</li>
+                </ul>
+            </div>
+            <h3 class="text-xl text-[var(--accent-light)] mb-3">Other Input Types</h3>
+            <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;input type="file" accept=".pdf,.doc"&gt;
+&lt;input type="hidden" name="user_id" value="123"&gt;
+&lt;input type="color" value="#ff0000"&gt;</code></pre>
+        </section>
+
+        <!-- Slide 5: Labels & Accessibility -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Labels & Accessibility</h1>
+            <div class="p-5 rounded-lg border border-red-500/30 bg-red-500/10 my-4">
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Never skip labels!</strong> They are not optional.</p>
+            </div>
+            <h3 class="text-xl text-[var(--accent-light)] mb-3">Why Labels Matter</h3>
+            <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Clickable area</strong> - Clicking label focuses the input</li>
+                <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Screen readers</strong> - Announce what the field is for</li>
+                <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Mobile users</strong> - Larger tap target</li>
+            </ul>
+            <h3 class="text-xl text-[var(--accent-light)] mb-3">Two Ways to Associate Labels</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10">
+                    <h4 class="text-lg text-[var(--accent-light)] mb-2">Explicit (Preferred)</h4>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;label for="email"&gt;Email:&lt;/label&gt;
+&lt;input type="email" id="email"&gt;</code></pre>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600 mt-2"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">for</code> matches <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">id</code></p>
+                </div>
+                <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10">
+                    <h4 class="text-lg text-[var(--accent-light)] mb-2">Implicit</h4>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;label&gt;
+    Email:
+    &lt;input type="email"&gt;
+&lt;/label&gt;</code></pre>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600 mt-2">Input nested inside label</p>
+                </div>
+            </div>
+            <h3 class="text-xl text-[var(--accent-light)] mb-3">The OTP Problem</h3>
+            <div class="p-5 rounded-lg border border-green-500/30 bg-green-500/10 my-4">
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Ever tried tapping a tiny OTP box on mobile?</p>
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">With a proper label, the entire "Enter OTP" text becomes tappable!</p>
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Small HTML improvement = big usability gain</strong></p>
+            </div>
+        </section>
+
+        <!-- Slide 6: Select, Textarea & Grouping -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Select, Textarea & Grouping</h1>
+            <h3 class="text-xl text-[var(--accent-light)] mb-3">Dropdown Select</h3>
+            <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;label for="country"&gt;Country:&lt;/label&gt;
+&lt;select id="country" name="country"&gt;
+    &lt;option value=""&gt;-- Select Country --&lt;/option&gt;
+    &lt;option value="in"&gt;India&lt;/option&gt;
+    &lt;option value="us"&gt;United States&lt;/option&gt;
+    &lt;option value="uk"&gt;United Kingdom&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+            <h3 class="text-xl text-[var(--accent-light)] mb-3">Option Groups</h3>
+            <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;select name="car"&gt;
+    &lt;optgroup label="Indian"&gt;
+        &lt;option&gt;Tata&lt;/option&gt;
+        &lt;option&gt;Mahindra&lt;/option&gt;
+    &lt;/optgroup&gt;
+    &lt;optgroup label="Japanese"&gt;
+        &lt;option&gt;Toyota&lt;/option&gt;
+        &lt;option&gt;Honda&lt;/option&gt;
+    &lt;/optgroup&gt;
+&lt;/select&gt;</code></pre>
+            <h3 class="text-xl text-[var(--accent-light)] mb-3">Textarea</h3>
+            <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;label for="message"&gt;Message:&lt;/label&gt;
+&lt;textarea id="message" name="message" rows="5" cols="40"&gt;&lt;/textarea&gt;</code></pre>
+            <h3 class="text-xl text-[var(--accent-light)] mb-3">Fieldset & Legend</h3>
+            <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;fieldset&gt;
+    &lt;legend&gt;Personal Information&lt;/legend&gt;
+    &lt;label&gt;Name: &lt;input type="text" name="name"&gt;&lt;/label&gt;
+    &lt;label&gt;Email: &lt;input type="email" name="email"&gt;&lt;/label&gt;
+&lt;/fieldset&gt;</code></pre>
+            <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;fieldset&gt;</code> groups related inputs. <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;legend&gt;</code> describes the group. Great for accessibility!</p>
+            </div>
+        </section>
+
+        <!-- Slide 7: HTML5 Validation -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">HTML5 Validation Attributes</h1>
+            <h3 class="text-xl text-[var(--accent-light)] mb-3">Built-in Validation (No JavaScript!)</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse text-base">
+                    <tr><th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Attribute</th><th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Purpose</th><th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Example</th></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">required</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Must be filled</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;input required&gt;</code></td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">minlength</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Minimum characters</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">minlength="8"</code></td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">maxlength</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Maximum characters</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">maxlength="100"</code></td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">min</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Minimum value</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">min="18"</code></td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">max</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Maximum value</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">max="120"</code></td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">pattern</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Regex pattern</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">pattern="[A-Za-z]+"</code></td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">placeholder</code></td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Hint text</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">placeholder="Enter email"</code></td></tr>
+                </table>
+            </div>
+            <h3 class="text-xl text-[var(--accent-light)] mb-3">Example with Validation</h3>
+            <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;input type="text" name="username"
+    required
+    minlength="3"
+    maxlength="20"
+    pattern="[a-z0-9_]+"
+    placeholder="username (lowercase, numbers, _)"&gt;</code></pre>
+            <div class="p-5 rounded-lg border border-red-500/30 bg-red-500/10 my-4">
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Important:</strong> Placeholder is NOT a replacement for label!</p>
+                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                    <li>Placeholder disappears when typing</li>
+                    <li>Screen readers may not announce placeholders</li>
+                    <li>Always use <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;label&gt;</code> for accessibility</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Slide 8: How Form Data Flows -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">How Form Data Flows</h1>
+            <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">This is the same <strong class="text-gray-100 dark:text-gray-100 text-gray-800">request-response model</strong> from Week 01!</p>
+            </div>
+            <h3 class="text-xl text-[var(--accent-light)] mb-3">The Complete Journey</h3>
+            <ol class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">User fills form</strong> and clicks Submit</li>
+                <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Browser collects</strong> all named inputs</li>
+                <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Browser sends</strong> HTTP request to <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">action</code> URL</li>
+                <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Server receives</strong> data and processes it</li>
+                <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Server sends</strong> response (success page, error, redirect)</li>
+                <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Browser displays</strong> the response</li>
+            </ol>
+            <h3 class="text-xl text-[var(--accent-light)] mb-3">What Gets Sent?</h3>
+            <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;form action="/register" method="POST"&gt;
+    &lt;input name="username" value="john"&gt;
+    &lt;input name="email" value="john@example.com"&gt;
+    &lt;button type="submit"&gt;Register&lt;/button&gt;
+&lt;/form&gt;
+
+// Browser sends:
+// POST /register
+// Content-Type: application/x-www-form-urlencoded
+//
+// username=john&email=john%40example.com</code></pre>
+            <div class="p-5 rounded-lg border border-red-500/30 bg-red-500/10 my-4">
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Only named inputs are sent!</strong> Inputs without <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">name</code> attribute are ignored.</p>
+            </div>
+        </section>
+
+        <!-- Slide 9: GET vs POST -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">GET vs POST</h1>
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse text-base">
+                    <tr><th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">Aspect</th><th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">GET</th><th class="p-3 text-left border-b border-white/10 dark:border-white/10 border-gray-200 bg-[var(--accent)]/20 text-[var(--accent)]">POST</th></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Data location</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">In URL (visible)</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">In request body (hidden)</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Bookmarkable</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Yes</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">No</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Cacheable</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Yes</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">No</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Length limit</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">~2000 chars (URL limit)</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">No practical limit</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Security</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Less secure (in URL)</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">More secure (in body)</td></tr>
+                    <tr class="hover:bg-white/5"><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Use for</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Searching, filtering</td><td class="p-3 border-b border-white/10 dark:border-white/10 border-gray-200">Creating, updating, deleting</td></tr>
+                </table>
+            </div>
+            <h3 class="text-xl text-[var(--accent-light)] mb-3">GET Example</h3>
+            <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;form action="/search" method="GET"&gt;
+    &lt;input name="q" value="javascript"&gt;
+&lt;/form&gt;
+
+// URL becomes: /search?q=javascript
+// You can bookmark and share this URL!</code></pre>
+            <h3 class="text-xl text-[var(--accent-light)] mb-3">POST Example</h3>
+            <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;form action="/login" method="POST"&gt;
+    &lt;input name="password" type="password"&gt;
+&lt;/form&gt;
+
+// Password is in request body, NOT in URL
+// Can't bookmark login (good!)</code></pre>
+            <div class="p-5 rounded-lg border border-green-500/30 bg-green-500/10 my-4">
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Rule of thumb:</strong> GET for reading, POST for writing.</p>
+            </div>
+        </section>
+
+        <!-- Slide 10: Exercises -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Exercises</h1>
+            <h3 class="text-xl text-[var(--accent-light)] mb-3">Exercise 1: Complete Registration Form</h3>
+            <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Create a registration form with:</p>
+                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                    <li>Name, email, password, confirm password</li>
+                    <li>Date of birth (date input)</li>
+                    <li>Gender (radio buttons)</li>
+                    <li>Interests (checkboxes)</li>
+                    <li>Bio (textarea)</li>
+                    <li>Profile picture (file upload)</li>
+                    <li>Terms agreement checkbox</li>
+                    <li>Proper validation attributes</li>
+                </ul>
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Solution:</strong> <a href="../examples/01-registration.html" target="_blank" class="text-[var(--accent)] hover:underline">examples/01-registration.html</a></p>
+            </div>
+            <h3 class="text-xl text-[var(--accent-light)] mb-3">Exercise 2: Contact Form</h3>
+            <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Create a contact form with:</p>
+                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                    <li>Name, email</li>
+                    <li>Subject (dropdown)</li>
+                    <li>Priority (range slider)</li>
+                    <li>Message (textarea)</li>
+                </ul>
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Solution:</strong> <a href="../examples/02-contact.html" target="_blank" class="text-[var(--accent)] hover:underline">examples/02-contact.html</a></p>
+            </div>
+            <h3 class="text-xl text-[var(--accent-light)] mb-3">Exercise 3: Job Application</h3>
+            <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Create a job application form with fieldsets and file upload.</p>
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Solution:</strong> <a href="../examples/03-job-application.html" target="_blank" class="text-[var(--accent)] hover:underline">examples/03-job-application.html</a></p>
+            </div>
+        </section>
+
+        <!-- Slide 11: Key Takeaways -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Key Takeaways</h1>
+            <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                <h3 class="text-xl text-[var(--accent-light)] mb-3">Form Basics</h3>
+                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                    <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;form action="" method=""&gt;</code> - Container for inputs</li>
+                    <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">action</code> = where to send, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">method</code> = GET or POST</li>
+                    <li>Only inputs with <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">name</code> attribute are submitted</li>
+                </ul>
+            </div>
+            <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                <h3 class="text-xl text-[var(--accent-light)] mb-3">Input Types</h3>
+                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                    <li>Text: <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">text</code>, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">email</code>, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">password</code>, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">tel</code>, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">url</code></li>
+                    <li>Numbers: <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">number</code>, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">range</code></li>
+                    <li>Date/Time: <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">date</code>, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">time</code>, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">datetime-local</code></li>
+                    <li>Selection: <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">checkbox</code>, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">radio</code>, <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;select&gt;</code></li>
+                </ul>
+            </div>
+            <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                <h3 class="text-xl text-[var(--accent-light)] mb-3">Accessibility</h3>
+                <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                    <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Always use labels!</strong> Never skip them.</li>
+                    <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;fieldset&gt;</code> and <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">&lt;legend&gt;</code> for grouping</li>
+                    <li>Placeholder is NOT a label replacement</li>
+                </ul>
+            </div>
+            <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4 italic">
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Unit I Complete!</strong> Next week: CSS Fundamentals</p>
+            </div>
+        </section>
+
+        <!-- Slide 12: Resources -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Resources</h1>
+            <h3 class="text-xl text-[var(--accent-light)] mb-3">Videos</h3>
+            <div class="relative w-full max-w-[800px] mx-auto my-5 aspect-video bg-black rounded-lg overflow-hidden shadow-xl">
+                <iframe class="absolute inset-0 w-full h-full border-none" src="https://www.youtube.com/embed/fNcJuPIZ2WE?rel=0" title="HTML Form Validation" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <p class="text-center text-gray-500 text-sm">Web Dev Simplified - HTML Form Validation</p>
+            <h3 class="text-xl text-[var(--accent-light)] mb-3">Documentation</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 my-5">
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200 hover:-translate-y-1 transition">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">MDN Forms Guide</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600"><a href="https://developer.mozilla.org/en-US/docs/Learn/Forms" target="_blank" class="text-[var(--accent)] hover:underline">HTML Forms Guide</a></p>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200 hover:-translate-y-1 transition">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">MDN Input</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600"><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input" target="_blank" class="text-[var(--accent)] hover:underline">Input Element Reference</a></p>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200 hover:-translate-y-1 transition">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Frontend Masters</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600"><a href="https://frontendmasters.com/bootcamp/html-forms/" target="_blank" class="text-[var(--accent)] hover:underline">HTML Forms (FREE)</a></p>
+                </div>
+            </div>
+
+            <footer class="mt-10 pt-5 border-t border-white/10 dark:border-white/10 border-gray-200 text-center text-sm text-gray-500">
+                <p><strong>Prepared by Rajiv Ramakrishnan</strong></p>
+                <p><a href="mailto:gmail@rajiv.kr" class="text-[var(--accent)] hover:underline">gmail@rajiv.kr</a> | <a href="tel:+919566134326" class="text-[var(--accent)] hover:underline">+91 9566134326</a> | <a href="https://www.linkedin.com/in/rajivramakrishnan/" target="_blank" rel="noopener" class="text-[var(--accent)] hover:underline">LinkedIn</a></p>
+                <p class="mt-2 text-gray-600">&copy; 2026 Rajiv Ramakrishnan. Licensed for educational use at Eashwari.</p>
+            </footer>
+        </section></main>
+
+    <!-- Bottom nav -->
+    <div class="max-w-[1200px] mx-auto px-5">
+        <div class="flex justify-between items-center mt-8 pt-5 border-t border-white/10 dark:border-white/10 border-gray-200 pb-8">
+            <button class="px-6 py-3 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] text-white font-medium cursor-pointer hover:scale-105 hover:shadow-lg transition border-none disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none" id="prevBtn2" onclick="changeSlide(-1)">&larr; Previous</button>
+            <div class="text-gray-500 text-sm tabular-nums"><span id="currentSlide2"></span></div>
+            <button class="px-6 py-3 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] text-white font-medium cursor-pointer hover:scale-105 hover:shadow-lg transition border-none disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none" id="nextBtn2" onclick="changeSlide(1)">Next &rarr;</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] py-8 mt-8">
+        <div class="max-w-[1200px] mx-auto px-5 text-center">
+            <p class="text-gray-900 dark:text-white text-lg font-semibold mb-4">Prepared by Rajiv Ramakrishnan</p>
+            <div class="flex flex-wrap justify-center gap-3 text-sm mb-6">
+                <a href="mailto:gmail@rajiv.kr" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    gmail@rajiv.kr
+                </a>
+                <a href="tel:+919566134326" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    +91 9566134326
+                </a>
+                <a href="https://www.linkedin.com/in/rajivramakrishnan/" target="_blank" rel="noopener" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="mr-1.5"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+                    LinkedIn
+                </a>
+            </div>
+            <p class="text-gray-600 dark:text-gray-500 text-xs">
+                &copy; 2026 Rajiv Ramakrishnan. All rights reserved. Licensed for educational use at Eashwari.
+            </p>
+        </div>
+    </footer>
+
+    </div>
+
+    <!-- Keyboard hint -->
+    <div class="fixed bottom-5 right-5 bg-black/80 px-3 py-1.5 rounded-lg text-xs text-gray-500 z-10 pointer-events-none hidden md:block" aria-hidden="true">
+        <kbd class="bg-white/10 px-1.5 py-0.5 rounded border border-white/20 font-mono text-xs">&larr;</kbd>
+        <kbd class="bg-white/10 px-1.5 py-0.5 rounded border border-white/20 font-mono text-xs">&rarr;</kbd> navigate &middot;
+        <kbd class="bg-white/10 px-1.5 py-0.5 rounded border border-white/20 font-mono text-xs">M</kbd> menu
+    </div>
+
+    <script src="../../core/slides.js" defer></script>
+</body>
+</html>

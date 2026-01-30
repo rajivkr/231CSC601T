@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prepared Statements - Week 12 Example</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a2e;
+            color: #e0e0e0;
+        }
+        h1, h2, h3 {
+            color: #ff9800;
+        }
+        pre {
+            background: #0d1117;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            border-left: 4px solid #ff9800;
+        }
+        code {
+            font-family: 'Consolas', 'Monaco', monospace;
+            color: #e0e0e0;
+        }
+        .inline-code {
+            background: rgba(255,152,0,0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #ffb74d;
+        }
+        a {
+            color: #ffb74d;
+        }
+        .danger {
+            background: rgba(244,67,54,0.15);
+            border: 2px solid rgba(244,67,54,0.5);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .danger h3 {
+            color: #f44336;
+        }
+        .safe {
+            background: rgba(76,175,80,0.15);
+            border: 2px solid rgba(76,175,80,0.5);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .safe h3 {
+            color: #4caf50;
+        }
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        @media (max-width: 768px) {
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+        .note {
+            background: rgba(255,152,0,0.1);
+            border: 1px solid rgba(255,152,0,0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .attack-demo {
+            background: #1a0a0a;
+            border: 1px solid #f44336;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+
+    <h1>Prepared Statements & SQL Injection Prevention</h1>
+    <p>Learn how to write secure database queries that prevent SQL injection attacks.</p>
+
+    <h2>What is SQL Injection?</h2>
+    <p>SQL injection is a code injection technique where an attacker inserts malicious SQL code through user input. It's one of the most dangerous and common web vulnerabilities.</p>
+
+    <div class="danger">
+        <h3>VULNERABLE CODE - Never Do This!</h3>
+        <pre><code>// DANGEROUS: User input directly concatenated into SQL
+const username = req.body.username;
+const password = req.body.password;
+
+// This is VULNERABLE to SQL injection!
+const query = `SELECT * FROM users
+    WHERE username = '${username}'
+    AND password = '${password}'`;
+
+connection.query(query, (err, results) => {
+    if (results.length > 0) {
+        console.log('Login successful');
+    }
+});</code></pre>
+
+        <h4>How an Attacker Exploits This:</h4>
+        <div class="attack-demo">
+            <p><strong>Normal input:</strong></p>
+            <p>username: <span style="color: #4caf50;">alice</span></p>
+            <p>password: <span style="color: #4caf50;">secret123</span></p>
+            <p>Generated query: SELECT * FROM users WHERE username = 'alice' AND password = 'secret123'</p>
+            <br>
+            <p><strong>Malicious input:</strong></p>
+            <p>username: <span style="color: #f44336;">admin' --</span></p>
+            <p>password: <span style="color: #f44336;">anything</span></p>
+            <p>Generated query: SELECT * FROM users WHERE username = 'admin' <span style="color: #f44336;">-- ' AND password = 'anything'</span></p>
+            <p style="color: #ff9800;">The -- comments out the password check! Attacker logs in as admin!</p>
+        </div>
+    </div>
+
+    <h2>More SQL Injection Examples</h2>
+    <div class="danger">
+        <h3>Attack Type: Data Theft</h3>
+        <pre><code>// Vulnerable search function
+const searchTerm = req.query.search;
+const query = `SELECT * FROM products WHERE name LIKE '%${searchTerm}%'`;
+
+// Attacker input: ' UNION SELECT username, password, null FROM users --
+// Result: Returns all usernames and passwords from users table!</code></pre>
+
+        <h3>Attack Type: Data Deletion</h3>
+        <pre><code>// Vulnerable delete function
+const id = req.params.id;
+const query = `DELETE FROM orders WHERE id = ${id}`;
+
+// Attacker input: 1; DROP TABLE orders; --
+// Result: Deletes the entire orders table!</code></pre>
+
+        <h3>Attack Type: Bypassing Authentication</h3>
+        <pre><code>// Vulnerable login check
+const query = `SELECT * FROM users WHERE username = '${user}' AND password = '${pass}'`;
+
+// Attacker input for username: ' OR '1'='1
+// Attacker input for password: ' OR '1'='1
+// Result: SELECT * FROM users WHERE username = '' OR '1'='1' AND password = '' OR '1'='1'
+// This returns ALL users, bypassing authentication!</code></pre>
+    </div>
+
+    <h2>The Solution: Prepared Statements</h2>
+    <p>Prepared statements (also called parameterized queries) separate SQL code from data, making injection impossible.</p>
+
+    <div class="safe">
+        <h3>SAFE CODE - Always Use This!</h3>
+        <pre><code>const mysql = require('mysql2/promise');
+
+// Method 1: Using ? placeholders (positional)
+async function safeLogin(username, password) {
+    const [rows] = await pool.execute(
+        'SELECT * FROM users WHERE username = ? AND password = ?',
+        [username, password]  // Parameters are safely escaped
+    );
+    return rows[0] || null;
+}
+
+// Method 2: Using named placeholders
+async function safeLoginNamed(username, password) {
+    const [rows] = await pool.execute(
+        'SELECT * FROM users WHERE username = :user AND password = :pass',
+        { user: username, pass: password }
+    );
+    return rows[0] || null;
+}
+
+// Even if attacker enters: admin' --
+// The query becomes: SELECT * FROM users WHERE username = 'admin\' --' AND password = '...'
+// The ' is escaped, making it a harmless string!</code></pre>
+    </div>
+
+    <h2>Comparison: Vulnerable vs Safe</h2>
+    <div class="comparison">
+        <div class="danger">
+            <h3>Vulnerable (String Concatenation)</h3>
+            <pre><code>// DON'T DO THIS
+const query = `SELECT * FROM products
+WHERE category = '${category}'
+AND price < ${maxPrice}`;
+
+connection.query(query);</code></pre>
+        </div>
+        <div class="safe">
+            <h3>Safe (Prepared Statement)</h3>
+            <pre><code>// DO THIS
+const query = `SELECT * FROM products
+WHERE category = ?
+AND price < ?`;
+
+pool.execute(query, [category, maxPrice]);</code></pre>
+        </div>
+    </div>
+
+    <h2>Practical Examples</h2>
+
+    <div class="safe">
+        <h3>Safe INSERT Operation</h3>
+        <pre><code>async function createUser(userData) {
+    const { username, email, password } = userData;
+
+    // All user inputs are parameterized
+    const [result] = await pool.execute(
+        `INSERT INTO users (username, email, password, created_at)
+         VALUES (?, ?, ?, NOW())`,
+        [username, email, password]
+    );
+
+    return result.insertId;
+}
+
+// Even malicious input is treated as data, not SQL code
+createUser({
+    username: "hacker'; DROP TABLE users; --",
+    email: "test@test.com",
+    password: "password"
+});
+// This safely inserts the literal string "hacker'; DROP TABLE users; --" as username</code></pre>
+    </div>
+
+    <div class="safe">
+        <h3>Safe UPDATE Operation</h3>
+        <pre><code>async function updateUserProfile(userId, profileData) {
+    const { name, bio, website } = profileData;
+
+    const [result] = await pool.execute(
+        `UPDATE users
+         SET name = ?, bio = ?, website = ?
+         WHERE id = ?`,
+        [name, bio, website, userId]
+    );
+
+    return result.affectedRows > 0;
+}</code></pre>
+    </div>
+
+    <div class="safe">
+        <h3>Safe DELETE Operation</h3>
+        <pre><code>async function deleteComment(commentId, userId) {
+    // Only delete if the comment belongs to the user
+    const [result] = await pool.execute(
+        `DELETE FROM comments
+         WHERE id = ? AND user_id = ?`,
+        [commentId, userId]
+    );
+
+    return result.affectedRows > 0;
+}</code></pre>
+    </div>
+
+    <div class="safe">
+        <h3>Safe Search with LIKE</h3>
+        <pre><code>async function searchProducts(searchTerm) {
+    // The % wildcards are part of the parameter, not the query
+    const [rows] = await pool.execute(
+        `SELECT * FROM products
+         WHERE name LIKE ?
+         OR description LIKE ?
+         ORDER BY name`,
+        [`%${searchTerm}%`, `%${searchTerm}%`]
+    );
+
+    return rows;
+}
+
+// Safe even with malicious input
+searchProducts("phone' UNION SELECT * FROM users --");
+// Searches for literal string "phone' UNION SELECT * FROM users --"</code></pre>
+    </div>
+
+    <div class="safe">
+        <h3>Safe IN Clause</h3>
+        <pre><code>async function getProductsByIds(ids) {
+    if (!Array.isArray(ids) || ids.length === 0) {
+        return [];
+    }
+
+    // Create placeholders dynamically
+    const placeholders = ids.map(() => '?').join(', ');
+
+    const [rows] = await pool.execute(
+        `SELECT * FROM products WHERE id IN (${placeholders})`,
+        ids
+    );
+
+    return rows;
+}
+
+// Usage
+getProductsByIds([1, 2, 3, 4, 5]);</code></pre>
+    </div>
+
+    <div class="safe">
+        <h3>Safe Dynamic Column Selection</h3>
+        <pre><code>async function getUsers(sortColumn = 'name', sortOrder = 'ASC') {
+    // Whitelist allowed columns to prevent injection
+    const allowedColumns = ['name', 'email', 'created_at', 'id'];
+    const allowedOrders = ['ASC', 'DESC'];
+
+    // Validate inputs against whitelist
+    if (!allowedColumns.includes(sortColumn)) {
+        sortColumn = 'name';
+    }
+    if (!allowedOrders.includes(sortOrder.toUpperCase())) {
+        sortOrder = 'ASC';
+    }
+
+    // Column names can't be parameterized, so we use whitelisting
+    const [rows] = await pool.execute(
+        `SELECT id, name, email FROM users ORDER BY ${sortColumn} ${sortOrder}`
+    );
+
+    return rows;
+}</code></pre>
+    </div>
+
+    <h2>Additional Security Best Practices</h2>
+    <div class="note">
+        <h3>1. Input Validation</h3>
+        <pre><code>function validateEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+function validateAge(age) {
+    const num = parseInt(age);
+    return !isNaN(num) && num >= 0 && num <= 150;
+}
+
+async function createUser(data) {
+    // Validate before database operation
+    if (!validateEmail(data.email)) {
+        throw new Error('Invalid email format');
+    }
+    if (!validateAge(data.age)) {
+        throw new Error('Invalid age');
+    }
+
+    // Now proceed with parameterized query
+    const [result] = await pool.execute(
+        'INSERT INTO users (email, age) VALUES (?, ?)',
+        [data.email, data.age]
+    );
+    return result.insertId;
+}</code></pre>
+    </div>
+
+    <div class="note">
+        <h3>2. Least Privilege Principle</h3>
+        <pre><code>-- Create a database user with limited permissions
+-- Don't use root for your application!
+
+CREATE USER 'app_user'@'localhost' IDENTIFIED BY 'secure_password';
+
+-- Only grant necessary permissions
+GRANT SELECT, INSERT, UPDATE ON school.students TO 'app_user'@'localhost';
+GRANT SELECT ON school.courses TO 'app_user'@'localhost';
+
+-- No DELETE permission - prevents accidental/malicious deletions
+-- No DROP permission - prevents table destruction</code></pre>
+    </div>
+
+    <div class="note">
+        <h3>3. Error Handling (Don't Expose Details)</h3>
+        <pre><code>async function safeQuery(query, params) {
+    try {
+        const [rows] = await pool.execute(query, params);
+        return { success: true, data: rows };
+    } catch (error) {
+        // Log detailed error for debugging
+        console.error('Database error:', error);
+
+        // Return generic message to user (don't expose SQL details!)
+        return {
+            success: false,
+            error: 'An error occurred. Please try again.'
+        };
+    }
+}</code></pre>
+    </div>
+
+    <h2>Summary</h2>
+    <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+        <tr style="background: #ff9800; color: white;">
+            <th style="padding: 12px; text-align: left;">Practice</th>
+            <th style="padding: 12px; text-align: left;">Status</th>
+        </tr>
+        <tr>
+            <td style="padding: 12px; border-bottom: 1px solid #444;">Use prepared statements with ? placeholders</td>
+            <td style="padding: 12px; border-bottom: 1px solid #444; color: #4caf50;">Always Do</td>
+        </tr>
+        <tr>
+            <td style="padding: 12px; border-bottom: 1px solid #444;">Concatenate user input into SQL strings</td>
+            <td style="padding: 12px; border-bottom: 1px solid #444; color: #f44336;">Never Do</td>
+        </tr>
+        <tr>
+            <td style="padding: 12px; border-bottom: 1px solid #444;">Validate and sanitize all user inputs</td>
+            <td style="padding: 12px; border-bottom: 1px solid #444; color: #4caf50;">Always Do</td>
+        </tr>
+        <tr>
+            <td style="padding: 12px; border-bottom: 1px solid #444;">Use least privilege database accounts</td>
+            <td style="padding: 12px; border-bottom: 1px solid #444; color: #4caf50;">Always Do</td>
+        </tr>
+        <tr>
+            <td style="padding: 12px; border-bottom: 1px solid #444;">Expose detailed error messages to users</td>
+            <td style="padding: 12px; border-bottom: 1px solid #444; color: #f44336;">Never Do</td>
+        </tr>
+        <tr>
+            <td style="padding: 12px;">Whitelist allowed values for dynamic SQL parts</td>
+            <td style="padding: 12px; color: #4caf50;">Always Do</td>
+        </tr>
+    </table>
+
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>

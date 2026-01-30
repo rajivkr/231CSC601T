@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>npm & Modules - Week 10 Example</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; }
+        h1 { color: #4caf50; }
+        h2 { color: #388e3c; border-bottom: 2px solid #4caf50; padding-bottom: 5px; }
+        .code-block { background: #263238; color: #aed581; padding: 15px; border-radius: 8px; font-family: monospace; margin: 10px 0; overflow-x: auto; white-space: pre-wrap; }
+        .terminal { background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 8px; font-family: monospace; margin: 10px 0; white-space: pre-wrap; }
+        .prompt { color: #4caf50; }
+        .comment { color: #6a9955; }
+        .note { background: #e8f5e9; padding: 15px; border-radius: 8px; border-left: 4px solid #4caf50; margin: 15px 0; }
+        .warning { background: #fff3e0; padding: 15px; border-radius: 8px; border-left: 4px solid #ff9800; margin: 15px 0; }
+        .file-tree { background: #f5f5f5; padding: 15px; border-radius: 8px; font-family: monospace; margin: 10px 0; }
+        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    </style>
+</head>
+<body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+    <h1>npm & Modules</h1>
+
+    <h2>1. npm Project Setup</h2>
+    <div class="terminal">
+<span class="prompt">$ </span>mkdir my-project
+<span class="prompt">$ </span>cd my-project
+<span class="prompt">$ </span>npm init -y
+<span class="comment"># Creates package.json with defaults</span>
+    </div>
+
+    <h3>package.json</h3>
+    <div class="code-block">{
+    "name": "my-project",
+    "version": "1.0.0",
+    "description": "A sample Node.js project",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "dev": "nodemon index.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": ["nodejs", "learning"],
+    "author": "Your Name",
+    "license": "MIT",
+    "dependencies": {
+        "express": "^4.18.2"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.1"
+    }
+}</div>
+
+    <h2>2. Installing Packages</h2>
+    <div class="terminal">
+<span class="comment"># Install production dependency</span>
+<span class="prompt">$ </span>npm install express
+<span class="comment"># or shorthand</span>
+<span class="prompt">$ </span>npm i express
+
+<span class="comment"># Install dev dependency</span>
+<span class="prompt">$ </span>npm install --save-dev nodemon
+<span class="prompt">$ </span>npm i -D nodemon
+
+<span class="comment"># Install globally (available everywhere)</span>
+<span class="prompt">$ </span>npm install -g nodemon
+
+<span class="comment"># Install specific version</span>
+<span class="prompt">$ </span>npm install express@4.18.2
+
+<span class="comment"># Install from package.json</span>
+<span class="prompt">$ </span>npm install
+
+<span class="comment"># Remove package</span>
+<span class="prompt">$ </span>npm uninstall express
+
+<span class="comment"># List installed packages</span>
+<span class="prompt">$ </span>npm list
+<span class="prompt">$ </span>npm list --depth=0
+
+<span class="comment"># Check for outdated packages</span>
+<span class="prompt">$ </span>npm outdated
+    </div>
+
+    <h2>3. Project Structure</h2>
+    <div class="file-tree">
+my-project/
+  node_modules/          <span class="comment"># Installed packages (gitignored)</span>
+  package.json           <span class="comment"># Project metadata & dependencies</span>
+  package-lock.json      <span class="comment"># Exact version lock (commit this!)</span>
+  .gitignore             <span class="comment"># Contains: node_modules/</span>
+  index.js               <span class="comment"># Entry point</span>
+  src/
+    routes/
+      users.js
+    middleware/
+      auth.js
+    utils/
+      helpers.js
+    </div>
+
+    <div class="warning">
+        <strong>.gitignore</strong> - Always add this:
+        <div class="code-block">node_modules/
+.env
+.DS_Store
+*.log</div>
+    </div>
+
+    <h2>4. CommonJS Modules</h2>
+    <div class="note">
+        <strong>CommonJS</strong> is the original Node.js module system. Uses <code>require()</code> and <code>module.exports</code>.
+    </div>
+
+    <div class="two-column">
+        <div>
+            <h3>math.js (export)</h3>
+            <div class="code-block">// Export multiple items
+function add(a, b) {
+    return a + b;
+}
+
+function subtract(a, b) {
+    return a - b;
+}
+
+function multiply(a, b) {
+    return a * b;
+}
+
+const PI = 3.14159;
+
+module.exports = {
+    add,
+    subtract,
+    multiply,
+    PI
+};</div>
+        </div>
+        <div>
+            <h3>app.js (import)</h3>
+            <div class="code-block">// Import all exports
+const math = require('./math');
+console.log(math.add(2, 3));      // 5
+console.log(math.PI);             // 3.14159
+
+// Destructured import
+const { add, subtract } = require('./math');
+console.log(add(10, 5));          // 15
+console.log(subtract(10, 5));     // 5
+
+// Built-in modules
+const fs = require('fs');
+const path = require('path');
+const os = require('os');
+
+// npm packages
+const express = require('express');</div>
+        </div>
+    </div>
+
+    <h2>5. ES Modules</h2>
+    <div class="note">
+        <strong>ES Modules</strong> is the modern standard. Enable by adding <code>"type": "module"</code> to package.json or using <code>.mjs</code> extension.
+    </div>
+
+    <div class="two-column">
+        <div>
+            <h3>utils.js (export)</h3>
+            <div class="code-block">// Named exports
+export function formatDate(date) {
+    return date.toLocaleDateString();
+}
+
+export function capitalize(str) {
+    return str[0].toUpperCase()
+        + str.slice(1);
+}
+
+// Default export
+export default class Logger {
+    log(message) {
+        console.log(
+            `[${new Date().toISOString()}] ${message}`
+        );
+    }
+}</div>
+        </div>
+        <div>
+            <h3>app.js (import)</h3>
+            <div class="code-block">// Named imports
+import { formatDate, capitalize }
+    from './utils.js';
+
+console.log(capitalize('hello'));
+// 'Hello'
+
+// Default import
+import Logger from './utils.js';
+const logger = new Logger();
+logger.log('App started');
+
+// Import all
+import * as utils from './utils.js';
+utils.capitalize('test');
+
+// Dynamic import (lazy loading)
+async function loadModule() {
+    const mod = await import('./utils.js');
+    mod.capitalize('lazy');
+}</div>
+        </div>
+    </div>
+
+    <h2>6. CommonJS vs ES Modules</h2>
+    <div class="code-block">// CommonJS (CJS)
+// - require() is synchronous
+// - module.exports / exports
+// - Default in Node.js
+// - .js or .cjs extension
+// - __dirname and __filename available
+
+// ES Modules (ESM)
+// - import is async (can be statically analyzed)
+// - export / export default
+// - Requires "type": "module" in package.json
+// - .js or .mjs extension
+// - Must include file extensions in imports
+// - No __dirname/__filename (use import.meta.url)
+
+// Converting __dirname in ES Modules:
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);</div>
+
+    <h2>7. Popular npm Packages</h2>
+    <div class="code-block">// Web Framework
+// express - Fast, minimalist web framework
+
+// Utility
+// lodash    - Utility functions
+// dayjs     - Date manipulation
+// uuid      - Generate unique IDs
+
+// Database
+// mongoose  - MongoDB ODM
+// pg        - PostgreSQL client
+// mysql2    - MySQL client
+
+// Authentication
+// jsonwebtoken - JWT tokens
+// bcrypt       - Password hashing
+
+// Development
+// nodemon   - Auto-restart on changes
+// dotenv    - Environment variables
+// eslint    - Code linting
+// jest      - Testing framework
+
+// API
+// cors      - Cross-Origin Resource Sharing
+// helmet    - Security headers
+// morgan    - HTTP request logger</div>
+
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>

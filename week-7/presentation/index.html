@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en" class="dark" data-accent="unit-3">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1a1a2e">
+    <title>Week 07 - JavaScript Fundamentals | 231CSC601T</title>
+    <script src="../../core/theme.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../../core/tw-config.js"></script>
+    <link rel="stylesheet" href="../../core/slides.css">
+</head>
+<body class="font-sans min-h-screen
+             bg-gradient-to-br from-navy to-navy-deep text-gray-200
+             dark:bg-gradient-to-br dark:from-navy dark:to-navy-deep dark:text-gray-200">
+
+    <a href="#main-content" class="skip-link bg-[var(--accent)] text-white px-4 py-2 rounded-lg font-semibold no-underline">Skip to content</a>
+
+    <!-- Nav header -->
+    <nav class="fixed top-0 left-0 right-0 z-50
+                bg-black/90 dark:bg-black/90 bg-white/95 dark:bg-black/90
+                backdrop-blur-md border-b-2 border-[var(--accent)]
+                px-4 py-2 flex justify-between items-center" aria-label="Slide navigation">
+        <div class="flex items-center gap-3 min-w-0">
+            <a href="../../index.html" class="text-[var(--accent)] text-sm hover:underline whitespace-nowrap hidden sm:inline">&larr; Home</a>
+            <a href="../examples/index.html" class="text-[var(--accent)] text-sm hover:underline whitespace-nowrap hidden sm:inline">&larr; Examples</a>
+            <span class="text-[var(--accent)] font-bold text-sm truncate">Week 07: JavaScript Fundamentals</span>
+        </div>
+        <div class="flex items-center gap-2 flex-shrink-0">
+            <button class="theme-toggle w-9 h-9 flex items-center justify-center border border-gray-600 dark:border-gray-600 border-gray-300 rounded-lg bg-transparent text-gray-400 hover:text-white cursor-pointer transition" aria-label="Switch to light mode">
+                <svg class="icon-sun w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="icon-moon w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+            <button class="px-3 py-1.5 rounded-lg bg-[var(--accent)] text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" onclick="toggleMenu()" aria-label="Open slide menu">Menu</button>
+            <button class="px-3 py-1.5 rounded-lg bg-red-500 text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" id="prevBtn" aria-label="Previous slide">Prev</button>
+            <span class="text-gray-400 text-sm tabular-nums" aria-live="polite"><span id="currentSlide">1</span> / <span id="totalSlides"></span></span>
+            <button class="px-3 py-1.5 rounded-lg bg-green-600 text-white text-sm font-medium cursor-pointer hover:scale-105 transition border-none" id="nextBtn" aria-label="Next slide">Next</button>
+        </div>
+    </nav>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay fixed inset-0 z-[200] bg-black/90 dark:bg-black/90 overflow-y-auto p-6" id="menuOverlay" aria-hidden="true" role="dialog" aria-label="Slide navigation menu">
+        <button class="close-menu fixed top-6 right-6 text-4xl text-white cursor-pointer bg-transparent border-none z-[201] leading-none p-2" onclick="toggleMenu()" aria-label="Close menu">&times;</button>
+        <div class="max-w-[600px] mx-auto mt-12 p-5">
+            <h2 class="text-[var(--accent)] text-2xl font-bold text-center mb-6">Slide Navigation</h2>
+            <ul id="slideMenu" class="list-none m-0 p-0"></ul>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <main id="main-content" class="max-w-[1200px] mx-auto px-5 pt-16">
+
+        <!-- Progress bar -->
+        <div class="w-full h-1 bg-white/10 dark:bg-white/10 bg-gray-200 rounded mt-4 mb-5 overflow-hidden">
+            <div class="progress-fill h-full rounded bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)]" id="progress" style="width:0%"></div>
+        </div>
+
+        <!-- Slide 1: Title -->
+        <section class="slide active rounded-2xl p-6 md:p-10 min-h-[80vh]
+                        bg-white/5 dark:bg-white/5 bg-white dark:bg-white/5
+                        border border-white/10 dark:border-white/10 border-gray-200
+                        backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Week 07: JavaScript Fundamentals</h1>
+            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Unit III - Programming the Web</h2>
+            <p class="text-xl text-gray-300 dark:text-gray-300 text-gray-600 my-5">Welcome to the language of the web!</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <div class="text-5xl text-[var(--accent)] bg-[#2c3e50] px-5 py-2.5 rounded-lg inline-block font-bold">JS</div>
+                    <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 mt-5">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-3">What You'll Learn</h3>
+                        <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                            <li>JavaScript basics: variables, data types</li>
+                            <li>Operators and expressions</li>
+                            <li>Control flow: if, else, loops</li>
+                            <li>Functions and scope</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-3">Why JavaScript?</h3>
+                        <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                            <li>Only programming language browsers understand</li>
+                            <li>Makes web pages interactive</li>
+                            <li>Runs on servers (Node.js)</li>
+                            <li>Mobile apps, desktop apps, games...</li>
+                            <li>Most in-demand programming language!</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <p class="text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Press &rarr; or click Next to continue</strong></p>
+            <p class="text-sm text-gray-500">Press M for slide menu | Press ? for keyboard shortcuts</p>
+        </section>
+
+        <!-- Slide 2: Adding JavaScript -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Adding JavaScript to HTML</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">1. Inline (Avoid!)</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;button onclick="alert('Hi!')"&gt;
+    Click me
+&lt;/button&gt;</code></pre>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-5">2. Internal Script</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;script&gt;
+    console.log('Hello, World!');
+&lt;/script&gt;</code></pre>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-5">3. External File (Best!)</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">&lt;!-- At end of body --&gt;
+&lt;script src="script.js"&gt;&lt;/script&gt;</code></pre>
+                </div>
+                <div>
+                    <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-3">Where to Place Scripts?</h3>
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">At the <strong class="text-gray-100 dark:text-gray-100 text-gray-800">end of &lt;body&gt;</strong> or use <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">defer</code>:</p>
+                        <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm mt-3"><code class="text-gray-200">&lt;head&gt;
+    &lt;script src="app.js" defer&gt;&lt;/script&gt;
+&lt;/head&gt;</code></pre>
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600 mt-3"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Why?</strong> HTML loads first, then JavaScript runs. Prevents blocking page render.</p>
+                    </div>
+
+                    <div class="p-5 rounded-lg border border-red-500/30 bg-red-500/10 my-4">
+                        <h3 class="text-xl text-red-400 mb-3">Console is Your Friend!</h3>
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Open browser DevTools (F12) → Console tab to see JavaScript output and errors!</p>
+                        <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-red-500 text-sm mt-3"><code class="text-gray-200">console.log('Debug message');
+console.error('Error!');
+console.warn('Warning!');</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3: Variables -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Variables</h1>
+            <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Variables are containers for storing data values.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Declaring Variables</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// Modern way (ES6+)
+let name = 'John';      // Can be reassigned
+const PI = 3.14159;     // Cannot be reassigned
+
+// Old way (avoid!)
+var age = 25;           // Function scoped, hoisted</code></pre>
+
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3 mt-4">let vs const</h3>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">let</code> - value can change later</li>
+                        <li><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">const</code> - value never changes</li>
+                    </ul>
+
+                    <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-3">Best Practice</h3>
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Use <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">const</code> by default. Only use <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">let</code> if you need to reassign!</p>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Naming Rules</h2>
+                    <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Start with letter, _ or $</li>
+                        <li>Can contain letters, numbers, _ , $</li>
+                        <li>Case-sensitive (name ≠ Name)</li>
+                        <li>Cannot use reserved words (let, const, if...)</li>
+                    </ul>
+
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3 mt-4">Naming Conventions</h3>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// camelCase (preferred)
+let firstName = 'John';
+let totalPrice = 99.99;
+
+// UPPER_CASE for constants
+const MAX_SIZE = 100;
+const API_KEY = 'abc123';</code></pre>
+
+                    <div class="p-5 rounded-lg border border-red-500/30 bg-red-500/10 my-4">
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">var</code> has confusing hoisting behavior. Always use <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">let</code> or <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">const</code>!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 4: Data Types -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Data Types</h1>
+            <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">JavaScript is <strong class="text-gray-100 dark:text-gray-100 text-gray-800">dynamically typed</strong> - variables can hold any type!</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Primitive Types</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// String - text
+let name = 'John';
+let message = "Hello";
+let template = `Hi ${name}!`;  // Template literal
+
+// Number - integers and decimals
+let age = 25;
+let price = 19.99;
+let negative = -10;
+
+// Boolean - true or false
+let isActive = true;
+let isLoggedIn = false;
+
+// Undefined - declared but no value
+let x;  // x is undefined
+
+// Null - intentionally empty
+let data = null;</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Checking Types</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">typeof 'hello'    // "string"
+typeof 42         // "number"
+typeof true       // "boolean"
+typeof undefined  // "undefined"
+typeof null       // "object" (JS quirk!)
+typeof {}         // "object"
+typeof []         // "object"</code></pre>
+
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3 mt-4">Type Coercion</h3>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// JavaScript auto-converts types!
+'5' + 3     // "53" (string)
+'5' - 3     // 2 (number)
+'5' == 5    // true (loose equality)
+'5' === 5   // false (strict equality)</code></pre>
+
+                    <div class="p-5 rounded-lg border border-red-500/30 bg-red-500/10 my-4">
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Always use <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">===</code> (strict equality) to avoid surprises!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 5: Operators -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Operators</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Arithmetic</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">let a = 10, b = 3;
+
+a + b    // 13 (addition)
+a - b    // 7 (subtraction)
+a * b    // 30 (multiplication)
+a / b    // 3.333... (division)
+a % b    // 1 (modulo/remainder)
+a ** b   // 1000 (exponent)</code></pre>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-5">Assignment</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">let x = 10;
+x += 5;   // x = x + 5 → 15
+x -= 3;   // x = x - 3 → 12
+x *= 2;   // x = x * 2 → 24
+x /= 4;   // x = x / 4 → 6
+
+// Increment/Decrement
+x++;      // x = x + 1
+x--;      // x = x - 1</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Comparison</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">5 == '5'   // true (loose)
+5 === '5'  // false (strict)
+5 != '5'   // false
+5 !== '5'  // true
+5 > 3      // true
+5 < 3      // false
+5 >= 5     // true
+5 <= 4     // false</code></pre>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-5">Logical</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">true && true   // true (AND)
+true && false  // false
+true || false  // true (OR)
+false || false // false
+!true          // false (NOT)
+!false         // true</code></pre>
+
+                    <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-3">Short-circuit Evaluation</h3>
+                        <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm mt-3"><code class="text-gray-200">const name = user && user.name;
+const value = input || 'default';</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 6: Strings -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Working with Strings</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Creating Strings</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// Three ways
+let s1 = 'single quotes';
+let s2 = "double quotes";
+let s3 = `template literal`;
+
+// Template literals - best!
+let name = 'John';
+let greeting = `Hello, ${name}!`;
+let multi = `Line 1
+Line 2
+Line 3`;</code></pre>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-5">String Properties & Methods</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">let str = 'Hello, World!';
+
+str.length         // 13
+str.toUpperCase()  // "HELLO, WORLD!"
+str.toLowerCase()  // "hello, world!"
+str.trim()         // Remove whitespace</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Common String Methods</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">let str = 'Hello, World!';
+
+// Finding
+str.indexOf('World')    // 7
+str.includes('Hello')   // true
+str.startsWith('He')    // true
+str.endsWith('!')       // true
+
+// Extracting
+str.slice(0, 5)         // "Hello"
+str.slice(-6)           // "World!"
+str.substring(7, 12)    // "World"
+
+// Modifying (returns new string!)
+str.replace('World', 'JS')  // "Hello, JS!"
+str.split(', ')         // ["Hello", "World!"]
+
+// Combining
+'Hello' + ' ' + 'World'  // "Hello World"
+['Hello', 'World'].join(' ')  // "Hello World"</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 7: Arrays -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Arrays</h1>
+            <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Arrays store multiple values in a single variable.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Creating Arrays</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// Array literal (preferred)
+let fruits = ['apple', 'banana', 'orange'];
+let numbers = [1, 2, 3, 4, 5];
+let mixed = [1, 'two', true, null];
+
+// Accessing elements (0-indexed!)
+fruits[0]    // 'apple'
+fruits[1]    // 'banana'
+fruits[2]    // 'orange'
+fruits[3]    // undefined
+
+// Modifying
+fruits[1] = 'mango';  // Replace
+fruits.length         // 3</code></pre>
+
+                    <h3 class="text-xl text-[var(--accent-light)] mb-3 mt-4">Array Destructuring</h3>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">const [first, second] = fruits;
+// first = 'apple', second = 'banana'</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Common Array Methods</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">let arr = [1, 2, 3];
+
+// Adding/Removing
+arr.push(4)      // Add to end → [1,2,3,4]
+arr.pop()        // Remove from end → [1,2,3]
+arr.unshift(0)   // Add to start → [0,1,2,3]
+arr.shift()      // Remove from start → [1,2,3]
+
+// Finding
+arr.indexOf(2)       // 1
+arr.includes(2)      // true
+arr.find(x => x > 1) // 2
+
+// Transforming
+arr.map(x => x * 2)      // [2, 4, 6]
+arr.filter(x => x > 1)   // [2, 3]
+arr.reduce((a, b) => a + b, 0)  // 6
+
+// Other
+arr.slice(1, 2)      // [2] - extract
+arr.splice(1, 1)     // Remove at index
+arr.join(', ')       // "1, 2, 3"
+arr.reverse()        // [3, 2, 1]
+arr.sort()           // Sort alphabetically</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 8: Control Flow -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Control Flow - Conditionals</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">if...else</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">let age = 18;
+
+if (age >= 18) {
+    console.log('Adult');
+} else if (age >= 13) {
+    console.log('Teenager');
+} else {
+    console.log('Child');
+}
+
+// Single line (simple cases)
+if (age >= 18) console.log('Adult');</code></pre>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-5">Ternary Operator</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// condition ? ifTrue : ifFalse
+let status = age >= 18 ? 'adult' : 'minor';
+
+// Can be nested (but don't!)
+let category = age >= 18
+    ? 'adult'
+    : age >= 13
+        ? 'teen'
+        : 'child';</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">switch</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">let day = 'Monday';
+
+switch (day) {
+    case 'Monday':
+    case 'Tuesday':
+    case 'Wednesday':
+    case 'Thursday':
+    case 'Friday':
+        console.log('Weekday');
+        break;
+    case 'Saturday':
+    case 'Sunday':
+        console.log('Weekend');
+        break;
+    default:
+        console.log('Invalid day');
+}</code></pre>
+
+                    <div class="p-5 rounded-lg border border-red-500/30 bg-red-500/10 my-4">
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Don't forget <code class="bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded font-mono text-sm">break</code>!</strong> Without it, execution "falls through" to next case.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 9: Loops -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Control Flow - Loops</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">for loop</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// Classic for loop
+for (let i = 0; i < 5; i++) {
+    console.log(i);  // 0, 1, 2, 3, 4
+}
+
+// Looping arrays
+const fruits = ['apple', 'banana', 'orange'];
+
+for (let i = 0; i < fruits.length; i++) {
+    console.log(fruits[i]);
+}</code></pre>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-5">for...of (Arrays)</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// Preferred for arrays!
+for (const fruit of fruits) {
+    console.log(fruit);
+}
+
+// With index
+for (const [index, fruit] of fruits.entries()) {
+    console.log(index, fruit);
+}</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">while loop</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">let count = 0;
+
+while (count < 5) {
+    console.log(count);
+    count++;
+}
+
+// do...while (runs at least once)
+do {
+    console.log(count);
+    count++;
+} while (count < 5);</code></pre>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-5">Loop Control</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// break - exit loop entirely
+for (let i = 0; i < 10; i++) {
+    if (i === 5) break;
+    console.log(i);  // 0, 1, 2, 3, 4
+}
+
+// continue - skip to next iteration
+for (let i = 0; i < 5; i++) {
+    if (i === 2) continue;
+    console.log(i);  // 0, 1, 3, 4
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 10: Functions -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Functions</h1>
+            <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Functions are reusable blocks of code.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Function Declaration</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">function greet(name) {
+    return `Hello, ${name}!`;
+}
+
+greet('John');  // "Hello, John!"
+
+// Multiple parameters
+function add(a, b) {
+    return a + b;
+}
+
+add(5, 3);  // 8</code></pre>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-5">Default Parameters</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">function greet(name = 'Guest') {
+    return `Hello, ${name}!`;
+}
+
+greet();        // "Hello, Guest!"
+greet('John');  // "Hello, John!"</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Arrow Functions (ES6)</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// Arrow function syntax
+const greet = (name) => {
+    return `Hello, ${name}!`;
+};
+
+// Shorter: implicit return
+const greet = (name) => `Hello, ${name}!`;
+
+// Even shorter: single param
+const greet = name => `Hello, ${name}!`;
+
+// No params
+const sayHi = () => 'Hi!';
+
+// Multiple params need ()
+const add = (a, b) => a + b;</code></pre>
+
+                    <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-3">When to Use Which?</h3>
+                        <ul class="ml-6 space-y-2 text-lg leading-relaxed text-gray-300 dark:text-gray-300 text-gray-600">
+                            <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Arrow functions:</strong> Short callbacks, array methods</li>
+                            <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Regular functions:</strong> Object methods, constructors</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 11: Scope -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Scope</h1>
+            <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Scope determines where variables are accessible.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Global Scope</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// Accessible everywhere
+const globalVar = 'I am global';
+
+function test() {
+    console.log(globalVar);  // Works!
+}</code></pre>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-5">Function Scope</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">function test() {
+    const localVar = 'I am local';
+    console.log(localVar);  // Works!
+}
+
+console.log(localVar);  // Error!</code></pre>
+
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2 mt-5">Block Scope (let, const)</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">if (true) {
+    let blockVar = 'I am block scoped';
+    const alsoBlock = 'Me too';
+}
+
+console.log(blockVar);  // Error!</code></pre>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">var vs let</h2>
+                    <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm"><code class="text-gray-200">// var is function scoped (confusing!)
+if (true) {
+    var x = 5;
+}
+console.log(x);  // 5 (still accessible!)
+
+// let is block scoped (predictable)
+if (true) {
+    let y = 5;
+}
+console.log(y);  // Error!</code></pre>
+
+                    <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-3">Closure</h3>
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Functions remember their scope:</p>
+                        <pre class="bg-[#0d1117] p-5 rounded-lg overflow-x-auto border-l-4 border-[var(--accent)] text-sm mt-3"><code class="text-gray-200">function outer() {
+    let count = 0;
+    return function inner() {
+        count++;
+        return count;
+    };
+}
+
+const counter = outer();
+counter();  // 1
+counter();  // 2
+counter();  // 3</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 12: Video Resources -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Video Resources</h1>
+
+            <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">JavaScript in 100 Seconds - Fireship</h2>
+            <div class="relative w-full max-w-[800px] mx-auto my-5 aspect-video bg-black rounded-lg overflow-hidden shadow-xl">
+                <iframe class="absolute inset-0 w-full h-full border-none" src="https://www.youtube.com/embed/DHjqpvDnNGE?rel=0" title="JavaScript in 100 Seconds" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 my-5">
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200 hover:-translate-y-1 transition">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Frontend Masters</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600"><a href="https://frontendmasters.com/courses/getting-started-javascript-v2/" target="_blank" class="text-[var(--accent)] hover:underline">Getting Started with JS</a></p>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600">Kyle Simpson's beginner course</p>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200 hover:-translate-y-1 transition">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">JavaScript.info</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600"><a href="https://javascript.info/" target="_blank" class="text-[var(--accent)] hover:underline">javascript.info</a></p>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600">The Modern JavaScript Tutorial</p>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200 hover:-translate-y-1 transition">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">MDN</h3>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide" target="_blank" class="text-[var(--accent)] hover:underline">JavaScript Guide</a></p>
+                    <p class="text-gray-300 dark:text-gray-300 text-gray-600">Official documentation</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 13: Practice -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Practice Exercises</h1>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-5">
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Exercise 1: Variables</h3>
+                    <ul class="ml-5 space-y-1 text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Create variables of each type</li>
+                        <li>Use template literals</li>
+                        <li>Check types with typeof</li>
+                    </ul>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Exercise 2: Calculator</h3>
+                    <ul class="ml-5 space-y-1 text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Write functions: add, subtract, multiply, divide</li>
+                        <li>Handle division by zero</li>
+                        <li>Use arrow functions</li>
+                    </ul>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Exercise 3: Array Operations</h3>
+                    <ul class="ml-5 space-y-1 text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Filter even numbers</li>
+                        <li>Double all values with map</li>
+                        <li>Find sum with reduce</li>
+                    </ul>
+                </div>
+                <div class="p-4 rounded-lg bg-white/5 dark:bg-white/5 bg-gray-50 border border-white/10 dark:border-white/10 border-gray-200">
+                    <h3 class="text-xl text-[var(--accent-light)] mb-2">Exercise 4: FizzBuzz</h3>
+                    <ul class="ml-5 space-y-1 text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Print 1-100</li>
+                        <li>Fizz for multiples of 3</li>
+                        <li>Buzz for multiples of 5</li>
+                        <li>FizzBuzz for both</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 my-4">
+                <h3 class="text-xl text-[var(--accent-light)] mb-2">Examples to Study</h3>
+                <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600"><a href="../examples/index.html" class="text-[var(--accent)] hover:underline">View Week 07 Examples &rarr;</a></p>
+            </div>
+        </section>
+
+        <!-- Slide 14: Summary -->
+        <section class="slide rounded-2xl p-6 md:p-10 min-h-[80vh] bg-white/5 dark:bg-white/5 bg-white border border-white/10 dark:border-white/10 border-gray-200 backdrop-blur-sm">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent)] mb-5">Week 07 Summary</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-5">
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Key Concepts</h2>
+                    <ul class="ml-6 space-y-2 text-lg text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Variables:</strong> let (reassignable), const (constant)</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Types:</strong> string, number, boolean, null, undefined</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Operators:</strong> arithmetic, comparison, logical</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Strings:</strong> template literals, string methods</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Arrays:</strong> push, pop, map, filter, reduce</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Control:</strong> if/else, switch, for, while</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Functions:</strong> declaration, arrow functions</li>
+                        <li><strong class="text-gray-100 dark:text-gray-100 text-gray-800">Scope:</strong> global, function, block</li>
+                    </ul>
+                </div>
+                <div>
+                    <h2 class="text-2xl text-[var(--accent-light)] mb-4 border-b-2 border-[var(--accent)] pb-2">Best Practices</h2>
+                    <ul class="ml-6 space-y-2 text-lg text-gray-300 dark:text-gray-300 text-gray-600">
+                        <li>Use const by default, let when needed</li>
+                        <li>Never use var</li>
+                        <li>Always use === for comparison</li>
+                        <li>Use template literals for strings</li>
+                        <li>Use for...of for array iteration</li>
+                        <li>Keep functions small and focused</li>
+                        <li>Use descriptive variable names</li>
+                    </ul>
+
+                    <div class="p-5 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 mt-4">
+                        <h3 class="text-xl text-[var(--accent-light)] mb-2">Coming Next Week</h3>
+                        <p class="text-lg text-gray-300 dark:text-gray-300 text-gray-600">Week 08: JavaScript DOM & Events - Making pages interactive!</p>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="mt-10 pt-5 border-t border-white/10 dark:border-white/10 border-gray-200 text-center text-sm text-gray-500">
+                <p><strong>Prepared by Rajiv Ramakrishnan</strong></p>
+                <p><a href="mailto:gmail@rajiv.kr" class="text-[var(--accent)] hover:underline">gmail@rajiv.kr</a> | <a href="tel:+919566134326" class="text-[var(--accent)] hover:underline">+91 9566134326</a> | <a href="https://www.linkedin.com/in/rajivramakrishnan/" target="_blank" rel="noopener" class="text-[var(--accent)] hover:underline">LinkedIn</a></p>
+                <p class="mt-2 text-gray-600">&copy; 2026 Rajiv Ramakrishnan. Licensed for educational use at Eashwari.</p>
+            </footer>
+        </section></main>
+
+    <!-- Bottom nav -->
+    <div class="max-w-[1200px] mx-auto px-5">
+        <div class="flex justify-between items-center mt-8 pt-5 border-t border-white/10 dark:border-white/10 border-gray-200 pb-8">
+            <button class="px-6 py-3 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] text-white font-medium cursor-pointer hover:scale-105 hover:shadow-lg transition border-none disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none" id="prevBtn2" onclick="changeSlide(-1)">&larr; Previous</button>
+            <div class="text-gray-500 text-sm tabular-nums"><span id="currentSlide2"></span></div>
+            <button class="px-6 py-3 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] text-white font-medium cursor-pointer hover:scale-105 hover:shadow-lg transition border-none disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none" id="nextBtn2" onclick="changeSlide(1)">Next &rarr;</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] py-8 mt-8">
+        <div class="max-w-[1200px] mx-auto px-5 text-center">
+            <p class="text-gray-900 dark:text-white text-lg font-semibold mb-4">Prepared by Rajiv Ramakrishnan</p>
+            <div class="flex flex-wrap justify-center gap-3 text-sm mb-6">
+                <a href="mailto:gmail@rajiv.kr" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    gmail@rajiv.kr
+                </a>
+                <a href="tel:+919566134326" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    +91 9566134326
+                </a>
+                <a href="https://www.linkedin.com/in/rajivramakrishnan/" target="_blank" rel="noopener" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="mr-1.5"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+                    LinkedIn
+                </a>
+            </div>
+            <p class="text-gray-600 dark:text-gray-500 text-xs">
+                &copy; 2026 Rajiv Ramakrishnan. All rights reserved. Licensed for educational use at Eashwari.
+            </p>
+        </div>
+    </footer>
+
+    </div>
+
+    <!-- Keyboard hint -->
+    <div class="fixed bottom-5 right-5 bg-black/80 px-3 py-1.5 rounded-lg text-xs text-gray-500 z-10 pointer-events-none hidden md:block" aria-hidden="true">
+        <kbd class="bg-white/10 px-1.5 py-0.5 rounded border border-white/20 font-mono text-xs">&larr;</kbd>
+        <kbd class="bg-white/10 px-1.5 py-0.5 rounded border border-white/20 font-mono text-xs">&rarr;</kbd> navigate &middot;
+        <kbd class="bg-white/10 px-1.5 py-0.5 rounded border border-white/20 font-mono text-xs">M</kbd> menu
+    </div>
+
+    <script src="../../core/slides.js" defer></script>
+</body>
+</html>

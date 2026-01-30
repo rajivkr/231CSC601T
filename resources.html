@@ -1,0 +1,685 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1a1a2e" />
+    <title>Essential Resources | 231CSC601T</title>
+    <script src="core/theme.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="core/tw-config.js"></script>
+    <style type="text/tailwindcss">
+      /* Design system inspired button styles */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 500;
+        transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+        border-radius: 8px;
+        font-size: 14px;
+        line-height: 1;
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: var(--accent);
+        border: 1px solid;
+        border-color: currentColor;
+        padding: 10px 16px;
+      }
+      .btn-secondary:hover {
+        background: rgba(74,144,217,0.12);
+        transform: translateY(-1px);
+      }
+
+      /* Theme toggle icons */
+      html.dark .icon-sun { display: block; }
+      html.dark .icon-moon { display: none; }
+      html:not(.dark) .icon-sun { display: none; }
+      html:not(.dark) .icon-moon { display: block; }
+
+      /* Theme transition */
+      .theme-transitioning, .theme-transitioning *, .theme-transitioning *::before, .theme-transitioning *::after {
+        transition: background-color 0.25s, color 0.25s, border-color 0.25s !important;
+      }
+
+      .resource-card {
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+    </style>
+</head>
+<body class="min-h-screen font-sans bg-gray-50 text-gray-900 dark:bg-gradient-to-br dark:from-[#0a0a0f] dark:to-[#16161f] dark:text-gray-100">
+
+    <div class="max-w-[1400px] mx-auto px-6 py-12">
+
+        <!-- Header -->
+        <div class="mb-16 text-center">
+            <a href="index.html" class="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:underline mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Back to Course
+            </a>
+            <h1 class="text-5xl font-bold text-gray-900 dark:text-white mb-4 tracking-tight">
+                Essential Resources
+            </h1>
+            <p class="text-gray-700 dark:text-gray-400 text-xl max-w-3xl mx-auto leading-relaxed">
+                Handpicked tools, platforms, and communities to accelerate your web development journey. These are industry-standard resources used by professional developers worldwide.
+            </p>
+            <div class="flex justify-center gap-3 mt-8">
+                <button class="theme-toggle btn btn-secondary"
+                        aria-label="Switch to light mode">
+                    <svg class="icon-sun w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                    <svg class="icon-moon w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Learning & Career Growth -->
+        <div class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-3">
+                <span class="text-4xl">📚</span> Learning & Career Growth
+            </h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-6 ml-14">Free courses, tutorials, and career roadmaps</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <a href="https://roadmap.sh" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400">Roadmap.sh</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Step-by-step learning paths for 50+ developer roles. Community-driven roadmaps, guides, and resources.</p>
+                    <span class="inline-block mt-3 text-sm text-blue-600 dark:text-blue-400 font-medium">Explore roadmaps →</span>
+                </a>
+
+                <a href="https://freecodecamp.org" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-green-500 dark:hover:border-green-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-green-600 dark:group-hover:text-green-400">freeCodeCamp</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Learn to code for free with 8,000+ tutorials. Earn certifications in web development, JavaScript, and more.</p>
+                    <span class="inline-block mt-3 text-sm text-green-600 dark:text-green-400 font-medium">Start learning →</span>
+                </a>
+
+                <a href="https://frontendmasters.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-red-500 dark:hover:border-red-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-red-600 dark:group-hover:text-red-400">Frontend Masters</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">In-depth courses from industry experts at Netflix, Google, and Stripe. Master modern web technologies.</p>
+                    <span class="inline-block mt-3 text-sm text-red-600 dark:text-red-400 font-medium">Browse courses →</span>
+                </a>
+
+                <a href="https://theodinproject.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-orange-500 dark:hover:border-orange-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-orange-600 dark:group-hover:text-orange-400">The Odin Project</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Complete free full-stack curriculum. Learn by building real projects with Ruby or JavaScript.</p>
+                    <span class="inline-block mt-3 text-sm text-orange-600 dark:text-orange-400 font-medium">Start course →</span>
+                </a>
+
+                <a href="https://scrimba.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-purple-500 dark:hover:border-purple-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-purple-600 dark:group-hover:text-purple-400">Scrimba</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Interactive coding tutorials where you can pause and edit code. Better than watching videos!</p>
+                    <span class="inline-block mt-3 text-sm text-purple-600 dark:text-purple-400 font-medium">Try interactive →</span>
+                </a>
+
+                <a href="https://javascript.info" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-yellow-500 dark:hover:border-yellow-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-yellow-600 dark:group-hover:text-yellow-400">JavaScript.info</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">The most comprehensive free JavaScript guide. From basics to advanced concepts, all explained clearly.</p>
+                    <span class="inline-block mt-3 text-sm text-yellow-600 dark:text-yellow-400 font-medium">Read guide →</span>
+                </a>
+
+                <a href="https://developer.mozilla.org" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-blue-600 dark:hover:border-blue-500 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-700 dark:group-hover:text-blue-500">MDN Web Docs</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Official web documentation by Mozilla. THE reference for HTML, CSS, JavaScript, and Web APIs.</p>
+                    <span class="inline-block mt-3 text-sm text-blue-700 dark:text-blue-500 font-medium">Browse docs →</span>
+                </a>
+
+                <a href="https://web.dev" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-green-600 dark:hover:border-green-500 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-green-700 dark:group-hover:text-green-500">Web.dev</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Google's official web development guide. Learn modern best practices and performance optimization.</p>
+                    <span class="inline-block mt-3 text-sm text-green-700 dark:text-green-500 font-medium">Learn from Google →</span>
+                </a>
+
+                <a href="https://fullstackopen.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-indigo-500 dark:hover:border-indigo-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400">Full Stack Open</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">University of Helsinki's free course. Learn React, Node.js, MongoDB, GraphQL, and TypeScript.</p>
+                    <span class="inline-block mt-3 text-sm text-indigo-600 dark:text-indigo-400 font-medium">Take course →</span>
+                </a>
+
+                <a href="https://leetcode.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-orange-600 dark:hover:border-orange-500 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-orange-700 dark:group-hover:text-orange-500">LeetCode</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Master coding interviews with 2000+ problems. Essential for preparing for tech company interviews.</p>
+                    <span class="inline-block mt-3 text-sm text-orange-700 dark:text-orange-500 font-medium">Practice coding →</span>
+                </a>
+
+                <a href="https://exercism.org" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-purple-600 dark:hover:border-purple-500 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-purple-700 dark:group-hover:text-purple-500">Exercism</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Code practice with personal mentorship. Get feedback from experienced developers on your solutions.</p>
+                    <span class="inline-block mt-3 text-sm text-purple-700 dark:text-purple-500 font-medium">Get mentored →</span>
+                </a>
+
+                <a href="https://learnweb3.io" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-pink-500 dark:hover:border-pink-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-pink-600 dark:group-hover:text-pink-400">LearnWeb3</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Learn blockchain and Web3 development. Build real dApps and smart contracts for your portfolio.</p>
+                    <span class="inline-block mt-3 text-sm text-pink-600 dark:text-pink-400 font-medium">Start building →</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Practice & Challenges -->
+        <div class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-3">
+                <span class="text-4xl">🧪</span> Practice & Challenges
+            </h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-6 ml-14">Build real projects and sharpen your skills</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <a href="https://frontendmentor.io" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400">Frontend Mentor</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Real-world frontend challenges with professional designs. Build portfolio-worthy projects.</p>
+                    <span class="inline-block mt-3 text-sm text-blue-600 dark:text-blue-400 font-medium">Take challenge →</span>
+                </a>
+
+                <a href="https://codewars.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-red-500 dark:hover:border-red-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-red-600 dark:group-hover:text-red-400">CodeWars</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Level up your coding skills through fun challenges. Learn from community solutions.</p>
+                    <span class="inline-block mt-3 text-sm text-red-600 dark:text-red-400 font-medium">Start training →</span>
+                </a>
+
+                <a href="https://cssbattle.dev" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-purple-500 dark:hover:border-purple-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-purple-600 dark:group-hover:text-purple-400">CSS Battle</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Master CSS through visual challenges. Compete with developers worldwide.</p>
+                    <span class="inline-block mt-3 text-sm text-purple-600 dark:text-purple-400 font-medium">Battle now →</span>
+                </a>
+
+                <a href="https://javascript30.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-yellow-500 dark:hover:border-yellow-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-yellow-600 dark:group-hover:text-yellow-400">JavaScript30</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Build 30 projects in 30 days with vanilla JavaScript. No frameworks, no compilers.</p>
+                    <span class="inline-block mt-3 text-sm text-yellow-600 dark:text-yellow-400 font-medium">Start challenge →</span>
+                </a>
+
+                <a href="https://100dayscss.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-pink-500 dark:hover:border-pink-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-pink-600 dark:group-hover:text-pink-400">100 Days CSS</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Daily CSS challenges to improve your styling skills through creative coding.</p>
+                    <span class="inline-block mt-3 text-sm text-pink-600 dark:text-pink-400 font-medium">Daily practice →</span>
+                </a>
+
+                <a href="https://codepen.io" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-green-500 dark:hover:border-green-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-green-600 dark:group-hover:text-green-400">CodePen</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Frontend playground to test ideas. Learn from millions of community creations.</p>
+                    <span class="inline-block mt-3 text-sm text-green-600 dark:text-green-400 font-medium">Start coding →</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Design & Inspiration -->
+        <div class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-3">
+                <span class="text-4xl">🎨</span> Design & Inspiration
+            </h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-6 ml-14">Beautiful designs to inspire your next project</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <a href="https://curated.design" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-pink-500 dark:hover:border-pink-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-pink-600 dark:group-hover:text-pink-400">Curated Design</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Curated collection of modern, beautiful web designs to spark your creativity.</p>
+                    <span class="inline-block mt-3 text-sm text-pink-600 dark:text-pink-400 font-medium">Get inspired →</span>
+                </a>
+
+                <a href="https://dribbble.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-pink-600 dark:hover:border-pink-500 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-pink-700 dark:group-hover:text-pink-500">Dribbble</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Designer portfolios and UI/UX inspiration. Follow top designers and their work.</p>
+                    <span class="inline-block mt-3 text-sm text-pink-700 dark:text-pink-500 font-medium">Browse designs →</span>
+                </a>
+
+                <a href="https://awwwards.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-orange-500 dark:hover:border-orange-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-orange-600 dark:group-hover:text-orange-400">Awwwards</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Award-winning websites showcasing the best web design and innovation.</p>
+                    <span class="inline-block mt-3 text-sm text-orange-600 dark:text-orange-400 font-medium">See winners →</span>
+                </a>
+
+                <a href="https://behance.net" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-blue-600 dark:hover:border-blue-500 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-700 dark:group-hover:text-blue-500">Behance</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Adobe's creative portfolio platform. Showcase your work and discover amazing projects.</p>
+                    <span class="inline-block mt-3 text-sm text-blue-700 dark:text-blue-500 font-medium">Explore work →</span>
+                </a>
+
+                <a href="https://mobbin.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-purple-500 dark:hover:border-purple-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-purple-600 dark:group-hover:text-purple-400">Mobbin</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Mobile app design library with 300,000+ screens from top apps.</p>
+                    <span class="inline-block mt-3 text-sm text-purple-600 dark:text-purple-400 font-medium">Browse screens →</span>
+                </a>
+
+                <a href="https://land-book.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-green-500 dark:hover:border-green-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-green-600 dark:group-hover:text-green-400">Land-book</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Landing page gallery with filter by color, type, and style.</p>
+                    <span class="inline-block mt-3 text-sm text-green-600 dark:text-green-400 font-medium">Find inspiration →</span>
+                </a>
+
+                <a href="https://saaslandingpage.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-indigo-500 dark:hover:border-indigo-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400">SaaS Landing Page</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Curated SaaS landing pages and marketing websites.</p>
+                    <span class="inline-block mt-3 text-sm text-indigo-600 dark:text-indigo-400 font-medium">See examples →</span>
+                </a>
+
+                <a href="https://onepagelove.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-red-500 dark:hover:border-red-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-red-600 dark:group-hover:text-red-400">One Page Love</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Single page website inspiration and templates.</p>
+                    <span class="inline-block mt-3 text-sm text-red-600 dark:text-red-400 font-medium">View gallery →</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Design Resources & Assets -->
+        <div class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-3">
+                <span class="text-4xl">🖼️</span> Design Resources & Assets
+            </h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-6 ml-14">Free images, icons, and design tools</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <a href="https://figma.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-purple-500 dark:hover:border-purple-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-purple-600 dark:group-hover:text-purple-400">Figma</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Industry-standard design tool. Free for students to design websites and apps.</p>
+                    <span class="inline-block mt-3 text-sm text-purple-600 dark:text-purple-400 font-medium">Start designing →</span>
+                </a>
+
+                <a href="https://unsplash.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-gray-700 dark:hover:border-gray-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-gray-800 dark:group-hover:text-gray-400">Unsplash</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Free high-quality images for your projects. No attribution required.</p>
+                    <span class="inline-block mt-3 text-sm text-gray-800 dark:text-gray-400 font-medium">Download photos →</span>
+                </a>
+
+                <a href="https://pexels.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-teal-500 dark:hover:border-teal-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-teal-600 dark:group-hover:text-teal-400">Pexels</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Free stock photos and videos. Updated daily with new content.</p>
+                    <span class="inline-block mt-3 text-sm text-teal-600 dark:text-teal-400 font-medium">Browse media →</span>
+                </a>
+
+                <a href="https://coolors.co" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-pink-500 dark:hover:border-pink-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-pink-600 dark:group-hover:text-pink-400">Coolors</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Generate perfect color palettes for your designs in seconds.</p>
+                    <span class="inline-block mt-3 text-sm text-pink-600 dark:text-pink-400 font-medium">Generate palette →</span>
+                </a>
+
+                <a href="https://fonts.google.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400">Google Fonts</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">1000+ free, open-source fonts optimized for the web.</p>
+                    <span class="inline-block mt-3 text-sm text-blue-600 dark:text-blue-400 font-medium">Browse fonts →</span>
+                </a>
+
+                <a href="https://fontawesome.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-indigo-500 dark:hover:border-indigo-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400">Font Awesome</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">7000+ free icons for your web projects. Easy to use and customize.</p>
+                    <span class="inline-block mt-3 text-sm text-indigo-600 dark:text-indigo-400 font-medium">Get icons →</span>
+                </a>
+
+                <a href="https://heroicons.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-purple-600 dark:hover:border-purple-500 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-purple-700 dark:group-hover:text-purple-500">Heroicons</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Beautiful hand-crafted SVG icons by the makers of Tailwind CSS.</p>
+                    <span class="inline-block mt-3 text-sm text-purple-700 dark:text-purple-500 font-medium">Download icons →</span>
+                </a>
+
+                <a href="https://undraw.co" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-blue-600 dark:hover:border-blue-500 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-700 dark:group-hover:text-blue-500">unDraw</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Free customizable illustrations for your projects.</p>
+                    <span class="inline-block mt-3 text-sm text-blue-700 dark:text-blue-500 font-medium">Get illustrations →</span>
+                </a>
+
+                <a href="https://storyset.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-pink-600 dark:hover:border-pink-500 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-pink-700 dark:group-hover:text-pink-500">Storyset</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Customizable animated illustrations to bring your projects to life.</p>
+                    <span class="inline-block mt-3 text-sm text-pink-700 dark:text-pink-500 font-medium">Animate stories →</span>
+                </a>
+
+                <a href="https://excalidraw.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-gray-700 dark:hover:border-gray-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-gray-800 dark:group-hover:text-gray-400">Excalidraw</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Simple whiteboard tool for sketching diagrams and wireframes.</p>
+                    <span class="inline-block mt-3 text-sm text-gray-800 dark:text-gray-400 font-medium">Start drawing →</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Developer Tools & Deployment -->
+        <div class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-3">
+                <span class="text-4xl">🛠️</span> Developer Tools & Deployment
+            </h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-6 ml-14">Host your projects and manage your code</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <a href="https://github.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-gray-700 dark:hover:border-gray-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-gray-800 dark:group-hover:text-gray-400">GitHub</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Host your code, collaborate with developers worldwide, and build your portfolio. Essential for every developer.</p>
+                    <span class="inline-block mt-3 text-sm text-gray-800 dark:text-gray-400 font-medium">Create account →</span>
+                </a>
+
+                <a href="https://vercel.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-black dark:hover:border-white hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-black dark:group-hover:text-white">Vercel</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Deploy your projects for free in seconds. Automatic HTTPS, global CDN, zero configuration.</p>
+                    <span class="inline-block mt-3 text-sm text-black dark:text-white font-medium">Deploy now →</span>
+                </a>
+
+                <a href="https://netlify.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-teal-500 dark:hover:border-teal-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-teal-600 dark:group-hover:text-teal-400">Netlify</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Alternative to Vercel with free hosting, forms, and serverless functions.</p>
+                    <span class="inline-block mt-3 text-sm text-teal-600 dark:text-teal-400 font-medium">Start hosting →</span>
+                </a>
+
+                <a href="https://railway.app" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-purple-500 dark:hover:border-purple-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-purple-600 dark:group-hover:text-purple-400">Railway</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Deploy backends, databases, and full-stack apps for free.</p>
+                    <span class="inline-block mt-3 text-sm text-purple-600 dark:text-purple-400 font-medium">Deploy backend →</span>
+                </a>
+
+                <a href="https://render.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400">Render</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Free hosting with databases, cron jobs, and static sites.</p>
+                    <span class="inline-block mt-3 text-sm text-blue-600 dark:text-blue-400 font-medium">Start hosting →</span>
+                </a>
+
+                <a href="https://supabase.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-green-500 dark:hover:border-green-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-green-600 dark:group-hover:text-green-400">Supabase</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Open source Firebase alternative. Free PostgreSQL database, auth, and storage.</p>
+                    <span class="inline-block mt-3 text-sm text-green-600 dark:text-green-400 font-medium">Get started →</span>
+                </a>
+
+                <a href="https://planetscale.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-orange-500 dark:hover:border-orange-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-orange-600 dark:group-hover:text-orange-400">PlanetScale</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Free MySQL database hosting with branching like Git.</p>
+                    <span class="inline-block mt-3 text-sm text-orange-600 dark:text-orange-400 font-medium">Create database →</span>
+                </a>
+
+                <a href="https://godaddy.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-green-600 dark:hover:border-green-500 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-green-700 dark:group-hover:text-green-500">GoDaddy</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Get your custom domain name. Starting from ₹99/year for students.</p>
+                    <span class="inline-block mt-3 text-sm text-green-700 dark:text-green-500 font-medium">Find domain →</span>
+                </a>
+
+                <a href="https://namecheap.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-orange-600 dark:hover:border-orange-500 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-orange-700 dark:group-hover:text-orange-500">Namecheap</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Cheaper alternative to GoDaddy for domain names. Student discounts available.</p>
+                    <span class="inline-block mt-3 text-sm text-orange-700 dark:text-orange-500 font-medium">Search domains →</span>
+                </a>
+
+                <a href="https://cloudflare.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-orange-500 dark:hover:border-orange-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-orange-600 dark:group-hover:text-orange-400">Cloudflare</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Free DNS management and CDN. Make your websites faster and more secure.</p>
+                    <span class="inline-block mt-3 text-sm text-orange-600 dark:text-orange-400 font-medium">Setup DNS →</span>
+                </a>
+
+                <a href="https://postman.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-orange-700 dark:hover:border-orange-600 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-orange-800 dark:group-hover:text-orange-600">Postman</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Essential API testing tool. Test and debug your backend APIs.</p>
+                    <span class="inline-block mt-3 text-sm text-orange-800 dark:text-orange-600 font-medium">Test APIs →</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Documentation & References -->
+        <div class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-3">
+                <span class="text-4xl">📖</span> Documentation & References
+            </h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-6 ml-14">Quick references and technical documentation</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <a href="https://devdocs.io" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400">DevDocs</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">All developer documentation in one searchable interface. Works offline too!</p>
+                    <span class="inline-block mt-3 text-sm text-blue-600 dark:text-blue-400 font-medium">Browse docs →</span>
+                </a>
+
+                <a href="https://caniuse.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-green-500 dark:hover:border-green-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-green-600 dark:group-hover:text-green-400">Can I Use</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Check browser compatibility for HTML, CSS, and JavaScript features.</p>
+                    <span class="inline-block mt-3 text-sm text-green-600 dark:text-green-400 font-medium">Check support →</span>
+                </a>
+
+                <a href="https://regex101.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-purple-500 dark:hover:border-purple-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-purple-600 dark:group-hover:text-purple-400">Regex101</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Test and debug regular expressions with explanations.</p>
+                    <span class="inline-block mt-3 text-sm text-purple-600 dark:text-purple-400 font-medium">Test regex →</span>
+                </a>
+
+                <a href="https://jsfiddle.net" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-blue-600 dark:hover:border-blue-500 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-700 dark:group-hover:text-blue-500">JSFiddle</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Test HTML, CSS, and JavaScript code snippets quickly in your browser.</p>
+                    <span class="inline-block mt-3 text-sm text-blue-700 dark:text-blue-500 font-medium">Start coding →</span>
+                </a>
+
+                <a href="https://stackoverflow.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-orange-600 dark:hover:border-orange-500 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-orange-700 dark:group-hover:text-orange-500">Stack Overflow</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Q&A for coding problems. Search before asking - chances are it's already answered!</p>
+                    <span class="inline-block mt-3 text-sm text-orange-700 dark:text-orange-500 font-medium">Find answers →</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Testing & Performance -->
+        <div class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-3">
+                <span class="text-4xl">⚡</span> Testing & Performance
+            </h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-6 ml-14">Make your websites fast and reliable</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <a href="https://pagespeed.web.dev" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-green-500 dark:hover:border-green-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-green-600 dark:group-hover:text-green-400">PageSpeed Insights</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Test your website speed and get optimization recommendations from Google.</p>
+                    <span class="inline-block mt-3 text-sm text-green-600 dark:text-green-400 font-medium">Test speed →</span>
+                </a>
+
+                <a href="https://gtmetrix.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400">GTmetrix</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Detailed performance analysis with waterfall charts and video playback.</p>
+                    <span class="inline-block mt-3 text-sm text-blue-600 dark:text-blue-400 font-medium">Analyze site →</span>
+                </a>
+
+                <a href="https://browserstack.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-purple-500 dark:hover:border-purple-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-purple-600 dark:group-hover:text-purple-400">BrowserStack</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Test your websites across different browsers and devices. Free for students.</p>
+                    <span class="inline-block mt-3 text-sm text-purple-600 dark:text-purple-400 font-medium">Test browsers →</span>
+                </a>
+
+                <a href="https://sizzy.co" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-pink-500 dark:hover:border-pink-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-pink-600 dark:group-hover:text-pink-400">Sizzy</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Browser for developers. Test responsive designs on all devices in one window.</p>
+                    <span class="inline-block mt-3 text-sm text-pink-600 dark:text-pink-400 font-medium">Try Sizzy →</span>
+                </a>
+
+                <a href="https://responsively.app" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-indigo-500 dark:hover:border-indigo-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400">Responsively</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">FREE open-source alternative to Sizzy. Preview all device sizes simultaneously.</p>
+                    <span class="inline-block mt-3 text-sm text-indigo-600 dark:text-indigo-400 font-medium">Download free →</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Career & Community -->
+        <div class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-3">
+                <span class="text-4xl">💼</span> Career & Community
+            </h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-6 ml-14">Find jobs, build your network, and grow your career</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <a href="https://wellfound.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400">Wellfound</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Find startup jobs worldwide. Previously known as AngelList Talent.</p>
+                    <span class="inline-block mt-3 text-sm text-blue-600 dark:text-blue-400 font-medium">Find startups →</span>
+                </a>
+
+                <a href="https://workatastartup.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-orange-500 dark:hover:border-orange-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-orange-600 dark:group-hover:text-orange-400">Work at a Startup</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Y Combinator's job board. Apply to YC-backed startups with one application.</p>
+                    <span class="inline-block mt-3 text-sm text-orange-600 dark:text-orange-400 font-medium">Apply to YC →</span>
+                </a>
+
+                <a href="https://ycombinator.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-orange-600 dark:hover:border-orange-500 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-orange-700 dark:group-hover:text-orange-500">Y Combinator</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">World's most successful startup accelerator. Learn from their essays and startup school.</p>
+                    <span class="inline-block mt-3 text-sm text-orange-700 dark:text-orange-500 font-medium">Learn startups →</span>
+                </a>
+
+                <a href="https://remoteindian.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-indigo-500 dark:hover:border-indigo-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400">RemoteIndian</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">4,000+ Indians working remotely. Find jobs, learn about taxes, and connect with professionals.</p>
+                    <span class="inline-block mt-3 text-sm text-indigo-600 dark:text-indigo-400 font-medium">Join community →</span>
+                </a>
+
+                <a href="https://indiehackers.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-blue-600 dark:hover:border-blue-500 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-700 dark:group-hover:text-blue-500">Indie Hackers</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Learn to build startups in public. Read success stories and share your journey.</p>
+                    <span class="inline-block mt-3 text-sm text-blue-700 dark:text-blue-500 font-medium">Start building →</span>
+                </a>
+
+                <a href="https://instahyre.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-pink-500 dark:hover:border-pink-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-pink-600 dark:group-hover:text-pink-400">Instahyre</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Indian tech job platform. Get interview calls from top startups and companies.</p>
+                    <span class="inline-block mt-3 text-sm text-pink-600 dark:text-pink-400 font-medium">Find jobs →</span>
+                </a>
+
+                <a href="https://naukri.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-blue-700 dark:hover:border-blue-600 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-800 dark:group-hover:text-blue-600">Naukri.com</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">India's largest job portal. Upload your resume and get matched with companies.</p>
+                    <span class="inline-block mt-3 text-sm text-blue-800 dark:text-blue-600 font-medium">Upload resume →</span>
+                </a>
+
+                <a href="https://linkedin.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-blue-600 dark:hover:border-blue-500 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-700 dark:group-hover:text-blue-500">LinkedIn</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Professional networking platform. Build your profile, connect with recruiters, find jobs.</p>
+                    <span class="inline-block mt-3 text-sm text-blue-700 dark:text-blue-500 font-medium">Build network →</span>
+                </a>
+
+                <a href="https://dev.to" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-gray-700 dark:hover:border-gray-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-gray-800 dark:group-hover:text-gray-400">DEV Community</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Developer blogging community. Share your learning and build your online presence.</p>
+                    <span class="inline-block mt-3 text-sm text-gray-800 dark:text-gray-400 font-medium">Start writing →</span>
+                </a>
+
+                <a href="https://hashnode.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400">Hashnode</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Blogging platform for developers with your own custom domain.</p>
+                    <span class="inline-block mt-3 text-sm text-blue-600 dark:text-blue-400 font-medium">Create blog →</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Freelancing & Income -->
+        <div class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-3">
+                <span class="text-4xl">💰</span> Freelancing & Income
+            </h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-6 ml-14">Start earning while you learn</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <a href="https://upwork.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-green-500 dark:hover:border-green-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-green-600 dark:group-hover:text-green-400">Upwork</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Largest freelance marketplace. Find web development projects from clients worldwide.</p>
+                    <span class="inline-block mt-3 text-sm text-green-600 dark:text-green-400 font-medium">Start freelancing →</span>
+                </a>
+
+                <a href="https://fiverr.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-green-600 dark:hover:border-green-500 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-green-700 dark:group-hover:text-green-500">Fiverr</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Sell your services starting at $5. Create gigs for website development, design, and more.</p>
+                    <span class="inline-block mt-3 text-sm text-green-700 dark:text-green-500 font-medium">Create gigs →</span>
+                </a>
+
+                <a href="https://toptal.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-blue-600 dark:hover:border-blue-500 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-700 dark:group-hover:text-blue-500">Toptal</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">High-end freelancing for experienced developers. Premium rates, selective acceptance.</p>
+                    <span class="inline-block mt-3 text-sm text-blue-700 dark:text-blue-500 font-medium">Apply (advanced) →</span>
+                </a>
+
+                <a href="https://contra.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-purple-500 dark:hover:border-purple-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-purple-600 dark:group-hover:text-purple-400">Contra</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Freelance platform with ZERO commission! Keep 100% of your earnings.</p>
+                    <span class="inline-block mt-3 text-sm text-purple-600 dark:text-purple-400 font-medium">Join free →</span>
+                </a>
+
+                <a href="https://turing.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-indigo-500 dark:hover:border-indigo-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400">Turing</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Remote jobs for Indian developers. Work for US companies from India with good pay.</p>
+                    <span class="inline-block mt-3 text-sm text-indigo-600 dark:text-indigo-400 font-medium">Apply for jobs →</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Portfolio & Personal Branding -->
+        <div class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-3">
+                <span class="text-4xl">🎯</span> Portfolio & Personal Branding
+            </h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-6 ml-14">Showcase your work and build your brand</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <a href="https://read.cv" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-gray-700 dark:hover:border-gray-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-gray-800 dark:group-hover:text-gray-400">Read.cv</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Beautiful online resume that stands out. Used by designers and developers at top companies.</p>
+                    <span class="inline-block mt-3 text-sm text-gray-800 dark:text-gray-400 font-medium">Create resume →</span>
+                </a>
+
+                <a href="https://bento.me" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-orange-500 dark:hover:border-orange-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-orange-600 dark:group-hover:text-orange-400">Bento.me</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Link-in-bio for developers. One page with all your links, projects, and social media.</p>
+                    <span class="inline-block mt-3 text-sm text-orange-600 dark:text-orange-400 font-medium">Build page →</span>
+                </a>
+
+                <a href="https://polywork.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-purple-500 dark:hover:border-purple-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-purple-600 dark:group-hover:text-purple-400">Polywork</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Professional network for creators and builders. Show what you're working on.</p>
+                    <span class="inline-block mt-3 text-sm text-purple-600 dark:text-purple-400 font-medium">Join network →</span>
+                </a>
+
+                <a href="https://peerlist.io" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-green-500 dark:hover:border-green-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-green-600 dark:group-hover:text-green-400">Peerlist</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">LinkedIn alternative for builders. Profile, projects, and job opportunities in one place.</p>
+                    <span class="inline-block mt-3 text-sm text-green-600 dark:text-green-400 font-medium">Create profile →</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Productivity & Collaboration -->
+        <div class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-3">
+                <span class="text-4xl">⚡</span> Productivity & Collaboration
+            </h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-6 ml-14">Tools to work efficiently and collaborate with teams</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <a href="https://cal.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400">Cal.com</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Open-source scheduling for meetings. Share your availability and automate booking.</p>
+                    <span class="inline-block mt-3 text-sm text-blue-600 dark:text-blue-400 font-medium">Schedule meetings →</span>
+                </a>
+
+                <a href="https://slack.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-purple-600 dark:hover:border-purple-500 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-purple-700 dark:group-hover:text-purple-500">Slack</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Industry-standard team communication. Collaborate on projects and stay connected.</p>
+                    <span class="inline-block mt-3 text-sm text-purple-700 dark:text-purple-500 font-medium">Start collaborating →</span>
+                </a>
+
+                <a href="https://discord.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-indigo-600 dark:hover:border-indigo-500 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-indigo-700 dark:group-hover:text-indigo-500">Discord</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Join developer communities and study groups. Voice, video, and text chat.</p>
+                    <span class="inline-block mt-3 text-sm text-indigo-700 dark:text-indigo-500 font-medium">Join communities →</span>
+                </a>
+
+                <a href="https://notion.so" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-gray-700 dark:hover:border-gray-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-gray-800 dark:group-hover:text-gray-400">Notion</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">All-in-one workspace for notes, docs, and project management. Free for students.</p>
+                    <span class="inline-block mt-3 text-sm text-gray-800 dark:text-gray-400 font-medium">Get organized →</span>
+                </a>
+
+                <a href="https://trello.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-blue-600 dark:hover:border-blue-500 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-700 dark:group-hover:text-blue-500">Trello</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Simple project boards to organize tasks. Visual kanban boards for project management.</p>
+                    <span class="inline-block mt-3 text-sm text-blue-700 dark:text-blue-500 font-medium">Create boards →</span>
+                </a>
+
+                <a href="https://loom.com" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-purple-500 dark:hover:border-purple-400 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-purple-600 dark:group-hover:text-purple-400">Loom</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Screen recording for presentations and tutorials. Great for project demos.</p>
+                    <span class="inline-block mt-3 text-sm text-purple-600 dark:text-purple-400 font-medium">Record video →</span>
+                </a>
+
+                <a href="https://obsidian.md" target="_blank" rel="noopener" class="resource-card group block rounded-xl p-6 border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-purple-700 dark:hover:border-purple-600 hover:shadow-xl hover:-translate-y-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-purple-800 dark:group-hover:text-purple-600">Obsidian</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">Powerful note-taking app with linked notes. Perfect for building a knowledge base.</p>
+                    <span class="inline-block mt-3 text-sm text-purple-800 dark:text-purple-600 font-medium">Take notes →</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Back to Top -->
+        <div class="text-center py-12">
+            <a href="index.html" class="btn btn-secondary text-base px-8 py-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Back to Course Home
+            </a>
+        </div>
+
+    </div>
+
+</body>
+</html>

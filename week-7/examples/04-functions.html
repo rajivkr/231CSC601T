@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Functions - Week 07 Example</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 { color: #f1c40f; }
+        h2 { color: #2c3e50; margin-top: 30px; }
+        .output {
+            background: #2c3e50;
+            color: #2ecc71;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            margin: 15px 0;
+        }
+        .controls {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        input {
+            padding: 8px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 5px;
+            width: 80px;
+        }
+        button {
+            background: #f1c40f;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+        }
+        button:hover { background: #f39c12; }
+    </style>
+</head>
+<body>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+
+    <h1>Functions</h1>
+
+    <h2>1. Function Declaration vs Expression</h2>
+    <button onclick="demoDeclaration()">Run Demo</button>
+    <div class="output" id="output1">Click to see the difference...</div>
+
+    <h2>2. Calculator Functions</h2>
+    <div class="controls">
+        <input type="number" id="num1" value="10" placeholder="Number 1">
+        <input type="number" id="num2" value="5" placeholder="Number 2">
+        <br>
+        <button onclick="calc('add')">Add</button>
+        <button onclick="calc('subtract')">Subtract</button>
+        <button onclick="calc('multiply')">Multiply</button>
+        <button onclick="calc('divide')">Divide</button>
+    </div>
+    <div class="output" id="output2">Enter numbers and click an operation...</div>
+
+    <h2>3. Arrow Functions</h2>
+    <button onclick="demoArrow()">Show Arrow Function Syntax</button>
+    <div class="output" id="output3">Click to see arrow function examples...</div>
+
+    <h2>4. Default Parameters</h2>
+    <div class="controls">
+        <input type="text" id="userName" placeholder="Name (optional)" style="width: 150px;">
+        <button onclick="demoDefault()">Greet</button>
+    </div>
+    <div class="output" id="output4">Leave name empty to see default parameter...</div>
+
+    <h2>5. Rest Parameters & Spread</h2>
+    <button onclick="demoRest()">Run Demo</button>
+    <div class="output" id="output5">Click to see rest/spread in action...</div>
+
+    <h2>6. Scope and Closures</h2>
+    <button onclick="demoScope()">Show Scope Examples</button>
+    <button onclick="demoClosure()">Show Closure Example</button>
+    <div class="output" id="output6">Click a button...</div>
+
+    <h2>7. Higher-Order Functions</h2>
+    <button onclick="demoHigherOrder()">Run Demo</button>
+    <div class="output" id="output7">Click to see map, filter, reduce...</div>
+
+    <h2>8. Callback Functions</h2>
+    <button onclick="demoCallback()">Run Callback Demo</button>
+    <div class="output" id="output8">Click to see callbacks in action...</div>
+
+    <script>
+        function demoDeclaration() {
+            const result = `// Function Declaration vs Expression
+
+// 1. Function Declaration (Hoisted!)
+function greet(name) {
+    return \`Hello, \${name}!\`;
+}
+
+// Can call before declaration due to hoisting:
+// greet('John');  // Works!
+
+// 2. Function Expression (Not hoisted)
+const sayHi = function(name) {
+    return \`Hi, \${name}!\`;
+};
+
+// Cannot call before declaration:
+// sayHi('John');  // Error if called above!
+
+// 3. Named Function Expression
+const sayBye = function goodbye(name) {
+    return \`Goodbye, \${name}!\`;
+};
+
+// Results:
+greet('John')   → "${greet('John')}"
+sayHi('Jane')   → "${sayHi('Jane')}"
+sayBye('Bob')   → "${sayBye('Bob')}"`;
+
+            document.getElementById('output1').textContent = result;
+        }
+
+        // Calculator functions
+        function add(a, b) { return a + b; }
+        function subtract(a, b) { return a - b; }
+        function multiply(a, b) { return a * b; }
+        function divide(a, b) {
+            if (b === 0) return 'Cannot divide by zero!';
+            return a / b;
+        }
+
+        function greet(name) {
+            return `Hello, ${name}!`;
+        }
+
+        function sayHi(name) {
+            return `Hi, ${name}!`;
+        }
+
+        function sayBye(name) {
+            return `Goodbye, ${name}!`;
+        }
+
+        function calc(operation) {
+            const a = parseFloat(document.getElementById('num1').value);
+            const b = parseFloat(document.getElementById('num2').value);
+            let result = '';
+            let value = '';
+
+            switch (operation) {
+                case 'add':
+                    value = add(a, b);
+                    result = `function add(a, b) {
+    return a + b;
+}
+
+add(${a}, ${b}) = ${value}`;
+                    break;
+                case 'subtract':
+                    value = subtract(a, b);
+                    result = `function subtract(a, b) {
+    return a - b;
+}
+
+subtract(${a}, ${b}) = ${value}`;
+                    break;
+                case 'multiply':
+                    value = multiply(a, b);
+                    result = `function multiply(a, b) {
+    return a * b;
+}
+
+multiply(${a}, ${b}) = ${value}`;
+                    break;
+                case 'divide':
+                    value = divide(a, b);
+                    result = `function divide(a, b) {
+    if (b === 0) return 'Cannot divide by zero!';
+    return a / b;
+}
+
+divide(${a}, ${b}) = ${value}`;
+                    break;
+            }
+
+            document.getElementById('output2').textContent = result;
+        }
+
+        function demoArrow() {
+            // Arrow function examples
+            const add = (a, b) => a + b;
+            const square = x => x * x;
+            const greet = () => 'Hello!';
+            const multiLine = (a, b) => {
+                const sum = a + b;
+                return sum * 2;
+            };
+
+            const result = `// Arrow Functions (ES6)
+
+// Regular function
+function add(a, b) {
+    return a + b;
+}
+
+// Arrow function equivalent
+const add = (a, b) => a + b;
+
+// Single parameter: parentheses optional
+const square = x => x * x;
+square(4) → ${square(4)}
+
+// No parameters: empty parentheses required
+const greet = () => 'Hello!';
+greet() → "${greet()}"
+
+// Multiple lines: need braces and return
+const multiLine = (a, b) => {
+    const sum = a + b;
+    return sum * 2;
+};
+multiLine(3, 4) → ${multiLine(3, 4)}
+
+// Returning objects: wrap in parentheses
+const makeUser = (name, age) => ({ name, age });
+makeUser('John', 25) → ${JSON.stringify({ name: 'John', age: 25 })}
+
+// Arrow functions in callbacks
+const numbers = [1, 2, 3, 4, 5];
+numbers.map(x => x * 2) → [${[1,2,3,4,5].map(x => x * 2)}]
+numbers.filter(x => x > 2) → [${[1,2,3,4,5].filter(x => x > 2)}]`;
+
+            document.getElementById('output3').textContent = result;
+        }
+
+        function demoDefault() {
+            const name = document.getElementById('userName').value;
+
+            // Function with default parameter
+            function greetUser(userName = 'Guest') {
+                return `Hello, ${userName}! Welcome to the site.`;
+            }
+
+            const greeting = name ? greetUser(name) : greetUser();
+
+            const result = `// Default Parameters
+
+function greetUser(userName = 'Guest') {
+    return \`Hello, \${userName}! Welcome to the site.\`;
+}
+
+// Called with: ${name ? `"${name}"` : '(no argument)'}
+greetUser(${name ? `"${name}"` : ''}) → "${greeting}"
+
+// More examples:
+function createUser(name, role = 'user', active = true) {
+    return { name, role, active };
+}
+
+createUser('John')
+→ ${JSON.stringify({ name: 'John', role: 'user', active: true })}
+
+createUser('Jane', 'admin')
+→ ${JSON.stringify({ name: 'Jane', role: 'admin', active: true })}
+
+createUser('Bob', 'editor', false)
+→ ${JSON.stringify({ name: 'Bob', role: 'editor', active: false })}`;
+
+            document.getElementById('output4').textContent = result;
+        }
+
+        function demoRest() {
+            // Rest parameter
+            function sum(...numbers) {
+                return numbers.reduce((total, n) => total + n, 0);
+            }
+
+            // Spread operator
+            const arr1 = [1, 2, 3];
+            const arr2 = [4, 5, 6];
+            const combined = [...arr1, ...arr2];
+
+            const result = `// Rest Parameters (...args)
+// Collects multiple arguments into an array
+
+function sum(...numbers) {
+    return numbers.reduce((total, n) => total + n, 0);
+}
+
+sum(1, 2)           → ${sum(1, 2)}
+sum(1, 2, 3, 4, 5)  → ${sum(1, 2, 3, 4, 5)}
+
+// Rest must be last parameter
+function greet(greeting, ...names) {
+    return \`\${greeting} \${names.join(', ')}!\`;
+}
+greet('Hello', 'John', 'Jane', 'Bob')
+→ "Hello John, Jane, Bob!"
+
+// Spread Operator (...)
+// Expands arrays/objects
+
+const arr1 = [1, 2, 3];
+const arr2 = [4, 5, 6];
+const combined = [...arr1, ...arr2];
+→ [${combined}]
+
+// Spread with objects
+const user = { name: 'John', age: 25 };
+const updated = { ...user, city: 'Chennai' };
+→ ${JSON.stringify({ name: 'John', age: 25, city: 'Chennai' })}
+
+// Clone array/object (shallow copy)
+const clone = [...arr1];
+const objClone = { ...user };`;
+
+            document.getElementById('output5').textContent = result;
+        }
+
+        function demoScope() {
+            const result = `// Scope in JavaScript
+
+// 1. Global Scope
+const globalVar = 'I am global';
+// Accessible everywhere!
+
+// 2. Function Scope
+function myFunction() {
+    const localVar = 'I am local';
+    console.log(globalVar);  // ✓ Can access global
+    console.log(localVar);   // ✓ Can access local
+}
+// console.log(localVar);  // ✗ Error! Not accessible
+
+// 3. Block Scope (let, const)
+if (true) {
+    let blockVar = 'I am block scoped';
+    const alsoBlock = 'Me too';
+}
+// console.log(blockVar);  // ✗ Error! Not accessible
+
+// 4. var is Function Scoped (NOT block scoped!)
+if (true) {
+    var varVariable = 'I escape blocks!';
+}
+console.log(varVariable);  // ✓ Works! (This is why we avoid var)
+
+// 5. Nested Scope
+function outer() {
+    const outerVar = 'outer';
+
+    function inner() {
+        const innerVar = 'inner';
+        console.log(outerVar);  // ✓ Can access parent scope
+    }
+
+    // console.log(innerVar);  // ✗ Cannot access child scope
+}`;
+
+            document.getElementById('output6').textContent = result;
+        }
+
+        function demoClosure() {
+            // Closure example
+            function createCounter() {
+                let count = 0;  // Private variable
+
+                return {
+                    increment: function() {
+                        count++;
+                        return count;
+                    },
+                    decrement: function() {
+                        count--;
+                        return count;
+                    },
+                    getCount: function() {
+                        return count;
+                    }
+                };
+            }
+
+            const counter = createCounter();
+
+            const result = `// Closures
+// Functions remember their scope even after parent function returns
+
+function createCounter() {
+    let count = 0;  // Private variable!
+
+    return {
+        increment: function() {
+            count++;
+            return count;
+        },
+        decrement: function() {
+            count--;
+            return count;
+        },
+        getCount: function() {
+            return count;
+        }
+    };
+}
+
+const counter = createCounter();
+
+counter.increment()  → ${counter.increment()}
+counter.increment()  → ${counter.increment()}
+counter.increment()  → ${counter.increment()}
+counter.decrement()  → ${counter.decrement()}
+counter.getCount()   → ${counter.getCount()}
+
+// count is private - cannot be accessed directly!
+// counter.count → undefined
+
+// Each call creates a new scope:
+const counter2 = createCounter();
+counter2.increment() → 1  (separate from counter!)`;
+
+            document.getElementById('output6').textContent = result;
+        }
+
+        function demoHigherOrder() {
+            const numbers = [1, 2, 3, 4, 5];
+
+            const doubled = numbers.map(x => x * 2);
+            const evens = numbers.filter(x => x % 2 === 0);
+            const sum = numbers.reduce((acc, x) => acc + x, 0);
+
+            const result = `// Higher-Order Functions
+// Functions that take or return other functions
+
+const numbers = [1, 2, 3, 4, 5];
+
+// map() - Transform each element
+numbers.map(x => x * 2)
+→ [${doubled}]
+
+// filter() - Keep elements that pass test
+numbers.filter(x => x % 2 === 0)
+→ [${evens}]
+
+// reduce() - Accumulate to single value
+numbers.reduce((acc, x) => acc + x, 0)
+→ ${sum}
+
+// find() - Find first matching element
+numbers.find(x => x > 3)
+→ ${numbers.find(x => x > 3)}
+
+// some() - Check if any element passes
+numbers.some(x => x > 4)
+→ ${numbers.some(x => x > 4)}
+
+// every() - Check if all elements pass
+numbers.every(x => x > 0)
+→ ${numbers.every(x => x > 0)}
+
+// Chaining methods
+numbers
+    .filter(x => x > 2)
+    .map(x => x * 2)
+    .reduce((acc, x) => acc + x, 0)
+→ ${numbers.filter(x => x > 2).map(x => x * 2).reduce((acc, x) => acc + x, 0)}`;
+
+            document.getElementById('output7').textContent = result;
+        }
+
+        function demoCallback() {
+            let output = [];
+
+            // Simulated async operation with callback
+            function fetchData(callback) {
+                output.push('Fetching data...');
+                setTimeout(() => {
+                    const data = { name: 'John', age: 25 };
+                    callback(data);
+                }, 100);
+            }
+
+            function processData(data) {
+                output.push(`Data received: ${JSON.stringify(data)}`);
+            }
+
+            const result = `// Callback Functions
+// Functions passed as arguments to other functions
+
+// Example: Array methods use callbacks
+const numbers = [1, 2, 3];
+
+numbers.forEach(function(num) {
+    console.log(num);
+});
+// Or with arrow function:
+numbers.forEach(num => console.log(num));
+
+// Example: Custom callback
+function greetUser(name, callback) {
+    const greeting = \`Hello, \${name}!\`;
+    callback(greeting);
+}
+
+greetUser('John', function(message) {
+    console.log(message);
+});
+// Output: "Hello, John!"
+
+// Callbacks for async operations (older pattern)
+function fetchData(callback) {
+    setTimeout(() => {
+        const data = { name: 'John' };
+        callback(data);  // Call when done
+    }, 1000);
+}
+
+fetchData(function(data) {
+    console.log('Data received:', data);
+});
+
+// Note: Modern JS uses Promises and async/await
+// (We'll cover these in later weeks!)`;
+
+            document.getElementById('output8').textContent = result;
+        }
+
+        // Run first demo on load
+        demoDeclaration();
+    </script>
+
+    <hr>
+    <p><a href="index.html">&larr; Back to Examples</a></p>
+</body>
+</html>
